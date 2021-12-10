@@ -1,0 +1,15 @@
+{
+  "singleQuote": true,
+  "semi": true,
+  "tabWidth": 2,
+  "importOrder": [
+    "reflect-metadata",
+    "<THIRD_PARTY_MODULES>",
+    "^@components/(.*)$",
+    "^@styles/(.*)$",
+    "^@euk-labs/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
+}
