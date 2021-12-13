@@ -1,9 +1,15 @@
+import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
+import React from 'react';
+
+import AppBar from '@components/AppBar';
 
 const Home: NextPage = () => {
-  return <div>oioioi</div>;
+  return (
+    <AppBar>
+      <Typography>A</Typography>
+    </AppBar>
+  );
 };
 
 export default Home;

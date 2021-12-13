@@ -1,10 +1,16 @@
-import { ThemeOptions, createTheme } from '@mui/material/styles';
+import { ThemeOptions } from '@mui/material/styles';
 
 const baseTheme: ThemeOptions = {
   palette: {
     primary: {
-      main: '#00bcd4',
+      main: '#063060',
     },
+    secondary: {
+      main: '#3AA3F8',
+    },
+  },
+  typography: {
+    fontFamily: '"Inter", "Helvetica", sans-serif',
   },
 };
 
