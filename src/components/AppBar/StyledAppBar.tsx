@@ -10,7 +10,7 @@ export interface StyledAppBarProps extends MuiAppBarProps {
 export const StyledAppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
 })<StyledAppBarProps>(({ theme, open }) => ({
-  background: theme.palette.primaryGradient,
+  background: theme.palette.primaryGradient ?? theme.palette.primary.main,
 
   zIndex: theme.zIndex.drawer + 1,
   transition: theme.transitions.create(['width', 'margin'], {

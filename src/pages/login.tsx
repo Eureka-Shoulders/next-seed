@@ -2,8 +2,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import type { NextPage } from 'next';
 
-import LoginBanner from '@components/LoginBanner';
-import LoginForm from '@components/LoginForm';
+import LoginBanner from '@components/Login/LoginBanner';
+import LoginForm from '@components/Login/LoginForm';
 
 const Login: NextPage = () => {
   return (
