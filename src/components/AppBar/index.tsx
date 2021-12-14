@@ -3,12 +3,12 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import { Grid, ListItemButton } from '@mui/material';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
@@ -60,7 +60,7 @@ const AppBar: NextPage = ({ children }: AppBarProps) => {
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              marginRight: 6,
+              marginRight: 5,
               display: open ? 'none' : 'flex',
             }}
           >
@@ -84,12 +84,16 @@ const AppBar: NextPage = ({ children }: AppBarProps) => {
         <Divider />
         <List>
           {pages.map((page, index) => (
-            <ListItem button key={page.href}>
-              <ListItemIcon>
+            <ListItemButton key={page.href} sx={{ justifyContent: 'center' }}>
+              <ListItemIcon
+                sx={{
+                  minWidth: open ? 48 : 0,
+                }}
+              >
                 <page.Icon />
               </ListItemIcon>
-              <ListItemText primary={page.title} />
-            </ListItem>
+              <ListItemText hidden={!open} primary={page.title} />
+            </ListItemButton>
           ))}
         </List>
       </StyledDrawer>
