@@ -24,6 +24,19 @@ interface AppBarProps {
   children?: ReactNode;
 }
 
+const pages = [
+  {
+    title: 'Inbox',
+    href: '/inbox',
+    Icon: InboxIcon,
+  },
+  {
+    title: 'Starred',
+    href: '/starred',
+    Icon: MailIcon,
+  },
+];
+
 const AppBar: NextPage = ({ children }: AppBarProps) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -47,8 +60,8 @@ const AppBar: NextPage = ({ children }: AppBarProps) => {
             onClick={handleDrawerOpen}
             edge="start"
             sx={{
-              marginRight: '36px',
-              ...(open && { display: 'none' }),
+              marginRight: 6,
+              display: open ? 'none' : 'flex',
             }}
           >
             <MenuIcon />
@@ -70,23 +83,12 @@ const AppBar: NextPage = ({ children }: AppBarProps) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
+          {pages.map((page, index) => (
+            <ListItem button key={page.href}>
               <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                <page.Icon />
               </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={page.title} />
             </ListItem>
           ))}
         </List>
