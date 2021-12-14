@@ -1,9 +1,7 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import { Grid, ListItemButton } from '@mui/material';
+import { ListItemButton } from '@mui/material';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -19,23 +17,11 @@ import React, { ReactNode } from 'react';
 
 import { StyledAppBar } from './StyledAppBar';
 import { DrawerHeader, StyledDrawer } from './StyledDrawer';
+import { drawerPages } from './drawerPages';
 
 interface AppBarProps {
   children?: ReactNode;
 }
-
-const pages = [
-  {
-    title: 'Inbox',
-    href: '/inbox',
-    Icon: InboxIcon,
-  },
-  {
-    title: 'Starred',
-    href: '/starred',
-    Icon: MailIcon,
-  },
-];
 
 const AppBar: NextPage = ({ children }: AppBarProps) => {
   const theme = useTheme();
@@ -83,7 +69,7 @@ const AppBar: NextPage = ({ children }: AppBarProps) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {pages.map((page, index) => (
+          {drawerPages.map((page, index) => (
             <ListItemButton key={page.href} sx={{ minHeight: 48 }}>
               <ListItemIcon
                 sx={{
