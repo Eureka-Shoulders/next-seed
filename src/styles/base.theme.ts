@@ -1,14 +1,16 @@
 import { ThemeOptions } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    primaryGradient: string;
+  }
+
+  interface PaletteOptions {
+    primaryGradient?: string;
+  }
+}
+
 const baseTheme: ThemeOptions = {
-  palette: {
-    primary: {
-      main: '#063060',
-    },
-    secondary: {
-      main: '#3AA3F8',
-    },
-  },
   typography: {
     fontFamily: '"Inter", "Helvetica", sans-serif',
   },

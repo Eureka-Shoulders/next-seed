@@ -35,3 +35,11 @@ const Login: NextPage = () => {
 };
 
 export default Login;
+
+export const getStaticProps = async () => {
+  return {
+    props: {
+      showAppBar: false,
+    },
+  };
+};

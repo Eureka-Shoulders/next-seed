@@ -2,13 +2,14 @@ import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
 import React from 'react';
 
-import AppBar from '@components/AppBar';
+import { Breadcrumb } from '@euk-labs/componentz';
 
 const Home: NextPage = () => {
   return (
-    <AppBar>
-      <Typography>A</Typography>
-    </AppBar>
+    <>
+      <Breadcrumb />
+      <Typography>Children here</Typography>
+    </>
   );
 };
 
