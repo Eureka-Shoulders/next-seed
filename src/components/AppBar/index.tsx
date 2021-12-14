@@ -84,7 +84,7 @@ const AppBar: NextPage = ({ children }: AppBarProps) => {
         <Divider />
         <List>
           {pages.map((page, index) => (
-            <ListItemButton key={page.href} sx={{ justifyContent: 'center' }}>
+            <ListItemButton key={page.href} sx={{ minHeight: 48 }}>
               <ListItemIcon
                 sx={{
                   minWidth: open ? 48 : 0,
