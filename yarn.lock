@@ -2201,10 +2201,10 @@ internal-slot@^1.0.3:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-inversify-react@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/inversify-react/-/inversify-react-1.0.0.tgz#7907e9713106771167efc1f74d0e2d3f5ca2e113"
-  integrity sha512-2w4gUbInM4XfpGdhIfbgb8O5qCee9wFRHxWItn6dFed6hzheFBVfrBWgG0dAEne4tx9pisDBeMj4EPBXkjM02Q==
+inversify-react@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/inversify-react/-/inversify-react-1.0.1.tgz#ff980144ee9ae1b1534e08fbe8ce5af447f47300"
+  integrity sha512-y6kh2pL3Lpqy94yhPE9amBs2GsD0eM+IziHiKMi2z6ZsR6ORk0rhDdnHDZ6AMDpEtQzpEJEg4+9zp5FWKukkxA==
 
 inversify@^6.0.1:
   version "6.0.1"
