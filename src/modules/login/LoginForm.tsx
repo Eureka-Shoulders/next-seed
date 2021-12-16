@@ -67,6 +67,12 @@ export default function LoginForm() {
                   Entrar
                 </Button>
               </Grid>
+
+              <Grid item xs={12} display="flex" justifyContent="center">
+                <MuiLink component={NextLink} href="/register">
+                  Criar uma conta
+                </MuiLink>
+              </Grid>
             </Grid>
           </Formix>
         </Grid>
