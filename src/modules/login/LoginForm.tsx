@@ -13,7 +13,7 @@ const initialValues = {
 };
 const LoginSchema = zod.object({
   username: zod.string(),
-  password: zod.string(),
+  password: zod.string().min(8),
 });
 
 type LoginSchema = zod.infer<typeof LoginSchema>;
