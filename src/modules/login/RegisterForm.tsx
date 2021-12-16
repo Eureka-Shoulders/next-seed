@@ -1,3 +1,4 @@
+import MESSAGES from '@config/messages';
 import { Box, Button, Grid, Link as MuiLink, Typography } from '@mui/material';
 import NextLink from 'next/link';
 import * as zod from 'zod';
@@ -12,11 +13,10 @@ const initialValues = {
   email: '',
   password: '',
 };
-// TODO: customize standard error messages
 const RegisterSchema = zod.object({
-  username: zod.string(),
-  email: zod.string().email(),
-  password: zod.string().min(8),
+  username: zod.string().min(1, MESSAGES.required),
+  email: zod.string().email(MESSAGES.invalid_email),
+  password: zod.string().min(8, MESSAGES.minimum_password),
 });
 
 type RegisterSchema = zod.infer<typeof RegisterSchema>;
