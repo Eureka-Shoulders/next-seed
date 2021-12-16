@@ -19,10 +19,14 @@ export const DrawerItem = ({ page, isDrawerOpen }: DrawerItemProps) => {
   const handleClick = (link: string, haveSub?: boolean) => {
     return () => {
       if (haveSub) {
-        setExpanded(!expanded);
-        return;
+        if (!isDrawerOpen) {
+          // TODO: open drawer if its closed
+        }
+
+        return setExpanded(!expanded);
       }
-      Router.push(link);
+
+      return Router.push(link);
     };
   };
 

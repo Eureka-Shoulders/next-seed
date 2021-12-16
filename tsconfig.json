@@ -15,6 +15,7 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": "./src",
+    "noUnusedLocals": true,
     "paths": {
       "@components/*": ["./components/*"],
       "@styles/*": ["./styles/*"],

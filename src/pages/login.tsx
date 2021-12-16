@@ -1,13 +1,12 @@
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import LoginForm from 'modules/login/LoginForm';
 import type { NextPage } from 'next';
 
 import LoginBanner from '@components/Login/LoginBanner';
-import LoginForm from '@components/Login/LoginForm';
 
 const Login: NextPage = () => {
   return (
-    <Grid container>
+    <Grid container minHeight="100vh">
       <Grid
         item
         xs={6}
@@ -26,9 +25,7 @@ const Login: NextPage = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <Box width={200} height={200}>
-          <LoginForm />
-        </Box>
+        <LoginForm />
       </Grid>
     </Grid>
   );
