@@ -1,20 +1,45 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
 
-import LoginBanner from '@components/LoginBanner';
+import LoginBanner from '@components/Login/LoginBanner';
+import LoginForm from '@components/Login/LoginForm';
 
-const Home: NextPage = () => {
+const Login: NextPage = () => {
   return (
     <Grid container>
-      <Grid item xs={6}>
-        <LoginBanner>oioiooio</LoginBanner>
+      <Grid
+        item
+        xs={6}
+        display={{
+          xs: 'none',
+          md: 'block',
+        }}
+      >
+        <LoginBanner />
       </Grid>
-      <Grid item xs={6}></Grid>
+      <Grid
+        item
+        xs={12}
+        md={6}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Box width={200} height={200}>
+          <LoginForm />
+        </Box>
+      </Grid>
     </Grid>
   );
 };
 
-export default Home;
+export default Login;
+
+export const getStaticProps = async () => {
+  return {
+    props: {
+      showAppBar: false,
+    },
+  };
+};

@@ -1,9 +1,16 @@
+import Typography from '@mui/material/Typography';
 import type { NextPage } from 'next';
-import Head from 'next/head';
-import Image from 'next/image';
+import React from 'react';
+
+import { Breadcrumb } from '@euk-labs/componentz';
 
 const Home: NextPage = () => {
-  return <div>oioioi</div>;
+  return (
+    <>
+      <Breadcrumb />
+      <Typography>Children here</Typography>
+    </>
+  );
 };
 
 export default Home;

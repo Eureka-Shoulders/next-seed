@@ -515,6 +515,13 @@
     prop-types "^15.7.2"
     react-is "^17.0.2"
 
+"@mui/icons-material@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.2.1.tgz#f037aeb7a0491bf855eaebea53de8ee427b3014e"
+  integrity sha512-AFOn0bbaGd1dw8oYE40dv3I+QnfS5xP5HSUiUGsvb1ntP0cM1kW4VqQp7BtL7DbOpEsw1ZTbw67tDqSCH7utNg==
+  dependencies:
+    "@babel/runtime" "^7.16.3"
+
 "@mui/lab@^5.0.0-alpha.59":
   version "5.0.0-alpha.59"
   resolved "https://registry.yarnpkg.com/@mui/lab/-/lab-5.0.0-alpha.59.tgz#a73550b980154c33bf81709fed3ce4030143a109"
@@ -2194,10 +2201,10 @@ internal-slot@^1.0.3:
     has "^1.0.3"
     side-channel "^1.0.4"
 
-inversify-react@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/inversify-react/-/inversify-react-1.0.0.tgz#7907e9713106771167efc1f74d0e2d3f5ca2e113"
-  integrity sha512-2w4gUbInM4XfpGdhIfbgb8O5qCee9wFRHxWItn6dFed6hzheFBVfrBWgG0dAEne4tx9pisDBeMj4EPBXkjM02Q==
+inversify-react@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/inversify-react/-/inversify-react-1.0.1.tgz#ff980144ee9ae1b1534e08fbe8ce5af447f47300"
+  integrity sha512-y6kh2pL3Lpqy94yhPE9amBs2GsD0eM+IziHiKMi2z6ZsR6ORk0rhDdnHDZ6AMDpEtQzpEJEg4+9zp5FWKukkxA==
 
 inversify@^6.0.1:
   version "6.0.1"

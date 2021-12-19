@@ -1,10 +1,18 @@
-import { ThemeOptions, createTheme } from '@mui/material/styles';
+import { ThemeOptions } from '@mui/material/styles';
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    primaryGradient: string;
+  }
+
+  interface PaletteOptions {
+    primaryGradient?: string;
+  }
+}
 
 const baseTheme: ThemeOptions = {
-  palette: {
-    primary: {
-      main: '#00bcd4',
-    },
+  typography: {
+    fontFamily: '"Inter", "Helvetica", sans-serif',
   },
 };
 
