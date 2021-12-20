@@ -6,6 +6,7 @@ import globalContainer from 'containers/global.inversify';
 import createEmotionCache from 'createEmotionCache';
 import { Provider } from 'inversify-react';
 import type { AppProps } from 'next/app';
+import { ThemeType } from 'stores/ThemeStore';
 
 import AppBar from '@components/AppBar';
 import { BreadcrumbListener } from '@components/Breadcrumbs/BreadcrumbListner';
@@ -26,7 +27,7 @@ function MyApp(props: MyAppProps) {
       <Provider container={globalContainer}>
         <BreadcrumbListener />
 
-        <ThemeProvider theme={pageProps.theme as string}>
+        <ThemeProvider themeType={pageProps.theme as ThemeType}>
           <CssBaseline />
           {showAppBar ? (
             <AppBar>

@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const themeStore = useInjection<ThemeStoreType>(TYPES.ThemeStore);
 
   function toggleTheme() {
-    if (themeStore.theme.palette.mode === 'light') {
+    if (themeStore.theme === 'light') {
       themeStore.setTheme('dark');
     } else {
       themeStore.setTheme('light');

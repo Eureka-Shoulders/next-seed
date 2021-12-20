@@ -1,4 +1,7 @@
-import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import {
+  ThemeProvider as MuiThemeProvider,
+  createTheme,
+} from '@mui/material/styles';
 import TYPES from 'containers/global.types';
 import { useInjection } from 'inversify-react';
 import { observer } from 'mobx-react-lite';
@@ -7,24 +10,27 @@ import { ThemeStoreType, ThemeType } from 'stores/ThemeStore';
 
 function ThemeProvider({
   children,
-  theme,
-}: PropsWithChildren<{ theme?: string }>) {
+  themeType,
+}: PropsWithChildren<{ themeType?: ThemeType }>) {
   const themeStore = useInjection<ThemeStoreType>(TYPES.ThemeStore);
 
-  if (typeof window === 'undefined' && theme) {
-    themeStore.hydrate(theme as ThemeType);
+  // This will happen on the server side
+  if (typeof window === 'undefined' && themeType) {
+    themeStore.hydrate(themeType as ThemeType);
   }
 
+  const theme = createTheme(themeStore.themes[themeStore.theme || themeType]);
+  console.log('Theme:', themeStore.theme || themeType);
+
   useEffect(() => {
-    if (!theme) {
-      themeStore.hydrate();
+    themeStore.hydrate();
+
+    if (!themeType) {
       themeStore.persist();
     }
   }, []); // eslint-disable-line
 
-  return (
-    <MuiThemeProvider theme={themeStore.theme}>{children}</MuiThemeProvider>
-  );
+  return <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>;
 }
 
 export default observer(ThemeProvider);

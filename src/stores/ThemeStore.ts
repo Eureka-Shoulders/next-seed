@@ -1,4 +1,4 @@
-import { Theme, createTheme } from '@mui/material';
+import { Theme } from '@mui/material';
 import { injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import { parseCookies, setCookie } from 'nookies';
@@ -7,7 +7,8 @@ import darkTheme from '@styles/dark.theme';
 import lightTheme from '@styles/light.theme';
 
 export interface ThemeStoreType {
-  theme: Theme;
+  theme: ThemeType;
+  themes: Record<ThemeType, Theme>;
   setTheme(theme: ThemeType): void;
   persist(): void;
   hydrate(theme?: ThemeType): void;
@@ -21,19 +22,19 @@ class ThemeStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  private _theme: ThemeType = 'light';
+  theme: ThemeType | null = null;
   themes = {
     light: lightTheme,
     dark: darkTheme,
   };
 
   setTheme(theme: ThemeType) {
-    this._theme = theme;
+    this.theme = theme;
     this.persist();
   }
 
   persist() {
-    setCookie(null, 'theme', this._theme, {
+    setCookie(null, 'theme', this.theme || 'light', {
       maxAge: 30 * 24 * 60 * 60,
       path: '/',
     });
@@ -42,15 +43,13 @@ class ThemeStore {
   hydrate(theme?: ThemeType) {
     const cookies = parseCookies();
 
-    theme = cookies.theme as ThemeType;
+    if (cookies.theme) {
+      theme = cookies.theme as ThemeType;
+    }
 
     if (theme) {
-      this._theme = theme as ThemeType;
+      this.theme = theme;
     }
-  }
-
-  get theme() {
-    return createTheme(this.themes[this._theme]);
   }
 }
 
