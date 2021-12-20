@@ -1,28 +1,22 @@
 import MESSAGES from '@config/messages';
-import { Box, Button, Grid, Link as MuiLink, Typography } from '@mui/material';
-import NextLink from 'next/link';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import * as zod from 'zod';
 
-import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
 import { Formix } from '@euk-labs/formix';
 
 const initialValues = {
-  username: '',
-  email: '',
   password: '',
 };
-const RegisterSchema = zod.object({
-  username: zod.string().min(1, MESSAGES.required),
-  email: zod.string().email(MESSAGES.invalid_email),
+const ResetPasswordSchema = zod.object({
   password: zod.string().min(8, MESSAGES.minimum_password),
 });
 
-type RegisterSchema = zod.infer<typeof RegisterSchema>;
+type ResetPasswordSchema = zod.infer<typeof ResetPasswordSchema>;
 
-export default function RegisterForm() {
-  function handleSubmit(values: RegisterSchema) {
+export default function ResetPasswordForm() {
+  function handleSubmit(values: ResetPasswordSchema) {
     window.alert(JSON.stringify(values));
   }
 
@@ -36,25 +30,19 @@ export default function RegisterForm() {
             component="h1"
             fontWeight={700}
           >
-            Criar conta
+            Alterar Senha
           </Typography>
         </Grid>
 
         <Grid item xs={12} sm={8}>
           <Formix
             initialValues={initialValues}
-            zodSchema={RegisterSchema}
+            zodSchema={ResetPasswordSchema}
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <FXTextField name="email" label="E-mail" type="email" />
-              </Grid>
-              <Grid item xs={12}>
-                <FXTextField name="username" label="Username" />
-              </Grid>
-              <Grid item xs={12}>
-                <FXPasswordField name="password" label="Password" />
+                <FXTextField name="password" label="Password" type="password" />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
@@ -64,14 +52,14 @@ export default function RegisterForm() {
                   color="primary"
                   type="submit"
                 >
-                  Cadastrar
+                  Alterar
                 </Button>
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
-                <MuiLink component={NextLink} href="/login">
-                  Já tem uma conta?
-                </MuiLink>
+                <Button fullWidth color="primary" type="submit" href="/login">
+                  Voltar
+                </Button>
               </Grid>
             </Grid>
           </Formix>

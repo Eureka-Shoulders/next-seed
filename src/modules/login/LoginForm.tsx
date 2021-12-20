@@ -34,7 +34,7 @@ export default function LoginForm() {
             component="h1"
             fontWeight={700}
           >
-            Login
+            Entrar
           </Typography>
         </Grid>
 
