@@ -20,7 +20,6 @@ function ThemeProvider({
   }
 
   const theme = createTheme(themeStore.themes[themeStore.theme || themeType]);
-  console.log('Theme:', themeStore.theme || themeType);
 
   useEffect(() => {
     themeStore.hydrate();
