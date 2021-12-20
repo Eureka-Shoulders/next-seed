@@ -26,7 +26,7 @@ function MyApp(props: MyAppProps) {
       <Provider container={globalContainer}>
         <BreadcrumbListener />
 
-        <ThemeProvider>
+        <ThemeProvider theme={pageProps.theme as string}>
           <CssBaseline />
           {showAppBar ? (
             <AppBar>

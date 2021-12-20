@@ -1,19 +1,19 @@
 import { Theme, createTheme } from '@mui/material';
 import { injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
+import { parseCookies, setCookie } from 'nookies';
 
 import darkTheme from '@styles/dark.theme';
 import lightTheme from '@styles/light.theme';
 
 export interface ThemeStoreType {
-  theme: string;
-  setTheme(theme: string): void;
-  buildTheme(): Theme;
+  theme: Theme;
+  setTheme(theme: ThemeType): void;
   persist(): void;
-  hydrate(): void;
+  hydrate(theme?: ThemeType): void;
 }
 
-type ThemeType = 'light' | 'dark';
+export type ThemeType = 'light' | 'dark';
 
 @injectable()
 class ThemeStore {
@@ -21,33 +21,36 @@ class ThemeStore {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  theme: ThemeType = 'light';
+  private _theme: ThemeType = 'light';
   themes = {
     light: lightTheme,
     dark: darkTheme,
   };
 
   setTheme(theme: ThemeType) {
-    this.theme = theme;
+    this._theme = theme;
     this.persist();
   }
 
-  buildTheme() {
-    const theme = this.themes[this.theme];
-
-    return createTheme(theme);
-  }
-
   persist() {
-    localStorage.setItem('theme', this.theme);
+    setCookie(null, 'theme', this._theme, {
+      maxAge: 30 * 24 * 60 * 60,
+      path: '/',
+    });
   }
 
-  hydrate() {
-    const theme = localStorage.getItem('theme');
+  hydrate(theme?: ThemeType) {
+    const cookies = parseCookies();
+
+    theme = cookies.theme as ThemeType;
 
     if (theme) {
-      this.theme = theme as ThemeType;
+      this._theme = theme as ThemeType;
     }
+  }
+
+  get theme() {
+    return createTheme(this.themes[this._theme]);
   }
 }
 
