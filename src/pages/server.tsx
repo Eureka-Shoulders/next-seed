@@ -2,13 +2,15 @@ import { Button, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import TYPES from 'containers/global.types';
 import { useInjection } from 'inversify-react';
-import type { NextPage } from 'next';
+import { observer } from 'mobx-react-lite';
+import type { GetServerSideProps, NextPage } from 'next';
+import nookies from 'nookies';
 import React from 'react';
 import { ThemeStoreType } from 'stores/ThemeStore';
 
 import { Breadcrumb } from '@euk-labs/componentz';
 
-const Home: NextPage = () => {
+const Server: NextPage = () => {
   const themeStore = useInjection<ThemeStoreType>(TYPES.ThemeStore);
 
   function toggleTheme() {
@@ -22,12 +24,22 @@ const Home: NextPage = () => {
   return (
     <Box p={3}>
       <Breadcrumb />
-      <Typography>Children here</Typography>
+      <Typography>Tema atual: {themeStore.theme}</Typography>
       <Button variant="contained" onClick={toggleTheme}>
-        Mudar tema
+        Mudar tema para
       </Button>
     </Box>
   );
 };
 
-export default Home;
+export default observer(Server);
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const cookies = nookies.get(ctx);
+
+  return {
+    props: {
+      theme: cookies.theme,
+    },
+  };
+};

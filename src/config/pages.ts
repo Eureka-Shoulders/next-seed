@@ -21,6 +21,11 @@ export const pages: Page[] = [
     Icon: UserIcon,
   },
   {
+    label: 'Server-Side Rendering page',
+    link: '/server',
+    Icon: UserIcon,
+  },
+  {
     label: 'E-mails',
     link: '/emails',
     Icon: MailIcon,

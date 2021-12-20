@@ -2,10 +2,10 @@ import { ThemeOptions } from '@mui/material/styles';
 
 import baseTheme from './base.theme';
 
-const lightTheme: ThemeOptions = {
+const darkTheme: ThemeOptions = {
   ...baseTheme,
   palette: {
-    mode: 'light',
+    mode: 'dark',
     primary: {
       '300': '#3AA3F8',
       main: '#184b85',
@@ -18,4 +18,4 @@ const lightTheme: ThemeOptions = {
       'linear-gradient(225deg, rgba(48,141,219,1) 0%, rgba(12,62,114,1) 100%)',
   },
 };
-export default lightTheme;
+export default darkTheme;
