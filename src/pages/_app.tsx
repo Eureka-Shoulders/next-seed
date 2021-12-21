@@ -1,39 +1,48 @@
 import 'reflect-metadata';
 
+import { CacheProvider, EmotionCache } from '@emotion/react';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import globalContainer from 'containers/global.inversify';
+import createEmotionCache from 'createEmotionCache';
 import { Provider } from 'inversify-react';
+import { enableStaticRendering } from 'mobx-react-lite';
 import type { AppProps } from 'next/app';
+import { HydrationData } from 'types';
 
 import AppBar from '@components/AppBar';
 import { BreadcrumbListener } from '@components/Breadcrumbs/BreadcrumbListner';
+import ThemeProvider from '@components/ThemeProvider';
 
-import { globalContainer } from '@euk-labs/componentz';
-
-import lightTheme from '../styles/light.theme';
-
-function buildTheme() {
-  return createTheme(lightTheme);
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
+const clientSideEmotionCache = createEmotionCache();
+
+enableStaticRendering(typeof window === 'undefined');
+
+function MyApp(props: MyAppProps) {
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const showAppBar = pageProps.showAppBar ?? true;
+  const hydrationData: HydrationData = pageProps.hydrationData || {};
 
   return (
-    <Provider container={globalContainer}>
-      <BreadcrumbListener />
+    <CacheProvider value={emotionCache}>
+      <Provider container={globalContainer(hydrationData)}>
+        <BreadcrumbListener />
 
-      <ThemeProvider theme={buildTheme()}>
-        <CssBaseline />
-        {showAppBar ? (
-          <AppBar>
+        <ThemeProvider>
+          <CssBaseline />
+          {showAppBar ? (
+            <AppBar>
+              <Component {...pageProps} />
+            </AppBar>
+          ) : (
             <Component {...pageProps} />
-          </AppBar>
-        ) : (
-          <Component {...pageProps} />
-        )}
-      </ThemeProvider>
-    </Provider>
+          )}
+        </ThemeProvider>
+      </Provider>
+    </CacheProvider>
   );
 }
 

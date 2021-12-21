@@ -1,8 +1,9 @@
 import { Page } from '@config/pages';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { ListItemButton } from '@mui/material';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Router from 'next/router';
