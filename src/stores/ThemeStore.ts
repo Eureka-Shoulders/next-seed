@@ -1,25 +1,29 @@
 import { Theme } from '@mui/material';
-import { injectable } from 'inversify';
+import TYPES from 'containers/global.types';
+import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
-import { parseCookies, setCookie } from 'nookies';
+import { setCookie } from 'nookies';
+import { HydrationData } from 'types';
 
 import darkTheme from '@styles/dark.theme';
 import lightTheme from '@styles/light.theme';
+
+export type ThemeType = 'light' | 'dark';
 
 export interface ThemeStoreType {
   theme: ThemeType;
   themes: Record<ThemeType, Theme>;
   setTheme(theme: ThemeType): void;
   persist(): void;
-  hydrate(theme?: ThemeType): void;
+  hydrate(data?: HydrationData): void;
 }
-
-export type ThemeType = 'light' | 'dark';
 
 @injectable()
 class ThemeStore {
-  constructor() {
+  constructor(@inject(TYPES.HydrationData) hydrationData?: HydrationData) {
     makeAutoObservable(this, {}, { autoBind: true });
+
+    if (hydrationData?.theme) this.theme = hydrationData.theme;
   }
 
   theme: ThemeType | null = null;
@@ -38,18 +42,6 @@ class ThemeStore {
       maxAge: 30 * 24 * 60 * 60,
       path: '/',
     });
-  }
-
-  hydrate(theme?: ThemeType) {
-    const cookies = parseCookies();
-
-    if (cookies.theme) {
-      theme = cookies.theme as ThemeType;
-    }
-
-    if (theme) {
-      this.theme = theme;
-    }
   }
 }
 
