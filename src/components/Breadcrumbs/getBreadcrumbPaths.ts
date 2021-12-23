@@ -2,7 +2,7 @@ import { Page } from '@config/pages';
 
 export function getBreadcrumbPaths(pages: Page[], pathname: string): Page[] {
   const urlPaths = pathname.split('/');
-  let paths = [];
+  const paths = [];
 
   if (urlPaths.length === 2 && urlPaths[1] === '') {
     const newPage = pages.find((page) => page.link === '/');

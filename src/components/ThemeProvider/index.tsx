@@ -6,10 +6,14 @@ import TYPES from 'containers/global.types';
 import { useInjection } from 'inversify-react';
 import { observer } from 'mobx-react-lite';
 import nookies from 'nookies';
-import { PropsWithChildren, useEffect } from 'react';
+import { useEffect } from 'react';
 import { ThemeStoreType, ThemeType } from 'stores/ThemeStore';
 
-function ThemeProvider({ children }: PropsWithChildren<{}>) {
+interface ThemeProviderProps {
+  children?: React.ReactNode;
+}
+
+function ThemeProvider({ children }: ThemeProviderProps) {
   const themeStore = useInjection<ThemeStoreType>(TYPES.ThemeStore);
 
   useEffect(() => {

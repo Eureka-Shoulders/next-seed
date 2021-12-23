@@ -1,11 +1,13 @@
 import UserIcon from '@mui/icons-material/AccountCircle';
 import Dashboard from '@mui/icons-material/Dashboard';
 import MailIcon from '@mui/icons-material/Mail';
+import { SvgIconTypeMap } from '@mui/material';
+import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 export interface Page {
   label: string;
   link: string;
-  Icon: any;
+  Icon: OverridableComponent<SvgIconTypeMap>;
   sub?: Omit<Page, 'sub'>[];
 }
 

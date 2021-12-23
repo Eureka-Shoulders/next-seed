@@ -16,8 +16,9 @@
     "incremental": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noUnusedLocals": true,
     "baseUrl": "./src",
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
     "paths": {
       "@components/*": ["./components/*"],
       "@styles/*": ["./styles/*"],

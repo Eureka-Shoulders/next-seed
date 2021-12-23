@@ -7,6 +7,8 @@ import createEmotionCache from 'createEmotionCache';
 import { Provider } from 'inversify-react';
 import { enableStaticRendering } from 'mobx-react-lite';
 import type { AppProps } from 'next/app';
+import getConfig from 'next/config';
+import createMirageServer from 'services/mockService';
 import { HydrationData } from 'types';
 
 import AppBar from '@components/AppBar';
@@ -17,8 +19,10 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
+const { publicRuntimeConfig } = getConfig();
 const clientSideEmotionCache = createEmotionCache();
 
+if (publicRuntimeConfig.useMirage) createMirageServer();
 enableStaticRendering(typeof window === 'undefined');
 
 function MyApp(props: MyAppProps) {
