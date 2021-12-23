@@ -1,7 +1,11 @@
 import tableLocaleText from '@config/tableLocale';
-import { Box, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { toJS } from 'mobx';
+
+import CustomLoadingOverlay from './CustomLoadingOverlay';
+import CustomNoRowsOverlay from './CustomNoRowsOverlay';
+import CustomPagination from './CustomPagination';
 
 interface MuiTableProps {
   columns: GridColDef[];
@@ -13,6 +17,8 @@ interface MuiTableProps {
   totalCount?: number;
   onPageChange?: (page: number) => void;
 }
+
+// TODO: context menu for rows by: https://mui.com/pt/components/data-grid/components/#row
 
 export default function MuiTable(props: MuiTableProps) {
   const {
@@ -42,6 +48,11 @@ export default function MuiTable(props: MuiTableProps) {
         disableColumnFilter
         paginationMode="server"
         sortingMode="server"
+        components={{
+          Pagination: CustomPagination,
+          LoadingOverlay: CustomLoadingOverlay,
+          NoRowsOverlay: CustomNoRowsOverlay,
+        }}
       />
     </Paper>
   );
