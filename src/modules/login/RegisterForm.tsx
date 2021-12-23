@@ -1,4 +1,4 @@
-import MESSAGES from '@config/messages';
+import ERROR_MESSAGES from '@config/messages';
 import { Box, Button, Grid, Link as MuiLink, Typography } from '@mui/material';
 import NextLink from 'next/link';
 import * as zod from 'zod';
@@ -14,9 +14,9 @@ const initialValues = {
   password: '',
 };
 const RegisterSchema = zod.object({
-  username: zod.string().min(1, MESSAGES.required),
-  email: zod.string().email(MESSAGES.invalid_email),
-  password: zod.string().min(8, MESSAGES.minimum_password),
+  username: zod.string().min(1, ERROR_MESSAGES.required),
+  email: zod.string().email(ERROR_MESSAGES.invalid_email),
+  password: zod.string().min(8, ERROR_MESSAGES.minimum_password),
 });
 
 type RegisterSchema = zod.infer<typeof RegisterSchema>;

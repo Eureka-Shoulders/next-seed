@@ -1,4 +1,4 @@
-import MESSAGES from '@config/messages';
+import ERROR_MESSAGES from '@config/messages';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import * as zod from 'zod';
 
@@ -10,7 +10,7 @@ const initialValues = {
   email: '',
 };
 const RecoverPasswordSchema = zod.object({
-  email: zod.string().email(MESSAGES.invalid_email),
+  email: zod.string().email(ERROR_MESSAGES.invalid_email),
 });
 
 type RecoverPasswordSchema = zod.infer<typeof RecoverPasswordSchema>;
