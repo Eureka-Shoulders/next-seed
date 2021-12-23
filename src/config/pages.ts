@@ -9,6 +9,7 @@ export interface Page {
   link: string;
   Icon: OverridableComponent<SvgIconTypeMap>;
   sub?: Omit<Page, 'sub'>[];
+  drawer?: boolean;
 }
 
 export const pages: Page[] = [
@@ -21,7 +22,16 @@ export const pages: Page[] = [
     label: 'Usuários',
     link: '/users',
     Icon: UserIcon,
+    sub: [
+      {
+        label: 'Criar usuário',
+        link: '/new',
+        Icon: UserIcon,
+        drawer: false,
+      },
+    ],
   },
+
   {
     label: 'Server-Side Rendering page',
     link: '/server',

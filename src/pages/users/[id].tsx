@@ -3,41 +3,49 @@ import { Box, Grid, Paper } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import usersRepository from 'modules/users/repository';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import * as zod from 'zod';
 
 import FXSubmitButton from '@components/FXSubmitButton';
-import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
 import { Breadcrumb } from '@euk-labs/componentz';
+import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
 
-const initialValues = {
-  name: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
-const NewUserSchema = zod
-  .object({
-    name: zod.string().min(1, ERROR_MESSAGES.required),
-    email: zod.string().email(ERROR_MESSAGES.invalid_email),
-    password: zod.string().min(8, ERROR_MESSAGES.minimum_password),
-    confirmPassword: zod.string().min(8, ERROR_MESSAGES.minimum_password),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: ERROR_MESSAGES.password_mismatch,
-    path: ['confirmPassword'],
-  });
+const UpdateUserSchema = zod.object({
+  name: zod.string().min(1, ERROR_MESSAGES.required),
+  email: zod.string().email(ERROR_MESSAGES.invalid_email),
+});
 
-type NewUserSchema = zod.infer<typeof NewUserSchema>;
+type UpdateUserSchema = zod.infer<typeof UpdateUserSchema>;
 
 function Index() {
   const router = useRouter();
+  const { id } = router.query;
 
-  async function handleSubmit(values: NewUserSchema) {
+  if (Array.isArray(id)) {
+    router.replace('/users');
+  }
+
+  const userEntity = useEntity(usersRepository, id as string);
+
+  async function handleSubmit(values: UpdateUserSchema) {
     await usersRepository.create({ ...values, confirmPassword: undefined });
-    router.push('/users');
+  }
+
+  useEffect(() => {
+    if (userEntity.identifier) {
+      userEntity.fetch();
+    }
+  }, [userEntity.identifier]); // eslint-disable-line
+
+  if (userEntity.identifier === null || userEntity.loading) {
+    return <h1>Loading...</h1>;
+  }
+
+  if (userEntity.data === null) {
+    return <h1>User not found</h1>;
   }
 
   return (
@@ -50,8 +58,8 @@ function Index() {
         <Grid item xs={12}>
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Formix
-              initialValues={initialValues}
-              zodSchema={NewUserSchema}
+              initialValues={userEntity.data as UpdateUserSchema}
+              zodSchema={UpdateUserSchema}
               onSubmit={handleSubmit}
             >
               <Grid container spacing={2}>
@@ -60,15 +68,6 @@ function Index() {
                 </Grid>
                 <Grid item xs={6}>
                   <FXTextField name="email" label="E-mail" />
-                </Grid>
-                <Grid item xs={6}>
-                  <FXPasswordField name="password" label="Senha" />
-                </Grid>
-                <Grid item xs={6}>
-                  <FXPasswordField
-                    name="confirmPassword"
-                    label="Confirmar Senha"
-                  />
                 </Grid>
 
                 <Grid item xs={12} display="flex" justifyContent="flex-end">

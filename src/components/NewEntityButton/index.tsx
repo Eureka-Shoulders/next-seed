@@ -1,14 +1,17 @@
 import AddIcon from '@mui/icons-material/Add';
 import { Fab } from '@mui/material';
+import { useRouter } from 'next/router';
 
-interface NewEntityButtonProps {
-  pathname: string;
-}
+export default function NewEntityButton() {
+  const router = useRouter();
 
-export default function NewEntityButton({ pathname }: NewEntityButtonProps) {
+  function redirect() {
+    router.push(router.pathname + '/new');
+  }
+
   return (
     <Fab
-      href={`${pathname}/new`}
+      onClick={redirect}
       color="primary"
       aria-label="add"
       sx={{

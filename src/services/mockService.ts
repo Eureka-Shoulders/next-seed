@@ -42,6 +42,40 @@ const createMirageServer = () => {
         };
       });
 
+      this.post('/users', (schema, request) => {
+        const newUser = schema.users.create({
+          ...JSON.parse(request.requestBody),
+          createdAt: new Date(),
+        });
+
+        return newUser.user;
+      });
+
+      this.get('/users/:id', async (schema, request) => {
+        const { id } = request.params;
+        const user = await schema.users.find(id);
+
+        return user.attrs;
+      });
+
+      this.patch('/users/:id', (schema, request) => {
+        const user = schema.users.find(request.params.id);
+
+        user.update({
+          ...JSON.parse(request.requestBody),
+        });
+
+        return user.user;
+      });
+
+      this.delete('/users/:id', (schema, request) => {
+        const user = schema.users.find(request.params.id);
+
+        user.destroy();
+
+        return user.attrs;
+      });
+
       this.namespace = '/';
       this.passthrough();
     },

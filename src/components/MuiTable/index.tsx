@@ -1,5 +1,5 @@
 import tableLocaleText from '@config/tableLocale';
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { toJS } from 'mobx';
 
@@ -27,21 +27,22 @@ export default function MuiTable(props: MuiTableProps) {
   } = props;
 
   return (
-    <Box height={400}>
+    <Paper elevation={0} sx={{ height: 400 }}>
       <DataGrid
         rows={toJS(rows)}
         columns={columns}
         rowCount={totalCount}
         page={page}
-        pageSize={pageSize}
+        pageSize={pageSize || 100}
         rowsPerPageOptions={rowsPerPageOptions || [pageSize || 100]}
         localeText={tableLocaleText}
         loading={isLoading}
         onPageChange={onPageChange}
-        // checkboxSelection
         disableSelectionOnClick
         disableColumnFilter
+        paginationMode="server"
+        sortingMode="server"
       />
-    </Box>
+    </Paper>
   );
 }
