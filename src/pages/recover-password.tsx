@@ -1,10 +1,10 @@
 import Grid from '@mui/material/Grid';
-import LoginForm from 'modules/login/LoginForm';
+import RecoverPasswordForm from 'modules/login/RecoverPasswordForm';
 import type { NextPage } from 'next';
 
 import LoginBanner from '@components/Login/LoginBanner';
 
-const Login: NextPage = () => {
+const RecoverPassword: NextPage = () => {
   return (
     <Grid container minHeight="100vh">
       <Grid
@@ -25,13 +25,13 @@ const Login: NextPage = () => {
         alignItems="center"
         justifyContent="center"
       >
-        <LoginForm />
+        <RecoverPasswordForm />
       </Grid>
     </Grid>
   );
 };
 
-export default Login;
+export default RecoverPassword;
 
 export const getStaticProps = async () => {
   return {
