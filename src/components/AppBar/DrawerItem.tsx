@@ -6,7 +6,7 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import React, { Fragment, useState } from 'react';
 
 interface DrawerItemProps {
@@ -15,6 +15,7 @@ interface DrawerItemProps {
 }
 
 export const DrawerItem = ({ page, isDrawerOpen }: DrawerItemProps) => {
+  const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const drawerSubPages = page.sub?.filter(
     (subPage) => subPage.drawer !== false
@@ -30,7 +31,7 @@ export const DrawerItem = ({ page, isDrawerOpen }: DrawerItemProps) => {
         return setExpanded(!expanded);
       }
 
-      return Router.push(link);
+      return router.push(link);
     };
   };
 
