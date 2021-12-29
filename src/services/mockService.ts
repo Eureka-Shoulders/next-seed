@@ -2,7 +2,7 @@ import faker from 'faker';
 import { Model, Server } from 'miragejs';
 import getConfig from 'next/config';
 
-const createMirageServer = () => {
+export default function createMirageServer() {
   const { publicRuntimeConfig } = getConfig();
 
   const server = new Server({
@@ -15,14 +15,14 @@ const createMirageServer = () => {
         email: 'sampaio@shoulders.com.br',
         password: '12345678',
         createdAt: new Date(),
-      });
+      } as any);
       for (let i = 0; i < 14; i++) {
         server.create('user', {
           name: faker.name.findName(),
           email: faker.internet.email(),
           password: faker.internet.password(),
           createdAt: new Date(),
-        });
+        } as any);
       }
     },
     routes() {
@@ -32,7 +32,7 @@ const createMirageServer = () => {
       /**
        * Users
        */
-      this.get('/users', (schema, request) => {
+      this.get('/users', (schema: any, request) => {
         const limit = +request.queryParams.limit;
         const skip = +request.queryParams.skip;
 
@@ -42,33 +42,33 @@ const createMirageServer = () => {
         };
       });
 
-      this.post('/users', (schema, request) => {
+      this.post('/users', (schema: any, request) => {
         const newUser = schema.users.create({
           ...JSON.parse(request.requestBody),
           createdAt: new Date(),
         });
 
-        return newUser.user;
+        return newUser.attrs;
       });
 
-      this.get('/users/:id', async (schema, request) => {
+      this.get('/users/:id', async (schema: any, request) => {
         const { id } = request.params;
         const user = await schema.users.find(id);
 
         return user.attrs;
       });
 
-      this.patch('/users/:id', (schema, request) => {
+      this.patch('/users/:id', (schema: any, request) => {
         const user = schema.users.find(request.params.id);
 
         user.update({
           ...JSON.parse(request.requestBody),
         });
 
-        return user.user;
+        return user.attrs;
       });
 
-      this.delete('/users/:id', (schema, request) => {
+      this.delete('/users/:id', (schema: any, request) => {
         const user = schema.users.find(request.params.id);
 
         user.destroy();
@@ -82,6 +82,4 @@ const createMirageServer = () => {
   });
 
   return server;
-};
-
-export default createMirageServer;
+}

@@ -8,12 +8,17 @@ import { Provider } from 'inversify-react';
 import { enableStaticRendering } from 'mobx-react-lite';
 import type { AppProps } from 'next/app';
 import getConfig from 'next/config';
-import createMirageServer from 'services/mockService';
-import { HydrationData } from 'types';
+import dynamic from 'next/dynamic';
+import type { HydrationData } from 'types';
 
 import AppBar from '@components/AppBar';
-import { BreadcrumbListener } from '@components/Breadcrumbs/BreadcrumbListner';
+import { BreadcrumbListener } from '@components/Breadcrumbs/BreadcrumbListener';
 import ThemeProvider from '@components/ThemeProvider';
+
+const Snackbar = dynamic(
+  () => import('@euk-labs/componentz/components/Snackbar'),
+  { ssr: false }
+);
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -22,7 +27,12 @@ interface MyAppProps extends AppProps {
 const { publicRuntimeConfig } = getConfig();
 const clientSideEmotionCache = createEmotionCache();
 
-if (publicRuntimeConfig.useMirage) createMirageServer();
+if (publicRuntimeConfig.useMirage) {
+  import('services/mockService').then((mod) => {
+    mod.default();
+  });
+}
+
 enableStaticRendering(typeof window === 'undefined');
 
 function MyApp(props: MyAppProps) {
@@ -44,6 +54,8 @@ function MyApp(props: MyAppProps) {
           ) : (
             <Component {...pageProps} />
           )}
+
+          <Snackbar />
         </ThemeProvider>
       </Provider>
     </CacheProvider>
