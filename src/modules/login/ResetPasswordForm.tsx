@@ -4,7 +4,7 @@ import * as zod from 'zod';
 
 import FXTextField from '@components/Inputs/FXTextField';
 
-import { Formix } from '@euk-labs/formix';
+import { Formix } from '@euk-labs/formix/components';
 
 const initialValues = {
   password: '',
@@ -48,13 +48,13 @@ export default function ResetPasswordForm() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <FXTextField name="password" label="Password" type="password" />
+                <FXTextField name="password" type="password" label="Senha" />
               </Grid>
               <Grid item xs={12}>
                 <FXTextField
                   name="confirmPassword"
-                  label="Confirm Password"
                   type="password"
+                  label="Confirmar sneha"
                 />
               </Grid>
 

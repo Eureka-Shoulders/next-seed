@@ -6,7 +6,7 @@ import * as zod from 'zod';
 import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
-import { Formix } from '@euk-labs/formix';
+import { Formix } from '@euk-labs/formix/components';
 
 const initialValues = {
   username: '',
@@ -46,10 +46,10 @@ export default function LoginForm() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <FXTextField name="username" label="Username" />
+                <FXTextField name="email" label="E-mail" />
               </Grid>
               <Grid item xs={12}>
-                <FXPasswordField name="password" label="Password" />
+                <FXPasswordField name="password" label="Senha" />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="flex-end">

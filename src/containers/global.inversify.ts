@@ -1,7 +1,7 @@
 import ThemeStore from 'stores/ThemeStore';
-import { HydrationData } from 'types';
+import type { HydrationData } from 'types';
 
-import { globalContainer as componentzContainer } from '@euk-labs/componentz';
+import componentzContainer from '@euk-labs/componentz/containers/global.inversify';
 
 import TYPES from './global.types';
 

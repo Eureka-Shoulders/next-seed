@@ -4,7 +4,7 @@ import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { MouseEvent, useState } from 'react';
 
-import { useField } from '@euk-labs/formix';
+import { useField } from '@euk-labs/formix/hooks';
 
 interface FieldProps {
   name: string;

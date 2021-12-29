@@ -42,9 +42,11 @@ const AppBar: NextPage = ({ children }: AppBarProps) => {
         </DrawerHeader>
         <Divider />
         <List>
-          {pages.map((page) => (
-            <DrawerItem key={page.link} isDrawerOpen={open} page={page} />
-          ))}
+          {pages
+            .filter((page) => page.drawer !== false)
+            .map((page) => (
+              <DrawerItem key={page.link} isDrawerOpen={open} page={page} />
+            ))}
         </List>
       </StyledDrawer>
       <Box component="main" flexGrow={1}>

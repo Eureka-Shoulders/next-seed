@@ -1,9 +1,9 @@
 import { Theme } from '@mui/material';
 import TYPES from 'containers/global.types';
-import { inject, injectable } from 'inversify';
+import { decorate, inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import { setCookie } from 'nookies';
-import { HydrationData } from 'types';
+import type { HydrationData } from 'types';
 
 import darkTheme from '@styles/dark.theme';
 import lightTheme from '@styles/light.theme';
@@ -18,9 +18,8 @@ export interface ThemeStoreType {
   hydrate(data?: HydrationData): void;
 }
 
-@injectable()
 class ThemeStore {
-  constructor(@inject(TYPES.HydrationData) hydrationData?: HydrationData) {
+  constructor(hydrationData?: HydrationData) {
     makeAutoObservable(this, {}, { autoBind: true });
 
     if (hydrationData?.theme) this.theme = hydrationData.theme;
@@ -44,5 +43,8 @@ class ThemeStore {
     });
   }
 }
+
+decorate(injectable(), ThemeStore);
+decorate(inject(TYPES.HydrationData), ThemeStore, 0);
 
 export default ThemeStore;
