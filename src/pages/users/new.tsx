@@ -1,5 +1,6 @@
 import ERROR_MESSAGES from '@config/messages';
 import { Box, Grid, Paper } from '@mui/material';
+import { AxiosError } from 'axios';
 import { observer } from 'mobx-react-lite';
 import usersRepository from 'modules/users/repository';
 import { useRouter } from 'next/router';
@@ -9,8 +10,8 @@ import FXSubmitButton from '@components/FXSubmitButton';
 import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
-import { Breadcrumb } from '@euk-labs/componentz';
-import { Formix } from '@euk-labs/formix';
+import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
+import { Formix } from '@euk-labs/formix/components';
 
 const initialValues = {
   name: '',
@@ -34,10 +35,28 @@ type NewUserSchema = zod.infer<typeof NewUserSchema>;
 
 function Index() {
   const router = useRouter();
+  const uiStore = useUIStore();
 
   async function handleSubmit(values: NewUserSchema) {
-    await usersRepository.create({ ...values, confirmPassword: undefined });
-    router.push('/users');
+    try {
+      const response = await usersRepository.create<
+        NewUserSchema,
+        Omit<NewUserSchema, 'confirmPassword'> & { id: string }
+      >(values);
+
+      uiStore.snackbar.show({
+        message: 'Usuário criado com sucesso',
+        severity: 'success',
+      });
+      router.push('/users/' + response.data?.id);
+    } catch (error) {
+      uiStore.snackbar.show({
+        message:
+          (error as AxiosError).response?.data.message ||
+          'Ocorreu um erro ao criar o usuário!',
+        severity: 'error',
+      });
+    }
   }
 
   return (

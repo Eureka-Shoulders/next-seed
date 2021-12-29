@@ -4,7 +4,7 @@ import * as zod from 'zod';
 
 import FXTextField from '@components/Inputs/FXTextField';
 
-import { Formix } from '@euk-labs/formix';
+import { Formix } from '@euk-labs/formix/components';
 
 const initialValues = {
   password: '',
