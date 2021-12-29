@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { getBreadcrumbPaths } from '@components/Breadcrumbs/getBreadcrumbPaths';
 
-import { useUIStore } from '@euk-labs/componentz';
+import useUIStore from '@euk-labs/componentz/hooks/useUIStore';
 
 export const BreadcrumbListener = () => {
   const uiStore = useUIStore();
