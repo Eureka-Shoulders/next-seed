@@ -1,16 +1,8 @@
 import UserIcon from '@mui/icons-material/AccountCircle';
 import Dashboard from '@mui/icons-material/Dashboard';
 import MailIcon from '@mui/icons-material/Mail';
-import { SvgIconTypeMap } from '@mui/material';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
 
-export interface Page {
-  label: string;
-  link: string;
-  Icon: OverridableComponent<SvgIconTypeMap>;
-  sub?: Omit<Page, 'sub'>[];
-  drawer?: boolean;
-}
+import { Page } from '@euk-labs/componentz/components/AppBar/types';
 
 export const pages: Page[] = [
   {

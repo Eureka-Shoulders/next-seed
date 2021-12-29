@@ -11,9 +11,11 @@ import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import type { HydrationData } from 'types';
 
-import AppBar from '@components/AppBar';
+import AppBarBuilder from '@components/AppBarBuilder';
 import { BreadcrumbListener } from '@components/Breadcrumbs/BreadcrumbListener';
 import ThemeProvider from '@components/ThemeProvider';
+
+import { AppBar } from '@euk-labs/componentz/components';
 
 const Snackbar = dynamic(
   () => import('@euk-labs/componentz/components/Snackbar'),
@@ -44,6 +46,7 @@ function MyApp(props: MyAppProps) {
     <CacheProvider value={emotionCache}>
       <Provider container={globalContainer(hydrationData)}>
         <BreadcrumbListener />
+        <AppBarBuilder />
 
         <ThemeProvider>
           <CssBaseline />
