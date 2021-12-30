@@ -1,4 +1,4 @@
-import { Page } from '@config/pages';
+import { Page } from '@euk-labs/componentz/components/AppBar/types';
 
 export function getBreadcrumbPaths(pages: Page[], pathname: string): Page[] {
   const urlPaths = pathname.split('/');
