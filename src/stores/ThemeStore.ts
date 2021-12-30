@@ -1,4 +1,4 @@
-import { Theme } from '@mui/material';
+import { ThemeOptions } from '@mui/material';
 import TYPES from 'containers/global.types';
 import { decorate, inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
@@ -11,14 +11,13 @@ import lightTheme from '@styles/light.theme';
 export type ThemeType = 'light' | 'dark';
 
 export interface ThemeStoreType {
-  theme: ThemeType;
-  themes: Record<ThemeType, Theme>;
+  theme: ThemeType | null;
+  themes: Record<ThemeType, ThemeOptions>;
   setTheme(theme: ThemeType): void;
   persist(): void;
-  hydrate(data?: HydrationData): void;
 }
 
-class ThemeStore {
+class ThemeStore implements ThemeStoreType {
   constructor(hydrationData?: HydrationData) {
     makeAutoObservable(this, {}, { autoBind: true });
 
