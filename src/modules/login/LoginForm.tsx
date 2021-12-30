@@ -1,27 +1,42 @@
-import ERROR_MESSAGES from '@config/messages';
 import { Box, Button, Grid, Link as MuiLink, Typography } from '@mui/material';
+import TYPES from 'containers/global.types';
+import useUserStore from 'hooks/useUserStore';
+import { useInjection } from 'inversify-react';
+import UsersRepository from 'modules/users/repository';
 import NextLink from 'next/link';
-import * as zod from 'zod';
 
 import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
+import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix/components';
 
+import { LoginSchema } from './login.schema';
+
 const initialValues = {
-  username: '',
+  email: '',
   password: '',
 };
-const LoginSchema = zod.object({
-  username: zod.string().min(1, ERROR_MESSAGES.required),
-  password: zod.string().min(8, ERROR_MESSAGES.minimum_password),
-});
-
-type LoginSchema = zod.infer<typeof LoginSchema>;
 
 export default function LoginForm() {
-  function handleSubmit(values: LoginSchema) {
-    window.alert(JSON.stringify(values));
+  const uiStore = useUIStore();
+  const userStore = useUserStore();
+  const usersRepository = useInjection<UsersRepository>(TYPES.UsersRepository);
+
+  async function handleSubmit(values: LoginSchema) {
+    try {
+      const response = await usersRepository.login(
+        values.email,
+        values.password
+      );
+
+      userStore.login(response.data.access_token);
+    } catch (error) {
+      uiStore.snackbar.show({
+        message: 'Usuário ou senha inválidos',
+        severity: 'error',
+      });
+    }
   }
 
   return (
@@ -53,9 +68,9 @@ export default function LoginForm() {
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="flex-end">
-                <MuiLink component={NextLink} href="/recover-password">
-                  Esqueceu sua senha?
-                </MuiLink>
+                <NextLink href="/recover-password" passHref>
+                  <MuiLink>Esqueceu sua senha?</MuiLink>
+                </NextLink>
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
@@ -70,9 +85,9 @@ export default function LoginForm() {
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
-                <MuiLink component={NextLink} href="/register">
-                  Criar uma conta
-                </MuiLink>
+                <NextLink href="/register" passHref>
+                  <MuiLink>Criar uma conta</MuiLink>
+                </NextLink>
               </Grid>
             </Grid>
           </Formix>

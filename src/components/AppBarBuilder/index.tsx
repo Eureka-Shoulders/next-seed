@@ -6,7 +6,9 @@ import { useEffect } from 'react';
 
 import { useUIStore } from '@euk-labs/componentz';
 
-export default function AppBarBuilder() {
+import AppBarHeader from './AppBarHeader';
+
+function AppBarBuilder() {
   const uiStore = useUIStore();
   const router = useRouter();
 
@@ -18,18 +20,16 @@ export default function AppBarBuilder() {
         width={177 / 5}
         height={191 / 5}
       />
-      <Typography sx={{ ml: 2 }} variant="h6" noWrap fontWeight="bold">
+      <Typography ml={2} variant="h6" noWrap fontWeight="bold">
         Shoulders
       </Typography>
     </>
   );
 
-  const AppBarHeader = <Typography variant="h5">Shoulders</Typography>;
-
   useEffect(() => {
     uiStore.appBar.setPages(pages);
     uiStore.appBar.setDrawerHeaderContent(DrawerHeader);
-    uiStore.appBar.setAppBarHeaderContent(AppBarHeader);
+    uiStore.appBar.setAppBarHeaderContent(<AppBarHeader />);
     uiStore.appBar.setOnClickDrawerOption((page) => {
       router.push(page.link);
     });
@@ -37,3 +37,5 @@ export default function AppBarBuilder() {
 
   return null;
 }
+
+export default AppBarBuilder;

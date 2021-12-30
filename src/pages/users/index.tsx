@@ -1,7 +1,10 @@
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Skeleton } from '@mui/material';
+import TYPES from 'containers/global.types';
+import useUserStore from 'hooks/useUserStore';
+import { useInjection } from 'inversify-react';
 import { observer } from 'mobx-react-lite';
 import usersColumns from 'modules/users/columns';
-import usersRepository from 'modules/users/repository';
+import UsersRepository from 'modules/users/repository';
 import { useEffect } from 'react';
 
 import MuiTable from '@components/MuiTable';
@@ -11,12 +14,9 @@ import { Breadcrumb } from '@euk-labs/componentz';
 import { Identifier, useList } from '@euk-labs/fetchx';
 
 function Index() {
-  const usersList = useList(usersRepository, {
-    limit: 10,
-    limitField: 'limit',
-    totalCountField: 'totalCount',
-    resultsField: 'data',
-  });
+  const userStore = useUserStore();
+  const usersRepository = useInjection<UsersRepository>(TYPES.UsersRepository);
+  const usersList = useList(usersRepository);
 
   async function handleDelete(id: Identifier) {
     await usersRepository.delete(id);
@@ -24,8 +24,8 @@ function Index() {
   }
 
   useEffect(() => {
-    usersList.fetch();
-  }, [usersList.page]); // eslint-disable-line
+    userStore.isLogged && usersList.fetch();
+  }, [usersList.page, userStore.isLogged]); // eslint-disable-line
 
   return (
     <Box p={3} mb={10}>
@@ -35,15 +35,19 @@ function Index() {
         </Grid>
 
         <Grid item xs={12}>
-          <MuiTable
-            page={usersList.page - 1}
-            pageSize={10}
-            columns={usersColumns(handleDelete)}
-            rows={usersList.list as Record<string, unknown>[]}
-            isLoading={usersList.loading}
-            totalCount={usersList.totalCount}
-            onPageChange={(page) => usersList.setPage(page + 1)}
-          />
+          {userStore.isLogged ? (
+            <MuiTable
+              page={usersList.page - 1}
+              pageSize={10}
+              columns={usersColumns(handleDelete)}
+              rows={usersList.list as Record<string, unknown>[]}
+              isLoading={usersList.loading}
+              totalCount={usersList.totalCount}
+              onPageChange={(page) => usersList.setPage(page + 1)}
+            />
+          ) : (
+            <Skeleton variant="rectangular" width="100%" height={400} />
+          )}
         </Grid>
       </Grid>
 

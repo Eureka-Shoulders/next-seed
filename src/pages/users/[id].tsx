@@ -1,11 +1,12 @@
-import ERROR_MESSAGES from '@config/messages';
 import { Box, Grid, Paper } from '@mui/material';
 import { AxiosError } from 'axios';
+import TYPES from 'containers/global.types';
+import { useInjection } from 'inversify-react';
 import { observer } from 'mobx-react-lite';
-import usersRepository from 'modules/users/repository';
+import UsersRepository from 'modules/users/repository';
+import { UpdateUserSchema } from 'modules/users/user.schema';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import * as zod from 'zod';
 
 import FXSubmitButton from '@components/FXSubmitButton';
 import FXTextField from '@components/Inputs/FXTextField';
@@ -13,13 +14,6 @@ import FXTextField from '@components/Inputs/FXTextField';
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix/components';
-
-const UpdateUserSchema = zod.object({
-  name: zod.string().min(1, ERROR_MESSAGES.required),
-  email: zod.string().email(ERROR_MESSAGES.invalid_email),
-});
-
-type UpdateUserSchema = zod.infer<typeof UpdateUserSchema>;
 
 function Index() {
   const uiStore = useUIStore();
@@ -30,6 +24,7 @@ function Index() {
     router.replace('/users');
   }
 
+  const usersRepository = useInjection<UsersRepository>(TYPES.UsersRepository);
   const userEntity = useEntity(usersRepository, id as string);
 
   async function handleSubmit(values: UpdateUserSchema) {
@@ -39,6 +34,7 @@ function Index() {
         message: 'Usuário atualizado com sucesso!',
         severity: 'success',
       });
+      router.push('/users');
     } catch (error) {
       uiStore.snackbar.show({
         message:

@@ -1,10 +1,11 @@
-import ERROR_MESSAGES from '@config/messages';
 import { Box, Grid, Paper } from '@mui/material';
 import { AxiosError } from 'axios';
+import TYPES from 'containers/global.types';
+import { useInjection } from 'inversify-react';
 import { observer } from 'mobx-react-lite';
-import usersRepository from 'modules/users/repository';
+import UsersRepository from 'modules/users/repository';
+import { NewUserSchema } from 'modules/users/user.schema';
 import { useRouter } from 'next/router';
-import * as zod from 'zod';
 
 import FXSubmitButton from '@components/FXSubmitButton';
 import FXPasswordField from '@components/Inputs/FXPasswordField';
@@ -19,36 +20,25 @@ const initialValues = {
   password: '',
   confirmPassword: '',
 };
-const NewUserSchema = zod
-  .object({
-    name: zod.string().min(1, ERROR_MESSAGES.required),
-    email: zod.string().email(ERROR_MESSAGES.invalid_email),
-    password: zod.string().min(8, ERROR_MESSAGES.minimum_password),
-    confirmPassword: zod.string().min(8, ERROR_MESSAGES.minimum_password),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: ERROR_MESSAGES.password_mismatch,
-    path: ['confirmPassword'],
-  });
-
-type NewUserSchema = zod.infer<typeof NewUserSchema>;
 
 function Index() {
   const router = useRouter();
   const uiStore = useUIStore();
+  const usersRepository = useInjection<UsersRepository>(TYPES.UsersRepository);
 
   async function handleSubmit(values: NewUserSchema) {
     try {
-      const response = await usersRepository.create<
-        NewUserSchema,
+      await usersRepository.create<
+        Partial<NewUserSchema>,
         Omit<NewUserSchema, 'confirmPassword'> & { id: string }
-      >(values);
+      >({ ...values, confirmPassword: undefined });
 
       uiStore.snackbar.show({
         message: 'Usuário criado com sucesso',
         severity: 'success',
       });
-      router.push('/users/' + response.data?.id);
+
+      router.push('/users');
     } catch (error) {
       uiStore.snackbar.show({
         message:

@@ -14,6 +14,7 @@ import type { HydrationData } from 'types';
 import AppBarBuilder from '@components/AppBarBuilder';
 import { BreadcrumbListener } from '@components/Breadcrumbs/BreadcrumbListener';
 import ThemeProvider from '@components/ThemeProvider';
+import UserListener from '@components/UserListener';
 
 import { AppBar } from '@euk-labs/componentz/components';
 
@@ -40,12 +41,14 @@ enableStaticRendering(typeof window === 'undefined');
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const showAppBar = pageProps.showAppBar ?? true;
+  const isPublicPage = pageProps.isPublic ?? false;
   const hydrationData: HydrationData = pageProps.hydrationData || {};
 
   return (
     <CacheProvider value={emotionCache}>
       <Provider container={globalContainer(hydrationData)}>
         <BreadcrumbListener />
+        <UserListener isPublicPage={isPublicPage} />
         <AppBarBuilder />
 
         <ThemeProvider>
