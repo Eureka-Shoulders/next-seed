@@ -23,7 +23,6 @@ export const pages: Page[] = [
       },
     ],
   },
-
   {
     label: 'Server-Side Rendering page',
     link: '/server',
