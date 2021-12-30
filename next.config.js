@@ -3,7 +3,7 @@ const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(
   ['@euk-labs/formix', '@euk-labs/componentz', '@euk-labs/fetchx'],
   {
-    resolveSymlinks: true,
+    resolveSymlinks: false,
   }
 );
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -15,6 +15,6 @@ module.exports = withPlugins([withBundleAnalyzer, withTM], {
   reactStrictMode: true,
   publicRuntimeConfig: {
     apiUrl: process.env.API_URL || 'http://localhost:3030',
-    useMirage: process.env.USE_MIRAGE || false,
+    useMirage: process.env.USE_MIRAGE === 'true' || false,
   },
 });
