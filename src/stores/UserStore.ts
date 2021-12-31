@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import axios from 'axios';
 import TYPES from 'containers/global.types';
 import { decorate, inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
@@ -96,9 +96,10 @@ class UserStore implements UserStoreType {
         return response;
       },
       (error) => {
-        if ((error as AxiosError).response?.status === 401) {
-          return Router.push('/login');
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 401) return Router.push('/login');
         }
+
         return error;
       }
     );

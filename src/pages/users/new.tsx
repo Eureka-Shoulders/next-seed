@@ -1,5 +1,5 @@
 import { Box, Grid, Paper } from '@mui/material';
-import { AxiosError } from 'axios';
+import axios from 'axios';
 import TYPES from 'containers/global.types';
 import { useInjection } from 'inversify-react';
 import { observer } from 'mobx-react-lite';
@@ -40,12 +40,13 @@ function Index() {
 
       router.push('/users');
     } catch (error) {
-      uiStore.snackbar.show({
-        message:
-          (error as AxiosError).response?.data.message ||
-          'Ocorreu um erro ao criar o usuário!',
-        severity: 'error',
-      });
+      if (axios.isAxiosError(error))
+        uiStore.snackbar.show({
+          message:
+            error.response?.data.message ||
+            'Ocorreu um erro ao criar o usuário!',
+          severity: 'error',
+        });
     }
   }
 
