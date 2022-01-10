@@ -27,11 +27,30 @@ export interface Contact {
   value: string;
 }
 
-export interface User {
+export interface Address {
+  id: string;
+  street: string;
+  number: number;
+  neighborhood: string;
+  city: string;
+  state: string;
+  country: string;
+  zipcode: string;
+}
+
+export interface Person {
   id: string;
   name: string;
+  cpf: string;
+  contacts: Contact[];
+  addresses: Address[];
+}
+
+export interface User {
+  id: string;
   email: string;
   avatar: string;
   roles: Role[];
-  contacts: Contact[];
+
+  person: Person;
 }

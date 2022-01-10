@@ -23,6 +23,10 @@ const Snackbar = dynamic(
   { ssr: false }
 );
 
+const Dialog = dynamic(() => import('@euk-labs/componentz/components/Dialog'), {
+  ssr: false,
+});
+
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
@@ -61,7 +65,8 @@ function MyApp(props: MyAppProps) {
             <Component {...pageProps} />
           )}
 
-          <Snackbar />
+          <Snackbar autoHideDuration={3000} />
+          <Dialog />
         </ThemeProvider>
       </Provider>
     </CacheProvider>

@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.6.0",
     "@euk-labs/beltz": "^2.1.1",
     "@euk-labs/componentz": "^0.1.2",
-    "@euk-labs/fetchx": "^0.3.2",
+    "@euk-labs/fetchx": "^0.3.3",
     "@euk-labs/formix": "^0.2.2",
     "@mui/icons-material": "^5.2.1",
     "@mui/lab": "^5.0.0-alpha.59",

@@ -522,10 +522,10 @@
     inversify-react ">=1.0.1"
     ramda ">=0.27.1"
 
-"@euk-labs/fetchx@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@euk-labs/fetchx/-/fetchx-0.3.2.tgz#d30472c11cc74abb22707c9653a7dae73eeef17a"
-  integrity sha512-Hh184VZv3rxlJSOSMlR/QDNsLbDZOFt2tr0lj8AIapHUCJ0D4GFiI0zVx072Zs0FPrApuqVz+j4QRwc6YA9hwQ==
+"@euk-labs/fetchx@^0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@euk-labs/fetchx/-/fetchx-0.3.3.tgz#6e9e337f851ccf1a55fd68764749afb8be8fbb62"
+  integrity sha512-63gAmOOryD/3dxJxBwX1C+haQr4v+TUly/CXYg0nseUKcp7xVRsuGoINsNSKI0/oZSSXbKzxh86GZ1wC/MOPzw==
   dependencies:
     axios "^0.24.0"
     inversify "^6.0.1"

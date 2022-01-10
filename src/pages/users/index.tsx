@@ -16,7 +16,11 @@ import { Identifier, useList } from '@euk-labs/fetchx';
 function Index() {
   const userStore = useUserStore();
   const usersRepository = useInjection<UsersRepository>(TYPES.UsersRepository);
-  const usersList = useList(usersRepository);
+  const usersList = useList(usersRepository, {
+    limit: 10,
+    limitField: 'limit',
+    resultsField: 'data',
+  });
 
   async function handleDelete(id: Identifier) {
     await usersRepository.delete(id);

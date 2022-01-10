@@ -24,7 +24,7 @@ function AppBarHeader() {
       </Typography>
 
       <IconButton onClick={handleClick}>
-        <Avatar>{userStore.user?.name[0]}</Avatar>
+        <Avatar>{userStore.user?.person.name[0]}</Avatar>
       </IconButton>
 
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
