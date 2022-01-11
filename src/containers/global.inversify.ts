@@ -1,3 +1,4 @@
+import PeopleRepository from 'modules/people/repository';
 import UsersRepository from 'modules/users/repository';
 import httpService from 'services/httpService';
 import ThemeStore from 'stores/ThemeStore';
@@ -17,6 +18,10 @@ export default function globalContainer(hydrationData: HydrationData) {
     container
       .bind(TYPES.UsersRepository)
       .to(UsersRepository)
+      .inSingletonScope();
+    container
+      .bind(TYPES.PeopleRepository)
+      .to(PeopleRepository)
       .inSingletonScope();
 
     container.bind(TYPES.HydrationData).toConstantValue(hydrationData);

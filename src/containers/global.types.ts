@@ -12,6 +12,7 @@ const TYPES = {
    * Repositories
    */
   UsersRepository: Symbol('UsersRepository'),
+  PeopleRepository: Symbol('PeopleRepository'),
 };
 
 export default TYPES;
