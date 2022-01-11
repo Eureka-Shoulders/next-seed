@@ -1,5 +1,7 @@
 import { ThemeType } from 'stores/ThemeStore';
 
+import Enum from './utils/Enum';
+
 export interface HydrationData {
   theme: ThemeType;
 }
@@ -10,16 +12,17 @@ export interface Role {
   ability: string;
 }
 
-enum ContactType {
-  Phone = 'PHONE',
-  Email = 'EMAIL',
+export enum ContactType {
+  Telefone = 'PHONE',
+  'E-mail' = 'EMAIL',
   Facebook = 'FACEBOOK',
   Twitter = 'TWITTER',
   Instagram = 'INSTAGRAM',
-  Linkedin = 'LINKEDIN',
+  LinkedIn = 'LINKEDIN',
   GitHub = 'GITHUB',
   Website = 'WEBSITE',
 }
+export const ContactTypeEnum = new Enum(ContactType);
 
 export interface Contact {
   id: string;
@@ -30,7 +33,7 @@ export interface Contact {
 export interface Address {
   id: string;
   street: string;
-  number: number;
+  number: string;
   neighborhood: string;
   city: string;
   state: string;
@@ -41,7 +44,7 @@ export interface Address {
 export interface Person {
   id: string;
   name: string;
-  cpf: string;
+  identifier: string;
   contacts: Contact[];
   addresses: Address[];
 }
