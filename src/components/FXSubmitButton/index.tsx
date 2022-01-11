@@ -13,7 +13,7 @@ function FXSubmitButton({ label }: FXSubmitButtonProps) {
   return (
     <LoadingButton
       loading={formix.isSubmitting}
-      disabled={formix.isSubmitting}
+      disabled={!formix.isValid || formix.isSubmitting}
       variant="contained"
       type="submit"
     >
