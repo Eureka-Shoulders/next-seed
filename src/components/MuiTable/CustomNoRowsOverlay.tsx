@@ -1,5 +1,4 @@
-import { Box } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, styled } from '@mui/material';
 import { GridOverlay, useGridApiContext } from '@mui/x-data-grid';
 
 const StyledGridOverlay = styled(GridOverlay)(({ theme }) => ({

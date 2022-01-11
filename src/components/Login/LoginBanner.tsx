@@ -1,5 +1,4 @@
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+import { Box, styled } from '@mui/material';
 import Image from 'next/image';
 
 const LoginBannerContainer = styled(Box)({

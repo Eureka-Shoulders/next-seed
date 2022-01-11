@@ -1,4 +1,4 @@
-import { ThemeOptions } from '@mui/material/styles';
+import { ThemeOptions } from '@mui/material';
 
 declare module '@mui/material/styles' {
   interface Palette {

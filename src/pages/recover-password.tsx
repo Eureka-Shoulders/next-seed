@@ -1,4 +1,4 @@
-import Grid from '@mui/material/Grid';
+import { Grid } from '@mui/material';
 import RecoverPasswordForm from 'modules/login/RecoverPasswordForm';
 import type { NextPage } from 'next';
 

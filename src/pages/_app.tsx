@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import CssBaseline from '@mui/material/CssBaseline';
+import { CssBaseline } from '@mui/material';
 import globalContainer from 'containers/global.inversify';
 import createEmotionCache from 'createEmotionCache';
 import { Provider } from 'inversify-react';

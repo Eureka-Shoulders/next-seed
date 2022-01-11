@@ -1,4 +1,4 @@
-import Grid from '@mui/material/Grid';
+import { Grid } from '@mui/material';
 import RegisterForm from 'modules/login/RegisterForm';
 import type { NextPage } from 'next';
 
