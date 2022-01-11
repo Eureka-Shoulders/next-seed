@@ -100,7 +100,7 @@ class UserStore implements UserStoreType {
           if (error.response?.status === 401) return Router.push('/login');
         }
 
-        return error;
+        throw error;
       }
     );
   }
