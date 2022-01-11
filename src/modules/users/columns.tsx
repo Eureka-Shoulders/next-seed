@@ -27,7 +27,7 @@ function getUserColumns(
       headerName: 'Nome',
       minWidth: 200,
       flex: 1,
-      valueGetter: (params) => params.row.person.name,
+      valueGetter: (params) => params.row.person?.name || 'Sem nome',
       renderCell: (rowData) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const router = useRouter();
