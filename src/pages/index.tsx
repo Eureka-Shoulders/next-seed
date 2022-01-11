@@ -1,16 +1,13 @@
-import { Button, Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import TYPES from 'containers/global.types';
-import { useInjection } from 'inversify-react';
+import { Box, Button, Typography } from '@mui/material';
+import { useThemeStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import type { NextPage } from 'next';
 import React from 'react';
-import { ThemeStoreType } from 'stores/ThemeStore';
 
 import { Breadcrumb } from '@euk-labs/componentz';
 
 const Home: NextPage = () => {
-  const themeStore = useInjection<ThemeStoreType>(TYPES.ThemeStore);
+  const themeStore = useThemeStore();
 
   function toggleTheme() {
     if (themeStore.theme === 'light') {

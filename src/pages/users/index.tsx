@@ -1,10 +1,8 @@
 import { Box, Grid, Skeleton } from '@mui/material';
-import TYPES from 'containers/global.types';
-import useUserStore from 'hooks/useUserStore';
-import { useInjection } from 'inversify-react';
+import { useUsersRepository } from 'hooks/repositories';
+import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import usersColumns from 'modules/users/columns';
-import UsersRepository from 'modules/users/repository';
 import { useEffect } from 'react';
 
 import MuiTable from '@components/MuiTable';
@@ -15,7 +13,7 @@ import { Identifier, useList } from '@euk-labs/fetchx';
 
 function Index() {
   const userStore = useUserStore();
-  const usersRepository = useInjection<UsersRepository>(TYPES.UsersRepository);
+  const usersRepository = useUsersRepository();
   const usersList = useList(usersRepository, {
     limit: 10,
     limitField: 'limit',

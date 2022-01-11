@@ -1,8 +1,6 @@
 import { Box, Button, Grid, Link as MuiLink, Typography } from '@mui/material';
-import TYPES from 'containers/global.types';
-import useUserStore from 'hooks/useUserStore';
-import { useInjection } from 'inversify-react';
-import UsersRepository from 'modules/users/repository';
+import { useUsersRepository } from 'hooks/repositories';
+import { useUserStore } from 'hooks/stores';
 import NextLink from 'next/link';
 
 import FXPasswordField from '@components/Inputs/FXPasswordField';
@@ -21,7 +19,7 @@ const initialValues = {
 export default function LoginForm() {
   const uiStore = useUIStore();
   const userStore = useUserStore();
-  const usersRepository = useInjection<UsersRepository>(TYPES.UsersRepository);
+  const usersRepository = useUsersRepository();
 
   async function handleSubmit(values: LoginSchema) {
     try {

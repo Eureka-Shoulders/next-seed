@@ -1,7 +1,5 @@
 import { Box, Button, Grid, Link as MuiLink, Typography } from '@mui/material';
-import TYPES from 'containers/global.types';
-import { useInjection } from 'inversify-react';
-import UsersRepository from 'modules/users/repository';
+import { useUsersRepository } from 'hooks/repositories';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -22,7 +20,7 @@ const initialValues = {
 export default function RegisterForm() {
   const uiStore = useUIStore();
   const router = useRouter();
-  const usersRepository = useInjection<UsersRepository>(TYPES.UsersRepository);
+  const usersRepository = useUsersRepository();
 
   async function handleSubmit(values: RegisterSchema) {
     try {

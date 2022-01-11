@@ -1,4 +1,4 @@
-import useUserStore from 'hooks/useUserStore';
+import { useUserStore } from 'hooks/stores';
 import { useEffect } from 'react';
 
 interface UserListenerProps {

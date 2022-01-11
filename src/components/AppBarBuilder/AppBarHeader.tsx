@@ -1,5 +1,5 @@
 import { Avatar, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import useUserStore from 'hooks/useUserStore';
+import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useState } from 'react';

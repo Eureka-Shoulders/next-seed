@@ -1,9 +1,7 @@
 import { Box, Grid, Paper } from '@mui/material';
 import axios from 'axios';
-import TYPES from 'containers/global.types';
-import { useInjection } from 'inversify-react';
+import { useUsersRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
-import UsersRepository from 'modules/users/repository';
 import { NewUserSchema } from 'modules/users/user.schema';
 import { useRouter } from 'next/router';
 
@@ -24,7 +22,7 @@ const initialValues = {
 function Index() {
   const router = useRouter();
   const uiStore = useUIStore();
-  const usersRepository = useInjection<UsersRepository>(TYPES.UsersRepository);
+  const usersRepository = useUsersRepository();
 
   async function handleSubmit(values: NewUserSchema) {
     try {
