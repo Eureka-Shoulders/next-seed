@@ -11,6 +11,7 @@ export const NewPersonSchema = zod.object({
       zod.object({
         street: zod.string().min(1, ERROR_MESSAGES.required),
         number: zod.string().min(1, ERROR_MESSAGES.required),
+        neighborhood: zod.string().min(1, ERROR_MESSAGES.required),
         city: zod.string().min(1, ERROR_MESSAGES.required),
         state: zod.string().min(1, ERROR_MESSAGES.required),
         country: zod.string().min(1, ERROR_MESSAGES.required),
@@ -38,6 +39,7 @@ export const UpdatePersonSchema = zod.object({
       zod.object({
         street: zod.string().min(1, ERROR_MESSAGES.required),
         number: zod.string().min(1, ERROR_MESSAGES.required),
+        neighborhood: zod.string().min(1, ERROR_MESSAGES.required),
         city: zod.string().min(1, ERROR_MESSAGES.required),
         state: zod.string().min(1, ERROR_MESSAGES.required),
         country: zod.string().min(1, ERROR_MESSAGES.required),
