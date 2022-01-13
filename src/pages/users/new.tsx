@@ -13,7 +13,10 @@ import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix/components';
 
 const initialValues = {
-  name: '',
+  avatar: null,
+  person: {
+    name: '',
+  },
   email: '',
   password: '',
   confirmPassword: '',

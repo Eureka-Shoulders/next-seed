@@ -52,8 +52,10 @@ export interface Person {
 export interface User {
   id: string;
   email: string;
-  avatar: string;
+  avatar: string | null;
   roles: Role[];
 
   person: Person;
+  personId: string;
+  password?: string;
 }

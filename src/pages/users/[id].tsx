@@ -68,7 +68,7 @@ function Index() {
               >
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                    <FXTextField name="name" label="Nome" />
+                    <FXTextField name="person.name" label="Nome" />
                   </Grid>
                   <Grid item xs={6}>
                     <FXTextField name="email" label="E-mail" />

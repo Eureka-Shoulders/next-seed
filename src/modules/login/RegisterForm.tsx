@@ -1,5 +1,7 @@
 import { Box, Button, Grid, Link as MuiLink, Typography } from '@mui/material';
+import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
+import { NewUserSchema } from 'modules/users/user.schema';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -9,12 +11,14 @@ import FXTextField from '@components/Inputs/FXTextField';
 import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix/components';
 
-import { RegisterSchema } from './register.schema';
-
 const initialValues = {
-  username: '',
+  avatar: null,
+  person: {
+    name: '',
+  },
   email: '',
   password: '',
+  confirmPassword: '',
 };
 
 export default function RegisterForm() {
@@ -22,19 +26,27 @@ export default function RegisterForm() {
   const router = useRouter();
   const usersRepository = useUsersRepository();
 
-  async function handleSubmit(values: RegisterSchema) {
+  async function handleSubmit(values: NewUserSchema) {
     try {
-      await usersRepository.create(values);
+      await usersRepository.create<
+        Partial<NewUserSchema>,
+        Omit<NewUserSchema, 'confirmPassword'> & { id: string }
+      >({ ...values, confirmPassword: undefined });
+
       uiStore.snackbar.show({
         message: 'Usuário criado com sucesso',
         severity: 'success',
       });
+
       router.push('/login');
     } catch (error) {
-      uiStore.snackbar.show({
-        message: 'Usuário ou senha inválidos',
-        severity: 'error',
-      });
+      if (axios.isAxiosError(error))
+        uiStore.snackbar.show({
+          message:
+            error.response?.data.message ||
+            'Ocorreu um erro ao criar o usuário!',
+          severity: 'error',
+        });
     }
   }
 
@@ -55,7 +67,7 @@ export default function RegisterForm() {
         <Grid item xs={12} sm={8}>
           <Formix
             initialValues={initialValues}
-            zodSchema={RegisterSchema}
+            zodSchema={NewUserSchema}
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>
@@ -63,10 +75,16 @@ export default function RegisterForm() {
                 <FXTextField name="email" label="E-mail" type="email" />
               </Grid>
               <Grid item xs={12}>
-                <FXTextField name="username" label="Username" />
+                <FXTextField name="person.name" label="Nome" />
               </Grid>
               <Grid item xs={12}>
-                <FXPasswordField name="password" label="Password" />
+                <FXPasswordField name="password" label="Senha" />
+              </Grid>
+              <Grid item xs={6}>
+                <FXPasswordField
+                  name="confirmPassword"
+                  label="Confirmar Senha"
+                />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
