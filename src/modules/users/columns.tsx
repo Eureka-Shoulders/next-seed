@@ -50,7 +50,7 @@ function getUserColumns(
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) => {
-        return formatOnlyDate(new Date(params.value as string));
+        return formatOnlyDate(new Date(params.value as string), 'dd/MM/yyyy');
       },
     },
     {
