@@ -17,6 +17,11 @@ function AppBarHeader() {
     setAnchorEl(null);
   }
 
+  function goToProfile() {
+    router.push('/profile');
+    handleClose();
+  }
+
   return (
     <>
       <Typography flexGrow={1} variant="h5">
@@ -28,7 +33,7 @@ function AppBarHeader() {
       </IconButton>
 
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={() => router.push('/profile')}>Perfil</MenuItem>
+        <MenuItem onClick={goToProfile}>Perfil</MenuItem>
         <MenuItem onClick={userStore.logout}>Sair</MenuItem>
       </Menu>
     </>
