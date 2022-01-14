@@ -68,7 +68,10 @@ function Index() {
                   <FXTextField name="name" label="Nome" />
                 </Grid>
                 <Grid item xs={6}>
-                  <FXTextField name="identifier" label="Identificador" />
+                  <FXTextField
+                    name="identifier"
+                    label="Identificador (CPF, CNPJ...)"
+                  />
                 </Grid>
 
                 <Grid item xs={12}>
