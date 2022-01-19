@@ -10,7 +10,7 @@ import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
-import { Formix } from '@euk-labs/formix/components';
+import { Formix } from '@euk-labs/formix';
 
 const initialValues = {
   avatar: null,

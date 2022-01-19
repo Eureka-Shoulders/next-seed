@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { observer } from 'mobx-react-lite';
 
-import { useFormixContext } from '@euk-labs/formix/hooks';
+import { useFormixContext } from '@euk-labs/formix';
 
 interface FXSubmitButtonProps {
   label: string;

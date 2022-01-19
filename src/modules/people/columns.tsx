@@ -7,10 +7,10 @@ import {
   GridRowParams,
   GridValueFormatterParams,
 } from '@mui/x-data-grid';
+import { format } from 'date-fns';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
-import { formatOnlyDate } from '@euk-labs/beltz';
 import { Identifier } from '@euk-labs/fetchx';
 
 export default function getPeopleColumns(
@@ -49,7 +49,7 @@ export default function getPeopleColumns(
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) => {
-        return formatOnlyDate(new Date(params.value as string));
+        return format(new Date(params.value as string), 'dd/MM/yyyy');
       },
     },
     {

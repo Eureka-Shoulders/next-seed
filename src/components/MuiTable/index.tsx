@@ -1,7 +1,14 @@
 import tableLocaleText from '@config/tableLocale';
 import { Paper } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridRowIdGetter,
+  GridRowsProp,
+  GridSortModel,
+} from '@mui/x-data-grid';
 import { toJS } from 'mobx';
+import React from 'react';
 
 import CustomLoadingOverlay from './CustomLoadingOverlay';
 import CustomNoRowsOverlay from './CustomNoRowsOverlay';
@@ -9,16 +16,16 @@ import CustomPagination from './CustomPagination';
 
 interface MuiTableProps {
   columns: GridColDef[];
-  rows: Record<string, unknown>[];
+  rows: GridRowsProp;
   pageSize?: number;
   rowsPerPageOptions?: number[];
   isLoading?: boolean;
   page?: number;
   totalCount?: number;
   onPageChange?: (page: number) => void;
+  onSortModelChange?: (model: GridSortModel) => void;
+  getRowId?: GridRowIdGetter;
 }
-
-// TODO: context menu for rows by: https://mui.com/pt/components/data-grid/components/#row
 
 export default function MuiTable(props: MuiTableProps) {
   const {
@@ -30,6 +37,8 @@ export default function MuiTable(props: MuiTableProps) {
     totalCount,
     isLoading,
     onPageChange,
+    onSortModelChange,
+    getRowId,
   } = props;
 
   return (
@@ -44,8 +53,10 @@ export default function MuiTable(props: MuiTableProps) {
         localeText={tableLocaleText}
         loading={isLoading}
         onPageChange={onPageChange}
+        onSortModelChange={onSortModelChange}
         disableSelectionOnClick
         disableColumnFilter
+        getRowId={getRowId}
         paginationMode="server"
         sortingMode="server"
         components={{

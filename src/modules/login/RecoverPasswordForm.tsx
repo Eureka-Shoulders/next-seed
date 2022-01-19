@@ -4,7 +4,7 @@ import * as zod from 'zod';
 
 import FXTextField from '@components/Inputs/FXTextField';
 
-import { Formix } from '@euk-labs/formix/components';
+import { Formix } from '@euk-labs/formix';
 
 const initialValues = {
   email: '',

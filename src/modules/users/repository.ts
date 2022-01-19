@@ -5,6 +5,8 @@ import { LoginSchema } from 'modules/login/login.schema';
 
 import { HttpService, Repository } from '@euk-labs/fetchx';
 
+import { NewUserSchema } from './user.schema';
+
 interface LoginResponse {
   access_token: string;
 }
@@ -12,6 +14,14 @@ interface LoginResponse {
 class UsersRepository extends Repository {
   constructor(private apiService: HttpService) {
     super(apiService, { path: '/users' });
+  }
+
+  register(values: Omit<NewUserSchema, 'confirmPassword'>) {
+    return this.apiService.client.post<
+      unknown,
+      AxiosResponse<unknown>,
+      Omit<NewUserSchema, 'confirmPassword'>
+    >('/auth/register', values);
   }
 
   login(email: string, password: string) {

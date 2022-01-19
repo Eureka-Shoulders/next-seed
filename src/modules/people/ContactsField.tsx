@@ -1,25 +1,16 @@
-import ERROR_MESSAGES from '@config/messages';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {
-  Button,
-  Divider,
-  FormHelperText,
-  Grid,
-  IconButton,
-  Typography,
-} from '@mui/material';
+import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 
 import FXAutocomplete from '@components/Inputs/FXAutocomplete';
 import FXTextField from '@components/Inputs/FXTextField';
 
-import { useArrayField } from '@euk-labs/formix/hooks';
+import { useArrayField } from '@euk-labs/formix';
 
 function ContactsField() {
   const { values, helpers } = useArrayField('contacts');
-  const hasValues = values.length > 0;
   const newContact = {
     type: null,
     value: '',
@@ -99,12 +90,6 @@ function ContactsField() {
           Adicionar
         </Button>
       </Grid>
-
-      {!hasValues && (
-        <Grid item xs={12}>
-          <FormHelperText error>{ERROR_MESSAGES.required}</FormHelperText>
-        </Grid>
-      )}
     </Grid>
   );
 }

@@ -18,18 +18,17 @@ import UserListener from '@components/UserListener';
 
 import { AppBar } from '@euk-labs/componentz/components';
 
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
+}
+
 const Snackbar = dynamic(
   () => import('@euk-labs/componentz/components/Snackbar'),
   { ssr: false }
 );
-
 const Dialog = dynamic(() => import('@euk-labs/componentz/components/Dialog'), {
   ssr: false,
 });
-
-interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache;
-}
 
 const { publicRuntimeConfig } = getConfig();
 const clientSideEmotionCache = createEmotionCache();

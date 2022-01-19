@@ -9,7 +9,7 @@ import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
 import { useUIStore } from '@euk-labs/componentz';
-import { Formix } from '@euk-labs/formix/components';
+import { Formix } from '@euk-labs/formix';
 
 const initialValues = {
   avatar: null,
@@ -26,12 +26,9 @@ export default function RegisterForm() {
   const router = useRouter();
   const usersRepository = useUsersRepository();
 
-  async function handleSubmit(values: NewUserSchema) {
+  async function handleSubmit({ confirmPassword, ...values }: NewUserSchema) {
     try {
-      await usersRepository.create<
-        Partial<NewUserSchema>,
-        Omit<NewUserSchema, 'confirmPassword'> & { id: string }
-      >({ ...values, confirmPassword: undefined });
+      await usersRepository.register(values);
 
       uiStore.snackbar.show({
         message: 'Usuário criado com sucesso',

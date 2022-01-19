@@ -1,10 +1,9 @@
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { MouseEvent, useState } from 'react';
 
-import { useField } from '@euk-labs/formix/hooks';
+import { useField } from '@euk-labs/formix';
 
 interface FieldProps {
   name: string;

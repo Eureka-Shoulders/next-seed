@@ -7,7 +7,7 @@ import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
 import { useUIStore } from '@euk-labs/componentz';
-import { Formix } from '@euk-labs/formix/components';
+import { Formix } from '@euk-labs/formix';
 
 import { LoginSchema } from './login.schema';
 

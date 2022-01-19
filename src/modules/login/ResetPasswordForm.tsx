@@ -4,7 +4,7 @@ import * as zod from 'zod';
 
 import FXTextField from '@components/Inputs/FXTextField';
 
-import { Formix } from '@euk-labs/formix/components';
+import { Formix } from '@euk-labs/formix';
 
 const initialValues = {
   password: '',
@@ -22,6 +22,7 @@ const ResetPasswordSchema = zod
 type ResetPasswordSchema = zod.infer<typeof ResetPasswordSchema>;
 
 export default function ResetPasswordForm() {
+  // TODO: Implement reset password submit logic
   function handleSubmit(values: ResetPasswordSchema) {
     window.alert(JSON.stringify(values));
   }

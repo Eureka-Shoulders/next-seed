@@ -1,9 +1,14 @@
+import { Can } from '@casl/react';
 import { Box, Grid, Skeleton } from '@mui/material';
+import sortList from '@utils/sortList';
 import { usePeopleRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import getPeopleColumns from 'modules/people/columns';
+import { GetServerSideProps } from 'next';
+import nookies from 'nookies';
 import { useEffect } from 'react';
+import { Actions, Subjects } from 'types';
 
 import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
@@ -16,7 +21,7 @@ function Index() {
   const peopleRepository = usePeopleRepository();
   const peopleList = useList(peopleRepository, {
     limit: 10,
-    limitField: 'limit',
+    limitField: 'take',
     resultsField: 'data',
   });
 
@@ -26,7 +31,9 @@ function Index() {
   }
 
   useEffect(() => {
-    userStore.isLogged && peopleList.fetch();
+    if (userStore.isLogged) {
+      peopleList.fetch();
+    }
   }, [peopleList.page, userStore.isLogged]); // eslint-disable-line
 
   return (
@@ -46,6 +53,7 @@ function Index() {
               isLoading={peopleList.loading}
               totalCount={peopleList.totalCount}
               onPageChange={(page) => peopleList.setPage(page + 1)}
+              onSortModelChange={sortList(peopleList)}
             />
           ) : (
             <Skeleton variant="rectangular" width="100%" height={400} />
@@ -53,9 +61,23 @@ function Index() {
         </Grid>
       </Grid>
 
-      <NewEntityButton />
+      <Can I={Actions.Create} a={Subjects.People} ability={userStore.abilities}>
+        <NewEntityButton />
+      </Can>
     </Box>
   );
 }
 
 export default observer(Index);
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const cookies = nookies.get(ctx);
+
+  return {
+    props: {
+      hydrationData: {
+        theme: cookies.theme,
+      },
+    },
+  };
+};

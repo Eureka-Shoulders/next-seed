@@ -3,7 +3,7 @@ import { Autocomplete, TextField } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import * as zod from 'zod';
 
-import { useField } from '@euk-labs/formix/hooks';
+import { useField } from '@euk-labs/formix';
 
 interface AutocompleteOption {
   label: string;

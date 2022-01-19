@@ -4,6 +4,7 @@ import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import usersColumns from 'modules/users/columns';
 import { useEffect } from 'react';
+import { User } from 'types';
 
 import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
@@ -14,9 +15,9 @@ import { Identifier, useList } from '@euk-labs/fetchx';
 function Index() {
   const userStore = useUserStore();
   const usersRepository = useUsersRepository();
-  const usersList = useList(usersRepository, {
+  const usersList = useList<User>(usersRepository, {
     limit: 10,
-    limitField: 'limit',
+    limitField: 'take',
     resultsField: 'data',
   });
 
@@ -26,7 +27,9 @@ function Index() {
   }
 
   useEffect(() => {
-    userStore.isLogged && usersList.fetch();
+    if (userStore.isLogged) {
+      usersList.fetch();
+    }
   }, [usersList.page, userStore.isLogged]); // eslint-disable-line
 
   return (
@@ -41,8 +44,8 @@ function Index() {
             <MuiTable
               page={usersList.page - 1}
               pageSize={10}
-              columns={usersColumns(handleDelete)}
-              rows={usersList.list as Record<string, unknown>[]}
+              columns={usersColumns(userStore.abilities, handleDelete)}
+              rows={usersList.list}
               isLoading={usersList.loading}
               totalCount={usersList.totalCount}
               onPageChange={(page) => usersList.setPage(page + 1)}

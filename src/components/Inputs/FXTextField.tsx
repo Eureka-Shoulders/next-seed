@@ -1,7 +1,7 @@
 import { TextField, TextFieldProps } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 
-import { useField } from '@euk-labs/formix/hooks';
+import { useField } from '@euk-labs/formix';
 
 interface FieldProps {
   name: string;
