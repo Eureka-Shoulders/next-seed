@@ -7,11 +7,12 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import FXSubmitButton from '@components/FXSubmitButton';
+import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
-import { Formix } from '@euk-labs/formix/components';
+import { Formix } from '@euk-labs/formix';
 
 function Index() {
   const uiStore = useUIStore();
@@ -27,7 +28,14 @@ function Index() {
 
   async function handleSubmit(values: UpdateUserSchema) {
     try {
-      await userEntity.update(values);
+      await userEntity.update({
+        email: values.email,
+        password: values.password,
+        person: {
+          name: values.person.name,
+        },
+      });
+
       uiStore.snackbar.show({
         message: 'Usuário atualizado com sucesso!',
         severity: 'success',
@@ -72,6 +80,16 @@ function Index() {
                   </Grid>
                   <Grid item xs={6}>
                     <FXTextField name="email" label="E-mail" />
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <FXPasswordField name="password" label="Senha" />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FXPasswordField
+                      name="confirmPassword"
+                      label="Confirmar Senha"
+                    />
                   </Grid>
 
                   <Grid item xs={12} display="flex" justifyContent="flex-end">
