@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(
-  ['@euk-labs/formix', '@euk-labs/componentz', '@euk-labs/fetchx'],
+  [
+    '@euk-labs/formix',
+    '@euk-labs/componentz',
+    '@euk-labs/beltz',
+    '@euk-labs/fetchx',
+  ],
   {
     resolveSymlinks: false,
   }
 );
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
 
 /** @type {import('next').NextConfig} */
-module.exports = withPlugins([withBundleAnalyzer, withTM], {
+module.exports = withTM({
   reactStrictMode: true,
   publicRuntimeConfig: {
     apiUrl: process.env.API_URL || 'http://localhost:3030',

@@ -1,3 +1,4 @@
+import { Ability } from '@casl/ability';
 import { ThemeType } from 'stores/ThemeStore';
 
 import Enum from './utils/Enum';
@@ -5,6 +6,24 @@ import Enum from './utils/Enum';
 export interface HydrationData {
   theme: ThemeType;
 }
+
+export enum Actions {
+  Create = 'create',
+  Read = 'read',
+  Update = 'update',
+  Delete = 'delete',
+  Manage = 'manage',
+}
+
+export enum Subjects {
+  Users = 'users',
+  People = 'people',
+  Contacts = 'contacts',
+  Addresses = 'addresses',
+  All = 'all',
+}
+
+export type AppAbility = Ability<[Actions, Subjects]>;
 
 export interface Role {
   id: string;

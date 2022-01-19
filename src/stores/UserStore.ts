@@ -1,16 +1,19 @@
+import { Ability, RawRuleOf } from '@casl/ability';
 import axios from 'axios';
 import TYPES from 'containers/global.types';
 import { decorate, inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import Router from 'next/router';
 import { parseCookies, setCookie } from 'nookies';
-import type { User } from 'types';
+import { AppAbility, User } from 'types';
 
 import { HttpService } from '@euk-labs/fetchx';
 
 export interface UserStoreType {
   user: User | null;
   setUser(user: User): void;
+
+  abilities: AppAbility;
 
   login(accessToken: string): void;
   logout(): void;
@@ -33,6 +36,8 @@ class UserStore implements UserStoreType {
   setUser(user: User | null) {
     this.user = user;
   }
+
+  abilities: AppAbility = new Ability();
 
   login(accessToken: string) {
     setCookie(null, 'user_token', accessToken, {
@@ -65,9 +70,16 @@ class UserStore implements UserStoreType {
     }
 
     try {
-      const response = await this.apiService.client.get<User>('/auth/me');
+      const userResponse = await this.apiService.client.get<User>('/auth/me');
+      const abilitiesResponse = await this.apiService.client.get<
+        RawRuleOf<AppAbility>[]
+      >('/auth/abilities');
 
-      this.setUser(response.data);
+      this.setUser(userResponse.data);
+
+      if (abilitiesResponse.data) {
+        this.abilities.update(abilitiesResponse.data);
+      }
     } catch (error) {
       return Router.push('/login');
     }

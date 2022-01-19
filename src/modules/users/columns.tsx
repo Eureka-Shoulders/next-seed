@@ -1,3 +1,4 @@
+import { Can } from '@casl/react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link as MuiLink } from '@mui/material';
 import {
@@ -7,13 +8,15 @@ import {
   GridRowParams,
   GridValueFormatterParams,
 } from '@mui/x-data-grid';
+import { format } from 'date-fns';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { Actions, AppAbility, Subjects } from 'types';
 
-import { formatOnlyDate } from '@euk-labs/beltz';
 import { Identifier } from '@euk-labs/fetchx';
 
 function getUserColumns(
+  abilities: AppAbility,
   handleDelete: (id: Identifier) => Promise<void>
 ): (GridActionsColDef | GridColDef)[] {
   return [
@@ -31,10 +34,13 @@ function getUserColumns(
       renderCell: (rowData) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const router = useRouter();
-        return (
+
+        return abilities.can(Actions.Update, Subjects.Users) ? (
           <NextLink href={`${router.pathname}/${rowData.id}`} passHref>
             <MuiLink>{rowData.value}</MuiLink>
           </NextLink>
+        ) : (
+          rowData.value
         );
       },
     },
@@ -50,7 +56,7 @@ function getUserColumns(
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) => {
-        return formatOnlyDate(new Date(params.value as string), 'dd/MM/yyyy');
+        return format(new Date(params.value as string), 'dd/MM/yyyy');
       },
     },
     {
@@ -58,12 +64,18 @@ function getUserColumns(
       headerName: 'Ações',
       type: 'actions',
       getActions: (params: GridRowParams) => [
-        <GridActionsCellItem
+        <Can
+          I={Actions.Delete}
+          an={Subjects.Users}
+          ability={abilities}
           key={params.id}
-          icon={<DeleteIcon />}
-          onClick={() => handleDelete(params.id)}
-          label="Delete"
-        />,
+        >
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            onClick={() => handleDelete(params.id)}
+            label="Delete"
+          />
+        </Can>,
       ],
     },
   ];

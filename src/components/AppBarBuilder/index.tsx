@@ -1,5 +1,7 @@
-import { pages } from '@config/pages';
+import { getPages } from '@config/pages';
 import { Typography } from '@mui/material';
+import { useUserStore } from 'hooks/stores';
+import { observer } from 'mobx-react-lite';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -10,6 +12,7 @@ import AppBarHeader from './AppBarHeader';
 
 function AppBarBuilder() {
   const uiStore = useUIStore();
+  const userStore = useUserStore();
   const router = useRouter();
 
   const DrawerHeader = (
@@ -27,7 +30,6 @@ function AppBarBuilder() {
   );
 
   useEffect(() => {
-    uiStore.appBar.setPages(pages);
     uiStore.appBar.setDrawerHeaderContent(DrawerHeader);
     uiStore.appBar.setAppBarHeaderContent(<AppBarHeader />);
     uiStore.appBar.setOnClickDrawerOption((page) => {
@@ -35,7 +37,13 @@ function AppBarBuilder() {
     });
   }, []); // eslint-disable-line
 
+  useEffect(() => {
+    const pages = getPages(userStore.abilities);
+
+    uiStore.appBar.setPages(pages);
+  }, [userStore.user]); // eslint-disable-line
+
   return null;
 }
 
-export default AppBarBuilder;
+export default observer(AppBarBuilder);
