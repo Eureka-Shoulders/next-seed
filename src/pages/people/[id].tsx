@@ -1,30 +1,26 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Grid, Paper, Tab, Tabs } from '@mui/material';
 import axios from 'axios';
 import { usePeopleRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
-import AddressesField from 'modules/people/AddressesField';
-import ContactsField from 'modules/people/ContactsField';
+import AddressesForm from 'modules/people/AddressesForm';
+import ContactsForm from 'modules/people/ContactsForm';
+import PersonForm from 'modules/people/PersonForm';
 import { UpdatePersonSchema } from 'modules/people/people.schema';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { Address, Contact, ContactTypeEnum, Person } from 'types';
+import { ContactTypeEnum, Person } from 'types';
 
 import FXSubmitButton from '@components/FXSubmitButton';
-import FXTextField from '@components/Inputs/FXTextField';
+import TabPanel from '@components/TabPanel';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
-import { Formix } from '@euk-labs/formix/components';
+import { Formix } from '@euk-labs/formix';
 
-function getInitialValues(
-  person: Person,
-  contacts: Contact[],
-  addresses: Address[]
-): UpdatePersonSchema {
+function getInitialValues(person: Person): UpdatePersonSchema {
   return {
     ...person,
-    addresses,
-    contacts: contacts.map((contact) => ({
+    contacts: person.contacts.map((contact) => ({
       ...contact,
       type: {
         label: ContactTypeEnum.getKey(contact.type),
@@ -37,8 +33,7 @@ function getInitialValues(
 function Index() {
   const uiStore = useUIStore();
   const router = useRouter();
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [addresses, setAddresses] = useState<Address[]>([]);
+  const [activeTab, setActiveTab] = useState(0);
   const { id } = router.query;
 
   if (Array.isArray(id)) {
@@ -48,6 +43,10 @@ function Index() {
   const peopleRepository = usePeopleRepository();
   const personEntity = useEntity(peopleRepository, id as string);
 
+  function handleChange(event: React.SyntheticEvent, newValue: number) {
+    setActiveTab(newValue);
+  }
+
   async function handleSubmit(values: UpdatePersonSchema) {
     try {
       await personEntity.update({
@@ -56,9 +55,14 @@ function Index() {
         contacts: values.contacts.map((contact) => ({
           ...contact,
           type: contact.type.value,
+          personId: undefined,
         })),
-        addresses: values.addresses,
+        addresses: values.addresses.map((address) => ({
+          ...address,
+          personId: undefined,
+        })),
       });
+
       uiStore.snackbar.show({
         message: 'Pessoa atualizada com sucesso!',
         severity: 'success',
@@ -76,18 +80,9 @@ function Index() {
     }
   }
 
-  async function getPersonData() {
-    await personEntity.fetch();
-    const contactsResponse = await peopleRepository.getContacts(id as string);
-    const addressesResponse = await peopleRepository.getAddresses(id as string);
-
-    setContacts(contactsResponse.data.data);
-    setAddresses(addressesResponse.data.data);
-  }
-
   useEffect(() => {
     if (personEntity.identifier) {
-      getPersonData();
+      personEntity.fetch();
     }
   }, [personEntity.identifier]); // eslint-disable-line
 
@@ -100,52 +95,44 @@ function Index() {
           </Grid>
 
           <Grid item xs={12}>
-            <Paper variant="outlined" sx={{ p: 2 }}>
-              <Formix
-                initialValues={getInitialValues(
-                  personEntity.data as Person,
-                  contacts,
-                  addresses
-                )}
-                zodSchema={UpdatePersonSchema}
-                onSubmit={handleSubmit}
-              >
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Typography variant="h6">Informações</Typography>
-                  </Grid>
+            <Paper variant="outlined">
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs
+                  value={activeTab}
+                  onChange={handleChange}
+                  aria-label="basic tabs example"
+                >
+                  <Tab label="Informações" />
+                  <Tab label="Contatos" />
+                  <Tab label="Endereços" />
+                </Tabs>
+              </Box>
 
-                  <Grid item xs={6}>
-                    <FXTextField name="name" label="Nome" />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FXTextField
-                      name="identifier"
-                      label="Identificador (CPF, CNPJ...)"
-                    />
-                  </Grid>
+              <Box p={2}>
+                <Formix
+                  initialValues={getInitialValues(personEntity.data as Person)}
+                  zodSchema={UpdatePersonSchema}
+                  onSubmit={handleSubmit}
+                >
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TabPanel value={activeTab} index={0}>
+                        <PersonForm />
+                      </TabPanel>
+                      <TabPanel value={activeTab} index={1}>
+                        <ContactsForm />
+                      </TabPanel>
+                      <TabPanel value={activeTab} index={2}>
+                        <AddressesForm />
+                      </TabPanel>
+                    </Grid>
 
-                  <Grid item xs={12}>
-                    <Typography variant="h6">Contatos</Typography>
+                    <Grid item xs={12} display="flex" justifyContent="flex-end">
+                      <FXSubmitButton label="Salvar" />
+                    </Grid>
                   </Grid>
-
-                  <Grid item xs={12}>
-                    <ContactsField />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <Typography variant="h6">Endereços</Typography>
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <AddressesField />
-                  </Grid>
-
-                  <Grid item xs={12} display="flex" justifyContent="flex-end">
-                    <FXSubmitButton label="Salvar" />
-                  </Grid>
-                </Grid>
-              </Formix>
+                </Formix>
+              </Box>
             </Paper>
           </Grid>
         </Grid>

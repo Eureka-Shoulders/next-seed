@@ -1,17 +1,21 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import { Box, Grid, Paper, Tab, Tabs } from '@mui/material';
 import axios from 'axios';
 import { usePeopleRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
-import AddressesField from 'modules/people/AddressesField';
-import ContactsField from 'modules/people/ContactsField';
+import AddressesForm from 'modules/people/AddressesForm';
+import ContactsForm from 'modules/people/ContactsForm';
+import PersonForm from 'modules/people/PersonForm';
 import { NewPersonSchema } from 'modules/people/people.schema';
+import { ICreatePerson } from 'modules/people/repository';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { ContactType } from 'types';
 
 import FXSubmitButton from '@components/FXSubmitButton';
-import FXTextField from '@components/Inputs/FXTextField';
+import TabPanel from '@components/TabPanel';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
-import { Formix } from '@euk-labs/formix/components';
+import { Formix } from '@euk-labs/formix';
 
 const initialValues = {
   name: '',
@@ -21,16 +25,24 @@ const initialValues = {
 };
 
 function Index() {
+  const [activeTab, setActiveTab] = useState(0);
   const router = useRouter();
   const uiStore = useUIStore();
   const peopleRepository = usePeopleRepository();
 
+  function handleChange(event: React.SyntheticEvent, newValue: number) {
+    setActiveTab(newValue);
+  }
+
   async function handleSubmit(values: NewPersonSchema) {
     try {
-      await peopleRepository.create<
-        NewPersonSchema,
-        NewPersonSchema & { id: string }
-      >({ ...values });
+      await peopleRepository.create<ICreatePerson, ICreatePerson>({
+        ...values,
+        contacts: values.contacts.map((contact) => ({
+          ...contact,
+          type: contact.type.value as ContactType,
+        })),
+      });
 
       uiStore.snackbar.show({
         message: 'Pessoa criada com sucesso',
@@ -57,44 +69,44 @@ function Index() {
         </Grid>
 
         <Grid item xs={12}>
-          <Paper variant="outlined" sx={{ p: 2 }}>
-            <Formix
-              initialValues={initialValues}
-              zodSchema={NewPersonSchema}
-              onSubmit={handleSubmit}
-            >
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <FXTextField name="name" label="Nome" />
-                </Grid>
-                <Grid item xs={6}>
-                  <FXTextField
-                    name="identifier"
-                    label="Identificador (CPF, CNPJ...)"
-                  />
-                </Grid>
+          <Paper variant="outlined">
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs
+                value={activeTab}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label="Informações" />
+                <Tab label="Contatos" />
+                <Tab label="Endereços" />
+              </Tabs>
+            </Box>
 
-                <Grid item xs={12}>
-                  <Typography variant="h6">Contatos</Typography>
-                </Grid>
+            <Box p={2}>
+              <Formix
+                initialValues={initialValues}
+                zodSchema={NewPersonSchema}
+                onSubmit={handleSubmit}
+              >
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TabPanel value={activeTab} index={0}>
+                      <PersonForm />
+                    </TabPanel>
+                    <TabPanel value={activeTab} index={1}>
+                      <ContactsForm />
+                    </TabPanel>
+                    <TabPanel value={activeTab} index={2}>
+                      <AddressesForm />
+                    </TabPanel>
+                  </Grid>
 
-                <Grid item xs={12}>
-                  <ContactsField />
+                  <Grid item xs={12} display="flex" justifyContent="flex-end">
+                    <FXSubmitButton label="Salvar" />
+                  </Grid>
                 </Grid>
-
-                <Grid item xs={12}>
-                  <Typography variant="h6">Endereços</Typography>
-                </Grid>
-
-                <Grid item xs={12}>
-                  <AddressesField />
-                </Grid>
-
-                <Grid item xs={12} display="flex" justifyContent="flex-end">
-                  <FXSubmitButton label="Salvar" />
-                </Grid>
-              </Grid>
-            </Formix>
+              </Formix>
+            </Box>
           </Paper>
         </Grid>
       </Grid>
