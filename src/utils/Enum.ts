@@ -1,3 +1,5 @@
+import { find, keys } from 'ramda';
+
 class Enum<T extends Record<string, string>> {
   private notFound = 'Sem correspondência';
 
@@ -5,9 +7,8 @@ class Enum<T extends Record<string, string>> {
 
   getKey(value: string) {
     return (
-      Object.keys(this.enumerable).find(
-        (key) => this.enumerable[key] === value
-      ) || this.notFound
+      find((key) => this.enumerable[key] === value, keys(this.enumerable)) ||
+      this.notFound
     );
   }
 

@@ -1,25 +1,14 @@
-import ERROR_MESSAGES from '@config/messages';
 import { Box, Button, Grid, Typography } from '@mui/material';
-import * as zod from 'zod';
 
 import FXTextField from '@components/Inputs/FXTextField';
 
 import { Formix } from '@euk-labs/formix';
 
+import { ResetPasswordSchema } from './login.schema';
+
 const initialValues = {
   password: '',
 };
-const ResetPasswordSchema = zod
-  .object({
-    password: zod.string().min(8, ERROR_MESSAGES.minimum_password),
-    confirmPassword: zod.string().min(8, ERROR_MESSAGES.minimum_password),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: ERROR_MESSAGES.password_mismatch,
-    path: ['confirmPassword'],
-  });
-
-type ResetPasswordSchema = zod.infer<typeof ResetPasswordSchema>;
 
 export default function ResetPasswordForm() {
   // TODO: Implement reset password submit logic

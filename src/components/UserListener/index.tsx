@@ -29,7 +29,6 @@ function UserListener({ isPublicPage }: UserListenerProps) {
     if (!isPublicPage && userStore.user) {
       const pages = getPages(userStore.abilities);
       const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
-
       const lastPath = breadcrumbPaths.pop();
 
       if (lastPath?.disabled) {

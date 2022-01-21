@@ -1,5 +1,6 @@
 import { Page } from '@euk-labs/componentz/components/AppBar/types';
 
+// TODO: try to improve this function with ramda
 export function getBreadcrumbPaths(pages: Page[], pathname: string): Page[] {
   const regex = /\[([^\]]+)\]/g;
   pathname = pathname.replace(regex, ':$1');

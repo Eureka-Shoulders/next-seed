@@ -109,7 +109,9 @@ class UserStore implements UserStoreType {
       },
       (error) => {
         if (axios.isAxiosError(error)) {
-          if (error.response?.status === 401) return Router.push('/login');
+          if (error.response?.status === 401) {
+            return Router.push('/login');
+          }
         }
 
         throw error;

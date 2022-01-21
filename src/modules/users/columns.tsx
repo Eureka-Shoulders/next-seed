@@ -35,13 +35,15 @@ function getUserColumns(
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const router = useRouter();
 
-        return abilities.can(Actions.Update, Subjects.Users) ? (
-          <NextLink href={`${router.pathname}/${rowData.id}`} passHref>
-            <MuiLink>{rowData.value}</MuiLink>
-          </NextLink>
-        ) : (
-          rowData.value
-        );
+        if (abilities.can(Actions.Update, Subjects.Users)) {
+          return (
+            <NextLink href={`${router.pathname}/${rowData.id}`} passHref>
+              <MuiLink>{rowData.value}</MuiLink>
+            </NextLink>
+          );
+        }
+
+        return rowData.value;
       },
     },
     {
@@ -55,9 +57,8 @@ function getUserColumns(
       headerName: 'Criado em',
       type: 'date',
       minWidth: 200,
-      valueFormatter: (params: GridValueFormatterParams) => {
-        return format(new Date(params.value as string), 'dd/MM/yyyy');
-      },
+      valueFormatter: (params: GridValueFormatterParams) =>
+        format(new Date(params.value as string), 'dd/MM/yyyy'),
     },
     {
       field: 'actions',

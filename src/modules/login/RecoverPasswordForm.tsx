@@ -1,21 +1,17 @@
-import ERROR_MESSAGES from '@config/messages';
 import { Box, Button, Grid, Typography } from '@mui/material';
-import * as zod from 'zod';
 
 import FXTextField from '@components/Inputs/FXTextField';
 
 import { Formix } from '@euk-labs/formix';
 
+import { RecoverPasswordSchema } from './login.schema';
+
 const initialValues = {
   email: '',
 };
-const RecoverPasswordSchema = zod.object({
-  email: zod.string().email(ERROR_MESSAGES.invalid_email),
-});
-
-type RecoverPasswordSchema = zod.infer<typeof RecoverPasswordSchema>;
 
 export default function RecoverPasswordForm() {
+  // TODO: implement recover password submit logic
   function handleSubmit(values: RecoverPasswordSchema) {
     window.alert(JSON.stringify(values));
   }
