@@ -3,9 +3,9 @@ import * as zod from 'zod';
 
 export const NewUserSchema = zod
   .object({
-    avatar: zod.string().url().nullable(),
     person: zod.object({
       name: zod.string().min(1, ERROR_MESSAGES.required),
+      identifier: zod.string().min(1, ERROR_MESSAGES.required),
     }),
     email: zod.string().email(ERROR_MESSAGES.invalid_email),
     password: zod.string().min(8, ERROR_MESSAGES.minimum_password),
@@ -23,6 +23,7 @@ export const UpdateUserSchema = zod
     avatar: zod.string().url().nullable(),
     person: zod.object({
       name: zod.string().min(1, ERROR_MESSAGES.required),
+      identifier: zod.string().min(1, ERROR_MESSAGES.required),
     }),
     email: zod.string().email(ERROR_MESSAGES.invalid_email),
     password: zod.string().min(8, ERROR_MESSAGES.minimum_password).optional(),

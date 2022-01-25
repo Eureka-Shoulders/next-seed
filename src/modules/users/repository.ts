@@ -21,7 +21,7 @@ class UsersRepository extends Repository {
       unknown,
       AxiosResponse<unknown>,
       Omit<NewUserSchema, 'confirmPassword'>
-    >('/auth/register', values);
+    >('/users/register', values);
   }
 
   login(email: string, password: string) {

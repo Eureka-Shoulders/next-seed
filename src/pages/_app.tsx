@@ -64,7 +64,7 @@ function MyApp(props: MyAppProps) {
             <Component {...pageProps} />
           )}
 
-          <Snackbar autoHideDuration={3000} />
+          <Snackbar autoHideDuration={6000} />
           <Dialog />
         </ThemeProvider>
       </Provider>

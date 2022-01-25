@@ -1,10 +1,11 @@
-import { Box, Button, Grid, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { NewUserSchema } from 'modules/users/user.schema';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
+import FXSubmitButton from '@components/FXSubmitButton';
 import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
@@ -12,9 +13,9 @@ import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 
 const initialValues = {
-  avatar: null,
   person: {
     name: '',
+    identifier: '',
   },
   email: '',
   password: '',
@@ -75,9 +76,15 @@ export default function RegisterForm() {
                 <FXTextField name="person.name" label="Nome" />
               </Grid>
               <Grid item xs={12}>
+                <FXTextField
+                  name="person.identifier"
+                  label="Identificador (CPF, CNPJ...)"
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <FXPasswordField name="password" label="Senha" />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <FXPasswordField
                   name="confirmPassword"
                   label="Confirmar Senha"
@@ -85,14 +92,7 @@ export default function RegisterForm() {
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
-                  Cadastrar
-                </Button>
+                <FXSubmitButton fullWidth label="Cadastrar" />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
