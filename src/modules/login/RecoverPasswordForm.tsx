@@ -1,7 +1,13 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
+import axios from 'axios';
+import { useRouter } from 'next/router';
 
+import FXSubmitButton from '@components/FXSubmitButton';
 import FXTextField from '@components/Inputs/FXTextField';
 
+import { useUsersRepository } from '@hooks/repositories';
+
+import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 
 import { RecoverPasswordSchema } from './login.schema';
@@ -11,9 +17,30 @@ const initialValues = {
 };
 
 export default function RecoverPasswordForm() {
-  // TODO: implement recover password submit logic
-  function handleSubmit(values: RecoverPasswordSchema) {
-    window.alert(JSON.stringify(values));
+  const router = useRouter();
+  const uiStore = useUIStore();
+  const usersRepository = useUsersRepository();
+
+  async function handleSubmit(values: RecoverPasswordSchema) {
+    try {
+      await usersRepository.recoverPassword(values.email);
+
+      uiStore.snackbar.show({
+        message:
+          'Recuperação enviada com sucesso! Confira sua caixa de entrada.',
+        severity: 'success',
+      });
+
+      router.push('/login');
+    } catch (error) {
+      if (axios.isAxiosError(error))
+        uiStore.snackbar.show({
+          message:
+            error.response?.data.message ||
+            'Ocorreu um erro ao solicitar recuperação de senha!',
+          severity: 'error',
+        });
+    }
   }
 
   return (
@@ -42,14 +69,7 @@ export default function RecoverPasswordForm() {
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
-                  Recuperar
-                </Button>
+                <FXSubmitButton fullWidth label="Recuperar" />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">

@@ -35,11 +35,6 @@ function Index() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
   const { id } = router.query;
-
-  if (Array.isArray(id)) {
-    router.replace('/people');
-  }
-
   const peopleRepository = usePeopleRepository();
   const personEntity = useEntity(peopleRepository, id as string);
 

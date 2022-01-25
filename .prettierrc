@@ -6,6 +6,8 @@
     "reflect-metadata",
     "<THIRD_PARTY_MODULES>",
     "^@components/(.*)$",
+    "^@hooks/(.*)$",
+    "^@modules/(.*)$",
     "^@styles/(.*)$",
     "^@euk-labs/(.*)$",
     "^[./]"

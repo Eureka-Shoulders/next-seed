@@ -1,8 +1,9 @@
-import { Box, Button, Grid, Link as MuiLink, Typography } from '@mui/material';
+import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import NextLink from 'next/link';
 
+import FXSubmitButton from '@components/FXSubmitButton';
 import FXPasswordField from '@components/Inputs/FXPasswordField';
 import FXTextField from '@components/Inputs/FXTextField';
 
@@ -72,14 +73,7 @@ export default function LoginForm() {
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                >
-                  Entrar
-                </Button>
+                <FXSubmitButton fullWidth label="Entrar" />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">

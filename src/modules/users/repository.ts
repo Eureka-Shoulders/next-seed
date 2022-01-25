@@ -11,6 +11,11 @@ interface LoginResponse {
   access_token: string;
 }
 
+interface ResetPasswordDto {
+  password: string;
+  token: string;
+}
+
 class UsersRepository extends Repository {
   constructor(private apiService: HttpService) {
     super(apiService, { path: '/users' });
@@ -33,6 +38,19 @@ class UsersRepository extends Repository {
       email,
       password,
     });
+  }
+
+  recoverPassword(email: string) {
+    return this.apiService.client.post('/auth/recover-password', {
+      userEmail: email,
+    });
+  }
+
+  resetPassword(resetPasswordDto: ResetPasswordDto) {
+    return this.apiService.client.post(
+      '/auth/reset-password',
+      resetPasswordDto
+    );
   }
 }
 

@@ -23,14 +23,11 @@
       "@components/*": ["./components/*"],
       "@styles/*": ["./styles/*"],
       "@config/*": ["./config/*"],
-      "@utils/*": ["./utils/*"]
+      "@utils/*": ["./utils/*"],
+      "@modules/*": ["./modules/*"],
+      "@hooks/*": ["./hooks/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/modules/users/columns.txs"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
