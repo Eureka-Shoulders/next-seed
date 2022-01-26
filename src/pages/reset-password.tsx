@@ -22,7 +22,7 @@ const initialValues = {
   password: '',
 };
 
-const ResetPassword: NextPage<ResetPasswordProps> = ({ token }) => {
+const ResetPassword: NextPage<ResetPasswordProps> = () => {
   const uiStore = useUIStore();
   const router = useRouter();
   const usersRepository = useUsersRepository();
