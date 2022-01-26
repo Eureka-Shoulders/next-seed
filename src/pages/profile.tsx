@@ -20,6 +20,7 @@ function getInitialValues(user: User) {
     email: user.email,
     person: {
       name: user.person.name,
+      identifier: user.person.identifier,
     },
   };
 
