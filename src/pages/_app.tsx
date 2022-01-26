@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { LocalizationProvider } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { CssBaseline } from '@mui/material';
 import globalContainer from 'containers/global.inversify';
 import createEmotionCache from 'createEmotionCache';
@@ -50,23 +52,25 @@ function MyApp(props: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
       <Provider container={globalContainer(hydrationData)}>
-        <BreadcrumbListener />
-        <UserListener isPublicPage={isPublicPage} />
-        <AppBarBuilder />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <BreadcrumbListener />
+          <UserListener isPublicPage={isPublicPage} />
+          <AppBarBuilder />
 
-        <ThemeProvider>
-          <CssBaseline />
-          {showAppBar ? (
-            <AppBar>
+          <ThemeProvider>
+            <CssBaseline />
+            {showAppBar ? (
+              <AppBar>
+                <Component {...pageProps} />
+              </AppBar>
+            ) : (
               <Component {...pageProps} />
-            </AppBar>
-          ) : (
-            <Component {...pageProps} />
-          )}
+            )}
 
-          <Snackbar autoHideDuration={6000} />
-          <Dialog />
-        </ThemeProvider>
+            <Snackbar autoHideDuration={6000} />
+            <Dialog />
+          </ThemeProvider>
+        </LocalizationProvider>
       </Provider>
     </CacheProvider>
   );
