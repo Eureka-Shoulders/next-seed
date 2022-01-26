@@ -16,6 +16,7 @@ const initialValues = {
   avatar: null,
   person: {
     name: '',
+    identifier: '',
   },
   email: '',
   password: '',
