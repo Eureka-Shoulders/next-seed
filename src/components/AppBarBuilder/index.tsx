@@ -38,10 +38,12 @@ function AppBarBuilder() {
   }, []); // eslint-disable-line
 
   useEffect(() => {
-    const pages = getPages(userStore.abilities);
+    if (userStore.abilities) {
+      const pages = getPages(userStore.abilities);
 
-    uiStore.appBar.setPages(pages);
-  }, [userStore.user]); // eslint-disable-line
+      uiStore.appBar.setPages(pages);
+    }
+  }, [userStore.abilities]); // eslint-disable-line
 
   return null;
 }

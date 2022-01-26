@@ -13,13 +13,16 @@ export const BreadcrumbListener = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const pages = getPages(userStore.abilities);
-    const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
-    uiStore.breadcrumb.setPaths(breadcrumbPaths);
-    uiStore.breadcrumb.setOnClickBreadcrumbPath((breadcrumbPath) => {
-      router.push(breadcrumbPath.link);
-    });
-  }, [router.pathname, userStore.user]); // eslint-disable-line
+    if (userStore.abilities) {
+      const pages = getPages(userStore.abilities);
+      const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
+
+      uiStore.breadcrumb.setPaths(breadcrumbPaths);
+      uiStore.breadcrumb.setOnClickBreadcrumbPath((breadcrumbPath) => {
+        router.push(breadcrumbPath.link);
+      });
+    }
+  }, [router.pathname, userStore.abilities]); // eslint-disable-line
 
   return null;
 };

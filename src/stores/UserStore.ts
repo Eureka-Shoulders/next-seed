@@ -13,7 +13,8 @@ export interface UserStoreType {
   user: User | null;
   setUser(user: User): void;
 
-  abilities: AppAbility;
+  rawAbilities: RawRuleOf<AppAbility>[] | null;
+  setRawAbilities(rawAbilities: RawRuleOf<AppAbility>[]): void;
 
   login(accessToken: string): void;
   logout(): void;
@@ -24,7 +25,8 @@ export interface UserStoreType {
   startTokenInjector(): void;
   catchUnauthorizedErrors(): void;
 
-  isLogged: boolean;
+  get abilities(): AppAbility | null;
+  get isLogged(): boolean;
 }
 
 class UserStore implements UserStoreType {
@@ -37,7 +39,10 @@ class UserStore implements UserStoreType {
     this.user = user;
   }
 
-  abilities: AppAbility = new Ability();
+  rawAbilities: RawRuleOf<AppAbility>[] | null = null;
+  setRawAbilities(rawAbilities: RawRuleOf<AppAbility>[]) {
+    this.rawAbilities = rawAbilities;
+  }
 
   login(accessToken: string) {
     setCookie(null, 'user_token', accessToken, {
@@ -76,9 +81,8 @@ class UserStore implements UserStoreType {
       >('/auth/abilities');
 
       this.setUser(userResponse.data);
-
       if (abilitiesResponse.data) {
-        this.abilities.update(abilitiesResponse.data);
+        this.setRawAbilities(abilitiesResponse.data);
       }
     } catch (error) {
       return Router.push('/login');
@@ -117,6 +121,14 @@ class UserStore implements UserStoreType {
         throw error;
       }
     );
+  }
+
+  get abilities() {
+    if (this.rawAbilities) {
+      return new Ability(this.rawAbilities) as AppAbility;
+    } else {
+      return null;
+    }
   }
 
   get isLogged() {

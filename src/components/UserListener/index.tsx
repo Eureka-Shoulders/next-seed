@@ -26,7 +26,7 @@ function UserListener({ isPublicPage }: UserListenerProps) {
   }, [isPublicPage]); // eslint-disable-line
 
   useEffect(() => {
-    if (!isPublicPage && userStore.user) {
+    if (!isPublicPage && userStore.user && userStore.abilities) {
       const pages = getPages(userStore.abilities);
       const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
       const lastPath = breadcrumbPaths.pop();
@@ -35,7 +35,7 @@ function UserListener({ isPublicPage }: UserListenerProps) {
         router.push('/no-permissions');
       }
     }
-  }, [isPublicPage, userStore.user]); // eslint-disable-line
+  }, [isPublicPage, userStore.abilities, userStore.user]); // eslint-disable-line
 
   return null;
 }
