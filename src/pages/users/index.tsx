@@ -40,6 +40,10 @@ function Index() {
         </Grid>
 
         <Grid item xs={12}>
+          <Filters filters={filters} listHook={usuariosQuery} />
+        </Grid>
+
+        <Grid item xs={12}>
           {userStore.isLogged ? (
             <MuiTable
               page={usersList.page - 1}
