@@ -1,11 +1,12 @@
 import { Avatar, Box, Grid, Paper, Skeleton, Typography } from '@mui/material';
+import { witchSSRAuth } from '@utils/withSSRAuth';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import { UpdateUserSchema } from 'modules/users/user.schema';
 import { useEffect } from 'react';
-import { User } from 'types';
+import { Actions, Subjects, User } from 'types';
 
 import FXSubmitButton from '@components/FXSubmitButton';
 import FXTextField from '@components/Inputs/FXTextField';
@@ -130,3 +131,10 @@ function Index() {
 }
 
 export default observer(Index);
+
+export const getServerSideProps = witchSSRAuth(async () => ({ props: {} }), {
+  can: [
+    { action: Actions.Read, subject: Subjects.People },
+    { action: Actions.Read, subject: Subjects.Users },
+  ],
+});
