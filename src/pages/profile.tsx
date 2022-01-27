@@ -1,5 +1,5 @@
 import { Avatar, Box, Grid, Paper, Skeleton, Typography } from '@mui/material';
-import { witchSSRAuth } from '@utils/withSSRAuth';
+import { withSSRAuth } from '@utils/withSSRAuth';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
@@ -132,9 +132,9 @@ function Index() {
 
 export default observer(Index);
 
-export const getServerSideProps = witchSSRAuth(async () => ({ props: {} }), {
+export const getServerSideProps = withSSRAuth(async () => ({ props: {} }), {
   can: [
-    { action: Actions.Read, subject: Subjects.People },
     { action: Actions.Read, subject: Subjects.Users },
+    { action: Actions.Update, subject: Subjects.Users },
   ],
 });

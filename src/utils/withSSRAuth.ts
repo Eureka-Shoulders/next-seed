@@ -15,17 +15,18 @@ type WithSSRAuthOptions = {
   }[];
 };
 
-export function witchSSRAuth<P>(
+export function withSSRAuth<P>(
   fn: GetServerSideProps<P>,
   options?: WithSSRAuthOptions
 ) {
   return async (
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<P>> => {
-    // BUG: user_token is not set on SSR
-    const { user_token } = parseCookies();
+    const { user_token } = parseCookies(ctx);
 
     if (!user_token && !ctx.req.rawHeaders.some((i) => i.includes('/login'))) {
+      // TODO: smart login
+
       return {
         redirect: {
           destination: '/login',
@@ -59,7 +60,7 @@ export function witchSSRAuth<P>(
       } catch (error) {
         return {
           redirect: {
-            destination: '/',
+            destination: '/no-permissions',
             permanent: false,
           },
         };

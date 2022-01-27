@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import { witchSSRAuth } from '@utils/withSSRAuth';
+import { withSSRAuth } from '@utils/withSSRAuth';
 import { useThemeStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import type { NextPage } from 'next';
@@ -32,4 +32,4 @@ const Home: NextPage = () => {
 
 export default observer(Home);
 
-export const getServerSideProps = witchSSRAuth(async () => ({ props: {} }));
+export const getServerSideProps = withSSRAuth(async () => ({ props: {} }));
