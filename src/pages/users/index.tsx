@@ -1,4 +1,5 @@
 import { Box, Grid, Skeleton } from '@mui/material';
+import setFilter from '@utils/setFilter';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
@@ -28,11 +29,12 @@ function Index() {
 
   useEffect(() => {
     if (userStore.isLogged) {
-      usersList.filters.set(
+      setFilter(
         'include',
-        JSON.stringify({
+        {
           person: true,
-        })
+        },
+        usersList.filters
       );
       usersList.fetch();
     }
