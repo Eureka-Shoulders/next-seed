@@ -21,11 +21,6 @@ function getUserColumns(
 ): (GridActionsColDef | GridColDef)[] {
   return [
     {
-      field: 'id',
-      headerName: 'ID',
-      minWidth: 200,
-    },
-    {
       field: 'name',
       headerName: 'Nome',
       minWidth: 200,
