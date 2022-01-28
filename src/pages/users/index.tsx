@@ -6,6 +6,7 @@ import usersColumns from 'modules/users/columns';
 import { useEffect } from 'react';
 import { User } from 'types';
 
+import { Filters } from '@components/Filters';
 import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
 
@@ -40,7 +41,19 @@ function Index() {
         </Grid>
 
         <Grid item xs={12}>
-          <Filters filters={filters} listHook={usuariosQuery} />
+          <Filters
+            filters={filters}
+            onFilter={() => {
+              // TODO: use ramda to set filters
+              usersList.fetch();
+            }}
+            onClear={() => {
+              usersList.filters.forEach((filter) => {
+                usersList.filters.delete(filter);
+              });
+            }}
+            onRefresh={usersList.fetch}
+          />
         </Grid>
 
         <Grid item xs={12}>
@@ -48,7 +61,7 @@ function Index() {
             <MuiTable
               page={usersList.page - 1}
               pageSize={10}
-              columns={usersColumns(userStore.abilities, handleDelete)}
+              columns={usersColumns(userStore.abilities!, handleDelete)}
               rows={usersList.list}
               isLoading={usersList.loading}
               totalCount={usersList.totalCount}

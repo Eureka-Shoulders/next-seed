@@ -1,13 +1,12 @@
 import { Add as AddIcon, Refresh as RefreshIcon } from '@mui/icons-material';
 import { Button, Grid } from '@mui/material';
-import { format } from 'date-fns';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Formix } from '@euk-labs/formix';
 
-import { FiltersModal } from '../filters/FiltersModal';
 import ClearFiltersButton from './ClearFiltersButton';
-import FilterChip from './FilterChip';
+import { FiltersModal } from './FiltersModal';
+import FiltersValuesList from './FiltersValuesList';
 import SmallButton from './SmallButton';
 import { Filter } from './types';
 import { buildInitialValues, getFilterValue } from './utils';
@@ -15,9 +14,16 @@ import { buildInitialValues, getFilterValue } from './utils';
 interface FiltersProps {
   filters: Filter[];
   onFilter: (filters: Record<string, unknown>) => void;
+  onClear: () => void;
+  onRefresh: () => void;
 }
 
-function FiltersComponent({ filters, onFilter }: FiltersProps) {
+function FiltersComponent({
+  filters,
+  onFilter,
+  onClear,
+  onRefresh,
+}: FiltersProps) {
   const [isFiltersOpen, setFiltersOpen] = useState(false);
   const anchorRef = useRef<HTMLButtonElement>(null);
   const initialValues = useMemo(() => buildInitialValues(filters), [filters]);
@@ -64,18 +70,7 @@ function FiltersComponent({ filters, onFilter }: FiltersProps) {
       <Grid container spacing={2}>
         <Grid item xs>
           <Grid container spacing={2}>
-            {Object.entries(listHook.filters).map(([key, value]) => {
-              let title = value;
-              if (key === 'sort') return;
-
-              if (value instanceof Date) title = format(value, 'dd/MM/yyyy');
-
-              return (
-                <Grid item key={key}>
-                  <FilterChip label={String(title)} key={key} />
-                </Grid>
-              );
-            })}
+            <FiltersValuesList />
 
             <Grid item>
               <Button
@@ -91,11 +86,11 @@ function FiltersComponent({ filters, onFilter }: FiltersProps) {
         </Grid>
 
         <Grid item>
-          <ClearFiltersButton />
+          <ClearFiltersButton onClear={onClear} />
         </Grid>
 
         <Grid item>
-          <SmallButton variant="contained" onClick={listHook.refresh}>
+          <SmallButton variant="contained" onClick={onRefresh}>
             <RefreshIcon fontSize="small" />
           </SmallButton>
         </Grid>
