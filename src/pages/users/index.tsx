@@ -28,6 +28,12 @@ function Index() {
 
   useEffect(() => {
     if (userStore.isLogged) {
+      usersList.filters.set(
+        'include',
+        JSON.stringify({
+          person: true,
+        })
+      );
       usersList.fetch();
     }
   }, [usersList.page, userStore.isLogged]); // eslint-disable-line
@@ -44,7 +50,8 @@ function Index() {
             <MuiTable
               page={usersList.page - 1}
               pageSize={10}
-              columns={usersColumns(userStore.abilities, handleDelete)}
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              columns={usersColumns(userStore.abilities!, handleDelete)}
               rows={usersList.list}
               isLoading={usersList.loading}
               totalCount={usersList.totalCount}
