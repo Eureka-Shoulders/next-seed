@@ -5,6 +5,7 @@ const withTM = require('next-transpile-modules')(
     '@euk-labs/componentz',
     '@euk-labs/beltz',
     '@euk-labs/fetchx',
+    '@euk-labs/formix-mui',
   ],
   {
     resolveSymlinks: false,

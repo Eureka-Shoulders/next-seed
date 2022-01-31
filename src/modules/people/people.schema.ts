@@ -1,11 +1,14 @@
+import AutocompleteSchema from '@config/autocomplete.schema';
 import ERROR_MESSAGES from '@config/messages';
 import * as zod from 'zod';
-
-import { AutocompleteSchema } from '@components/Inputs/FXAutocomplete';
 
 export const NewPersonSchema = zod.object({
   name: zod.string().min(1, ERROR_MESSAGES.required),
   identifier: zod.string().min(1, ERROR_MESSAGES.required),
+  birthDate: zod
+    .date()
+    .nullable()
+    .refine((value) => value !== null, ERROR_MESSAGES.required),
   addresses: zod
     .array(
       zod.object({
@@ -34,6 +37,10 @@ export type NewPersonSchema = zod.infer<typeof NewPersonSchema>;
 export const UpdatePersonSchema = zod.object({
   name: zod.string().min(1, ERROR_MESSAGES.required),
   identifier: zod.string().min(1, ERROR_MESSAGES.required),
+  birthDate: zod.date({
+    invalid_type_error: ERROR_MESSAGES.required,
+    required_error: ERROR_MESSAGES.required,
+  }),
   addresses: zod
     .array(
       zod.object({

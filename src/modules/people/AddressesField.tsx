@@ -4,9 +4,8 @@ import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 
-import FXTextField from '@components/Inputs/FXTextField';
-
 import { useArrayField } from '@euk-labs/formix';
+import { FXTextField } from '@euk-labs/formix-mui';
 
 function AddressesField() {
   const name = 'addresses';

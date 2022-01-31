@@ -5,12 +5,16 @@ import { observer } from 'mobx-react-lite';
 import { NewUserSchema } from 'modules/users/user.schema';
 import { useRouter } from 'next/router';
 
-import FXSubmitButton from '@components/FXSubmitButton';
-import FXPasswordField from '@components/Inputs/FXPasswordField';
-import FXTextField from '@components/Inputs/FXTextField';
-
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
+import {
+  FXDatePicker,
+  FXPasswordField,
+  FXSubmitButton,
+  FXTextField,
+} from '@euk-labs/formix-mui';
+
+('@euk-labs/formix-mui');
 
 const initialValues = {
   avatar: null,
@@ -68,7 +72,20 @@ function Index() {
             >
               <Grid container spacing={2}>
                 <Grid item xs={6}>
-                  <FXTextField name="name" label="Nome" />
+                  <FXTextField name="person.name" label="Nome" />
+                </Grid>
+                <Grid item xs={6}>
+                  <FXTextField
+                    name="person.identifier"
+                    label="Identificador (CPF, CNPJ...)"
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <FXDatePicker
+                    name="person.birthDate"
+                    label="Data de Nascimento"
+                    inputFormat="dd/MM/yyyy"
+                  />
                 </Grid>
                 <Grid item xs={6}>
                   <FXTextField name="email" label="E-mail" />

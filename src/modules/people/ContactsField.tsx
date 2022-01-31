@@ -4,10 +4,8 @@ import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 
-import FXAutocomplete from '@components/Inputs/FXAutocomplete';
-import FXTextField from '@components/Inputs/FXTextField';
-
 import { useArrayField } from '@euk-labs/formix';
+import { FXAutocomplete, FXTextField } from '@euk-labs/formix-mui';
 
 function ContactsField() {
   const { values, helpers } = useArrayField('contacts');

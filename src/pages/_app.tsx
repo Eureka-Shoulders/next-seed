@@ -18,7 +18,7 @@ import { BreadcrumbListener } from '@components/Breadcrumbs/BreadcrumbListener';
 import ThemeProvider from '@components/ThemeProvider';
 import UserListener from '@components/UserListener';
 
-import { AppBar } from '@euk-labs/componentz/components';
+import { AppBar } from '@euk-labs/componentz';
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;

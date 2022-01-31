@@ -11,15 +11,16 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ContactType } from 'types';
 
-import FXSubmitButton from '@components/FXSubmitButton';
 import TabPanel from '@components/TabPanel';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
+import { FXSubmitButton } from '@euk-labs/formix-mui';
 
 const initialValues = {
   name: '',
   identifier: '',
+  birthDate: null,
   contacts: [],
   addresses: [],
 };

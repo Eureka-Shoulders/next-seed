@@ -10,16 +10,17 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ContactTypeEnum, Person } from 'types';
 
-import FXSubmitButton from '@components/FXSubmitButton';
 import TabPanel from '@components/TabPanel';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
+import { FXSubmitButton } from '@euk-labs/formix-mui';
 
 function getInitialValues(person: Person): UpdatePersonSchema {
   return {
     ...person,
+    birthDate: new Date(person.birthDate),
     contacts: person.contacts.map((contact) => ({
       ...contact,
       type: {

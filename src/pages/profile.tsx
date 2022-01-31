@@ -7,12 +7,10 @@ import { UpdateUserSchema } from 'modules/users/user.schema';
 import { useEffect } from 'react';
 import { User } from 'types';
 
-import FXSubmitButton from '@components/FXSubmitButton';
-import FXTextField from '@components/Inputs/FXTextField';
-
 import { useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
+import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 
 function getInitialValues(user: User) {
   const initialValues: UpdateUserSchema = {
