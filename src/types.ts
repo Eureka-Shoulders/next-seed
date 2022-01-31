@@ -64,6 +64,7 @@ export interface Person {
   id: string;
   name: string;
   identifier: string;
+  birthDate: Date | string;
   contacts: Contact[];
   addresses: Address[];
 }

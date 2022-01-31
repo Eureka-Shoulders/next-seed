@@ -3,8 +3,6 @@ import axios from 'axios';
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import FXSubmitButton from '@components/FXSubmitButton';
-import FXPasswordField from '@components/Inputs/FXPasswordField';
 import LoginBanner from '@components/Login/LoginBanner';
 
 import { useUsersRepository } from '@hooks/repositories';
@@ -13,6 +11,7 @@ import { ResetPasswordSchema } from '@modules/login/login.schema';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
+import { FXPasswordField, FXSubmitButton } from '@euk-labs/formix-mui';
 
 interface ResetPasswordProps {
   token: string;

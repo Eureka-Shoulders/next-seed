@@ -18,11 +18,6 @@ export default function getPeopleColumns(
 ): (GridActionsColDef | GridColDef)[] {
   return [
     {
-      field: 'id',
-      headerName: 'ID',
-      minWidth: 200,
-    },
-    {
       field: 'name',
       headerName: 'Nome',
       minWidth: 200,
@@ -42,6 +37,14 @@ export default function getPeopleColumns(
       headerName: 'Identificador',
       minWidth: 200,
       flex: 1,
+    },
+    {
+      field: 'birthDate',
+      headerName: 'Data de Nascimento',
+      type: 'date',
+      minWidth: 200,
+      valueFormatter: (params: GridValueFormatterParams) =>
+        format(new Date(params.value as string), 'dd/MM/yyyy'),
     },
     {
       field: 'createdAt',

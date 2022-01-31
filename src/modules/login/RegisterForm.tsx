@@ -5,12 +5,13 @@ import { NewUserSchema } from 'modules/users/user.schema';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
-import FXSubmitButton from '@components/FXSubmitButton';
-import FXPasswordField from '@components/Inputs/FXPasswordField';
-import FXTextField from '@components/Inputs/FXTextField';
-
 import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
+import {
+  FXPasswordField,
+  FXSubmitButton,
+  FXTextField,
+} from '@euk-labs/formix-mui';
 
 const initialValues = {
   person: {

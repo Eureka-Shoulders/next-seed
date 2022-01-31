@@ -6,13 +6,14 @@ import { UpdateUserSchema } from 'modules/users/user.schema';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import FXSubmitButton from '@components/FXSubmitButton';
-import FXPasswordField from '@components/Inputs/FXPasswordField';
-import FXTextField from '@components/Inputs/FXTextField';
-
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
+import {
+  FXPasswordField,
+  FXSubmitButton,
+  FXTextField,
+} from '@euk-labs/formix-mui';
 
 function Index() {
   const uiStore = useUIStore();

@@ -3,12 +3,13 @@ import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import NextLink from 'next/link';
 
-import FXSubmitButton from '@components/FXSubmitButton';
-import FXPasswordField from '@components/Inputs/FXPasswordField';
-import FXTextField from '@components/Inputs/FXTextField';
-
 import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
+import {
+  FXPasswordField,
+  FXSubmitButton,
+  FXTextField,
+} from '@euk-labs/formix-mui';
 
 import { LoginSchema } from './login.schema';
 

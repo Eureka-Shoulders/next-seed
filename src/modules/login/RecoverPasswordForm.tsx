@@ -2,13 +2,11 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
-import FXSubmitButton from '@components/FXSubmitButton';
-import FXTextField from '@components/Inputs/FXTextField';
-
 import { useUsersRepository } from '@hooks/repositories';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
+import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 
 import { RecoverPasswordSchema } from './login.schema';
 

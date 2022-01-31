@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 
-import FXTextField from '@components/Inputs/FXTextField';
+import { FXDatePicker, FXTextField } from '@euk-labs/formix-mui';
 
 export default function PersonForm() {
   return (
@@ -10,6 +10,13 @@ export default function PersonForm() {
       </Grid>
       <Grid item xs={6}>
         <FXTextField name="identifier" label="Identificador (CPF, CNPJ...)" />
+      </Grid>
+      <Grid item xs={12}>
+        <FXDatePicker
+          name="birthDate"
+          label="Data de Nascimento"
+          inputFormat="dd/MM/yyyy"
+        />
       </Grid>
     </Grid>
   );

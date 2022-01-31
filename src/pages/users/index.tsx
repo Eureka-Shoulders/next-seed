@@ -1,4 +1,5 @@
 import { Box, Grid, Skeleton } from '@mui/material';
+import setFilter from '@utils/setFilter';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
@@ -29,6 +30,13 @@ function Index() {
 
   useEffect(() => {
     if (userStore.isLogged) {
+      setFilter(
+        'include',
+        {
+          person: true,
+        },
+        usersList.filters
+      );
       usersList.fetch();
     }
   }, [usersList.page, userStore.isLogged]); // eslint-disable-line
@@ -61,6 +69,7 @@ function Index() {
             <MuiTable
               page={usersList.page - 1}
               pageSize={10}
+              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               columns={usersColumns(userStore.abilities!, handleDelete)}
               rows={usersList.list}
               isLoading={usersList.loading}
