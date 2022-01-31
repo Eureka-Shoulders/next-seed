@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import { format } from 'date-fns';
-import { map, pipe, toPairs } from 'ramda';
+import { filter, map, pipe, toPairs } from 'ramda';
 
 import { useFormixContext } from '@euk-labs/formix';
 
@@ -11,6 +11,7 @@ export default function FiltersValuesList() {
 
   const renderChips = pipe(
     toPairs,
+    filter(([, value]) => value !== '' && value !== null),
     map(([field, value]) => {
       let title = value;
       if (field === 'sort') return;
@@ -19,7 +20,7 @@ export default function FiltersValuesList() {
 
       return (
         <Grid item key={field}>
-          <FilterChip label={String(title)} key={field} />
+          <FilterChip label={String(title)} key={field} field={field} />
         </Grid>
       );
     })

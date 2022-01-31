@@ -1,36 +1,46 @@
-const filters: Filter[] = [
+import { add, format } from 'date-fns';
+
+import { Filter } from '@components/Filters/types';
+
+export const filters: Filter[] = [
   {
     field: 'name',
     title: 'Nome',
     type: 'string',
   },
   {
-    field: 'username',
+    field: 'email',
     title: 'E-mail',
     type: 'string',
   },
   {
-    field: 'empresa',
-    title: 'Empresa',
-    type: 'enum',
-    enums: [
-      { value: 'G10', title: 'G10' },
-      { value: 'TP', title: 'Transpanorama' },
-    ],
-  },
-  {
-    field: 'cpf',
-    title: 'CPF',
-    type: 'cpf',
-  },
-  {
-    field: 'dataNascimento',
-    title: 'Data Nascimento',
-    type: 'date',
-  },
-  {
-    field: 'dataAdmissao',
-    title: 'Data Admissão',
+    field: 'createdAt',
+    title: 'Data de criação',
     type: 'date',
   },
 ];
+
+export function buildFilters(
+  filters: Record<string, unknown>,
+  urlSearchParams: URLSearchParams
+) {
+  const whereObject: Record<string, unknown> = {};
+
+  if (filters.name) {
+    whereObject.person = { name: { contains: filters.name } };
+  }
+
+  if (filters.email) {
+    whereObject.email = { contains: filters.email };
+  }
+
+  if (filters.createdAt) {
+    const date = new Date(format(filters.createdAt as Date, 'yyyy-MM-dd'));
+    whereObject.createdAt = {
+      gte: date,
+      lt: add(date, { days: 1 }),
+    };
+  }
+
+  urlSearchParams.set('where', JSON.stringify(whereObject));
+}

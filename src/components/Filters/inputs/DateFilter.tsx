@@ -2,7 +2,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 
 import TabPanel from '@components/TabPanel';
 
-import DateInput from '../forms/inputs/DateInput';
+import { FXDatePicker } from '@euk-labs/formix-mui';
 
 interface DateFilterProps {
   name: string;
@@ -23,7 +23,7 @@ export default function DateFilter({
             <Typography>Busque por uma determinada data</Typography>
           </Grid>
           <Grid item xs={12}>
-            <DateInput name={name} label="Pesquisar" />
+            <FXDatePicker name={name} label="Pesquisar" />
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">

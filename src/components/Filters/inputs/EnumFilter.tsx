@@ -3,7 +3,8 @@ import { useMemo } from 'react';
 
 import TabPanel from '@components/TabPanel';
 
-import CheckboxGroupInput from '../forms/inputs/CheckboxGroupInput';
+import { FXCheckboxGroup } from '@euk-labs/formix-mui';
+
 import { FilterEnum } from '../types';
 
 interface EnumFilterProps {
@@ -22,8 +23,8 @@ export default function EnumFilter({
   const checkboxOptions = useMemo(
     () =>
       options.map((option) => ({
-        label: option.title,
-        value: option.value,
+        name: option.value,
+        label: option.value,
       })),
     [options]
   );
@@ -33,8 +34,7 @@ export default function EnumFilter({
       <Box p={2}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <CheckboxGroupInput
-              name={name}
+            <FXCheckboxGroup
               label="Escolha as opções"
               options={checkboxOptions}
             />

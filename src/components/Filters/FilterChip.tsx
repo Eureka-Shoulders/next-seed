@@ -4,14 +4,14 @@ import { useFormixContext } from '@euk-labs/formix';
 
 interface FilterChipProps {
   label: string;
-  key: string;
+  field: string;
 }
 
-export default function FilterChip({ label, key }: FilterChipProps) {
+export default function FilterChip({ label, field }: FilterChipProps) {
   const formix = useFormixContext();
 
   function handleDelete() {
-    formix.setFieldValue(key, '');
+    formix.setFieldValue(field, '');
     formix.submitForm();
   }
 

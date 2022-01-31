@@ -2,7 +2,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 
 import TabPanel from '@components/TabPanel';
 
-import TextInput from '../forms/inputs/TextInput';
+import { FXTextField } from '@euk-labs/formix-mui';
 
 interface TextFilterProps {
   name: string;
@@ -23,7 +23,7 @@ export default function TextFilter({
             <Typography>Busque por um determinado texto</Typography>
           </Grid>
           <Grid item xs={12}>
-            <TextInput name={name} label="Pesquisar" fullWidth />
+            <FXTextField name={name} label="Pesquisar" fullWidth />
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">

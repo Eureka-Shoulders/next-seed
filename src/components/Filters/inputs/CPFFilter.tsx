@@ -2,7 +2,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 
 import TabPanel from '@components/TabPanel';
 
-import MaskInput from '../forms/inputs/MaskInput';
+import { FXMaskedField } from '@euk-labs/formix-mui';
 
 interface CPFFilterProps {
   name: string;
@@ -19,7 +19,7 @@ export default function CPFFilter({ name, activeTab, index }: CPFFilterProps) {
             <Typography>Busque por um determinado CPF</Typography>
           </Grid>
           <Grid item xs={12}>
-            <MaskInput
+            <FXMaskedField
               mask="999.999.999-99"
               label="Pesquisar CPF"
               name={name}
