@@ -14,7 +14,7 @@ import dynamic from 'next/dynamic';
 import type { HydrationData } from 'types';
 
 import AppBarBuilder from '@components/AppBarBuilder';
-import { BreadcrumbListener } from '@components/Breadcrumbs/BreadcrumbListener';
+import BreadcrumbListener from '@components/Breadcrumbs/BreadcrumbListener';
 import ThemeProvider from '@components/ThemeProvider';
 import UserListener from '@components/UserListener';
 
