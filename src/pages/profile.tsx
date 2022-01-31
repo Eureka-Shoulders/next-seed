@@ -1,11 +1,12 @@
 import { Avatar, Box, Grid, Paper, Skeleton, Typography } from '@mui/material';
+import { withSSRAuth } from '@utils/withSSRAuth';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import { UpdateUserSchema } from 'modules/users/user.schema';
 import { useEffect } from 'react';
-import { User } from 'types';
+import { Actions, Subjects, User } from 'types';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
@@ -128,3 +129,10 @@ function Index() {
 }
 
 export default observer(Index);
+
+export const getServerSideProps = withSSRAuth(async () => ({ props: {} }), {
+  can: [
+    { action: Actions.Read, subject: Subjects.Users },
+    { action: Actions.Update, subject: Subjects.Users },
+  ],
+});
