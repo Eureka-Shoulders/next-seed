@@ -1,3 +1,4 @@
+import { Can } from '@casl/react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Link as MuiLink } from '@mui/material';
 import {
@@ -10,10 +11,12 @@ import {
 import { format } from 'date-fns';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { Actions, AppAbility, Subjects } from 'types';
 
 import { Identifier } from '@euk-labs/fetchx';
 
 export default function getPeopleColumns(
+  abilities: AppAbility,
   handleDelete: (id: Identifier) => Promise<void>
 ): (GridActionsColDef | GridColDef)[] {
   return [
@@ -25,11 +28,16 @@ export default function getPeopleColumns(
       renderCell: (rowData) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const router = useRouter();
-        return (
-          <NextLink href={`${router.pathname}/${rowData.id}`} passHref>
-            <MuiLink>{rowData.value}</MuiLink>
-          </NextLink>
-        );
+
+        if (abilities.can(Actions.Update, Subjects.Users)) {
+          return (
+            <NextLink href={`${router.pathname}/${rowData.id}`} passHref>
+              <MuiLink>{rowData.value}</MuiLink>
+            </NextLink>
+          );
+        }
+
+        return rowData.value;
       },
     },
     {
@@ -60,12 +68,18 @@ export default function getPeopleColumns(
       headerName: 'Ações',
       type: 'actions',
       getActions: (params: GridRowParams) => [
-        <GridActionsCellItem
+        <Can
+          I={Actions.Delete}
+          an={Subjects.People}
+          ability={abilities}
           key={params.id}
-          icon={<DeleteIcon />}
-          onClick={() => handleDelete(params.id)}
-          label="Delete"
-        />,
+        >
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            onClick={() => handleDelete(params.id)}
+            label="Delete"
+          />
+        </Can>,
       ],
     },
   ];
