@@ -1,5 +1,6 @@
 import { Can } from '@casl/react';
 import { Box, Grid, Skeleton } from '@mui/material';
+import clearFilters from '@utils/clearFilters';
 import sortList from '@utils/sortList';
 import { usePeopleRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
@@ -10,8 +11,11 @@ import nookies from 'nookies';
 import { useEffect } from 'react';
 import { Actions, Subjects } from 'types';
 
+import { Filters } from '@components/Filters';
 import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
+
+import { buildFilters, filters } from '@modules/people/filters';
 
 import { Breadcrumb } from '@euk-labs/componentz';
 import { Identifier, useList } from '@euk-labs/fetchx';
@@ -45,6 +49,18 @@ function Index() {
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Breadcrumb />
+        </Grid>
+
+        <Grid item xs={12}>
+          <Filters
+            filters={filters}
+            onFilter={(filters) => {
+              buildFilters(filters, peopleList.filters);
+              peopleList.fetch();
+            }}
+            onClear={() => clearFilters(peopleList.filters)}
+            onRefresh={peopleList.fetch}
+          />
         </Grid>
 
         <Grid item xs={12}>
