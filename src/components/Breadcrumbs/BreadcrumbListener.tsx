@@ -1,5 +1,6 @@
 import { getPages } from 'config/pages';
 import { useUserStore } from 'hooks/stores';
+import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
@@ -7,7 +8,7 @@ import { getBreadcrumbPaths } from '@components/Breadcrumbs/getBreadcrumbPaths';
 
 import { useUIStore } from '@euk-labs/componentz';
 
-export const BreadcrumbListener = () => {
+function BreadcrumbListener() {
   const uiStore = useUIStore();
   const userStore = useUserStore();
   const router = useRouter();
@@ -25,4 +26,6 @@ export const BreadcrumbListener = () => {
   }, [router.pathname, userStore.abilities]); // eslint-disable-line
 
   return null;
-};
+}
+
+export default observer(BreadcrumbListener);

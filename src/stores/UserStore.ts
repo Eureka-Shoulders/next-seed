@@ -29,6 +29,8 @@ export interface UserStoreType {
   get isLogged(): boolean;
 }
 
+// TODO: add an isLogged property to know when the user is authenticated and authorized
+
 class UserStore implements UserStoreType {
   constructor(private apiService: HttpService) {
     makeAutoObservable(this, {}, { autoBind: true });

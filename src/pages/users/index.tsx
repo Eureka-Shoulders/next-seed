@@ -1,14 +1,19 @@
+import { Can } from '@casl/react';
 import { Box, Grid, Skeleton } from '@mui/material';
+import clearFilters from '@utils/clearFilters';
 import setFilter from '@utils/setFilter';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import usersColumns from 'modules/users/columns';
 import { useEffect } from 'react';
-import { User } from 'types';
+import { Actions, Subjects, User } from 'types';
 
+import { Filters } from '@components/Filters';
 import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
+
+import { buildFilters, filters } from '@modules/users/filters';
 
 import { Breadcrumb } from '@euk-labs/componentz';
 import { Identifier, useList } from '@euk-labs/fetchx';
@@ -40,6 +45,10 @@ function Index() {
     }
   }, [usersList.page, userStore.isLogged]); // eslint-disable-line
 
+  if (!userStore.abilities || !userStore.isLogged) {
+    return <Skeleton variant="rectangular" width="100%" height={500} />;
+  }
+
   return (
     <Box p={3} mb={10}>
       <Grid container spacing={2}>
@@ -48,24 +57,33 @@ function Index() {
         </Grid>
 
         <Grid item xs={12}>
-          {userStore.isLogged ? (
-            <MuiTable
-              page={usersList.page - 1}
-              pageSize={10}
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              columns={usersColumns(userStore.abilities!, handleDelete)}
-              rows={usersList.list}
-              isLoading={usersList.loading}
-              totalCount={usersList.totalCount}
-              onPageChange={(page) => usersList.setPage(page + 1)}
-            />
-          ) : (
-            <Skeleton variant="rectangular" width="100%" height={400} />
-          )}
+          <Filters
+            filters={filters}
+            onFilter={(filters) => {
+              buildFilters(filters, usersList.filters);
+              usersList.fetch();
+            }}
+            onClear={() => clearFilters(usersList.filters)}
+            onRefresh={usersList.fetch}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <MuiTable
+            page={usersList.page - 1}
+            pageSize={10}
+            columns={usersColumns(userStore.abilities, handleDelete)}
+            rows={usersList.list}
+            isLoading={usersList.loading}
+            totalCount={usersList.totalCount}
+            onPageChange={(page) => usersList.setPage(page + 1)}
+          />
         </Grid>
       </Grid>
 
-      <NewEntityButton />
+      <Can I={Actions.Create} a={Subjects.Users} ability={userStore.abilities}>
+        <NewEntityButton />
+      </Can>
     </Box>
   );
 }
