@@ -7,8 +7,13 @@ export function buildInitialValues(columns: GridColDef[]) {
   const initialValues: { [key: string]: unknown } = {};
 
   columns.forEach((column) => {
-    if (column.filterable || column.filterable === undefined)
-      initialValues[column.field] = '';
+    if (column.filterable || column.filterable === undefined) {
+      if (column.type === 'date') {
+        return (initialValues[column.field] = null);
+      }
+
+      return (initialValues[column.field] = '');
+    }
   });
 
   return initialValues;
