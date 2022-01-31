@@ -2,6 +2,7 @@ import AutocompleteSchema from '@config/autocomplete.schema';
 import ERROR_MESSAGES from '@config/messages';
 import * as zod from 'zod';
 
+// TODO: fix contact type validation
 export const NewPersonSchema = zod.object({
   name: zod.string().min(1, ERROR_MESSAGES.required),
   identifier: zod.string().min(1, ERROR_MESSAGES.required),
