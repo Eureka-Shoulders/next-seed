@@ -3,8 +3,7 @@ import ERROR_MESSAGES from '@config/messages';
 import validateCPForCNPJ from '@utils/validateCPForCNPJ';
 import * as zod from 'zod';
 
-import { validateCPF } from '@euk-labs/beltz';
-
+// TODO: fix contact type validation
 export const NewPersonSchema = zod.object({
   name: zod.string().min(1, ERROR_MESSAGES.required),
   type: zod
