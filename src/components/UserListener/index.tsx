@@ -27,7 +27,7 @@ function UserListener({ isPublicPage }: UserListenerProps) {
 
   useEffect(() => {
     if (!isPublicPage && userStore.user && userStore.abilities) {
-      const pages = getPages(userStore.abilities);
+      const pages = getPages(userStore.abilities, router);
       const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
       const lastPath = breadcrumbPaths.pop();
 

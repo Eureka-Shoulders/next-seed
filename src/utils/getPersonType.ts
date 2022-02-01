@@ -1,3 +1,4 @@
+// TODO: translate this
 export default function getPersonType(value: string) {
   if (value.length === 11) {
     return { value: 'F', label: 'Física' };

@@ -54,6 +54,7 @@ export function withSSRAuth<P>(
 
           can.forEach(({ action, subject }) => {
             if (userAbilities.cannot(action, subject))
+              // TODO: translate this
               throw new Error('Not Authorized');
           });
         }

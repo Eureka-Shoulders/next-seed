@@ -1,5 +1,6 @@
 import { GridLocaleText } from '@mui/x-data-grid';
 
+// TODO: translate this
 const tableLocaleText: Partial<GridLocaleText> = {
   columnMenuUnsort: 'Desfazer ordenação',
   columnMenuSortAsc: 'Ordem Crescente',

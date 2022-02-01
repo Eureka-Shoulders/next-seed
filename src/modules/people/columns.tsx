@@ -9,20 +9,22 @@ import {
   GridValueFormatterParams,
 } from '@mui/x-data-grid';
 import { format } from 'date-fns';
+import getLocaleString from 'locales/getLocaleString';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import { Actions, AppAbility, Subjects } from 'types';
 
 import { Identifier } from '@euk-labs/fetchx';
 
 export default function getPeopleColumns(
   abilities: AppAbility,
-  handleDelete: (id: Identifier) => Promise<void>
+  handleDelete: (id: Identifier) => Promise<void>,
+  router: NextRouter
 ): (GridActionsColDef | GridColDef)[] {
   return [
     {
       field: 'name',
-      headerName: 'Nome',
+      headerName: getLocaleString('name', router),
       minWidth: 200,
       flex: 1,
       renderCell: (rowData) => {
@@ -42,13 +44,13 @@ export default function getPeopleColumns(
     },
     {
       field: 'identifier',
-      headerName: 'CPF/CNPJ',
+      headerName: getLocaleString('identifier', router),
       minWidth: 200,
       flex: 1,
     },
     {
       field: 'birthDate',
-      headerName: 'Data de Nascimento',
+      headerName: getLocaleString('birthDate', router),
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) =>
@@ -56,7 +58,7 @@ export default function getPeopleColumns(
     },
     {
       field: 'createdAt',
-      headerName: 'Criado em',
+      headerName: getLocaleString('createdAt', router),
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) => {
@@ -65,7 +67,7 @@ export default function getPeopleColumns(
     },
     {
       field: 'actions',
-      headerName: 'Ações',
+      headerName: getLocaleString('actions', router),
       type: 'actions',
       getActions: (params: GridRowParams) => [
         <Can
@@ -77,7 +79,7 @@ export default function getPeopleColumns(
           <GridActionsCellItem
             icon={<DeleteIcon />}
             onClick={() => handleDelete(params.id)}
-            label="Delete"
+            label={getLocaleString('delete', router)}
           />
         </Can>,
       ],

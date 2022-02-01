@@ -29,6 +29,7 @@ function getInitialValues(user: User) {
   };
 }
 
+// TODO: translate this
 const ProfileCard = observer(() => {
   const userStore = useUserStore();
 

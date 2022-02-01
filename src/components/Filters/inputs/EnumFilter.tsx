@@ -1,7 +1,10 @@
 import { Box, Button, Grid } from '@mui/material';
+import getLocaleString from 'locales/getLocaleString';
+import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 
 import TabPanel from '@components/TabPanel';
+import Trans from '@components/Trans';
 
 import { FXCheckboxGroup } from '@euk-labs/formix-mui';
 
@@ -14,12 +17,14 @@ interface EnumFilterProps {
   options: FilterEnum[];
 }
 
+// TODO: test this
 export default function EnumFilter({
   name,
   activeTab,
   index,
   options,
 }: EnumFilterProps) {
+  const router = useRouter();
   const checkboxOptions = useMemo(
     () =>
       options.map((option) => ({
@@ -35,13 +40,13 @@ export default function EnumFilter({
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <FXCheckboxGroup
-              label="Escolha as opções"
+              label={getLocaleString('filters.enum.label', router)}
               options={checkboxOptions}
             />
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">
-              Aplicar
+              <Trans id="filters.submit" />
             </Button>
           </Grid>
         </Grid>

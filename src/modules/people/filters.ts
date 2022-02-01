@@ -1,29 +1,33 @@
 import { add, format } from 'date-fns';
+import getLocaleString from 'locales/getLocaleString';
+import { NextRouter } from 'next/router';
 
 import { Filter } from '@components/Filters/types';
 
-export const filters: Filter[] = [
-  {
-    field: 'name',
-    title: 'Nome',
-    type: 'string',
-  },
-  {
-    field: 'identifier',
-    title: 'Identificador',
-    type: 'string',
-  },
-  {
-    field: 'birthDate',
-    title: 'Data de Nascimento',
-    type: 'date',
-  },
-  {
-    field: 'createdAt',
-    title: 'Data de criação',
-    type: 'date',
-  },
-];
+export function getFilters(router: NextRouter): Filter[] {
+  return [
+    {
+      field: 'name',
+      title: getLocaleString('name', router),
+      type: 'string',
+    },
+    {
+      field: 'identifier',
+      title: getLocaleString('identifier', router),
+      type: 'string',
+    },
+    {
+      field: 'birthDate',
+      title: getLocaleString('birthDate', router),
+      type: 'date',
+    },
+    {
+      field: 'createdAt',
+      title: getLocaleString('createdAt', router),
+      type: 'date',
+    },
+  ];
+}
 
 export function buildFilters(
   filters: Record<string, unknown>,

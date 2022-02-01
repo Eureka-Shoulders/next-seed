@@ -1,6 +1,9 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
+import getLocaleString from 'locales/getLocaleString';
+import { useRouter } from 'next/router';
 
 import TabPanel from '@components/TabPanel';
+import Trans from '@components/Trans';
 
 import { FXMaskedField } from '@euk-labs/formix-mui';
 
@@ -11,24 +14,28 @@ interface CPFFilterProps {
 }
 
 export default function CPFFilter({ name, activeTab, index }: CPFFilterProps) {
+  const router = useRouter();
+
   return (
     <TabPanel value={activeTab} index={index}>
       <Box p={2}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography>Busque por um determinado CPF</Typography>
+            <Typography>
+              <Trans id="filters.cpf.title" />
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <FXMaskedField
               mask="999.999.999-99"
-              label="Pesquisar CPF"
+              label={getLocaleString('filters.cpf.label', router)}
               name={name}
             />
           </Grid>
 
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">
-              Aplicar
+              <Trans id="filters.submit" />
             </Button>
           </Grid>
         </Grid>

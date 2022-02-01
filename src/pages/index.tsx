@@ -8,6 +8,7 @@ import React from 'react';
 import { Breadcrumb } from '@euk-labs/componentz';
 
 // TODO: make a beautiful design for the homepage
+// TODO: translate this
 const Home: NextPage = () => {
   const themeStore = useThemeStore();
 

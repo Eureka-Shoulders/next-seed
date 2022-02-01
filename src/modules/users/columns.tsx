@@ -9,23 +9,26 @@ import {
   GridValueFormatterParams,
 } from '@mui/x-data-grid';
 import { format } from 'date-fns';
+import getLocaleString from 'locales/getLocaleString';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
+import { NextRouter, useRouter } from 'next/router';
 import { Actions, AppAbility, Subjects } from 'types';
 
 import { Identifier } from '@euk-labs/fetchx';
 
 function getUserColumns(
   abilities: AppAbility,
-  handleDelete: (id: Identifier) => Promise<void>
+  handleDelete: (id: Identifier) => Promise<void>,
+  router: NextRouter
 ): (GridActionsColDef | GridColDef)[] {
   return [
     {
       field: 'name',
-      headerName: 'Nome',
+      headerName: getLocaleString('name', router),
       minWidth: 200,
       flex: 1,
-      valueGetter: (params) => params.row.person?.name || 'Sem nome',
+      valueGetter: (params) =>
+        params.row.person?.name || getLocaleString('noName', router),
       renderCell: (rowData) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const router = useRouter();
@@ -43,13 +46,13 @@ function getUserColumns(
     },
     {
       field: 'email',
-      headerName: 'E-mail',
+      headerName: getLocaleString('email', router),
       minWidth: 200,
       flex: 1,
     },
     {
       field: 'createdAt',
-      headerName: 'Criado em',
+      headerName: getLocaleString('createdAt', router),
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) =>
@@ -57,7 +60,7 @@ function getUserColumns(
     },
     {
       field: 'actions',
-      headerName: 'Ações',
+      headerName: getLocaleString('actions', router),
       type: 'actions',
       getActions: (params: GridRowParams) => [
         <Can
@@ -69,7 +72,7 @@ function getUserColumns(
           <GridActionsCellItem
             icon={<DeleteIcon />}
             onClick={() => handleDelete(params.id)}
-            label="Delete"
+            label={getLocaleString('delete', router)}
           />
         </Can>,
       ],

@@ -1,6 +1,9 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import axios from 'axios';
+import getLocaleString from 'locales/getLocaleString';
 import { useRouter } from 'next/router';
+
+import Trans from '@components/Trans';
 
 import { useUsersRepository } from '@hooks/repositories';
 
@@ -24,8 +27,7 @@ export default function RecoverPasswordForm() {
       await usersRepository.recoverPassword(values.email);
 
       uiStore.snackbar.show({
-        message:
-          'Recuperação enviada com sucesso! Confira sua caixa de entrada.',
+        message: getLocaleString('feedback.recoverPassword', router),
         severity: 'success',
       });
 
@@ -35,7 +37,7 @@ export default function RecoverPasswordForm() {
         uiStore.snackbar.show({
           message:
             error.response?.data.message ||
-            'Ocorreu um erro ao solicitar recuperação de senha!',
+            getLocaleString('errors.recoverPassword', router),
           severity: 'error',
         });
     }
@@ -51,7 +53,7 @@ export default function RecoverPasswordForm() {
             component="h1"
             fontWeight={700}
           >
-            Recuperar Senha
+            <Trans id="recoverPassword" />
           </Typography>
         </Grid>
 
@@ -63,16 +65,23 @@ export default function RecoverPasswordForm() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <FXTextField name="email" label="E-mail" type="email" />
+                <FXTextField
+                  name="email"
+                  label={getLocaleString('email', router)}
+                  type="email"
+                />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
-                <FXSubmitButton fullWidth label="Recuperar" />
+                <FXSubmitButton
+                  fullWidth
+                  label={getLocaleString('recover', router)}
+                />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
                 <Button fullWidth color="primary" type="submit" href="/login">
-                  Voltar
+                  <Trans id="goBack" />
                 </Button>
               </Grid>
             </Grid>

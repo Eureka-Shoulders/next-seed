@@ -43,6 +43,9 @@ if (publicRuntimeConfig.useMirage) {
 
 enableStaticRendering(typeof window === 'undefined');
 
+// TODO: inject locale and default locale on inversify container
+// TODO: translate this
+
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const showAppBar = pageProps.showAppBar ?? true;

@@ -1,13 +1,15 @@
 import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
+import getLocaleString from 'locales/getLocaleString';
 import { UserSchema } from 'modules/users/user.schema';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 import FXCPFCNPJField from '@components/FXCPFCNPJField';
+import Trans from '@components/Trans';
 
-import { personTypes } from '@modules/people/types';
+import { getPersonTypes } from '@modules/people/types';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
@@ -43,7 +45,7 @@ export default function RegisterForm() {
       await usersRepository.register(values);
 
       uiStore.snackbar.show({
-        message: 'Usuário criado com sucesso',
+        message: getLocaleString('feedback.users.created', router),
         severity: 'success',
       });
 
@@ -53,7 +55,7 @@ export default function RegisterForm() {
         uiStore.snackbar.show({
           message:
             error.response?.data.message ||
-            'Ocorreu um erro ao criar o usuário!',
+            getLocaleString('errors.userCreation', router),
           severity: 'error',
         });
     }
@@ -69,7 +71,7 @@ export default function RegisterForm() {
             component="h1"
             fontWeight={700}
           >
-            Criar conta
+            <Trans id="createAccount" />
           </Typography>
         </Grid>
 
@@ -81,16 +83,23 @@ export default function RegisterForm() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <FXTextField name="email" label="E-mail" type="email" />
+                <FXTextField
+                  name="email"
+                  label={getLocaleString('email', router)}
+                  type="email"
+                />
               </Grid>
               <Grid item xs={12}>
-                <FXTextField name="person.name" label="Nome" />
+                <FXTextField
+                  name="person.name"
+                  label={getLocaleString('name', router)}
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FXAutocomplete
-                  options={personTypes}
+                  options={getPersonTypes(router)}
                   name="person.type"
-                  label="Tipo de pessoa"
+                  label={getLocaleString('personType', router)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -102,26 +111,34 @@ export default function RegisterForm() {
               <Grid item xs={12}>
                 <FXDatePicker
                   name="person.birthDate"
-                  label="Data de Nascimento"
+                  label={getLocaleString('birthDate', router)}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <FXPasswordField name="password" label="Senha" />
+                <FXPasswordField
+                  name="password"
+                  label={getLocaleString('password', router)}
+                />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FXPasswordField
                   name="confirmPassword"
-                  label="Confirmar Senha"
+                  label={getLocaleString('confirmPassword', router)}
                 />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
-                <FXSubmitButton fullWidth label="Cadastrar" />
+                <FXSubmitButton
+                  fullWidth
+                  label={getLocaleString('register', router)}
+                />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
                 <NextLink href="/login" passHref>
-                  <MuiLink>Já tem uma conta?</MuiLink>
+                  <MuiLink>
+                    <Trans id="alreadyHaveAccount" />
+                  </MuiLink>
                 </NextLink>
               </Grid>
             </Grid>

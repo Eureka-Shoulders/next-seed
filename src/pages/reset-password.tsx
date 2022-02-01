@@ -21,6 +21,7 @@ const initialValues = {
   password: '',
 };
 
+// TODO: translate this
 const ResetPassword: NextPage<ResetPasswordProps> = () => {
   const uiStore = useUIStore();
   const router = useRouter();

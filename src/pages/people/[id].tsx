@@ -1,6 +1,7 @@
 import { Box, Grid, Paper, Tab, Tabs } from '@mui/material';
 import axios from 'axios';
 import { usePeopleRepository } from 'hooks/repositories';
+import getLocaleString from 'locales/getLocaleString';
 import { observer } from 'mobx-react-lite';
 import AddressesForm from 'modules/people/AddressesForm';
 import ContactsForm from 'modules/people/ContactsForm';
@@ -31,6 +32,7 @@ function getInitialValues(person: Person): UpdatePersonSchema {
   };
 }
 
+// TODO: translate this
 function Index() {
   const uiStore = useUIStore();
   const router = useRouter();
@@ -60,7 +62,7 @@ function Index() {
       });
 
       uiStore.snackbar.show({
-        message: 'Pessoa atualizada com sucesso!',
+        message: getLocaleString('feedback.people.update'),
         severity: 'success',
       });
       router.push('/people');
@@ -69,7 +71,7 @@ function Index() {
         uiStore.snackbar.show({
           message:
             error.response?.data.message ||
-            'Ocorreu um erro ao atualizar a pessoa!',
+            getLocaleString('errors.personUpdate'),
           severity: 'error',
         });
       }

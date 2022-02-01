@@ -15,7 +15,7 @@ function BreadcrumbListener() {
 
   useEffect(() => {
     if (userStore.abilities) {
-      const pages = getPages(userStore.abilities);
+      const pages = getPages(userStore.abilities, router);
       const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
 
       uiStore.breadcrumb.setPaths(breadcrumbPaths);

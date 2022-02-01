@@ -6,6 +6,7 @@ import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import usersColumns from 'modules/users/columns';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Actions, Subjects, User } from 'types';
 
@@ -13,12 +14,14 @@ import { Filters } from '@components/Filters';
 import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
 
-import { buildFilters, filters } from '@modules/users/filters';
+import { buildFilters, getFilters } from '@modules/users/filters';
 
 import { Breadcrumb } from '@euk-labs/componentz';
 import { Identifier, useList } from '@euk-labs/fetchx';
 
+// TODO: translate this
 function Index() {
+  const router = useRouter();
   const userStore = useUserStore();
   const usersRepository = useUsersRepository();
   const usersList = useList<User>(usersRepository, {
@@ -58,7 +61,7 @@ function Index() {
 
         <Grid item xs={12}>
           <Filters
-            filters={filters}
+            filters={getFilters(router)}
             onFilter={(filters) => {
               buildFilters(filters, usersList.filters);
               usersList.fetch();
@@ -72,7 +75,7 @@ function Index() {
           <MuiTable
             page={usersList.page - 1}
             pageSize={10}
-            columns={usersColumns(userStore.abilities, handleDelete)}
+            columns={usersColumns(userStore.abilities, handleDelete, router)}
             rows={usersList.list}
             isLoading={usersList.loading}
             totalCount={usersList.totalCount}

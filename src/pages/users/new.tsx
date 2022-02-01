@@ -8,7 +8,7 @@ import { dissocPath, omit, pipe } from 'ramda';
 
 import FXCPFCNPJField from '@components/FXCPFCNPJField';
 
-import { personTypes } from '@modules/people/types';
+import { getPersonTypes } from '@modules/people/types';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
@@ -37,6 +37,7 @@ const initialValues = {
   confirmPassword: '',
 };
 
+// TODO: translate this
 function Index() {
   const router = useRouter();
   const uiStore = useUIStore();
@@ -86,7 +87,7 @@ function Index() {
                 </Grid>
                 <Grid item xs={12}>
                   <FXAutocomplete
-                    options={personTypes}
+                    options={getPersonTypes(router)}
                     name="person.type"
                     label="Tipo de pessoa"
                   />

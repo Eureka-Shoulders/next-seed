@@ -26,6 +26,7 @@ const initialValues = {
   addresses: [],
 };
 
+// TODO: translate this
 function Index() {
   const [activeTab, setActiveTab] = useState(0);
   const router = useRouter();

@@ -1,4 +1,4 @@
-import { ThemeOptions, alpha, lighten } from '@mui/material';
+import { ThemeOptions, lighten } from '@mui/material';
 import { blue, grey } from '@mui/material/colors';
 
 import baseTheme from './base.theme';

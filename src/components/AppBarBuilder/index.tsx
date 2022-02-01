@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
+import Trans from '@components/Trans';
+
 import { useUIStore } from '@euk-labs/componentz';
 
 import AppBarHeader from './AppBarHeader';
@@ -24,7 +26,7 @@ function AppBarBuilder() {
         height={191 / 5}
       />
       <Typography ml={2} variant="h6" noWrap fontWeight="bold">
-        Shoulders
+        <Trans id="title" />
       </Typography>
     </>
   );
@@ -39,7 +41,7 @@ function AppBarBuilder() {
 
   useEffect(() => {
     if (userStore.abilities) {
-      const pages = getPages(userStore.abilities);
+      const pages = getPages(userStore.abilities, router);
 
       uiStore.appBar.setPages(pages);
     }

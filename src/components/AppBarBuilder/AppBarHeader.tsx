@@ -4,6 +4,8 @@ import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
+import Trans from '@components/Trans';
+
 function AppBarHeader() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -25,7 +27,7 @@ function AppBarHeader() {
   return (
     <>
       <Typography flexGrow={1} variant="h5">
-        Shoulders
+        <Trans id="title" />
       </Typography>
 
       <IconButton onClick={handleClick}>
@@ -33,8 +35,12 @@ function AppBarHeader() {
       </IconButton>
 
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={goToProfile}>Perfil</MenuItem>
-        <MenuItem onClick={userStore.logout}>Sair</MenuItem>
+        <MenuItem onClick={goToProfile}>
+          <Trans id="menu.profile" />
+        </MenuItem>
+        <MenuItem onClick={userStore.logout}>
+          <Trans id="menu.logout" />
+        </MenuItem>
       </Menu>
     </>
   );

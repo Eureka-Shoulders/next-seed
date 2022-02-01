@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 
 import FXCPFCNPJField from '@components/FXCPFCNPJField';
 
-import { personTypes } from '@modules/people/types';
+import { getPersonTypes } from '@modules/people/types';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
@@ -22,6 +22,7 @@ import {
   FXTextField,
 } from '@euk-labs/formix-mui';
 
+// TODO: translate this
 function Index() {
   const uiStore = useUIStore();
   const router = useRouter();
@@ -86,7 +87,7 @@ function Index() {
                   </Grid>
                   <Grid item xs={12}>
                     <FXAutocomplete
-                      options={personTypes}
+                      options={getPersonTypes(router)}
                       name="person.type"
                       label="Tipo de pessoa"
                     />

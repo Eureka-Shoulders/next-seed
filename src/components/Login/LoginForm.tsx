@@ -1,5 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 
+import Trans from '@components/Trans';
+
 export default function LoginForm() {
   return (
     <Grid
@@ -18,7 +20,7 @@ export default function LoginForm() {
           justifyContent="center"
           fontWeight={700}
         >
-          Login
+          <Trans id="login" />
         </Typography>
       </Grid>
     </Grid>

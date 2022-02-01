@@ -19,6 +19,7 @@ export const NewPersonSchema = zod.object({
       (identifier) => validateCPForCNPJ(identifier.replace(/\D+/g, '')),
       ERROR_MESSAGES.invalid_field
     ),
+  // TODO: make it accept a string that is a valid date
   birthDate: zod
     .date()
     .nullable()
