@@ -1,3 +1,5 @@
+import When from './When';
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -15,7 +17,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`tab-${index}`}
       {...other}
     >
-      {value === index && children}
+      <When is={value === index}>{children}</When>
     </div>
   );
 }
