@@ -19,6 +19,7 @@ import { FXSubmitButton } from '@euk-labs/formix-mui';
 
 const initialValues = {
   name: '',
+  type: null,
   identifier: '',
   birthDate: null,
   contacts: [],

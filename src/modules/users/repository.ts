@@ -2,10 +2,11 @@ import { AxiosResponse } from 'axios';
 import TYPES from 'containers/global.types';
 import { decorate, inject, injectable } from 'inversify';
 import { LoginSchema } from 'modules/login/login.schema';
+import { dissocPath, omit, pipe } from 'ramda';
 
 import { HttpService, Repository } from '@euk-labs/fetchx';
 
-import { NewUserSchema } from './user.schema';
+import { UserSchema } from './user.schema';
 
 interface LoginResponse {
   access_token: string;
@@ -21,12 +22,13 @@ class UsersRepository extends Repository {
     super(apiService, { path: '/users' });
   }
 
-  register(values: Omit<NewUserSchema, 'confirmPassword'>) {
-    return this.apiService.client.post<
-      unknown,
-      AxiosResponse<unknown>,
-      Omit<NewUserSchema, 'confirmPassword'>
-    >('/users/register', values);
+  register(values: UserSchema) {
+    const newUser = pipe(
+      omit(['confirmPassword']),
+      dissocPath(['person', 'type'])
+    )(values);
+
+    return this.apiService.client.post('/users/register', newUser);
   }
 
   login(email: string, password: string) {

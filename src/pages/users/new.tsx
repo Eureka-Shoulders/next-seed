@@ -2,12 +2,18 @@ import { Box, Grid, Paper } from '@mui/material';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
-import { NewUserSchema } from 'modules/users/user.schema';
+import { UserSchema } from 'modules/users/user.schema';
 import { useRouter } from 'next/router';
+import { dissocPath, omit, pipe } from 'ramda';
+
+import FXCPFCNPJField from '@components/FXCPFCNPJField';
+
+import { personTypes } from '@modules/people/types';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import {
+  FXAutocomplete,
   FXDatePicker,
   FXPasswordField,
   FXSubmitButton,
@@ -20,7 +26,11 @@ const initialValues = {
   avatar: null,
   person: {
     name: '',
+    type: null,
     identifier: '',
+    birthDate: null,
+    addresses: [],
+    contacts: [],
   },
   email: '',
   password: '',
@@ -32,18 +42,18 @@ function Index() {
   const uiStore = useUIStore();
   const usersRepository = useUsersRepository();
 
-  async function handleSubmit(values: NewUserSchema) {
+  async function handleSubmit(values: UserSchema) {
     try {
-      await usersRepository.create<
-        Partial<NewUserSchema>,
-        Omit<NewUserSchema, 'confirmPassword'> & { id: string }
-      >({ ...values, confirmPassword: undefined });
+      const newUser = pipe(
+        omit(['confirmPassword']),
+        dissocPath(['person', 'type'])
+      )(values);
 
+      await usersRepository.create(newUser);
       uiStore.snackbar.show({
         message: 'Usuário criado com sucesso',
         severity: 'success',
       });
-
       router.push('/users');
     } catch (error) {
       if (axios.isAxiosError(error))
@@ -67,17 +77,24 @@ function Index() {
           <Paper variant="outlined" sx={{ p: 2 }}>
             <Formix
               initialValues={initialValues}
-              zodSchema={NewUserSchema}
+              zodSchema={UserSchema}
               onSubmit={handleSubmit}
             >
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   <FXTextField name="person.name" label="Nome" />
                 </Grid>
-                <Grid item xs={6}>
-                  <FXTextField
+                <Grid item xs={12}>
+                  <FXAutocomplete
+                    options={personTypes}
+                    name="person.type"
+                    label="Tipo de pessoa"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FXCPFCNPJField
                     name="person.identifier"
-                    label="Identificador (CPF, CNPJ...)"
+                    typeField="person.type"
                   />
                 </Grid>
                 <Grid item xs={6}>

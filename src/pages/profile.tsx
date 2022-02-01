@@ -1,10 +1,11 @@
 import { Avatar, Box, Grid, Paper, Skeleton, Typography } from '@mui/material';
+import getPersonType from '@utils/getPersonType';
 import { withSSRAuth } from '@utils/withSSRAuth';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
-import { UpdateUserSchema } from 'modules/users/user.schema';
+import { UserSchema } from 'modules/users/user.schema';
 import { useEffect } from 'react';
 import { Actions, Subjects, User } from 'types';
 
@@ -14,16 +15,18 @@ import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 
 function getInitialValues(user: User) {
-  const initialValues: UpdateUserSchema = {
-    avatar: user.avatar,
-    email: user.email,
+  return {
+    ...user,
     person: {
-      name: user.person.name,
-      identifier: user.person.identifier,
+      ...user.person,
+      birthDate: new Date(user.person.birthDate),
+      type: getPersonType(user.person.identifier),
+      contacts: [],
+      addresses: [],
     },
+    password: user.password || '',
+    confirmPassword: '',
   };
-
-  return initialValues;
 }
 
 const ProfileCard = observer(() => {
@@ -58,7 +61,7 @@ function Index() {
     }
   }, [userStore.user]); // eslint-disable-line
 
-  async function handleSubmit(values: UpdateUserSchema) {
+  async function handleSubmit(values: UserSchema) {
     try {
       await userEntity.update(values);
       uiStore.snackbar.show({
@@ -104,7 +107,7 @@ function Index() {
                 <Formix
                   initialValues={getInitialValues(userStore.user)}
                   onSubmit={handleSubmit}
-                  zodSchema={UpdateUserSchema}
+                  zodSchema={UserSchema}
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={6}>

@@ -12,7 +12,7 @@ declare module '@mui/material/styles' {
 
 const baseTheme: ThemeOptions = {
   typography: {
-    fontFamily: '"Inter", "Helvetica", sans-serif',
+    fontFamily: '"Roboto", "Helvetica", sans-serif',
   },
 };
 
