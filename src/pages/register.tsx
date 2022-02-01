@@ -6,7 +6,7 @@ import LoginBanner from '@components/Login/LoginBanner';
 
 const Register: NextPage = () => {
   return (
-    <Grid container minHeight="100vh">
+    <Grid container height="100vh">
       <Grid
         item
         xs={6}
@@ -24,6 +24,10 @@ const Register: NextPage = () => {
         display="flex"
         alignItems="center"
         justifyContent="center"
+        sx={{
+          overflowY: 'auto',
+        }}
+        maxHeight="100vh"
       >
         <RegisterForm />
       </Grid>

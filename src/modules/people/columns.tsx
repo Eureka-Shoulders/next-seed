@@ -34,7 +34,7 @@ export default function getPeopleColumns(
     },
     {
       field: 'identifier',
-      headerName: 'Identificador',
+      headerName: 'CPF/CNPJ',
       minWidth: 200,
       flex: 1,
     },

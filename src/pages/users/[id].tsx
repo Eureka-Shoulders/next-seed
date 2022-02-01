@@ -2,14 +2,21 @@ import { Box, Grid, Paper } from '@mui/material';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
-import { UpdateUserSchema } from 'modules/users/user.schema';
+import { UserSchema } from 'modules/users/user.schema';
 import { useRouter } from 'next/router';
+import { dissocPath, omit, pipe } from 'ramda';
 import { useEffect } from 'react';
+
+import FXCPFCNPJField from '@components/FXCPFCNPJField';
+
+import { personTypes } from '@modules/people/types';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
 import {
+  FXAutocomplete,
+  FXDatePicker,
   FXPasswordField,
   FXSubmitButton,
   FXTextField,
@@ -27,16 +34,14 @@ function Index() {
   const usersRepository = useUsersRepository();
   const userEntity = useEntity(usersRepository, id as string);
 
-  async function handleSubmit(values: UpdateUserSchema) {
+  async function handleSubmit(values: UserSchema) {
     try {
-      await userEntity.update({
-        email: values.email,
-        password: values.password,
-        person: {
-          name: values.person.name,
-        },
-      });
+      const updatedUser = pipe(
+        omit(['confirmPassword']),
+        dissocPath(['person', 'type'])
+      )(values);
 
+      await userEntity.update(updatedUser);
       uiStore.snackbar.show({
         message: 'Usuário atualizado com sucesso!',
         severity: 'success',
@@ -71,18 +76,37 @@ function Index() {
           <Grid item xs={12}>
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Formix
-                initialValues={userEntity.data as UpdateUserSchema}
-                zodSchema={UpdateUserSchema}
+                initialValues={userEntity.data as UserSchema}
+                zodSchema={UserSchema}
                 onSubmit={handleSubmit}
               >
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
                     <FXTextField name="person.name" label="Nome" />
                   </Grid>
+                  <Grid item xs={12}>
+                    <FXAutocomplete
+                      options={personTypes}
+                      name="person.type"
+                      label="Tipo de pessoa"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FXCPFCNPJField
+                      name="person.identifier"
+                      typeField="person.type"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FXDatePicker
+                      name="person.birthDate"
+                      label="Data de Nascimento"
+                      inputFormat="dd/MM/yyyy"
+                    />
+                  </Grid>
                   <Grid item xs={6}>
                     <FXTextField name="email" label="E-mail" />
                   </Grid>
-
                   <Grid item xs={6}>
                     <FXPasswordField name="password" label="Senha" />
                   </Grid>

@@ -1,13 +1,19 @@
 import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
-import { NewUserSchema } from 'modules/users/user.schema';
+import { UserSchema } from 'modules/users/user.schema';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+
+import FXCPFCNPJField from '@components/FXCPFCNPJField';
+
+import { personTypes } from '@modules/people/types';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import {
+  FXAutocomplete,
+  FXDatePicker,
   FXPasswordField,
   FXSubmitButton,
   FXTextField,
@@ -17,6 +23,10 @@ const initialValues = {
   person: {
     name: '',
     identifier: '',
+    type: null,
+    birthDate: null,
+    addresses: [],
+    contacts: [],
   },
   email: '',
   password: '',
@@ -28,7 +38,7 @@ export default function RegisterForm() {
   const router = useRouter();
   const usersRepository = useUsersRepository();
 
-  async function handleSubmit({ confirmPassword, ...values }: NewUserSchema) {
+  async function handleSubmit(values: UserSchema) {
     try {
       await usersRepository.register(values);
 
@@ -66,7 +76,7 @@ export default function RegisterForm() {
         <Grid item xs={12} sm={8}>
           <Formix
             initialValues={initialValues}
-            zodSchema={NewUserSchema}
+            zodSchema={UserSchema}
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>
@@ -76,16 +86,29 @@ export default function RegisterForm() {
               <Grid item xs={12}>
                 <FXTextField name="person.name" label="Nome" />
               </Grid>
-              <Grid item xs={12}>
-                <FXTextField
+              <Grid item xs={12} sm={6}>
+                <FXAutocomplete
+                  options={personTypes}
+                  name="person.type"
+                  label="Tipo de pessoa"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <FXCPFCNPJField
                   name="person.identifier"
-                  label="Identificador (CPF, CNPJ...)"
+                  typeField="person.type"
                 />
               </Grid>
               <Grid item xs={12}>
+                <FXDatePicker
+                  name="person.birthDate"
+                  label="Data de Nascimento"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <FXPasswordField name="password" label="Senha" />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <FXPasswordField
                   name="confirmPassword"
                   label="Confirmar Senha"
