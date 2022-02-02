@@ -17,7 +17,7 @@ import { Identifier } from '@euk-labs/fetchx';
 
 function getUserColumns(
   abilities: AppAbility,
-  handleDelete: (id: Identifier) => Promise<void>
+  handleDelete: (id: Identifier) => void
 ): (GridActionsColDef | GridColDef)[] {
   return [
     {

@@ -17,7 +17,7 @@ import { Identifier } from '@euk-labs/fetchx';
 
 export default function getPeopleColumns(
   abilities: AppAbility,
-  handleDelete: (id: Identifier) => Promise<void>
+  handleDelete: (id: Identifier) => void
 ): (GridActionsColDef | GridColDef)[] {
   return [
     {

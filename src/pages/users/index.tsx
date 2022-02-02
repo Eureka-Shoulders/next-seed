@@ -9,16 +9,18 @@ import usersColumns from 'modules/users/columns';
 import { useEffect } from 'react';
 import { Actions, Subjects, User } from 'types';
 
+import DeleteContent from '@components/DialogContents/DeleteContent';
 import { Filters } from '@components/Filters';
 import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
 
 import { buildFilters, filters } from '@modules/users/filters';
 
-import { Breadcrumb } from '@euk-labs/componentz';
+import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Identifier, useList } from '@euk-labs/fetchx';
 
 function Index() {
+  const uiStore = useUIStore();
   const userStore = useUserStore();
   const usersRepository = useUsersRepository();
   const usersList = useList<User>(usersRepository, {
@@ -27,10 +29,21 @@ function Index() {
     resultsField: 'data',
   });
 
-  async function handleDelete(id: Identifier) {
+  const deleteUser = async (id: Identifier) => {
     await usersRepository.delete(id);
     usersList.fetch();
-  }
+  };
+
+  const handleDelete = (id: Identifier) => {
+    uiStore.dialog.set({
+      content: <DeleteContent />,
+      rejectLabel: 'Cancelar',
+      acceptLabel: 'Deletar',
+      onReject: () => uiStore.dialog.close(),
+      onAccept: () => deleteUser(id),
+    });
+    uiStore.dialog.open();
+  };
 
   useEffect(() => {
     if (userStore.isLogged) {
