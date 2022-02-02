@@ -16,7 +16,7 @@
 
 ## Description
 
-🚀 This ia a seed to start a NeXt application easily with useful features already configured!
+🚀 This is a seed to start a NextJS application easily with useful features already configured!
 
 _You can use our <a href="https://github.com/Eureka-Shoulders/nest-seed" target="_blank">Nest Seed</a> to improve your application_
 

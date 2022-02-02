@@ -11,6 +11,7 @@ import nookies from 'nookies';
 import { useEffect } from 'react';
 import { Actions, Subjects } from 'types';
 
+import DeleteContent from '@components/DialogContents/DeleteContent';
 import { Filters } from '@components/Filters';
 import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
@@ -19,12 +20,13 @@ import useTranslation from '@hooks/useTranslation';
 
 import { buildFilters, getFilters } from '@modules/people/filters';
 
-import { Breadcrumb } from '@euk-labs/componentz';
+import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Identifier, useList } from '@euk-labs/fetchx';
 
 function Index() {
   const { translate } = useTranslation();
   const userStore = useUserStore();
+  const uiStore = useUIStore();
   const peopleRepository = usePeopleRepository();
   const peopleList = useList(peopleRepository, {
     limit: 10,
@@ -32,10 +34,21 @@ function Index() {
     resultsField: 'data',
   });
 
-  async function handleDelete(id: Identifier) {
+  const deletePeople = async (id: Identifier) => {
     await peopleRepository.delete(id);
     peopleList.fetch();
-  }
+  };
+
+  const handleDelete = (id: Identifier) => {
+    uiStore.dialog.set({
+      content: <DeleteContent />,
+      rejectLabel: 'Cancelar',
+      acceptLabel: 'Deletar',
+      onReject: () => uiStore.dialog.close(),
+      onAccept: () => deletePeople(id),
+    });
+    uiStore.dialog.open();
+  };
 
   useEffect(() => {
     if (userStore.isLogged) {

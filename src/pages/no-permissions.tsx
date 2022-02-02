@@ -1,8 +1,23 @@
-// TODO: make a beautiful screen :)
-import useTranslation from '@hooks/useTranslation';
+import { Box } from '@mui/material';
+import type { NextPage } from 'next';
 
-export default function Index() {
-  const { translate } = useTranslation();
+import UnauthorizedShower from '@components/Unauthorized';
 
-  return <h1>{translate('errors.noPermissions')}</h1>;
-}
+const NoPermissions: NextPage = () => {
+  return (
+    <Box p={3}>
+      <UnauthorizedShower />
+    </Box>
+  );
+};
+
+export default NoPermissions;
+
+export const getStaticProps = async () => {
+  return {
+    props: {
+      showAppBar: true,
+      isPublic: true,
+    },
+  };
+};
