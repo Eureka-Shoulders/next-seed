@@ -23,6 +23,7 @@ import { buildFilters, getFilters } from '@modules/people/filters';
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Identifier, useList } from '@euk-labs/fetchx';
 
+// TODO: translate this
 function Index() {
   const { translate } = useTranslation();
   const userStore = useUserStore();

@@ -9,6 +9,7 @@ type UnauthorizedShowerProps = {
   buttonLabel?: string;
 };
 
+// TODO: translate this
 const UnauthorizedShower = (props: UnauthorizedShowerProps) => {
   const {
     title = 'Acesso negado',

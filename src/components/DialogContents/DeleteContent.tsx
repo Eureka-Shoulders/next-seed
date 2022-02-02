@@ -10,6 +10,7 @@ const StyledImage = styled('img')({
   filter: 'drop-shadow(2px 2px 10px rgba(0,0,0,0.5))',
 });
 
+// TODO: translate this
 function DeleteContent(props: DeleteContentProps) {
   const {
     title = 'Deseja mesmo deletar?',
