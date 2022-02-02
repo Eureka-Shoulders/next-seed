@@ -16,7 +16,7 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.6.0",
     "@euk-labs/beltz": "^2.2.0",
-    "@euk-labs/componentz": "^0.3.0",
+    "@euk-labs/componentz": "^0.3.1",
     "@euk-labs/fetchx": "^0.4.0",
     "@euk-labs/formix": "^0.2.5",
     "@euk-labs/formix-mui": "^0.1.1",
