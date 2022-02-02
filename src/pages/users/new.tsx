@@ -8,6 +8,8 @@ import { dissocPath, omit, pipe } from 'ramda';
 
 import FXCPFCNPJField from '@components/FXCPFCNPJField';
 
+import useTranslation from '@hooks/useTranslation';
+
 import { getPersonTypes } from '@modules/people/types';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
@@ -37,11 +39,11 @@ const initialValues = {
   confirmPassword: '',
 };
 
-// TODO: translate this
 function Index() {
   const router = useRouter();
   const uiStore = useUIStore();
   const usersRepository = useUsersRepository();
+  const { translate } = useTranslation();
 
   async function handleSubmit(values: UserSchema) {
     try {
@@ -52,7 +54,7 @@ function Index() {
 
       await usersRepository.create(newUser);
       uiStore.snackbar.show({
-        message: 'Usuário criado com sucesso',
+        message: translate('feedbacks.users.created'),
         severity: 'success',
       });
       router.push('/users');
@@ -60,8 +62,7 @@ function Index() {
       if (axios.isAxiosError(error))
         uiStore.snackbar.show({
           message:
-            error.response?.data.message ||
-            'Ocorreu um erro ao criar o usuário!',
+            error.response?.data.message || translate('errors.users.creation'),
           severity: 'error',
         });
     }
@@ -83,13 +84,16 @@ function Index() {
             >
               <Grid container spacing={2}>
                 <Grid item xs={6}>
-                  <FXTextField name="person.name" label="Nome" />
+                  <FXTextField
+                    name="person.name"
+                    label={translate('common.name')}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <FXAutocomplete
-                    options={getPersonTypes(router)}
+                    options={getPersonTypes(translate)}
                     name="person.type"
-                    label="Tipo de pessoa"
+                    label={translate('common.personType')}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -101,25 +105,28 @@ function Index() {
                 <Grid item xs={6}>
                   <FXDatePicker
                     name="person.birthDate"
-                    label="Data de Nascimento"
+                    label={translate('common.birthDate')}
                     inputFormat="dd/MM/yyyy"
                   />
                 </Grid>
                 <Grid item xs={6}>
-                  <FXTextField name="email" label="E-mail" />
+                  <FXTextField name="email" label={translate('common.email')} />
                 </Grid>
                 <Grid item xs={6}>
-                  <FXPasswordField name="password" label="Senha" />
+                  <FXPasswordField
+                    name="password"
+                    label={translate('common.password')}
+                  />
                 </Grid>
                 <Grid item xs={6}>
                   <FXPasswordField
                     name="confirmPassword"
-                    label="Confirmar Senha"
+                    label={translate('common.confirmPassword')}
                   />
                 </Grid>
 
                 <Grid item xs={12} display="flex" justifyContent="flex-end">
-                  <FXSubmitButton label="Salvar" />
+                  <FXSubmitButton label={translate('actions.save')} />
                 </Grid>
               </Grid>
             </Formix>

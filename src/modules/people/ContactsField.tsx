@@ -1,18 +1,18 @@
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
-import getLocaleString from 'locales/getLocaleString';
 import { observer } from 'mobx-react-lite';
-import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 
 import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { useArrayField } from '@euk-labs/formix';
 import { FXAutocomplete, FXTextField } from '@euk-labs/formix-mui';
 
 function ContactsField() {
-  const router = useRouter();
+  const { translate } = useTranslation();
   const { values, helpers } = useArrayField('contacts');
   const newContact = {
     type: null,
@@ -20,35 +20,35 @@ function ContactsField() {
   };
   const contactTypes = [
     {
-      label: getLocaleString('phone', router),
+      label: translate('common.phone'),
       value: 'PHONE',
     },
     {
-      label: getLocaleString('email', router),
+      label: translate('common.email'),
       value: 'EMAIL',
     },
     {
-      label: getLocaleString('facebook', router),
+      label: translate('common.facebook'),
       value: 'FACEBOOK',
     },
     {
-      label: getLocaleString('twitter', router),
+      label: translate('common.twitter'),
       value: 'TWITTER',
     },
     {
-      label: getLocaleString('instagram', router),
+      label: translate('common.instagram'),
       value: 'INSTAGRAM',
     },
     {
-      label: getLocaleString('linkedin', router),
+      label: translate('common.linkedin'),
       value: 'LINKEDIN',
     },
     {
-      label: getLocaleString('github', router),
+      label: translate('common.github'),
       value: 'GITHUB',
     },
     {
-      label: getLocaleString('website', router),
+      label: translate('common.website'),
       value: 'WEBSITE',
     },
   ];
@@ -60,7 +60,7 @@ function ContactsField() {
         <Fragment key={`contact-${index}`}>
           <Grid item xs={12} display="flex" alignItems="center" gap={2}>
             <Typography variant="body1" fontWeight="bold">
-              <Trans id="contact" /> {index + 1}
+              <Trans id="common.contact" /> {index + 1}
             </Typography>
 
             <IconButton onClick={() => helpers.remove(index)}>
@@ -71,14 +71,14 @@ function ContactsField() {
           <Grid item xs={6}>
             <FXAutocomplete
               name={`contacts.${index}.type`}
-              label={getLocaleString('type', router)}
+              label={translate('common.type')}
               options={contactTypes}
             />
           </Grid>
           <Grid item xs={6}>
             <FXTextField
               name={`contacts.${index}.value`}
-              label={getLocaleString('contact', router)}
+              label={translate('common.contact')}
             />
           </Grid>
 
@@ -93,7 +93,7 @@ function ContactsField() {
       <Grid item xs={12}>
         <Button variant="outlined" onClick={() => helpers.push(newContact)}>
           <AddIcon />
-          <Trans id="add" />
+          <Trans id="actions.add" />
         </Button>
       </Grid>
     </Grid>

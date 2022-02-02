@@ -23,7 +23,7 @@ module.exports = withTM({
     /**
      * Provide the locales you want to support in your application
      */
-    locales: ['en-US', 'pt-BR'],
-    defaultLocale: 'en-US',
+    locales: ['en', 'pt'],
+    defaultLocale: 'en',
   },
 });

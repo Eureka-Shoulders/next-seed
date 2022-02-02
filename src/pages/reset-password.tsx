@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import LoginBanner from '@components/Login/LoginBanner';
 
 import { useUsersRepository } from '@hooks/repositories';
+import useTranslation from '@hooks/useTranslation';
 
 import { ResetPasswordSchema } from '@modules/login/login.schema';
 
@@ -21,11 +22,11 @@ const initialValues = {
   password: '',
 };
 
-// TODO: translate this
 const ResetPassword: NextPage<ResetPasswordProps> = () => {
   const uiStore = useUIStore();
   const router = useRouter();
   const usersRepository = useUsersRepository();
+  const { translate } = useTranslation();
 
   async function handleSubmit(values: ResetPasswordSchema) {
     try {
@@ -37,7 +38,7 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
       });
 
       uiStore.snackbar.show({
-        message: 'Senha alterada com sucesso!',
+        message: translate('feedbacks.changePassword'),
         severity: 'success',
       });
 
@@ -46,8 +47,7 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
       if (axios.isAxiosError(error))
         uiStore.snackbar.show({
           message:
-            error.response?.data.message ||
-            'Ocorreu um erro ao alterar a senha!',
+            error.response?.data.message || translate('errors.changePassword'),
           severity: 'error',
         });
     }
@@ -82,7 +82,7 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
                 component="h1"
                 fontWeight={700}
               >
-                Alterar Senha
+                {translate('actions.changePassword')}
               </Typography>
             </Grid>
 
@@ -94,17 +94,23 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
               >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <FXPasswordField name="password" label="Senha" />
+                    <FXPasswordField
+                      name="password"
+                      label={translate('common.password')}
+                    />
                   </Grid>
                   <Grid item xs={12}>
                     <FXPasswordField
                       name="confirmPassword"
-                      label="Confirmar senha"
+                      label={translate('actions.confirmPassword')}
                     />
                   </Grid>
 
                   <Grid item xs={12} display="flex" justifyContent="center">
-                    <FXSubmitButton fullWidth label="Alterar" />
+                    <FXSubmitButton
+                      fullWidth
+                      label={translate('actions.change')}
+                    />
                   </Grid>
 
                   <Grid item xs={12} display="flex" justifyContent="center">
@@ -114,7 +120,7 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
                       type="submit"
                       href="/login"
                     >
-                      Voltar
+                      {translate('actions.goBack')}
                     </Button>
                   </Grid>
                 </Grid>

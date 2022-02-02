@@ -1,12 +1,11 @@
-import getLocaleString from 'locales/getLocaleString';
-import { useRouter } from 'next/router';
+import useTranslation from '@hooks/useTranslation';
 
 interface TransProps {
   id: string;
 }
 
 export default function Trans({ id }: TransProps) {
-  const router = useRouter();
+  const { translate } = useTranslation();
 
-  return <>{getLocaleString(id, router)}</>;
+  return <>{translate(id)}</>;
 }

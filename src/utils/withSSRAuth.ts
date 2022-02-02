@@ -29,7 +29,7 @@ export function withSSRAuth<P>(
 
       return {
         redirect: {
-          destination: '/login',
+          destination: `/${ctx.locale || ctx.defaultLocale}/login`,
           permanent: false,
         },
       };

@@ -1,9 +1,8 @@
-import getLocaleString from 'locales/getLocaleString';
-import { NextRouter } from 'next/router';
+import { TranslateFunc } from '@hooks/useTranslation';
 
-export function getPersonTypes(router: NextRouter) {
+export function getPersonTypes(translate: TranslateFunc) {
   return [
-    { label: getLocaleString('physical', router), value: 'F' },
-    { label: getLocaleString('juridical', router), value: 'J' },
+    { label: translate('common.physical'), value: 'F' },
+    { label: translate('common.juridical'), value: 'J' },
   ];
 }

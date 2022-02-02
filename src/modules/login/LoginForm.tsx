@@ -1,11 +1,11 @@
 import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
-import getLocaleString from 'locales/getLocaleString';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 
 import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
@@ -23,7 +23,7 @@ const initialValues = {
 };
 
 export default function LoginForm() {
-  const router = useRouter();
+  const { translate } = useTranslation();
   const uiStore = useUIStore();
   const userStore = useUserStore();
   const usersRepository = useUsersRepository();
@@ -38,7 +38,7 @@ export default function LoginForm() {
       userStore.login(response.data.access_token);
     } catch (error) {
       uiStore.snackbar.show({
-        message: getLocaleString('errors.login.invalidCredentials', router),
+        message: translate('errors.invalidCredentials'),
         severity: 'error',
       });
     }
@@ -54,7 +54,7 @@ export default function LoginForm() {
             component="h1"
             fontWeight={700}
           >
-            <Trans id="login" />
+            <Trans id="actions.login" />
           </Typography>
         </Grid>
 
@@ -66,37 +66,31 @@ export default function LoginForm() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <FXTextField
-                  name="email"
-                  label={getLocaleString('email', router)}
-                />
+                <FXTextField name="email" label={translate('common.email')} />
               </Grid>
               <Grid item xs={12}>
                 <FXPasswordField
                   name="password"
-                  label={getLocaleString('password', router)}
+                  label={translate('common.password')}
                 />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="flex-end">
                 <NextLink href="/recover-password" passHref>
                   <MuiLink>
-                    <Trans id="forgotPassword" />
+                    <Trans id="common.forgotPassword" />
                   </MuiLink>
                 </NextLink>
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
-                <FXSubmitButton
-                  fullWidth
-                  label={getLocaleString('login', router)}
-                />
+                <FXSubmitButton fullWidth label={translate('actions.login')} />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
                 <NextLink href="/register" passHref>
                   <MuiLink>
-                    <Trans id="createAccount" />
+                    <Trans id="actions.createAccount" />
                   </MuiLink>
                 </NextLink>
               </Grid>

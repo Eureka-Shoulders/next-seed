@@ -1,11 +1,11 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import axios from 'axios';
-import getLocaleString from 'locales/getLocaleString';
 import { useRouter } from 'next/router';
 
 import Trans from '@components/Trans';
 
 import { useUsersRepository } from '@hooks/repositories';
+import useTranslation from '@hooks/useTranslation';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
@@ -21,13 +21,14 @@ export default function RecoverPasswordForm() {
   const router = useRouter();
   const uiStore = useUIStore();
   const usersRepository = useUsersRepository();
+  const { translate } = useTranslation();
 
   async function handleSubmit(values: RecoverPasswordSchema) {
     try {
       await usersRepository.recoverPassword(values.email);
 
       uiStore.snackbar.show({
-        message: getLocaleString('feedback.recoverPassword', router),
+        message: translate('feedbacks.recoverPassword'),
         severity: 'success',
       });
 
@@ -36,8 +37,7 @@ export default function RecoverPasswordForm() {
       if (axios.isAxiosError(error))
         uiStore.snackbar.show({
           message:
-            error.response?.data.message ||
-            getLocaleString('errors.recoverPassword', router),
+            error.response?.data.message || translate('errors.recoverPassword'),
           severity: 'error',
         });
     }
@@ -53,7 +53,7 @@ export default function RecoverPasswordForm() {
             component="h1"
             fontWeight={700}
           >
-            <Trans id="recoverPassword" />
+            <Trans id="actions.recoverPassword" />
           </Typography>
         </Grid>
 
@@ -67,7 +67,7 @@ export default function RecoverPasswordForm() {
               <Grid item xs={12}>
                 <FXTextField
                   name="email"
-                  label={getLocaleString('email', router)}
+                  label={translate('common.email')}
                   type="email"
                 />
               </Grid>
@@ -75,13 +75,13 @@ export default function RecoverPasswordForm() {
               <Grid item xs={12} display="flex" justifyContent="center">
                 <FXSubmitButton
                   fullWidth
-                  label={getLocaleString('recover', router)}
+                  label={translate('actions.recover')}
                 />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
                 <Button fullWidth color="primary" type="submit" href="/login">
-                  <Trans id="goBack" />
+                  <Trans id="actions.goBack" />
                 </Button>
               </Grid>
             </Grid>

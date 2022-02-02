@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material';
-import getLocaleString from 'locales/getLocaleString';
-import { useRouter } from 'next/router';
 
 import FXCPFCNPJField from '@components/FXCPFCNPJField';
+
+import useTranslation from '@hooks/useTranslation';
 
 import {
   FXAutocomplete,
@@ -13,18 +13,18 @@ import {
 import { getPersonTypes } from './types';
 
 export default function PersonForm() {
-  const router = useRouter();
+  const { translate } = useTranslation();
 
   return (
     <Grid container spacing={2}>
       <Grid item xs={6}>
-        <FXTextField name="name" label={getLocaleString('name', router)} />
+        <FXTextField name="name" label={translate('common.name')} />
       </Grid>
       <Grid item xs={12}>
         <FXAutocomplete
-          options={getPersonTypes(router)}
+          options={getPersonTypes(translate)}
           name="type"
-          label={getLocaleString('personType', router)}
+          label={translate('common.personType')}
         />
       </Grid>
       <Grid item xs={12}>
@@ -33,7 +33,7 @@ export default function PersonForm() {
       <Grid item xs={12}>
         <FXDatePicker
           name="birthDate"
-          label={getLocaleString('birthDate', router)}
+          label={translate('common.birthDate')}
           inputFormat="dd/MM/yyyy"
         />
       </Grid>

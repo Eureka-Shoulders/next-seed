@@ -27,7 +27,7 @@ function AppBarHeader() {
   return (
     <>
       <Typography flexGrow={1} variant="h5">
-        <Trans id="title" />
+        <Trans id="common.title" />
       </Typography>
 
       <IconButton onClick={handleClick}>
@@ -36,10 +36,10 @@ function AppBarHeader() {
 
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={goToProfile}>
-          <Trans id="menu.profile" />
+          <Trans id="common.profile" />
         </MenuItem>
         <MenuItem onClick={userStore.logout}>
-          <Trans id="menu.logout" />
+          <Trans id="actions.logout" />
         </MenuItem>
       </Menu>
     </>

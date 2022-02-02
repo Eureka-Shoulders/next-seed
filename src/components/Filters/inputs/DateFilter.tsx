@@ -1,9 +1,9 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
-import getLocaleString from 'locales/getLocaleString';
-import { useRouter } from 'next/router';
 
 import TabPanel from '@components/TabPanel';
 import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { FXDatePicker } from '@euk-labs/formix-mui';
 
@@ -18,7 +18,7 @@ export default function DateFilter({
   activeTab,
   index,
 }: DateFilterProps) {
-  const router = useRouter();
+  const { translate } = useTranslation();
 
   return (
     <TabPanel value={activeTab} index={index}>
@@ -32,12 +32,12 @@ export default function DateFilter({
           <Grid item xs={12}>
             <FXDatePicker
               name={name}
-              label={getLocaleString('search', router)}
+              label={translate('placeholders.search')}
             />
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">
-              <Trans id="filters.submit" />
+              <Trans id="actions.filters.submit" />
             </Button>
           </Grid>
         </Grid>

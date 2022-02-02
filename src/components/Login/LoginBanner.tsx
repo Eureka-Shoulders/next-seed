@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material';
-import getLocaleString from 'locales/getLocaleString';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+
+import useTranslation from '@hooks/useTranslation';
 
 const LoginBannerContainer = styled(Box)({
   background:
@@ -13,13 +13,13 @@ const LoginBannerContainer = styled(Box)({
 });
 
 function LoginBanner() {
-  const router = useRouter();
+  const { translate } = useTranslation();
 
   return (
     <LoginBannerContainer>
       <Image
         src="/shoulders-logo.svg"
-        alt={getLocaleString('logoAlt', router)}
+        alt={translate('common.logoAlt')}
         width={200}
         height={200}
       />

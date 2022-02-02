@@ -1,24 +1,24 @@
 import { add, format } from 'date-fns';
-import getLocaleString from 'locales/getLocaleString';
-import { NextRouter } from 'next/router';
 
 import { Filter } from '@components/Filters/types';
 
-export function getFilters(router: NextRouter): Filter[] {
+import { TranslateFunc } from '@hooks/useTranslation';
+
+export function getFilters(translate: TranslateFunc): Filter[] {
   return [
     {
       field: 'name',
-      title: getLocaleString('name', router),
+      title: translate('common.name'),
       type: 'string',
     },
     {
       field: 'email',
-      title: getLocaleString('email', router),
+      title: translate('common.email'),
       type: 'string',
     },
     {
       field: 'createdAt',
-      title: getLocaleString('createdAt', router),
+      title: translate('common.createdAt'),
       type: 'date',
     },
   ];

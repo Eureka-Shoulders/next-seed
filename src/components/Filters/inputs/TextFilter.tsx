@@ -1,9 +1,9 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
-import getLocaleString from 'locales/getLocaleString';
-import { useRouter } from 'next/router';
 
 import TabPanel from '@components/TabPanel';
 import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { FXTextField } from '@euk-labs/formix-mui';
 
@@ -18,7 +18,7 @@ export default function TextFilter({
   activeTab,
   index,
 }: TextFilterProps) {
-  const router = useRouter();
+  const { translate } = useTranslation();
 
   return (
     <TabPanel value={activeTab} index={index}>
@@ -32,13 +32,13 @@ export default function TextFilter({
           <Grid item xs={12}>
             <FXTextField
               name={name}
-              label={getLocaleString('filters.text.label', router)}
+              label={translate('filters.text.label')}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">
-              <Trans id="filters.submit" />
+              <Trans id="actions.filters.submit" />
             </Button>
           </Grid>
         </Grid>

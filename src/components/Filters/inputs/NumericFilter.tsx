@@ -1,9 +1,9 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
-import getLocaleString from 'locales/getLocaleString';
-import { useRouter } from 'next/router';
 
 import TabPanel from '@components/TabPanel';
 import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { FXCurrencyField } from '@euk-labs/formix-mui';
 
@@ -24,7 +24,7 @@ export default function NumericFilter({
   activeTab,
   index,
 }: NumericFilterProps) {
-  const router = useRouter();
+  const { translate } = useTranslation();
 
   return (
     <TabPanel value={activeTab} index={index}>
@@ -38,7 +38,7 @@ export default function NumericFilter({
           <Grid item xs={12}>
             <FXCurrencyField
               name={name}
-              label={getLocaleString('filters.numeric.label', router)}
+              label={translate('filters.numeric.label')}
               // precision={precision}
               // decimalChar={decimalChar}
               // thousandChar={thousandChar}
@@ -46,7 +46,7 @@ export default function NumericFilter({
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">
-              <Trans id="filters.submit" />
+              <Trans id="actions.filters.submit" />
             </Button>
           </Grid>
         </Grid>

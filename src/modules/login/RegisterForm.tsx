@@ -1,13 +1,14 @@
 import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
-import getLocaleString from 'locales/getLocaleString';
 import { UserSchema } from 'modules/users/user.schema';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 import FXCPFCNPJField from '@components/FXCPFCNPJField';
 import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { getPersonTypes } from '@modules/people/types';
 
@@ -36,6 +37,7 @@ const initialValues = {
 };
 
 export default function RegisterForm() {
+  const { translate } = useTranslation();
   const uiStore = useUIStore();
   const router = useRouter();
   const usersRepository = useUsersRepository();
@@ -45,7 +47,7 @@ export default function RegisterForm() {
       await usersRepository.register(values);
 
       uiStore.snackbar.show({
-        message: getLocaleString('feedback.users.created', router),
+        message: translate('feedbacks.users.created'),
         severity: 'success',
       });
 
@@ -54,8 +56,7 @@ export default function RegisterForm() {
       if (axios.isAxiosError(error))
         uiStore.snackbar.show({
           message:
-            error.response?.data.message ||
-            getLocaleString('errors.userCreation', router),
+            error.response?.data.message || translate('errors.users.creation'),
           severity: 'error',
         });
     }
@@ -71,7 +72,7 @@ export default function RegisterForm() {
             component="h1"
             fontWeight={700}
           >
-            <Trans id="createAccount" />
+            <Trans id="actions.createAccount" />
           </Typography>
         </Grid>
 
@@ -85,21 +86,21 @@ export default function RegisterForm() {
               <Grid item xs={12}>
                 <FXTextField
                   name="email"
-                  label={getLocaleString('email', router)}
+                  label={translate('common.email')}
                   type="email"
                 />
               </Grid>
               <Grid item xs={12}>
                 <FXTextField
                   name="person.name"
-                  label={getLocaleString('name', router)}
+                  label={translate('common.name')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FXAutocomplete
-                  options={getPersonTypes(router)}
+                  options={getPersonTypes(translate)}
                   name="person.type"
-                  label={getLocaleString('personType', router)}
+                  label={translate('common.personType')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -111,33 +112,33 @@ export default function RegisterForm() {
               <Grid item xs={12}>
                 <FXDatePicker
                   name="person.birthDate"
-                  label={getLocaleString('birthDate', router)}
+                  label={translate('common.birthDate')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FXPasswordField
                   name="password"
-                  label={getLocaleString('password', router)}
+                  label={translate('common.password')}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FXPasswordField
                   name="confirmPassword"
-                  label={getLocaleString('confirmPassword', router)}
+                  label={translate('actions.confirmPassword')}
                 />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
                 <FXSubmitButton
                   fullWidth
-                  label={getLocaleString('register', router)}
+                  label={translate('actions.register')}
                 />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
                 <NextLink href="/login" passHref>
                   <MuiLink>
-                    <Trans id="alreadyHaveAccount" />
+                    <Trans id="common.alreadyHaveAccount" />
                   </MuiLink>
                 </NextLink>
               </Grid>

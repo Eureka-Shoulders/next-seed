@@ -9,26 +9,27 @@ import {
   GridValueFormatterParams,
 } from '@mui/x-data-grid';
 import { format } from 'date-fns';
-import getLocaleString from 'locales/getLocaleString';
 import NextLink from 'next/link';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { Actions, AppAbility, Subjects } from 'types';
+
+import { TranslateFunc } from '@hooks/useTranslation';
 
 import { Identifier } from '@euk-labs/fetchx';
 
 function getUserColumns(
   abilities: AppAbility,
   handleDelete: (id: Identifier) => Promise<void>,
-  router: NextRouter
+  translate: TranslateFunc
 ): (GridActionsColDef | GridColDef)[] {
   return [
     {
       field: 'name',
-      headerName: getLocaleString('name', router),
+      headerName: translate('common.name'),
       minWidth: 200,
       flex: 1,
       valueGetter: (params) =>
-        params.row.person?.name || getLocaleString('noName', router),
+        params.row.person?.name || translate('common.noName'),
       renderCell: (rowData) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const router = useRouter();
@@ -46,13 +47,13 @@ function getUserColumns(
     },
     {
       field: 'email',
-      headerName: getLocaleString('email', router),
+      headerName: translate('common.email'),
       minWidth: 200,
       flex: 1,
     },
     {
       field: 'createdAt',
-      headerName: getLocaleString('createdAt', router),
+      headerName: translate('common.createdAt'),
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) =>
@@ -60,7 +61,7 @@ function getUserColumns(
     },
     {
       field: 'actions',
-      headerName: getLocaleString('actions', router),
+      headerName: translate('common.actions'),
       type: 'actions',
       getActions: (params: GridRowParams) => [
         <Can
@@ -72,7 +73,7 @@ function getUserColumns(
           <GridActionsCellItem
             icon={<DeleteIcon />}
             onClick={() => handleDelete(params.id)}
-            label={getLocaleString('delete', router)}
+            label={translate('actions.delete')}
           />
         </Can>,
       ],

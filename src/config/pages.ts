@@ -1,28 +1,31 @@
 import UserIcon from '@mui/icons-material/AccountCircle';
 import PeopleIcon from '@mui/icons-material/People';
-import getLocaleString from 'locales/getLocaleString';
-import { NextRouter } from 'next/router';
 import { Actions, AppAbility, Subjects } from 'types';
+
+import { TranslateFunc } from '@hooks/useTranslation';
 
 import { Page } from '@euk-labs/componentz/components/AppBar/types';
 
-export function getPages(abilities: AppAbility, router: NextRouter): Page[] {
+export function getPages(
+  abilities: AppAbility,
+  translate: TranslateFunc
+): Page[] {
   return [
     {
-      label: getLocaleString('users.page', router),
+      label: translate('pages.users.list'),
       link: '/users',
       Icon: UserIcon,
       disabled: abilities.cannot(Actions.Read, Subjects.Users),
       sub: [
         {
-          label: getLocaleString('users.createPage', router),
+          label: translate('pages.users.create'),
           link: '/new',
           Icon: UserIcon,
           drawer: false,
           disabled: abilities.cannot(Actions.Create, Subjects.Users),
         },
         {
-          label: getLocaleString('users.editPage', router),
+          label: translate('pages.users.edit'),
           link: '/:id',
           Icon: UserIcon,
           drawer: false,
@@ -31,20 +34,20 @@ export function getPages(abilities: AppAbility, router: NextRouter): Page[] {
       ],
     },
     {
-      label: getLocaleString('people.page', router),
+      label: translate('pages.people.list'),
       link: '/people',
       Icon: PeopleIcon,
       disabled: abilities.cannot(Actions.Read, Subjects.People),
       sub: [
         {
-          label: getLocaleString('people.createPage', router),
+          label: translate('pages.people.create'),
           link: '/new',
           Icon: PeopleIcon,
           drawer: false,
           disabled: abilities.cannot(Actions.Create, Subjects.Users),
         },
         {
-          label: getLocaleString('people.editPage', router),
+          label: translate('pages.people.edit'),
           link: '/:id',
           Icon: PeopleIcon,
           drawer: false,

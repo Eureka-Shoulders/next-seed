@@ -1,9 +1,9 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
-import getLocaleString from 'locales/getLocaleString';
-import { useRouter } from 'next/router';
 
 import TabPanel from '@components/TabPanel';
 import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { FXMaskedField } from '@euk-labs/formix-mui';
 
@@ -14,7 +14,7 @@ interface CPFFilterProps {
 }
 
 export default function CPFFilter({ name, activeTab, index }: CPFFilterProps) {
-  const router = useRouter();
+  const { translate } = useTranslation();
 
   return (
     <TabPanel value={activeTab} index={index}>
@@ -28,14 +28,14 @@ export default function CPFFilter({ name, activeTab, index }: CPFFilterProps) {
           <Grid item xs={12}>
             <FXMaskedField
               mask="999.999.999-99"
-              label={getLocaleString('filters.cpf.label', router)}
+              label={translate('filters.cpf.label')}
               name={name}
             />
           </Grid>
 
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">
-              <Trans id="filters.submit" />
+              <Trans id="actions.filters.submit" />
             </Button>
           </Grid>
         </Grid>

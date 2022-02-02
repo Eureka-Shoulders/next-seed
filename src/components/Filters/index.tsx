@@ -81,7 +81,7 @@ function FiltersComponent({
                 ref={anchorRef}
               >
                 <AddIcon />
-                <Trans id="filters.add" />
+                <Trans id="actions.filters.add" />
               </Button>
             </Grid>
           </Grid>

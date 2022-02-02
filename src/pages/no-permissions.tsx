@@ -1,5 +1,8 @@
 // TODO: make a beautiful screen :)
-// TODO: translate this
+import useTranslation from '@hooks/useTranslation';
+
 export default function Index() {
-  return <h1>Permissões insuficientes! :(</h1>;
+  const { translate } = useTranslation();
+
+  return <h1>{translate('errors.noPermissions')}</h1>;
 }

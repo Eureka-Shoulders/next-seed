@@ -20,7 +20,7 @@ export default function LoginForm() {
           justifyContent="center"
           fontWeight={700}
         >
-          <Trans id="login" />
+          <Trans id="actions.login" />
         </Typography>
       </Grid>
     </Grid>

@@ -9,22 +9,23 @@ import {
   GridValueFormatterParams,
 } from '@mui/x-data-grid';
 import { format } from 'date-fns';
-import getLocaleString from 'locales/getLocaleString';
 import NextLink from 'next/link';
-import { NextRouter, useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { Actions, AppAbility, Subjects } from 'types';
+
+import { TranslateFunc } from '@hooks/useTranslation';
 
 import { Identifier } from '@euk-labs/fetchx';
 
 export default function getPeopleColumns(
   abilities: AppAbility,
   handleDelete: (id: Identifier) => Promise<void>,
-  router: NextRouter
+  translate: TranslateFunc
 ): (GridActionsColDef | GridColDef)[] {
   return [
     {
       field: 'name',
-      headerName: getLocaleString('name', router),
+      headerName: translate('common.name'),
       minWidth: 200,
       flex: 1,
       renderCell: (rowData) => {
@@ -44,13 +45,13 @@ export default function getPeopleColumns(
     },
     {
       field: 'identifier',
-      headerName: getLocaleString('identifier', router),
+      headerName: translate('common.identifier'),
       minWidth: 200,
       flex: 1,
     },
     {
       field: 'birthDate',
-      headerName: getLocaleString('birthDate', router),
+      headerName: translate('common.birthDate'),
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) =>
@@ -58,7 +59,7 @@ export default function getPeopleColumns(
     },
     {
       field: 'createdAt',
-      headerName: getLocaleString('createdAt', router),
+      headerName: translate('common.createdAt'),
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) => {
@@ -67,7 +68,7 @@ export default function getPeopleColumns(
     },
     {
       field: 'actions',
-      headerName: getLocaleString('actions', router),
+      headerName: translate('common.actions'),
       type: 'actions',
       getActions: (params: GridRowParams) => [
         <Can
@@ -79,7 +80,7 @@ export default function getPeopleColumns(
           <GridActionsCellItem
             icon={<DeleteIcon />}
             onClick={() => handleDelete(params.id)}
-            label={getLocaleString('delete', router)}
+            label={translate('actions.delete')}
           />
         </Can>,
       ],
