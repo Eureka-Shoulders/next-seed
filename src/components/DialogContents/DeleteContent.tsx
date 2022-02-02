@@ -1,5 +1,7 @@
 import { Box, Grid, Typography, styled } from '@mui/material';
 
+import useTranslation from '@hooks/useTranslation';
+
 type DeleteContentProps = {
   title?: string;
   description?: string;
@@ -10,11 +12,11 @@ const StyledImage = styled('img')({
   filter: 'drop-shadow(2px 2px 10px rgba(0,0,0,0.5))',
 });
 
-// TODO: translate this
 function DeleteContent(props: DeleteContentProps) {
+  const { translate } = useTranslation();
   const {
-    title = 'Deseja mesmo deletar?',
-    description = 'Ao confirmar o seu registro será deletado!',
+    title = translate('dialogs.delete.title'),
+    description = translate('dialogs.delete.description'),
     src = '/remove-illustration.png',
   } = props;
 

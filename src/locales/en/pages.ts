@@ -1,6 +1,6 @@
 const pages = {
   users: {
-    list: 'Userss',
+    list: 'Users',
     create: 'Create User',
     edit: 'Edit User',
   },
@@ -8,6 +8,11 @@ const pages = {
     list: 'People',
     create: 'Create Person',
     edit: 'Edit Person',
+  },
+  noPermissions: {
+    title: 'Access denied',
+    description: `You don't got the necessary permissions to access this page`,
+    buttonLabel: 'Home page',
   },
 };
 

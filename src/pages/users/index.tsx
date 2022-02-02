@@ -41,8 +41,8 @@ function Index() {
   const handleDelete = (id: Identifier) => {
     uiStore.dialog.set({
       content: <DeleteContent />,
-      rejectLabel: 'Cancelar',
-      acceptLabel: 'Deletar',
+      rejectLabel: translate('dialogs.delete.rejectLabel'),
+      acceptLabel: translate('dialogs.delete.acceptLabel'),
       onReject: () => uiStore.dialog.close(),
       onAccept: () => deleteUser(id),
     });
