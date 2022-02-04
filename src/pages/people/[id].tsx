@@ -33,7 +33,6 @@ function getInitialValues(person: Person): UpdatePersonSchema {
   };
 }
 
-// TODO: translate this
 function Index() {
   const { translate } = useTranslation();
   const uiStore = useUIStore();
