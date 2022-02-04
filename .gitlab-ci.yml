@@ -1,21 +1,6 @@
 stages:
-  - test
   - build
   - deploy
-
-test:
-  stage: test
-  image: node:16-alpine
-  cache:
-    paths:
-      - node_modules/
-  only:
-    refs:
-      - merge_requests
-  script:
-    - yarn install --frozen-lockfile
-    - yarn lint
-    - yarn test
 
 build:
   stage: build
