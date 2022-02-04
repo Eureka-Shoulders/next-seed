@@ -24,4 +24,4 @@ deploy:
     refs:
       - develop
   script:
-    - kubectl kubectl rollout restart deployment next-seed -n next-seed-ns
+    - kubectl rollout restart deployment next-seed -n next-seed-ns
