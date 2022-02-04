@@ -16,12 +16,12 @@ build:
     - docker push ${REGISTRY_PATH}/next-seed
 
 deploy:
-  image: 
+  image:
     name: bitnami/kubectl
-    entrypoint: [""]
+    entrypoint: ['']
   stage: deploy
   only:
     refs:
       - develop
   script:
-    - kubectl rollout restart deployment next-seed -n next-seed-ns
+    - kubectl kubectl rollout restart deployment next-seed -n next-seed-ns
