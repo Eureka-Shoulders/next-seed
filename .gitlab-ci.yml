@@ -1,0 +1,25 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: docker
+  only:
+    refs:
+      - develop
+  before_script:
+    - mkdir -p ~/.docker
+    - cp $REGISTRY_DG_AUTH ~/.docker/config.json
+  script:
+    - docker build -t ${REGISTRY_PATH}/next-seed .
+    - docker push ${REGISTRY_PATH}/next-seed
+
+deploy:
+  image: bitnami/kubectl
+  stage: deploy
+  only:
+    refs:
+      - develop
+  script:
+    - kubectl rollout restart deployment next-seed -n next-seed-ns
