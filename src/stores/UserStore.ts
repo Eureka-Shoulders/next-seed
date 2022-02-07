@@ -16,7 +16,7 @@ export interface UserStoreType {
   rawAbilities: RawRuleOf<AppAbility>[] | null;
   setRawAbilities(rawAbilities: RawRuleOf<AppAbility>[]): void;
 
-  login(accessToken: string): void;
+  login(accessToken: string, redirectTo?: string): void;
   logout(): void;
 
   getAccessToken(): string | null;
@@ -46,13 +46,14 @@ class UserStore implements UserStoreType {
     this.rawAbilities = rawAbilities;
   }
 
-  login(accessToken: string) {
+  login(accessToken: string, redirectTo?: string) {
     setCookie(null, 'user_token', accessToken, {
       maxAge: 24 * 60 * 60,
       path: '/',
     });
 
-    Router.push('/');
+    console.log(redirectTo);
+    Router.push(redirectTo || '/');
   }
 
   logout() {
@@ -73,7 +74,10 @@ class UserStore implements UserStoreType {
     const accessToken = this.getAccessToken();
 
     if (!accessToken) {
-      return Router.push('/login');
+      return Router.push({
+        pathname: '/login',
+        search: `?redirect=${encodeURIComponent(Router.asPath)}`,
+      });
     }
 
     try {
@@ -87,7 +91,10 @@ class UserStore implements UserStoreType {
         this.setRawAbilities(abilitiesResponse.data);
       }
     } catch (error) {
-      return Router.push('/login');
+      return Router.push({
+        pathname: '/login',
+        search: `?redirect=${encodeURIComponent(Router.asPath)}`,
+      });
     }
   }
 
