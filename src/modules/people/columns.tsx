@@ -29,7 +29,7 @@ export default function getPeopleColumns(
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const router = useRouter();
 
-        if (abilities.can(Actions.Update, Subjects.Users)) {
+        if (abilities.can(Actions.Update, Subjects.User)) {
           return (
             <NextLink href={`${router.pathname}/${rowData.id}`} passHref>
               <MuiLink>{rowData.value}</MuiLink>
@@ -70,7 +70,7 @@ export default function getPeopleColumns(
       getActions: (params: GridRowParams) => [
         <Can
           I={Actions.Delete}
-          an={Subjects.People}
+          an={Subjects.Person}
           ability={abilities}
           key={params.id}
         >
