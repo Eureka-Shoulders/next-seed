@@ -18,7 +18,15 @@ const UnauthorizedSvg = ({ width, height }: UnauthorizedSvgProps) => {
       }}
     >
       <defs>
-        <style>{`.cls-1{isolation:isolate;}.cls-2{fill:#f4f7fa;}.cls-3{fill:#97a6b7;}.cls-4{fill:url(#linear-gradient);}.cls-5{fill:url(#linear-gradient-2);}.cls-6{fill:${theme.palette.primary.main};}.cls-7{fill:url(#linear-gradient-3);}.cls-15,.cls-8{opacity:0.48;mix-blend-mode:soft-light;}.cls-15,.cls-9{fill:#fff;}.cls-10{fill:url(#linear-gradient-4);}.cls-11{fill:url(#linear-gradient-5);}.cls-12{fill:url(#linear-gradient-6);}.cls-13{fill:url(#linear-gradient-7);}.cls-14,.cls-25,.cls-27,.cls-33{opacity:0.3;}.cls-14,.cls-27,.cls-33{mix-blend-mode:multiply;}.cls-14{fill:url(#linear-gradient-8);}.cls-16{fill:url(#linear-gradient-9);}.cls-17{fill:url(#linear-gradient-10);}.cls-18{fill:${theme.palette.primary.dark};}.cls-19{fill:${theme.palette.primary.light};}.cls-20{fill:url(#linear-gradient-11);}.cls-21{fill:url(#linear-gradient-12);}.cls-22{fill:url(#linear-gradient-13);}.cls-23{fill:url(#linear-gradient-14);}.cls-24{fill:url(#linear-gradient-15);}.cls-25{mix-blend-mode:color-burn;}.cls-26{fill:url(#linear-gradient-16);}.cls-28{fill:url(#linear-gradient-17);}.cls-29{fill:url(#linear-gradient-18);}.cls-30{fill:url(#linear-gradient-19);}.cls-31{fill:url(#linear-gradient-20);}.cls-32{fill:url(#linear-gradient-21);}.cls-33{fill:url(#linear-gradient-22);}`}</style>
+        <style>{`.cls-1{isolation:isolate;}.cls-2{fill:${
+          theme.palette.mode === 'light' ? '#f4f7fa' : '#212121'
+        };}.cls-3{fill:#97a6b7;}.cls-4{fill:url(#linear-gradient);}.cls-5{fill:url(#linear-gradient-2);}.cls-6{fill:${
+          theme.palette.primary.main
+        };}.cls-7{fill:url(#linear-gradient-3);}.cls-15,.cls-8{opacity:0.48;mix-blend-mode:soft-light;}.cls-15,.cls-9{fill:#fff;}.cls-10{fill:url(#linear-gradient-4);}.cls-11{fill:url(#linear-gradient-5);}.cls-12{fill:url(#linear-gradient-6);}.cls-13{fill:url(#linear-gradient-7);}.cls-14,.cls-25,.cls-27,.cls-33{opacity:0.3;}.cls-14,.cls-27,.cls-33{mix-blend-mode:multiply;}.cls-14{fill:url(#linear-gradient-8);}.cls-16{fill:url(#linear-gradient-9);}.cls-17{fill:url(#linear-gradient-10);}.cls-18{fill:${
+          theme.palette.primary.dark
+        };}.cls-19{fill:${
+          theme.palette.primary.light
+        };}.cls-20{fill:url(#linear-gradient-11);}.cls-21{fill:url(#linear-gradient-12);}.cls-22{fill:url(#linear-gradient-13);}.cls-23{fill:url(#linear-gradient-14);}.cls-24{fill:url(#linear-gradient-15);}.cls-25{mix-blend-mode:color-burn;}.cls-26{fill:url(#linear-gradient-16);}.cls-28{fill:url(#linear-gradient-17);}.cls-29{fill:url(#linear-gradient-18);}.cls-30{fill:url(#linear-gradient-19);}.cls-31{fill:url(#linear-gradient-20);}.cls-32{fill:url(#linear-gradient-21);}.cls-33{fill:url(#linear-gradient-22);}`}</style>
         <linearGradient
           id="linear-gradient"
           x1="1694.48"
