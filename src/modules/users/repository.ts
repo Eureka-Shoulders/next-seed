@@ -10,6 +10,7 @@ import { UserSchema } from './user.schema';
 
 interface LoginResponse {
   access_token: string;
+  refresh_token: string;
 }
 
 interface ResetPasswordDto {

@@ -30,7 +30,7 @@ export default function LoginForm() {
         values.password
       );
 
-      userStore.login(response.data.access_token);
+      userStore.login(response.data.access_token, response.data.refresh_token);
     } catch (error) {
       uiStore.snackbar.show({
         message: 'Usuário ou senha inválidos',
