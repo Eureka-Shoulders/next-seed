@@ -52,7 +52,6 @@ class UserStore implements UserStoreType {
       path: '/',
     });
 
-    console.log(redirectTo);
     Router.push(redirectTo || '/');
   }
 
