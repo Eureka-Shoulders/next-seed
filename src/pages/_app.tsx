@@ -43,17 +43,22 @@ if (publicRuntimeConfig.useMirage) {
 
 enableStaticRendering(typeof window === 'undefined');
 
-// TODO: inject locale and default locale on inversify container
-
 function MyApp(props: MyAppProps) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps,
+    router,
+  } = props;
   const showAppBar = pageProps.showAppBar ?? true;
   const isPublicPage = pageProps.isPublic ?? false;
   const hydrationData: HydrationData = pageProps.hydrationData || {};
+  const locale = router.locale || router.defaultLocale;
+  const container = globalContainer(hydrationData, locale);
 
   return (
     <CacheProvider value={emotionCache}>
-      <Provider container={globalContainer(hydrationData)}>
+      <Provider container={container}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <BreadcrumbListener />
           <UserListener isPublicPage={isPublicPage} />

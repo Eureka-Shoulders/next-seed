@@ -5,7 +5,10 @@ import { observer } from 'mobx-react-lite';
 import AddressesForm from 'modules/people/AddressesForm';
 import ContactsForm from 'modules/people/ContactsForm';
 import PersonForm from 'modules/people/PersonForm';
-import { NewPersonSchema } from 'modules/people/people.schema';
+import {
+  NewPersonSchema,
+  getNewPersonSchema,
+} from 'modules/people/people.schema';
 import { ICreatePerson } from 'modules/people/repository';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -89,7 +92,7 @@ function Index() {
             <Box p={2}>
               <Formix
                 initialValues={initialValues}
-                zodSchema={NewPersonSchema}
+                zodSchema={getNewPersonSchema(translate)}
                 onSubmit={handleSubmit}
               >
                 <Grid container spacing={2}>

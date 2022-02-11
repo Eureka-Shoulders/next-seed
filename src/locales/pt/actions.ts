@@ -17,9 +17,16 @@ const actions = {
   change: 'Alterar',
   changeProfile: 'Editar perfil',
   changeTheme: 'Alterar tema',
+  filter: 'Filtrar',
+  hide: 'Ocultar',
+  hideAll: 'Ocultar tudo',
+  showAll: 'Exibir tudo',
+  showColumns: 'Exibir colunas',
+  searchColumn: 'Pesquisar coluna',
   filters: {
     add: 'Adicionar filtro',
     submit: 'Aplicar',
+    undoSort: 'Desfazer ordenação',
   },
 };
 

@@ -10,6 +10,7 @@ const feedbacks = {
     created: 'Pessoa criada com sucesso!',
     updated: 'Pessoa atualizada com sucesso!',
   },
+  noRegisters: 'Nenhum registro encontrado!',
 };
 
 export default feedbacks;

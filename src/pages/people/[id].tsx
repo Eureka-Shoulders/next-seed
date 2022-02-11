@@ -5,7 +5,10 @@ import { observer } from 'mobx-react-lite';
 import AddressesForm from 'modules/people/AddressesForm';
 import ContactsForm from 'modules/people/ContactsForm';
 import PersonForm from 'modules/people/PersonForm';
-import { UpdatePersonSchema } from 'modules/people/people.schema';
+import {
+  UpdatePersonSchema,
+  getUpdatePersonSchema,
+} from 'modules/people/people.schema';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ContactTypeEnum, Person } from 'types';
@@ -63,7 +66,7 @@ function Index() {
       });
 
       uiStore.snackbar.show({
-        message: translate('feedbacks.people.updated'),
+        message: translate('feedbacks.person.updated'),
         severity: 'success',
       });
       router.push('/people');
@@ -109,7 +112,7 @@ function Index() {
               <Box p={2}>
                 <Formix
                   initialValues={getInitialValues(personEntity.data as Person)}
-                  zodSchema={UpdatePersonSchema}
+                  zodSchema={getUpdatePersonSchema(translate)}
                   onSubmit={handleSubmit}
                 >
                   <Grid container spacing={2}>

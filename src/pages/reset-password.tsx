@@ -8,7 +8,10 @@ import LoginBanner from '@components/Login/LoginBanner';
 import { useUsersRepository } from '@hooks/repositories';
 import useTranslation from '@hooks/useTranslation';
 
-import { ResetPasswordSchema } from '@modules/login/login.schema';
+import {
+  ResetPasswordSchema,
+  getResetPasswordSchema,
+} from '@modules/login/login.schema';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
@@ -89,7 +92,7 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
             <Grid item xs={12} sm={8}>
               <Formix
                 initialValues={initialValues}
-                zodSchema={ResetPasswordSchema}
+                zodSchema={getResetPasswordSchema(translate)}
                 onSubmit={handleSubmit}
               >
                 <Grid container spacing={2}>

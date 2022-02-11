@@ -2,7 +2,7 @@ import { Box, Grid, Paper } from '@mui/material';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
-import { UserSchema } from 'modules/users/user.schema';
+import { UserSchema, getUserSchema } from 'modules/users/user.schema';
 import { useRouter } from 'next/router';
 import { dissocPath, omit, pipe } from 'ramda';
 import { useEffect } from 'react';
@@ -79,7 +79,7 @@ function Index() {
             <Paper variant="outlined" sx={{ p: 2 }}>
               <Formix
                 initialValues={userEntity.data as UserSchema}
-                zodSchema={UserSchema}
+                zodSchema={getUserSchema(translate)}
                 onSubmit={handleSubmit}
               >
                 <Grid container spacing={2}>

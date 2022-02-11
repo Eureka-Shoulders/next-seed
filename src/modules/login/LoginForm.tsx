@@ -15,7 +15,7 @@ import {
   FXTextField,
 } from '@euk-labs/formix-mui';
 
-import { LoginSchema } from './login.schema';
+import { LoginSchema, getLoginSchema } from './login.schema';
 
 const initialValues = {
   email: '',
@@ -64,7 +64,7 @@ export default function LoginForm() {
         <Grid item xs={12} sm={8}>
           <Formix
             initialValues={initialValues}
-            zodSchema={LoginSchema}
+            zodSchema={getLoginSchema(translate)}
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>

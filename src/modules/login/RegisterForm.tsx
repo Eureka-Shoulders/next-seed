@@ -1,7 +1,7 @@
 import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
-import { UserSchema } from 'modules/users/user.schema';
+import { UserSchema, getUserSchema } from 'modules/users/user.schema';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -47,7 +47,7 @@ export default function RegisterForm() {
       await usersRepository.register(values);
 
       uiStore.snackbar.show({
-        message: translate('feedbacks.users.created'),
+        message: translate('feedbacks.user.created'),
         severity: 'success',
       });
 
@@ -79,7 +79,7 @@ export default function RegisterForm() {
         <Grid item xs={12} sm={8}>
           <Formix
             initialValues={initialValues}
-            zodSchema={UserSchema}
+            zodSchema={getUserSchema(translate)}
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>

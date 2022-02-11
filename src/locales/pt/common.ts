@@ -34,6 +34,14 @@ const common = {
   noName: 'Sem nome',
   profile: 'Perfil',
   currentTheme: 'Tema atual',
+  informations: 'Informações',
+  of: 'de',
+  sortAsc: 'Ordem Crescente',
+  sortDesc: 'Ordem Decrescente',
+  personTypes: {
+    legal: 'Jurídica',
+    private: 'Física',
+  },
 };
 
 export default common;

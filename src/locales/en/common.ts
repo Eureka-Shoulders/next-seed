@@ -29,6 +29,14 @@ const common = {
   actions: 'Actions',
   noName: 'No name',
   profile: 'Profile',
+  informations: 'Informations',
+  of: 'of',
+  sortAsc: 'Sort Asc',
+  sortDesc: 'Sort Desc',
+  personTypes: {
+    legal: 'Legal',
+    private: 'Private',
+  },
 };
 
 export default common;

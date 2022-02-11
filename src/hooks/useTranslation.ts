@@ -1,26 +1,25 @@
+import TYPES from 'containers/global.types';
+import { useInjection } from 'inversify-react';
 import en from 'locales/en';
 import pt from 'locales/pt';
-import { useRouter } from 'next/router';
 import { path, split } from 'ramda';
+import { TranslationServiceType } from 'services/translationService';
 
 export type TranslateFunc = (id: string) => string;
 
-export default function useTranslation() {
-  const { locale, defaultLocale, locales: nextLocales } = useRouter();
+export function serverSideTranslate(locale = '', id: string) {
   const locales: Record<string, unknown> = { pt, en };
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const translations = locales[locale || defaultLocale!];
+  const translations = locales[locale];
   const splitPath = split(/[[\].]/);
+  const localeValue = path(splitPath(id), translations);
 
-  function translate(id: string) {
-    const localeValue = path(splitPath(id), translations);
-
-    if (typeof localeValue === 'string') {
-      return localeValue;
-    }
-
-    return `[${id}]`;
+  if (typeof localeValue === 'string') {
+    return localeValue;
   }
 
-  return { translate };
+  return `[${id}]`;
+}
+
+export default function useTranslation() {
+  return useInjection<TranslationServiceType>(TYPES.TranslationService);
 }

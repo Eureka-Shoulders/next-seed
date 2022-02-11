@@ -23,7 +23,7 @@ export default function PersonForm() {
       <Grid item xs={6}>
         <FXDatePicker
           name="birthDate"
-          label="Data de Nascimento"
+          label={translate('common.birthDate')}
           inputFormat="dd/MM/yyyy"
         />
       </Grid>
@@ -36,13 +36,6 @@ export default function PersonForm() {
       </Grid>
       <Grid item xs={6}>
         <FXCPFCNPJField name="identifier" typeField="type" />
-      </Grid>
-      <Grid item xs={12}>
-        <FXDatePicker
-          name="birthDate"
-          label={translate('common.birthDate')}
-          inputFormat="dd/MM/yyyy"
-        />
       </Grid>
     </Grid>
   );

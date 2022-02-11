@@ -1,4 +1,4 @@
-import tableLocaleText from '@config/tableLocale';
+import getTableLocaleText from '@config/tableLocale';
 import { Paper } from '@mui/material';
 import {
   DataGrid,
@@ -9,6 +9,8 @@ import {
 } from '@mui/x-data-grid';
 import { toJS } from 'mobx';
 import React from 'react';
+
+import useTranslation from '@hooks/useTranslation';
 
 import CustomLoadingOverlay from './CustomLoadingOverlay';
 import CustomNoRowsOverlay from './CustomNoRowsOverlay';
@@ -40,6 +42,7 @@ export default function MuiTable(props: MuiTableProps) {
     onSortModelChange,
     getRowId,
   } = props;
+  const { translate } = useTranslation();
 
   return (
     <Paper elevation={0} sx={{ height: 400 }}>
@@ -50,7 +53,7 @@ export default function MuiTable(props: MuiTableProps) {
         page={page}
         pageSize={pageSize || 100}
         rowsPerPageOptions={rowsPerPageOptions || [pageSize || 100]}
-        localeText={tableLocaleText}
+        localeText={getTableLocaleText(translate)}
         loading={isLoading}
         onPageChange={onPageChange}
         onSortModelChange={onSortModelChange}
