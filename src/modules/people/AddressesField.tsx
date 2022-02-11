@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 
 import Trans from '@components/Trans';
+import When from '@components/When';
 
 import useTranslation from '@hooks/useTranslation';
 
@@ -83,11 +84,11 @@ function AddressesField() {
             />
           </Grid>
 
-          {!isLastItem(index) && (
+          <When isNot={isLastItem(index)}>
             <Grid item xs={12}>
               <Divider />
             </Grid>
-          )}
+          </When>
         </Fragment>
       ))}
 

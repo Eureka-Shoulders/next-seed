@@ -20,14 +20,21 @@ export default function PersonForm() {
       <Grid item xs={6}>
         <FXTextField name="name" label={translate('common.name')} />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
+        <FXDatePicker
+          name="birthDate"
+          label="Data de Nascimento"
+          inputFormat="dd/MM/yyyy"
+        />
+      </Grid>
+      <Grid item xs={6}>
         <FXAutocomplete
           options={getPersonTypes(translate)}
           name="type"
           label={translate('common.personType')}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         <FXCPFCNPJField name="identifier" typeField="type" />
       </Grid>
       <Grid item xs={12}>

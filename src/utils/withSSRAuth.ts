@@ -25,11 +25,11 @@ export function withSSRAuth<P>(
     const { user_token } = parseCookies(ctx);
 
     if (!user_token && !ctx.req.rawHeaders.some((i) => i.includes('/login'))) {
-      // TODO: smart login
-
       return {
         redirect: {
-          destination: `/${ctx.locale || ctx.defaultLocale}/login`,
+          destination: `/${
+            ctx.locale || ctx.defaultLocale
+          }/login?redirect=${encodeURIComponent(ctx.req.url || '/')}`,
           permanent: false,
         },
       };

@@ -29,13 +29,16 @@ export default function LoginForm() {
   const usersRepository = useUsersRepository();
 
   async function handleSubmit(values: LoginSchema) {
+    const params = new URLSearchParams(window.location.search);
+    const redirectTo = params.get('redirect') || undefined;
+
     try {
       const response = await usersRepository.login(
         values.email,
         values.password
       );
 
-      userStore.login(response.data.access_token);
+      userStore.login(response.data.access_token, redirectTo);
     } catch (error) {
       uiStore.snackbar.show({
         message: translate('errors.invalidCredentials'),
