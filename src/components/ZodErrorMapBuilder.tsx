@@ -8,8 +8,6 @@ export default function ZodErrorMapBuilder() {
 
   useEffect(() => {
     const customErrorMap: z.ZodErrorMap = (issue, ctx) => {
-      console.log(issue, ctx);
-
       if (issue.code == z.ZodIssueCode.invalid_string) {
         if (issue.validation === 'email') {
           return { message: translate('errors.validation.invalid_email') };
