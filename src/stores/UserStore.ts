@@ -99,7 +99,18 @@ class UserStore implements UserStoreType {
     }
 
     if (!accessToken && refreshToken) {
-      return await this.refreshToken();
+      const newTokens = await this.refreshToken();
+
+      if (newTokens) {
+        setCookie(null, 'user_token', newTokens.accessToken, {
+          maxAge: ONE_DAY_IN_SECONDS,
+          path: '/',
+        });
+        setCookie(null, 'refresh_token', newTokens.refreshToken, {
+          maxAge: ONE_DAY_IN_SECONDS * 2,
+          path: '/',
+        });
+      }
     }
 
     try {
@@ -126,8 +137,8 @@ class UserStore implements UserStoreType {
     try {
       const refreshToken = this.getRefreshToken();
       const refreshResponse = await this.apiService.client.post<{
-        access_token: string;
-        refresh_token: string;
+        accessToken: string;
+        refreshToken: string;
       }>('/auth/refresh', { refreshToken });
 
       return refreshResponse.data;
@@ -171,16 +182,16 @@ class UserStore implements UserStoreType {
               const newTokens = await this.refreshToken();
 
               if (newTokens) {
-                setCookie(null, 'user_token', newTokens.access_token, {
+                setCookie(null, 'user_token', newTokens.accessToken, {
                   maxAge: ONE_DAY_IN_SECONDS,
                   path: '/',
                 });
-                setCookie(null, 'refresh_token', newTokens.refresh_token, {
+                setCookie(null, 'refresh_token', newTokens.refreshToken, {
                   maxAge: ONE_DAY_IN_SECONDS * 2,
                   path: '/',
                 });
 
-                return await axios({
+                return await this.apiService.client({
                   ...error.config,
                 });
               }

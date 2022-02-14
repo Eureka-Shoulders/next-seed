@@ -9,8 +9,8 @@ import { HttpService, Repository } from '@euk-labs/fetchx';
 import { UserSchema } from './user.schema';
 
 interface LoginResponse {
-  access_token: string;
-  refresh_token: string;
+  accessToken: string;
+  refreshToken: string;
 }
 
 interface ResetPasswordDto {
