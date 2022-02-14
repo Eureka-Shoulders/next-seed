@@ -33,6 +33,7 @@ export default function DateFilter({
             <FXDatePicker
               name={name}
               label={translate('placeholders.search')}
+              inputFormat="dd/MM/yyyy"
             />
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
