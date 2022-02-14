@@ -5,11 +5,14 @@ import { observer } from 'mobx-react-lite';
 import type { NextPage } from 'next';
 import React from 'react';
 
+import useTranslation from '@hooks/useTranslation';
+
 import { Breadcrumb } from '@euk-labs/componentz';
 
 // TODO: make a beautiful design for the homepage
 const Home: NextPage = () => {
   const themeStore = useThemeStore();
+  const { translate } = useTranslation();
 
   function toggleTheme() {
     if (themeStore.theme === 'light') {
@@ -22,9 +25,11 @@ const Home: NextPage = () => {
   return (
     <Box p={3}>
       <Breadcrumb />
-      <Typography>Tema atual: {themeStore.theme}</Typography>
+      <Typography>
+        {translate('common.currentTheme')}: {themeStore.theme}
+      </Typography>
       <Button variant="contained" onClick={toggleTheme}>
-        Mudar tema para
+        {translate('actions.changeTheme')}
       </Button>
     </Box>
   );

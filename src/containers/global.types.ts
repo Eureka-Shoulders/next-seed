@@ -7,6 +7,8 @@ const TYPES = {
 
   HydrationData: Symbol('HydrationData'),
   ApiService: Symbol('ApiService'),
+  Locale: Symbol('Locale'),
+  TranslationService: Symbol('TranslationService'),
 
   /**
    * Repositories

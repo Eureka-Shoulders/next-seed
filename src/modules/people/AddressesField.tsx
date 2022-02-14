@@ -4,13 +4,17 @@ import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 
+import Trans from '@components/Trans';
 import When from '@components/When';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { useArrayField } from '@euk-labs/formix';
 import { FXTextField } from '@euk-labs/formix-mui';
 
 function AddressesField() {
   const name = 'addresses';
+  const { translate } = useTranslation();
   const { values, helpers } = useArrayField(name);
   const newAddress = {
     street: '',
@@ -29,7 +33,7 @@ function AddressesField() {
         <Fragment key={`address-${index}`}>
           <Grid item xs={12} display="flex" alignItems="center" gap={2}>
             <Typography variant="body1" fontWeight="bold">
-              Endereço {index + 1}
+              <Trans id="common.address" /> {index + 1}
             </Typography>
 
             <IconButton onClick={() => helpers.remove(index)}>
@@ -38,28 +42,46 @@ function AddressesField() {
           </Grid>
 
           <Grid item xs={3}>
-            <FXTextField name={`${name}.${index}.zipcode`} label="CEP" />
+            <FXTextField
+              name={`${name}.${index}.zipcode`}
+              label={translate('common.zipcode')}
+            />
           </Grid>
           <Grid item xs={6}>
-            <FXTextField name={`${name}.${index}.street`} label="Rua" />
+            <FXTextField
+              name={`${name}.${index}.street`}
+              label={translate('common.street')}
+            />
           </Grid>
           <Grid item xs={3}>
-            <FXTextField name={`${name}.${index}.number`} label="Número" />
+            <FXTextField
+              name={`${name}.${index}.number`}
+              label={translate('common.number')}
+            />
           </Grid>
           <Grid item xs={6}>
             <FXTextField
               name={`${name}.${index}.neighborhood`}
-              label="Bairro"
+              label={translate('common.neighborhood')}
             />
           </Grid>
           <Grid item xs={6}>
-            <FXTextField name={`${name}.${index}.city`} label="Cidade" />
+            <FXTextField
+              name={`${name}.${index}.city`}
+              label={translate('common.city')}
+            />
           </Grid>
           <Grid item xs={6}>
-            <FXTextField name={`${name}.${index}.state`} label="Estado" />
+            <FXTextField
+              name={`${name}.${index}.state`}
+              label={translate('common.state')}
+            />
           </Grid>
           <Grid item xs={6}>
-            <FXTextField name={`${name}.${index}.country`} label="País" />
+            <FXTextField
+              name={`${name}.${index}.country`}
+              label={translate('common.country')}
+            />
           </Grid>
 
           <When isNot={isLastItem(index)}>
@@ -73,7 +95,7 @@ function AddressesField() {
       <Grid item xs={12}>
         <Button variant="outlined" onClick={() => helpers.push(newAddress)}>
           <AddIcon />
-          Adicionar
+          <Trans id="actions.add" />
         </Button>
       </Grid>
     </Grid>

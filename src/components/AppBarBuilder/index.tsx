@@ -6,6 +6,10 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
+import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
+
 import { useUIStore } from '@euk-labs/componentz';
 
 import AppBarHeader from './AppBarHeader';
@@ -14,6 +18,7 @@ function AppBarBuilder() {
   const uiStore = useUIStore();
   const userStore = useUserStore();
   const router = useRouter();
+  const { translate } = useTranslation();
 
   const DrawerHeader = (
     <>
@@ -24,7 +29,7 @@ function AppBarBuilder() {
         height={191 / 5}
       />
       <Typography ml={2} variant="h6" noWrap fontWeight="bold">
-        Shoulders
+        <Trans id="common.title" />
       </Typography>
     </>
   );
@@ -39,7 +44,7 @@ function AppBarBuilder() {
 
   useEffect(() => {
     if (userStore.abilities) {
-      const pages = getPages(userStore.abilities);
+      const pages = getPages(userStore.abilities, translate);
 
       uiStore.appBar.setPages(pages);
     }

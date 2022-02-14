@@ -6,16 +6,19 @@ import { useEffect } from 'react';
 
 import { getBreadcrumbPaths } from '@components/Breadcrumbs/getBreadcrumbPaths';
 
+import useTranslation from '@hooks/useTranslation';
+
 import { useUIStore } from '@euk-labs/componentz';
 
 function BreadcrumbListener() {
   const uiStore = useUIStore();
   const userStore = useUserStore();
   const router = useRouter();
+  const { translate } = useTranslation();
 
   useEffect(() => {
     if (userStore.abilities) {
-      const pages = getPages(userStore.abilities);
+      const pages = getPages(userStore.abilities, translate);
       const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
 
       uiStore.breadcrumb.setPaths(breadcrumbPaths);

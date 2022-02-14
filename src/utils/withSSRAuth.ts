@@ -27,9 +27,9 @@ export function withSSRAuth<P>(
     if (!user_token && !ctx.req.rawHeaders.some((i) => i.includes('/login'))) {
       return {
         redirect: {
-          destination: `/login?redirect=${encodeURIComponent(
-            ctx.req.url || '/'
-          )}`,
+          destination: `/${
+            ctx.locale || ctx.defaultLocale
+          }/login?redirect=${encodeURIComponent(ctx.req.url || '/')}`,
           permanent: false,
         },
       };
@@ -53,8 +53,7 @@ export function withSSRAuth<P>(
           ) as AppAbility;
 
           can.forEach(({ action, subject }) => {
-            if (userAbilities.cannot(action, subject))
-              throw new Error('Not Authorized');
+            if (userAbilities.cannot(action, subject)) throw new Error();
           });
         }
       } catch (error) {

@@ -13,16 +13,19 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Actions, AppAbility, Subjects } from 'types';
 
+import { TranslateFunc } from '@hooks/useTranslation';
+
 import { Identifier } from '@euk-labs/fetchx';
 
 export default function getPeopleColumns(
   abilities: AppAbility,
-  handleDelete: (id: Identifier) => void
+  handleDelete: (id: Identifier) => void,
+  translate: TranslateFunc
 ): (GridActionsColDef | GridColDef)[] {
   return [
     {
       field: 'name',
-      headerName: 'Nome',
+      headerName: translate('common.name'),
       minWidth: 200,
       flex: 1,
       renderCell: (rowData) => {
@@ -42,13 +45,13 @@ export default function getPeopleColumns(
     },
     {
       field: 'identifier',
-      headerName: 'CPF/CNPJ',
+      headerName: translate('common.identifier'),
       minWidth: 200,
       flex: 1,
     },
     {
       field: 'birthDate',
-      headerName: 'Data de Nascimento',
+      headerName: translate('common.birthDate'),
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) =>
@@ -56,7 +59,7 @@ export default function getPeopleColumns(
     },
     {
       field: 'createdAt',
-      headerName: 'Criado em',
+      headerName: translate('common.createdAt'),
       type: 'date',
       minWidth: 200,
       valueFormatter: (params: GridValueFormatterParams) => {
@@ -65,7 +68,7 @@ export default function getPeopleColumns(
     },
     {
       field: 'actions',
-      headerName: 'Ações',
+      headerName: translate('common.actions'),
       type: 'actions',
       getActions: (params: GridRowParams) => [
         <Can
@@ -77,7 +80,7 @@ export default function getPeopleColumns(
           <GridActionsCellItem
             icon={<DeleteIcon />}
             onClick={() => handleDelete(params.id)}
-            label="Delete"
+            label={translate('actions.delete')}
           />
         </Can>,
       ],

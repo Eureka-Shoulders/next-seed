@@ -2,6 +2,8 @@ import { Add as AddIcon, Refresh as RefreshIcon } from '@mui/icons-material';
 import { Button, Grid } from '@mui/material';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
+import Trans from '@components/Trans';
+
 import { Formix } from '@euk-labs/formix';
 
 import ClearFiltersButton from './ClearFiltersButton';
@@ -79,7 +81,7 @@ function FiltersComponent({
                 ref={anchorRef}
               >
                 <AddIcon />
-                Adicionar filtro
+                <Trans id="actions.filters.add" />
               </Button>
             </Grid>
           </Grid>

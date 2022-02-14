@@ -14,12 +14,15 @@ import { Filters } from '@components/Filters';
 import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
 
-import { buildFilters, filters } from '@modules/users/filters';
+import useTranslation from '@hooks/useTranslation';
+
+import { buildFilters, getFilters } from '@modules/users/filters';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Identifier, useList } from '@euk-labs/fetchx';
 
 function Index() {
+  const { translate } = useTranslation();
   const uiStore = useUIStore();
   const userStore = useUserStore();
   const usersRepository = useUsersRepository();
@@ -37,8 +40,8 @@ function Index() {
   const handleDelete = (id: Identifier) => {
     uiStore.dialog.set({
       content: <DeleteContent />,
-      rejectLabel: 'Cancelar',
-      acceptLabel: 'Deletar',
+      rejectLabel: translate('dialogs.delete.rejectLabel'),
+      acceptLabel: translate('dialogs.delete.acceptLabel'),
       onReject: () => uiStore.dialog.close(),
       onAccept: () => deleteUser(id),
     });
@@ -71,7 +74,7 @@ function Index() {
 
         <Grid item xs={12}>
           <Filters
-            filters={filters}
+            filters={getFilters(translate)}
             onFilter={(filters) => {
               buildFilters(filters, usersList.filters);
               usersList.fetch();
@@ -85,7 +88,7 @@ function Index() {
           <MuiTable
             page={usersList.page - 1}
             pageSize={10}
-            columns={usersColumns(userStore.abilities, handleDelete)}
+            columns={usersColumns(userStore.abilities, handleDelete, translate)}
             rows={usersList.list}
             isLoading={usersList.loading}
             totalCount={usersList.totalCount}

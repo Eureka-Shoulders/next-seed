@@ -4,12 +4,16 @@ import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 
+import Trans from '@components/Trans';
 import When from '@components/When';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { useArrayField } from '@euk-labs/formix';
 import { FXAutocomplete, FXTextField } from '@euk-labs/formix-mui';
 
 function ContactsField() {
+  const { translate } = useTranslation();
   const { values, helpers } = useArrayField('contacts');
   const newContact = {
     type: null,
@@ -17,35 +21,35 @@ function ContactsField() {
   };
   const contactTypes = [
     {
-      label: 'Telefone',
+      label: translate('common.phone'),
       value: 'PHONE',
     },
     {
-      label: 'E-mail',
+      label: translate('common.email'),
       value: 'EMAIL',
     },
     {
-      label: 'Facebook',
+      label: translate('common.facebook'),
       value: 'FACEBOOK',
     },
     {
-      label: 'Twitter',
+      label: translate('common.twitter'),
       value: 'TWITTER',
     },
     {
-      label: 'Instagram',
+      label: translate('common.instagram'),
       value: 'INSTAGRAM',
     },
     {
-      label: 'LinkedIn',
+      label: translate('common.linkedin'),
       value: 'LINKEDIN',
     },
     {
-      label: 'GitHub',
+      label: translate('common.github'),
       value: 'GITHUB',
     },
     {
-      label: 'Website',
+      label: translate('common.website'),
       value: 'WEBSITE',
     },
   ];
@@ -57,7 +61,7 @@ function ContactsField() {
         <Fragment key={`contact-${index}`}>
           <Grid item xs={12} display="flex" alignItems="center" gap={2}>
             <Typography variant="body1" fontWeight="bold">
-              Contato {index + 1}
+              <Trans id="common.contact" /> {index + 1}
             </Typography>
 
             <IconButton onClick={() => helpers.remove(index)}>
@@ -68,12 +72,15 @@ function ContactsField() {
           <Grid item xs={6}>
             <FXAutocomplete
               name={`contacts.${index}.type`}
-              label="Tipo"
+              label={translate('common.type')}
               options={contactTypes}
             />
           </Grid>
           <Grid item xs={6}>
-            <FXTextField name={`contacts.${index}.value`} label="Contato" />
+            <FXTextField
+              name={`contacts.${index}.value`}
+              label={translate('common.contact')}
+            />
           </Grid>
 
           <When isNot={isLastItem(index)}>
@@ -87,7 +94,7 @@ function ContactsField() {
       <Grid item xs={12}>
         <Button variant="outlined" onClick={() => helpers.push(newContact)}>
           <AddIcon />
-          Adicionar
+          <Trans id="actions.add" />
         </Button>
       </Grid>
     </Grid>

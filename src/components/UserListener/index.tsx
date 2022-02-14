@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 
 import { getBreadcrumbPaths } from '@components/Breadcrumbs/getBreadcrumbPaths';
 
+import useTranslation from '@hooks/useTranslation';
+
 interface UserListenerProps {
   isPublicPage: boolean;
 }
@@ -13,6 +15,7 @@ interface UserListenerProps {
 function UserListener({ isPublicPage }: UserListenerProps) {
   const userStore = useUserStore();
   const router = useRouter();
+  const { translate } = useTranslation();
 
   useEffect(() => {
     userStore.startTokenInjector();
@@ -27,7 +30,7 @@ function UserListener({ isPublicPage }: UserListenerProps) {
 
   useEffect(() => {
     if (!isPublicPage && userStore.user && userStore.abilities) {
-      const pages = getPages(userStore.abilities);
+      const pages = getPages(userStore.abilities, translate);
       const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
       const lastPath = breadcrumbPaths.pop();
 

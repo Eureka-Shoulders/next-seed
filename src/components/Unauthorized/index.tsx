@@ -1,5 +1,7 @@
 import { Button, Grid, Typography } from '@mui/material';
 
+import useTranslation from '@hooks/useTranslation';
+
 import UnauthorizedSvg from './UnauthorizedSvg';
 
 type UnauthorizedShowerProps = {
@@ -10,10 +12,11 @@ type UnauthorizedShowerProps = {
 };
 
 const UnauthorizedShower = (props: UnauthorizedShowerProps) => {
+  const { translate } = useTranslation();
   const {
-    title = 'Acesso negado',
-    description = 'Você não tem as permissões necessárias para acessar esta página',
-    buttonLabel = 'página inicial',
+    title = translate('pages.noPermissions.title'),
+    description = translate('pages.noPermissions.description'),
+    buttonLabel = translate('pages.noPermissions.buttonLabel'),
     href = '/',
   } = props;
 

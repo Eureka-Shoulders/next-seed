@@ -1,36 +1,23 @@
 import { Avatar, Box, Grid, Paper, Skeleton, Typography } from '@mui/material';
-import getPersonType from '@utils/getPersonType';
 import { withSSRAuth } from '@utils/withSSRAuth';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
-import { UserSchema } from 'modules/users/user.schema';
-import { useEffect } from 'react';
+import { UserSchema, getUserSchema } from 'modules/users/user.schema';
+import { useEffect, useMemo } from 'react';
 import { Actions, Subjects, User } from 'types';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 
-function getInitialValues(user: User) {
-  return {
-    ...user,
-    person: {
-      ...user.person,
-      birthDate: new Date(user.person.birthDate),
-      type: getPersonType(user.person.identifier),
-      contacts: [],
-      addresses: [],
-    },
-    password: user.password || '',
-    confirmPassword: '',
-  };
-}
-
 const ProfileCard = observer(() => {
   const userStore = useUserStore();
+  const { translate } = useTranslation();
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center">
@@ -42,7 +29,7 @@ const ProfileCard = observer(() => {
         }}
       />
       <Typography variant="h6" textAlign="center">
-        {userStore.user?.person.name || 'Sem nome'}
+        {userStore.user?.person.name || translate('common.noName')}
       </Typography>
     </Box>
   );
@@ -53,6 +40,19 @@ function Index() {
   const userStore = useUserStore();
   const usersRepository = useUsersRepository();
   const userEntity = useEntity(usersRepository);
+  const { translate } = useTranslation();
+  const initialValues = useMemo(
+    () =>
+      userStore.user
+        ? {
+            email: userStore.user.email,
+            person: {
+              name: userStore.user.person.name,
+            },
+          }
+        : {},
+    [userStore.user]
+  );
 
   useEffect(() => {
     if (userStore.user?.id) {
@@ -65,7 +65,7 @@ function Index() {
     try {
       await userEntity.update(values);
       uiStore.snackbar.show({
-        message: 'Usuário atualizado com sucesso!',
+        message: translate('feedbacks.user.updated'),
         severity: 'success',
       });
       userStore.setUser(userEntity.data as User);
@@ -73,8 +73,7 @@ function Index() {
       if (axios.isAxiosError(error)) {
         uiStore.snackbar.show({
           message:
-            error.response?.data.message ||
-            'Ocorreu um erro ao atualizar o usuário!',
+            error.response?.data.message || translate('errors.users.update'),
           severity: 'error',
         });
       }
@@ -100,25 +99,33 @@ function Index() {
           <Grid item xs={8}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography variant="h5">Editar Perfil</Typography>
+                <Typography variant="h5">
+                  {translate('actions.changeProfile')}
+                </Typography>
               </Grid>
 
               <Grid item xs={12}>
                 <Formix
-                  initialValues={getInitialValues(userStore.user)}
+                  initialValues={initialValues}
                   onSubmit={handleSubmit}
-                  zodSchema={UserSchema}
+                  zodSchema={getUserSchema(translate)}
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
-                      <FXTextField name="person.name" label="Nome" />
+                      <FXTextField
+                        name="person.name"
+                        label={translate('common.name')}
+                      />
                     </Grid>
                     <Grid item xs={6}>
-                      <FXTextField name="email" label="E-mail" />
+                      <FXTextField
+                        name="email"
+                        label={translate('common.email')}
+                      />
                     </Grid>
 
                     <Grid item xs={12} display="flex" justifyContent="flex-end">
-                      <FXSubmitButton label="Salvar" />
+                      <FXSubmitButton label={translate('actions.save')} />
                     </Grid>
                   </Grid>
                 </Formix>
