@@ -19,6 +19,7 @@ const errors = {
     minimum_password: 'A senha deve conter, no minimo, 8 caracteres',
     required: 'Campo obrigatório',
     invalid_field: 'Campo inválido',
+    invalid_type: 'Tipo inválido',
     password_mismatch: 'As senhas não conferem',
   },
 };

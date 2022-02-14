@@ -17,6 +17,7 @@ import AppBarBuilder from '@components/AppBarBuilder';
 import BreadcrumbListener from '@components/Breadcrumbs/BreadcrumbListener';
 import ThemeProvider from '@components/ThemeProvider';
 import UserListener from '@components/UserListener';
+import ZodErrorMapBuilder from '@components/ZodErrorMapBuilder';
 
 import { AppBar } from '@euk-labs/componentz';
 
@@ -63,6 +64,7 @@ function MyApp(props: MyAppProps) {
           <BreadcrumbListener />
           <UserListener isPublicPage={isPublicPage} />
           <AppBarBuilder />
+          <ZodErrorMapBuilder />
 
           <ThemeProvider>
             <CssBaseline />

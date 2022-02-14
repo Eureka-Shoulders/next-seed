@@ -19,6 +19,7 @@ const errors = {
     minimum_password: 'Password must have at least 8 characters',
     required: 'Required field',
     invalid_field: 'Invalid field',
+    invalid_type: 'Invalid type',
     password_mismatch: 'Passwords do not match',
   },
 };
