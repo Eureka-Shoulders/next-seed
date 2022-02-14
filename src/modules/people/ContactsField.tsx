@@ -4,6 +4,8 @@ import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 
+import When from '@components/When';
+
 import { useArrayField } from '@euk-labs/formix';
 import { FXAutocomplete, FXTextField } from '@euk-labs/formix-mui';
 
@@ -74,11 +76,11 @@ function ContactsField() {
             <FXTextField name={`contacts.${index}.value`} label="Contato" />
           </Grid>
 
-          {!isLastItem(index) && (
+          <When isNot={isLastItem(index)}>
             <Grid item xs={12}>
               <Divider />
             </Grid>
-          )}
+          </When>
         </Fragment>
       ))}
 

@@ -24,13 +24,20 @@ export default function LoginForm() {
   const usersRepository = useUsersRepository();
 
   async function handleSubmit(values: LoginSchema) {
+    const params = new URLSearchParams(window.location.search);
+    const redirectTo = params.get('redirect') || undefined;
+
     try {
       const response = await usersRepository.login(
         values.email,
         values.password
       );
 
-      userStore.login(response.data.access_token, response.data.refresh_token);
+      userStore.login(
+        response.data.accessToken,
+        response.data.refreshToken,
+        redirectTo
+      );
     } catch (error) {
       uiStore.snackbar.show({
         message: 'Usuário ou senha inválidos',
