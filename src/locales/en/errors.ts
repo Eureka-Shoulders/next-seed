@@ -14,6 +14,13 @@ const errors = {
   invalidCredentials: 'Invalid credentials!',
   noPermissions: 'You do not have permission to access this page!',
   notAuthorized: 'You are not authorized to execute this action!',
+  validation: {
+    invalid_email: 'Invalid e-mail',
+    minimum_password: 'Password must have at least 8 characters',
+    required: 'Required field',
+    invalid_field: 'Invalid field',
+    password_mismatch: 'Passwords do not match',
+  },
 };
 
 export default errors;
