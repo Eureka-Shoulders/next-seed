@@ -1,4 +1,4 @@
-import { getAutocompleteSchema } from '@config/autocomplete.schema';
+import { getAutocompleteSchema } from '@config/schemas/autocomplete.schema';
 import validateCPForCNPJ from '@utils/validateCPForCNPJ';
 import * as zod from 'zod';
 

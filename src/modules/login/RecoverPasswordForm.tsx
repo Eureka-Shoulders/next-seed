@@ -11,10 +11,7 @@ import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 
-import {
-  ReccoverPasswordSchema,
-  getRecoverPasswordSchema,
-} from './login.schema';
+import { ReccoverPasswordSchema, RecoverPasswordSchema } from './login.schema';
 
 const initialValues = {
   email: '',
@@ -63,7 +60,7 @@ export default function RecoverPasswordForm() {
         <Grid item xs={12} sm={8}>
           <Formix
             initialValues={initialValues}
-            zodSchema={getRecoverPasswordSchema(translate)}
+            zodSchema={RecoverPasswordSchema}
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>
