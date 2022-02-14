@@ -3,7 +3,7 @@ import * as zod from 'zod';
 
 import { TranslateFunc } from '@hooks/useTranslation';
 
-import { getNewPersonSchema } from '@modules/people/people.schema';
+import { NewPersonSchema } from '@modules/people/people.schema';
 
 export function getUserSchema(translate: TranslateFunc) {
   return zod
@@ -11,7 +11,7 @@ export function getUserSchema(translate: TranslateFunc) {
       email: zod.string().email(),
       password: getPasswordSchema(translate),
       confirmPassword: getPasswordSchema(translate),
-      person: getNewPersonSchema(translate),
+      person: NewPersonSchema,
     })
     .refine((data) => data.password === data.confirmPassword, {
       message: translate('errors.validation.password_mismatch'),

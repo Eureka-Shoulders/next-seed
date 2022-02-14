@@ -1,102 +1,82 @@
-import { getAutocompleteSchema } from '@config/schemas/autocomplete.schema';
+import { AutocompleteSchema } from '@config/schemas/autocomplete.schema';
 import validateCPForCNPJ from '@utils/validateCPForCNPJ';
 import * as zod from 'zod';
 
-import { TranslateFunc } from '@hooks/useTranslation';
-
-export function getNewPersonSchema(translate: TranslateFunc) {
-  // TODO: fix contact type validation
-  return zod.object({
-    name: zod.string().min(1, translate('errors.validation.required')),
-    type: zod
-      .object({
-        label: zod.string().min(1, translate('errors.validation.required')),
-        value: zod.string().min(1, translate('errors.validation.required')),
+/**
+ *  New Person Schema
+ */
+export const NewPersonSchema = zod.object({
+  name: zod.string().min(1),
+  type: zod
+    .object({
+      label: zod.string().min(1),
+      value: zod.string().min(1),
+    })
+    .nullable(),
+  identifier: zod
+    .string()
+    .min(1)
+    .refine((identifier) => validateCPForCNPJ(identifier.replace(/\D+/g, ''))),
+  // TODO: make it accept a string that is a valid date
+  birthDate: zod
+    .date()
+    .nullable()
+    .refine((value) => value !== null),
+  addresses: zod
+    .array(
+      zod.object({
+        street: zod.string().min(1),
+        number: zod.string().min(1),
+        neighborhood: zod.string().min(1),
+        city: zod.string().min(1),
+        state: zod.string().min(1),
+        country: zod.string().min(1),
+        zipcode: zod.string().min(1),
       })
-      .nullable(),
-    identifier: zod
-      .string()
-      .min(1, translate('errors.validation.required'))
-      .refine(
-        (identifier) => validateCPForCNPJ(identifier.replace(/\D+/g, '')),
-        translate('errors.validation.invalid_field')
-      ),
-    // TODO: make it accept a string that is a valid date
-    birthDate: zod
-      .date()
-      .nullable()
-      .refine(
-        (value) => value !== null,
-        translate('errors.validation.required')
-      ),
-    addresses: zod
-      .array(
-        zod.object({
-          street: zod.string().min(1, translate('errors.validation.required')),
-          number: zod.string().min(1, translate('errors.validation.required')),
-          neighborhood: zod
-            .string()
-            .min(1, translate('errors.validation.required')),
-          city: zod.string().min(1, translate('errors.validation.required')),
-          state: zod.string().min(1, translate('errors.validation.required')),
-          country: zod.string().min(1, translate('errors.validation.required')),
-          zipcode: zod.string().min(1, translate('errors.validation.required')),
-        })
-      )
-      .min(1, translate('errors.validation.required')),
-    contacts: zod
-      .array(
-        zod.object({
-          type: getAutocompleteSchema(translate),
-          value: zod.string().min(1, translate('errors.validation.required')),
-        })
-      )
-      .min(1, translate('errors.validation.required')),
-  });
-}
+    )
+    .min(1),
+  // TODO: fix contact type validation
+  contacts: zod
+    .array(
+      zod.object({
+        type: AutocompleteSchema,
+        value: zod.string().min(1),
+      })
+    )
+    .min(1),
+});
+export type NewPersonSchema = zod.infer<typeof NewPersonSchema>;
 
-export type NewPersonSchema = zod.infer<ReturnType<typeof getNewPersonSchema>>;
-
-export function getUpdatePersonSchema(translate: TranslateFunc) {
-  return zod.object({
-    name: zod.string().min(1, translate('errors.validation.required')),
-    identifier: zod
-      .string()
-      .min(1, translate('errors.validation.required'))
-      .refine(
-        (identifier) => validateCPForCNPJ(identifier),
-        translate('errors.validation.invalid_field')
-      ),
-    birthDate: zod.date({
-      invalid_type_error: translate('errors.validation.required'),
-      required_error: translate('errors.validation.required'),
-    }),
-    addresses: zod
-      .array(
-        zod.object({
-          street: zod.string().min(1, translate('errors.validation.required')),
-          number: zod.string().min(1, translate('errors.validation.required')),
-          neighborhood: zod
-            .string()
-            .min(1, translate('errors.validation.required')),
-          city: zod.string().min(1, translate('errors.validation.required')),
-          state: zod.string().min(1, translate('errors.validation.required')),
-          country: zod.string().min(1, translate('errors.validation.required')),
-          zipcode: zod.string().min(1, translate('errors.validation.required')),
-        })
-      )
-      .min(1, translate('errors.validation.required')),
-    contacts: zod
-      .array(
-        zod.object({
-          type: getAutocompleteSchema(translate),
-          value: zod.string().min(1, translate('errors.validation.required')),
-        })
-      )
-      .min(1, translate('errors.validation.required')),
-  });
-}
-
-export type UpdatePersonSchema = zod.infer<
-  ReturnType<typeof getUpdatePersonSchema>
->;
+/**
+ *  Update Person Schema
+ */
+export const UpdatePersonSchema = zod.object({
+  name: zod.string().min(1),
+  identifier: zod
+    .string()
+    .min(1)
+    .refine((identifier) => validateCPForCNPJ(identifier)),
+  birthDate: zod.date(),
+  addresses: zod
+    .array(
+      zod.object({
+        street: zod.string().min(1),
+        number: zod.string().min(1),
+        neighborhood: zod.string().min(1),
+        city: zod.string().min(1),
+        state: zod.string().min(1),
+        country: zod.string().min(1),
+        zipcode: zod.string().min(1),
+      })
+    )
+    .min(1),
+  contacts: zod
+    .array(
+      zod.object({
+        type: AutocompleteSchema,
+        value: zod.string().min(1),
+      })
+    )
+    .min(1),
+});
+export type UpdatePersonSchema = zod.infer<typeof UpdatePersonSchema>;

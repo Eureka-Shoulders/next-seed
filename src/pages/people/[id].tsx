@@ -5,10 +5,7 @@ import { observer } from 'mobx-react-lite';
 import AddressesForm from 'modules/people/AddressesForm';
 import ContactsForm from 'modules/people/ContactsForm';
 import PersonForm from 'modules/people/PersonForm';
-import {
-  UpdatePersonSchema,
-  getUpdatePersonSchema,
-} from 'modules/people/people.schema';
+import { UpdatePersonSchema } from 'modules/people/people.schema';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ContactTypeEnum, Person } from 'types';
@@ -112,7 +109,7 @@ function Index() {
               <Box p={2}>
                 <Formix
                   initialValues={getInitialValues(personEntity.data as Person)}
-                  zodSchema={getUpdatePersonSchema(translate)}
+                  zodSchema={UpdatePersonSchema}
                   onSubmit={handleSubmit}
                 >
                   <Grid container spacing={2}>

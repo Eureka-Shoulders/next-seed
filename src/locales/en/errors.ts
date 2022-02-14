@@ -21,6 +21,9 @@ const errors = {
     invalid_field: 'Invalid field',
     invalid_type: 'Invalid type',
     password_mismatch: 'Passwords do not match',
+    too_small: 'Must contain at least ${min} character(s)',
+    too_small_array: 'Must contain at least ${min} item(s)',
+    too_big: 'Must contain at most ${max} character(s)',
   },
 };
 
