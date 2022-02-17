@@ -97,7 +97,7 @@ function Index() {
         </Grid>
       </Grid>
 
-      <Can I={Actions.Create} a={Subjects.Users} ability={userStore.abilities}>
+      <Can I={Actions.Create} a={Subjects.User} ability={userStore.abilities}>
         <NewEntityButton />
       </Can>
     </Box>

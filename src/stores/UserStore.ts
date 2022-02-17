@@ -9,6 +9,8 @@ import { AppAbility, User } from 'types';
 
 import { HttpService } from '@euk-labs/fetchx';
 
+const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
+
 export interface UserStoreType {
   user: User | null;
   setUser(user: User): void;
@@ -16,7 +18,7 @@ export interface UserStoreType {
   rawAbilities: RawRuleOf<AppAbility>[] | null;
   setRawAbilities(rawAbilities: RawRuleOf<AppAbility>[]): void;
 
-  login(accessToken: string, redirectTo?: string): void;
+  login(accessToken: string, refreshToken: string, redirectTo?: string): void;
   logout(): void;
 
   getAccessToken(): string | null;
@@ -29,11 +31,14 @@ export interface UserStoreType {
   get isLogged(): boolean;
 }
 
-// TODO: add an isLogged property to know when the user is authenticated and authorized
-
 class UserStore implements UserStoreType {
   constructor(private apiService: HttpService) {
     makeAutoObservable(this, {}, { autoBind: true });
+  }
+
+  isRefreshingToken = false;
+  setRefreshingToken(value: boolean) {
+    this.isRefreshingToken = value;
   }
 
   user: User | null = null;
@@ -46,9 +51,13 @@ class UserStore implements UserStoreType {
     this.rawAbilities = rawAbilities;
   }
 
-  login(accessToken: string, redirectTo?: string) {
+  login(accessToken: string, refreshToken: string, redirectTo?: string) {
     setCookie(null, 'user_token', accessToken, {
-      maxAge: 24 * 60 * 60,
+      maxAge: ONE_DAY_IN_SECONDS,
+      path: '/',
+    });
+    setCookie(null, 'refresh_token', refreshToken, {
+      maxAge: ONE_DAY_IN_SECONDS * 2,
       path: '/',
     });
 
@@ -61,6 +70,10 @@ class UserStore implements UserStoreType {
       maxAge: -1,
       path: '/',
     });
+    setCookie(null, 'refresh_token', '', {
+      maxAge: -1,
+      path: '/',
+    });
     Router.push('/login');
   }
 
@@ -69,14 +82,35 @@ class UserStore implements UserStoreType {
     return cookies.user_token;
   }
 
+  getRefreshToken() {
+    const cookies = parseCookies();
+    return cookies.refresh_token;
+  }
+
   async verifyToken() {
     const accessToken = this.getAccessToken();
+    const refreshToken = this.getRefreshToken();
 
-    if (!accessToken) {
+    if (!accessToken && !refreshToken) {
       return Router.push({
         pathname: '/login',
         search: `?redirect=${encodeURIComponent(Router.asPath)}`,
       });
+    }
+
+    if (!accessToken && refreshToken) {
+      const newTokens = await this.refreshToken();
+
+      if (newTokens) {
+        setCookie(null, 'user_token', newTokens.accessToken, {
+          maxAge: ONE_DAY_IN_SECONDS,
+          path: '/',
+        });
+        setCookie(null, 'refresh_token', newTokens.refreshToken, {
+          maxAge: ONE_DAY_IN_SECONDS * 2,
+          path: '/',
+        });
+      }
     }
 
     try {
@@ -94,6 +128,24 @@ class UserStore implements UserStoreType {
         pathname: '/login',
         search: `?redirect=${encodeURIComponent(Router.asPath)}`,
       });
+    }
+  }
+
+  async refreshToken() {
+    this.setRefreshingToken(true);
+
+    try {
+      const refreshToken = this.getRefreshToken();
+      const refreshResponse = await this.apiService.client.post<{
+        accessToken: string;
+        refreshToken: string;
+      }>('/auth/refresh', { refreshToken });
+
+      return refreshResponse.data;
+    } catch (error) {
+      return this.logout();
+    } finally {
+      this.setRefreshingToken(false);
     }
   }
 
@@ -119,14 +171,38 @@ class UserStore implements UserStoreType {
       (response) => {
         return response;
       },
-      (error) => {
+      async (error) => {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 401) {
-            return Router.push('/login');
+            if (this.isRefreshingToken) {
+              return error;
+            }
+
+            if (this.getRefreshToken()) {
+              const newTokens = await this.refreshToken();
+
+              if (newTokens) {
+                setCookie(null, 'user_token', newTokens.accessToken, {
+                  maxAge: ONE_DAY_IN_SECONDS,
+                  path: '/',
+                });
+                setCookie(null, 'refresh_token', newTokens.refreshToken, {
+                  maxAge: ONE_DAY_IN_SECONDS * 2,
+                  path: '/',
+                });
+
+                return await this.apiService.client({
+                  ...error.config,
+                });
+              }
+            }
+
+            window.location.href = '/login';
+            return error;
           }
         }
 
-        throw error;
+        return error;
       }
     );
   }
@@ -140,7 +216,7 @@ class UserStore implements UserStoreType {
   }
 
   get isLogged() {
-    return !!this.user;
+    return !!this.user && this.abilities !== null;
   }
 }
 

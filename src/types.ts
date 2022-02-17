@@ -16,10 +16,10 @@ export enum Actions {
 }
 
 export enum Subjects {
-  Users = 'users',
-  People = 'people',
-  Contacts = 'contacts',
-  Addresses = 'addresses',
+  User = 'User',
+  Person = 'Person',
+  Contact = 'Contact',
+  Address = 'Address',
   All = 'all',
 }
 
