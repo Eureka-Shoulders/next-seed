@@ -4,9 +4,21 @@ export interface FilterEnum {
   description?: string;
 }
 
-export interface Filter {
+export type Filter = GenericFilter | NumericFilter;
+
+export interface GenericFilter {
   field: string;
   title: string;
-  type: 'string' | 'number' | 'date' | 'enum' | 'cpf';
+  type: 'string' | 'date' | 'enum' | 'cpf';
+  enums?: FilterEnum[];
+}
+
+export interface NumericFilter {
+  field: string;
+  title: string;
+  type: 'number';
+  precision: number;
+  decimalChar: string;
+  thousandChar: string;
   enums?: FilterEnum[];
 }

@@ -5,13 +5,13 @@ import Trans from '@components/Trans';
 
 import useTranslation from '@hooks/useTranslation';
 
-import { FXCurrencyField } from '@euk-labs/formix-mui';
+import { FXNumericField } from '@euk-labs/formix-mui';
 
 interface NumericFilterProps {
   name: string;
   precision: number;
-  decimalChar?: string;
-  thousandChar?: string;
+  decimalChar: string;
+  thousandChar: string;
   activeTab: number;
   index: number;
 }
@@ -36,12 +36,12 @@ export default function NumericFilter({
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <FXCurrencyField
+            <FXNumericField
               name={name}
               label={translate('filters.numeric.label')}
-              // precision={precision}
-              // decimalChar={decimalChar}
-              // thousandChar={thousandChar}
+              precision={precision}
+              decimalChar={decimalChar}
+              thousandChar={thousandChar}
             />
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
