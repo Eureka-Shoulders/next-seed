@@ -15,15 +15,16 @@ const withTM = require('next-transpile-modules')(
 /** @type {import('next').NextConfig} */
 module.exports = withTM({
   reactStrictMode: true,
+  swcMinify: true,
   publicRuntimeConfig: {
     apiUrl: process.env.API_URL || 'http://localhost:3030',
     useMirage: process.env.USE_MIRAGE === 'true' || false,
   },
   i18n: {
-    /**
-     * Provide the locales you want to support in your application
-     */
     locales: ['en', 'pt'],
     defaultLocale: 'en',
+  },
+  experimental: {
+    outputStandalone: true,
   },
 });
