@@ -498,10 +498,10 @@
   dependencies:
     date-fns "^2.27.0"
 
-"@euk-labs/componentz@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@euk-labs/componentz/-/componentz-0.3.3.tgz#57c9ad8ec3ce5537a060dae5159c63fbc78cf62c"
-  integrity sha512-CxNSmsILBX3J/6qh2ls+B7C2hjFZ/tOQXB2lUE5E7zm/nqm1h2vJ37WaEMgY04iNvPvC4oYOEIUrx/HVzBVIHA==
+"@euk-labs/componentz@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@euk-labs/componentz/-/componentz-0.4.0.tgz#6db2ef125a6736f6a707736b486772327c8d84e1"
+  integrity sha512-QjZOjn9KMS5+QKlhDxYRDwyqixmopBWjFLiOp2RYNmfj7hLrTP1XcUldqEOO3isE6NQm6Ja2D/mDT8JFGg6bcw==
   dependencies:
     date-fns "^2.28.0"
     inversify ">=6.0.1"
@@ -518,18 +518,18 @@
     axios "^0.24.0"
     inversify "^6.0.1"
 
-"@euk-labs/formix-mui@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@euk-labs/formix-mui/-/formix-mui-0.1.2.tgz#34dc8b0c5c21165202614ffc0d03cc9be593620e"
-  integrity sha512-yZlKf7vYyh4MXnz0rx7sZ3GdUtfZBt7etIXAJorWL3PMlKAPkwpvZNaOfZi0W0RTCh3Oc/0ecUG4PxLvJDSokg==
+"@euk-labs/formix-mui@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@euk-labs/formix-mui/-/formix-mui-0.2.0.tgz#a65bb7f6a7e9a3e7995bc51e34fe12c542fa9eb4"
+  integrity sha512-l/2nVd1T6hpkplimQxPvLGQosKyeHvEK15yj/mYoSVseNhhgLS43N1fodyOIhv8Og4HoAn1QkFmLi1UN9I0ycg==
   dependencies:
     react-dropzone "^11.5.1"
     react-input-mask "^2.0.4"
 
-"@euk-labs/formix@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@euk-labs/formix/-/formix-0.2.5.tgz#a83f48c846bd02a207d9c6b933e9d6351eb94d8d"
-  integrity sha512-z8SGqEM38aclUz5YmiqtEUOhIoPyq0Q8ngURmKKoRedK7ci8HQF7e8df/1MLpt3CUoJFrNin89JbZC2grGD+aQ==
+"@euk-labs/formix@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@euk-labs/formix/-/formix-0.2.6.tgz#f11ae6cf6928757acfe58067396b34ce719cbdca"
+  integrity sha512-EU2xA9HM/8KmgilQvWx3gk35N9JM/2Fuo4DRx2DGkWXXxaatTUuN1xktpHegEZ9o+n+Xo6zGclUKGtW35eJRbg==
   dependencies:
     yup "^0.32.11"
     zod "^3.11.6"
