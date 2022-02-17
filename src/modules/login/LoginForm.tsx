@@ -38,7 +38,11 @@ export default function LoginForm() {
         values.password
       );
 
-      userStore.login(response.data.access_token, redirectTo);
+      userStore.login(
+        response.data.accessToken,
+        response.data.refreshToken,
+        redirectTo
+      );
     } catch (error) {
       uiStore.snackbar.show({
         message: translate('errors.invalidCredentials'),

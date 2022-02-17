@@ -142,7 +142,7 @@ export default observer(Index);
 
 export const getServerSideProps = withSSRAuth(async () => ({ props: {} }), {
   can: [
-    { action: Actions.Read, subject: Subjects.Users },
-    { action: Actions.Update, subject: Subjects.Users },
+    { action: Actions.Read, subject: Subjects.User },
+    { action: Actions.Update, subject: Subjects.User },
   ],
 });
