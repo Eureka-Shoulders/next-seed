@@ -1,36 +1,37 @@
 import { GridColDef } from '@mui/x-data-grid';
+import { filter, fromPairs, map, pipe } from 'ramda';
 
 import { Filter } from './types';
 
-// TODO: analyse use of ramda
 export function buildInitialValues(columns: GridColDef[]) {
-  const initialValues: { [key: string]: unknown } = {};
+  const pairs = filter(
+    Boolean,
+    map((column) => {
+      if (column.filterable || column.filterable === undefined) {
+        if (column.type === 'date') {
+          return [column.field, null];
+        }
 
-  columns.forEach((column) => {
-    if (column.filterable || column.filterable === undefined) {
-      if (column.type === 'date') {
-        return (initialValues[column.field] = null);
+        return [column.field, ''];
       }
-
-      return (initialValues[column.field] = '');
-    }
-  });
-
-  return initialValues;
+    }, columns)
+  ) as [key: string, value: string | null][];
+  return fromPairs(pairs);
 }
 
 export function getFilterValue(
-  filter: Filter,
+  filterObject: Filter,
   values: Record<string, unknown>
 ) {
-  switch (filter.type) {
+  switch (filterObject.type) {
     case 'enum':
-      const enumerable = values[filter.field] as Record<string, boolean>;
-      return Object.entries(enumerable)
-        .filter(([, value]) => value)
-        .map(([key]) => key);
+      return pipe(
+        Object.entries,
+        filter(([, value]) => value),
+        map(([key]) => key)
+      )(values[filterObject.field] as Record<string, boolean>);
 
     default:
-      return values[filter.field];
+      return values[filterObject.field];
   }
 }
