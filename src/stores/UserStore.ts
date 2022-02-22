@@ -174,7 +174,9 @@ class UserStore implements UserStoreType {
       async (error) => {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 401) {
-            if (this.isRefreshingToken) {
+            const isLoggingIn = error.config.url === '/auth/login';
+
+            if (this.isRefreshingToken || isLoggingIn) {
               return error;
             }
 
