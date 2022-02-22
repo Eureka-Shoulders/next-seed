@@ -22,6 +22,7 @@ export interface UserStoreType {
   logout(): void;
 
   getAccessToken(): string | null;
+  getRefreshToken(): string | null;
   verifyToken(): void;
 
   startTokenInjector(): void;

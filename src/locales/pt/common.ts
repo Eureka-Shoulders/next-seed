@@ -35,6 +35,7 @@ const common = {
   profile: 'Perfil',
   currentTheme: 'Tema atual',
   informations: 'Informações',
+  settings: 'Configurações',
   of: 'de',
   sortAsc: 'Ordem Crescente',
   sortDesc: 'Ordem Decrescente',

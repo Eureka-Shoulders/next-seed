@@ -3,6 +3,7 @@ const errors = {
     creation: 'Ocorreu um erro ao criar o usuário!',
     update: 'Ocorreu um erro ao atualizar o usuário!',
     notFound: 'Usuário não encontrado!',
+    logoutDevices: 'Ocorreu um erro ao sair de outros dispositivos!',
   },
   person: {
     creation: 'Ocorreu um erro ao criar a pessoa!',
@@ -14,6 +15,7 @@ const errors = {
   invalidCredentials: 'Usuário ou senha inválidos',
   noPermissions: 'Você não tem permissão para acessar esta página!',
   notAuthorized: 'Você não tem permissão para executar esta ação!',
+  noRefreshToken: 'Não foi possível obter o token de atualização!',
   validation: {
     invalid_email: 'E-mail invalido',
     minimum_password: 'A senha deve conter, no minimo, 8 caracteres',

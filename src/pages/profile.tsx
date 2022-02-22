@@ -1,4 +1,4 @@
-import { Avatar, Box, Grid, Paper, Skeleton, Typography } from '@mui/material';
+import { Box, Button, Grid, Paper, Skeleton, Typography } from '@mui/material';
 import { withSSRAuth } from '@utils/withSSRAuth';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
@@ -8,32 +8,14 @@ import { UserSchema, getUserSchema } from 'modules/users/user.schema';
 import { useEffect, useMemo } from 'react';
 import { Actions, Subjects, User } from 'types';
 
+import ProfileCard from '@components/ProfileCard';
+
 import useTranslation from '@hooks/useTranslation';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
-
-const ProfileCard = observer(() => {
-  const userStore = useUserStore();
-  const { translate } = useTranslation();
-
-  return (
-    <Box display="flex" flexDirection="column" alignItems="center">
-      <Avatar
-        src={userStore.user?.avatar ?? undefined}
-        sx={{
-          width: 150,
-          height: 150,
-        }}
-      />
-      <Typography variant="h6" textAlign="center">
-        {userStore.user?.person.name || translate('common.noName')}
-      </Typography>
-    </Box>
-  );
-});
 
 function Index() {
   const uiStore = useUIStore();
@@ -74,6 +56,35 @@ function Index() {
         uiStore.snackbar.show({
           message:
             error.response?.data.message || translate('errors.users.update'),
+          severity: 'error',
+        });
+      }
+    }
+  }
+
+  async function logoutDevices() {
+    const refreshToken = userStore.getRefreshToken();
+
+    try {
+      if (!refreshToken) {
+        return uiStore.snackbar.show({
+          message: translate('errors.noRefreshToken'),
+          severity: 'error',
+        });
+      }
+
+      await usersRepository.logoutDevices(refreshToken);
+
+      uiStore.snackbar.show({
+        message: translate('feedbacks.logoutDevices'),
+        severity: 'success',
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        uiStore.snackbar.show({
+          message:
+            error.response?.data.message ||
+            translate('errors.user.logoutDevices'),
           severity: 'error',
         });
       }
@@ -129,6 +140,18 @@ function Index() {
                     </Grid>
                   </Grid>
                 </Formix>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography variant="h5">
+                  {translate('common.settings')}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12} display="flex" justifyContent="end">
+                <Button onClick={logoutDevices}>
+                  Sair de outros dispositivos
+                </Button>
               </Grid>
             </Grid>
           </Grid>

@@ -55,6 +55,12 @@ class UsersRepository extends Repository {
       resetPasswordDto
     );
   }
+
+  logoutDevices(refreshToken: string) {
+    return this.apiService.client.post('/auth/logout-devices', {
+      refreshToken,
+    });
+  }
 }
 
 decorate(injectable(), UsersRepository);

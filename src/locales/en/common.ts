@@ -30,6 +30,7 @@ const common = {
   noName: 'No name',
   profile: 'Profile',
   informations: 'Informations',
+  settings: 'Settings',
   of: 'of',
   sortAsc: 'Sort Asc',
   sortDesc: 'Sort Desc',

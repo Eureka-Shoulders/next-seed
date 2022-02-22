@@ -3,6 +3,7 @@ const errors = {
     creation: 'An error occurred while creating the user!',
     update: 'An error occurred while updating the user!',
     notFound: 'User not found!',
+    logoutDevices: 'An error occurred while logging out other devices!',
   },
   person: {
     creation: 'An error occurred while creating the person!',
@@ -14,6 +15,7 @@ const errors = {
   invalidCredentials: 'Invalid credentials!',
   noPermissions: 'You do not have permission to access this page!',
   notAuthorized: 'You are not authorized to execute this action!',
+  noRefreshToken: "Couldn't get the refresh token!",
   validation: {
     invalid_email: 'Invalid e-mail',
     minimum_password: 'Password must have at least 8 characters',
