@@ -3,6 +3,9 @@ import TYPES from 'containers/global.types';
 import { decorate, inject, injectable } from 'inversify';
 import { LoginSchema } from 'modules/login/login.schema';
 import { dissocPath, omit, pipe } from 'ramda';
+import { User } from 'types';
+
+import { StringSearchObject } from '@hooks/useAutocomplete';
 
 import { HttpService, Repository } from '@euk-labs/fetchx';
 
@@ -60,6 +63,34 @@ class UsersRepository extends Repository {
     return this.apiService.client.post('/auth/logout-devices', {
       refreshToken,
     });
+  }
+
+  async getAutocompleteOptions(value?: StringSearchObject) {
+    const response = await this.read<{ data: User[] }>({
+      params: {
+        include: {
+          person: {
+            select: {
+              name: true,
+            },
+          },
+        },
+        where: value?.name
+          ? {
+              person: {
+                name: {
+                  contains: value?.name,
+                },
+              },
+            }
+          : undefined,
+      },
+    });
+
+    return response.data.data.map((user) => ({
+      label: user.person.name,
+      value: user.id,
+    }));
   }
 }
 
