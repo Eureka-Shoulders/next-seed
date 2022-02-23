@@ -1,10 +1,11 @@
 import { Add as AddIcon, Refresh as RefreshIcon } from '@mui/icons-material';
 import { Button, Grid } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import Trans from '@components/Trans';
 
-import { Formix } from '@euk-labs/formix';
+import { Formix, useFormixContext } from '@euk-labs/formix';
 
 import ClearFiltersButton from './ClearFiltersButton';
 import { FiltersModal } from './FiltersModal';
@@ -19,6 +20,14 @@ interface FiltersProps {
   onClear: () => void;
   onRefresh: () => void;
 }
+
+const Listener = observer(() => {
+  const formix = useFormixContext();
+
+  console.log(formix.values);
+
+  return null;
+});
 
 function FiltersComponent({
   filters,
@@ -69,10 +78,11 @@ function FiltersComponent({
 
   return (
     <Formix initialValues={initialValues} onSubmit={handleSubmit}>
+      <Listener />
       <Grid container spacing={2}>
         <Grid item xs>
           <Grid container spacing={2}>
-            <FiltersValuesList />
+            <FiltersValuesList filters={filters} />
 
             <Grid item>
               <Button

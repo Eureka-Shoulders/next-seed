@@ -3,25 +3,28 @@ import { buildInitialValues, getFilterValue } from './utils';
 
 describe('Filter Utils Tests', () => {
   it('should build initial values from columns', () => {
-    const columns = [
+    const filters: Filter[] = [
       {
         field: 'id',
-        filterable: true,
         type: 'number',
+        title: 'ID',
+        precision: 0,
+        decimalChar: '',
+        thousandChar: '',
       },
       {
         field: 'name',
-        filterable: true,
         type: 'string',
+        title: 'Name',
       },
       {
         field: 'date',
-        filterable: true,
         type: 'date',
+        title: 'Date',
       },
     ];
 
-    const initialValues = buildInitialValues(columns);
+    const initialValues = buildInitialValues(filters);
 
     expect(initialValues).toEqual({
       id: '',

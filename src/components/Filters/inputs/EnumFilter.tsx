@@ -17,7 +17,6 @@ interface EnumFilterProps {
   options: FilterEnum[];
 }
 
-// TODO: test this
 export default function EnumFilter({
   name,
   activeTab,
@@ -28,10 +27,10 @@ export default function EnumFilter({
   const checkboxOptions = useMemo(
     () =>
       options.map((option) => ({
-        name: option.value,
-        label: option.value,
+        name: `${name}.${option.value}`,
+        label: option.title,
       })),
-    [options]
+    [options, name]
   );
 
   return (

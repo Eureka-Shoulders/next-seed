@@ -46,5 +46,14 @@ export function buildFilters(
     };
   }
 
+  /**
+   * This is just an example of how to use the enum filter
+   */
+  // if (filters.enumeration) {
+  //   whereObject.enumeration = {
+  //     in: filters.enumeration as string[],
+  //   };
+  // }
+
   urlSearchParams.set('where', JSON.stringify(whereObject));
 }

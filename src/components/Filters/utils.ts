@@ -1,20 +1,29 @@
-import { GridColDef } from '@mui/x-data-grid';
 import { filter, fromPairs, map, pipe } from 'ramda';
 
-import { Filter } from './types';
+import { Filter, FilterEnum } from './types';
 
-export function buildInitialValues(columns: GridColDef[]) {
+function getEnumObject(enums: FilterEnum[]) {
+  const enumerationPairs = enums.map(
+    (enumeration) => [enumeration.value, false] as [string, boolean]
+  );
+
+  return fromPairs(enumerationPairs);
+}
+
+export function buildInitialValues(filters: Filter[]) {
   const pairs = filter(
     Boolean,
-    map((column) => {
-      if (column.filterable || column.filterable === undefined) {
-        if (column.type === 'date') {
-          return [column.field, null];
-        }
-
-        return [column.field, ''];
+    map((filterObject) => {
+      if (filterObject.type === 'date') {
+        return [filterObject.field, null];
       }
-    }, columns)
+
+      if (filterObject.type === 'enum') {
+        return [filterObject.field, getEnumObject(filterObject.enums)];
+      }
+
+      return [filterObject.field, ''];
+    }, filters)
   ) as [key: string, value: string | null][];
   return fromPairs(pairs);
 }

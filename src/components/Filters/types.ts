@@ -1,16 +1,14 @@
 export interface FilterEnum {
   value: string;
   title: string;
-  description?: string;
 }
 
-export type Filter = GenericFilter | NumericFilter;
+export type Filter = GenericFilter | NumericFilter | EnumFilter;
 
 export interface GenericFilter {
   field: string;
   title: string;
-  type: 'string' | 'date' | 'enum' | 'cpf';
-  enums?: FilterEnum[];
+  type: 'string' | 'date' | 'cpf';
 }
 
 export interface NumericFilter {
@@ -20,5 +18,11 @@ export interface NumericFilter {
   precision: number;
   decimalChar: string;
   thousandChar: string;
-  enums?: FilterEnum[];
+}
+
+export interface EnumFilter {
+  field: string;
+  title: string;
+  type: 'enum';
+  enums: FilterEnum[];
 }
