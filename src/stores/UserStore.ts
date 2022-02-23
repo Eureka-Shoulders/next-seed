@@ -205,7 +205,7 @@ class UserStore implements UserStoreType {
           }
         }
 
-        return error;
+        return Promise.reject(error);
       }
     );
   }
