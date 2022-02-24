@@ -1,7 +1,7 @@
 import { Ability, RawRuleOf } from '@casl/ability';
 import axios from 'axios';
 import TYPES from 'containers/global.types';
-import { decorate, inject, injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import Router from 'next/router';
 import { parseCookies, setCookie } from 'nookies';
@@ -32,8 +32,12 @@ export interface UserStoreType {
   get isLogged(): boolean;
 }
 
+@injectable()
 class UserStore implements UserStoreType {
-  constructor(private apiService: HttpService) {
+  constructor(
+    @inject(TYPES.ApiService)
+    private apiService: HttpService
+  ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
@@ -226,8 +230,5 @@ class UserStore implements UserStoreType {
     return !!this.user && this.abilities !== null;
   }
 }
-
-decorate(injectable(), UserStore);
-decorate(inject(TYPES.ApiService), UserStore, 0);
 
 export default UserStore;

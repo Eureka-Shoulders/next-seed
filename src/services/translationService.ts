@@ -1,5 +1,5 @@
 import TYPES from 'containers/global.types';
-import { decorate, inject, injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import en from 'locales/en';
 import pt from 'locales/pt';
 import { path, split } from 'ramda';
@@ -11,8 +11,12 @@ export interface TranslationServiceType {
   translate: (id: string) => string;
 }
 
+@injectable()
 class TranslationService implements TranslationServiceType {
-  constructor(private locale: string) {}
+  constructor(
+    @inject(TYPES.Locale)
+    private locale: string
+  ) {}
 
   translations = locales[this.locale];
 
@@ -27,8 +31,5 @@ class TranslationService implements TranslationServiceType {
     return `[${id}]`;
   };
 }
-
-decorate(injectable(), TranslationService);
-decorate(inject(TYPES.Locale), TranslationService, 0);
 
 export default TranslationService;

@@ -1,11 +1,9 @@
 import { AxiosResponse } from 'axios';
 import TYPES from 'containers/global.types';
-import { decorate, inject, injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { LoginSchema } from 'modules/login/login.schema';
 import { dissocPath, omit, pipe } from 'ramda';
 import { User } from 'types';
-
-import { StringSearchObject } from '@hooks/useAutocomplete';
 
 import { HttpService, Repository } from '@euk-labs/fetchx';
 
@@ -21,8 +19,12 @@ interface ResetPasswordDto {
   token: string;
 }
 
+@injectable()
 class UsersRepository extends Repository {
-  constructor(private apiService: HttpService) {
+  constructor(
+    @inject(TYPES.ApiService)
+    private apiService: HttpService
+  ) {
     super(apiService, { path: '/users' });
   }
 
@@ -65,7 +67,10 @@ class UsersRepository extends Repository {
     });
   }
 
-  async getAutocompleteOptions(value?: StringSearchObject) {
+  async getAutocompleteOptions(value?: string) {
+    const where = {
+      person: value ? { name: { contains: value } } : undefined,
+    };
     const response = await this.read<{ data: User[] }>({
       params: {
         include: {
@@ -75,15 +80,7 @@ class UsersRepository extends Repository {
             },
           },
         },
-        where: value?.name
-          ? {
-              person: {
-                name: {
-                  contains: value?.name,
-                },
-              },
-            }
-          : undefined,
+        where,
       },
     });
 
@@ -93,8 +90,5 @@ class UsersRepository extends Repository {
     }));
   }
 }
-
-decorate(injectable(), UsersRepository);
-decorate(inject(TYPES.ApiService), UsersRepository, 0);
 
 export default UsersRepository;
