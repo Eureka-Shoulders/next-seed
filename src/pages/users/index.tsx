@@ -2,6 +2,7 @@ import { Can } from '@casl/react';
 import { Box, Grid, Skeleton } from '@mui/material';
 import clearFilters from '@utils/clearFilters';
 import setFilter from '@utils/setFilter';
+import sortList from '@utils/sortList';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
@@ -93,6 +94,7 @@ function Index() {
             isLoading={usersList.loading}
             totalCount={usersList.totalCount}
             onPageChange={(page) => usersList.setPage(page + 1)}
+            onSortModelChange={sortList(usersList)}
           />
         </Grid>
       </Grid>
