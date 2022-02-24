@@ -47,6 +47,7 @@ build:
 deploy:
   image: bitnami/kubectl
   stage: deploy
+  entrypoint: [""]
   only:
     refs:
       - develop
