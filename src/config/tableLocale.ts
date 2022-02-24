@@ -6,7 +6,7 @@ export default function getTableLocaleText(
   translate: TranslateFunc
 ): Partial<GridLocaleText> {
   return {
-    columnMenuUnsort: translate('actions.undoSort'),
+    columnMenuUnsort: translate('actions.filters.undoSort'),
     columnMenuSortAsc: translate('common.sortAsc'),
     columnMenuSortDesc: translate('common.sortDesc'),
     columnMenuFilter: translate('actions.filter'),
