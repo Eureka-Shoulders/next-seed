@@ -75,7 +75,8 @@ class UserStore implements UserStoreType {
       maxAge: -1,
       path: '/',
     });
-    Router.push('/login');
+
+    window.location.href = '/';
   }
 
   getAccessToken() {
@@ -174,7 +175,10 @@ class UserStore implements UserStoreType {
       },
       async (error) => {
         if (axios.isAxiosError(error)) {
-          if (error.response?.status === 401) {
+          if (
+            error.response?.status === 401 ||
+            error.response?.data.message === 'Token is not allowed'
+          ) {
             const isLoggingIn = error.config.url === '/auth/login';
 
             if (this.isRefreshingToken || isLoggingIn) {
@@ -200,7 +204,7 @@ class UserStore implements UserStoreType {
               }
             }
 
-            window.location.href = '/login';
+            this.logout();
             return error;
           }
         }
