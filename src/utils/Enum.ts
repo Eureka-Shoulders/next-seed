@@ -1,7 +1,7 @@
 import { find, keys } from 'ramda';
 
 class Enum<T extends Record<string, string>> {
-  private notFound = 'Sem correspondência';
+  private notFound = 'Enum not found';
 
   constructor(private enumerable: T) {}
 

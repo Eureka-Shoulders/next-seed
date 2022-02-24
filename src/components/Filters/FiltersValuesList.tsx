@@ -1,11 +1,10 @@
 import { Grid } from '@mui/material';
-import { format } from 'date-fns';
-import { filter, isEmpty, join, keys, map, pipe, toPairs } from 'ramda';
 
 import { useFormixContext } from '@euk-labs/formix';
 
 import FilterChip from './FilterChip';
-import { EnumFilter, Filter } from './types';
+import { Filter } from './types';
+import { getFilterChips } from './utils';
 
 interface Props {
   filters: Filter[];
@@ -13,44 +12,19 @@ interface Props {
 
 export default function FiltersValuesList({ filters }: Props) {
   const formix = useFormixContext<Record<string | number, unknown>, unknown>();
+  const chips = getFilterChips(filters, formix.values);
 
-  const renderChips = pipe(
-    toPairs,
-    filter(([, value]) => value !== '' && value !== null),
-    map(([field, value]) => {
-      let title = value;
+  return (
+    <>
+      {chips.map((chip) => {
+        if (!chip) return;
 
-      if (field === 'sort') return;
-
-      if (value instanceof Date) title = format(value, 'dd/MM/yyyy');
-
-      if (typeof value === 'object') {
-        if (isEmpty(filter(Boolean, value as Record<string, boolean>))) return;
-
-        const enumOptions = filters.find(
-          (filter) => filter.field === field
-        ) as EnumFilter;
-        const enumTitleGetter = pipe(
-          filter(Boolean),
-          keys,
-          map(
-            (key) =>
-              enumOptions.enums.find((enumOption) => enumOption.value === key)
-                ?.title || ''
-          ),
-          join(', ')
+        return (
+          <Grid item key={chip.field}>
+            <FilterChip label={String(chip.title)} field={chip.field} />
+          </Grid>
         );
-
-        title = enumTitleGetter(value);
-      }
-
-      return (
-        <Grid item key={field}>
-          <FilterChip label={String(title)} key={field} field={field} />
-        </Grid>
-      );
-    })
+      })}
+    </>
   );
-
-  return <>{renderChips(formix.values)}</>;
 }

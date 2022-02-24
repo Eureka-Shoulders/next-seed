@@ -1,6 +1,16 @@
-import { filter, fromPairs, map, pipe } from 'ramda';
+import { format } from 'date-fns';
+import {
+  filter,
+  fromPairs,
+  isEmpty,
+  join,
+  keys,
+  map,
+  pipe,
+  toPairs,
+} from 'ramda';
 
-import { Filter, FilterEnum } from './types';
+import { EnumFilter, Filter, FilterEnum } from './types';
 
 function getEnumObject(enums: FilterEnum[]) {
   const enumerationPairs = enums.map(
@@ -43,4 +53,57 @@ export function getFilterValue(
     default:
       return values[filterObject.field];
   }
+}
+
+export interface FilterChip {
+  title: string;
+  field: string;
+}
+
+export function getFilterChips(
+  filters: Filter[],
+  values: Record<string | number, unknown>
+) {
+  return pipe(
+    toPairs,
+    filter(([, value]) => value !== '' && value !== null),
+    map(([field, value]) => {
+      const chip = {
+        field,
+        title: value,
+      };
+
+      if (field === 'sort') {
+        return;
+      }
+      if (value instanceof Date) {
+        chip.title = format(value, 'dd/MM/yyyy');
+        return chip;
+      }
+      if (typeof value === 'object') {
+        if (isEmpty(filter(Boolean, value as Record<string, boolean>))) {
+          return;
+        }
+
+        const enumOptions = filters.find(
+          (filter) => filter.field === field
+        ) as EnumFilter;
+        const enumTitleGetter = pipe(
+          filter(Boolean),
+          keys,
+          map(
+            (key) =>
+              enumOptions.enums.find((enumOption) => enumOption.value === key)
+                ?.title || ''
+          ),
+          join(', ')
+        );
+
+        chip.title = enumTitleGetter(value);
+        return chip;
+      }
+
+      return chip;
+    })
+  )(values);
 }
