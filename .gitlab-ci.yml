@@ -45,9 +45,11 @@ build:
     - docker push ${REGISTRY_PATH}/next-seed
 
 deploy:
-  image: bitnami/kubectl
+  image:
+    name: bitnami/kubectl
+    entrypoint: [""]
   stage: deploy
-  entrypoint: [""]
+  
   only:
     refs:
       - develop
