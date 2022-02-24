@@ -17,9 +17,6 @@ test:
         - yarn.lock
     paths:
       - .yarn-cache/
-  only:
-    refs:
-      - merge_requests
   script:
     - yarn install --frozen-lockfile --no-progress
     - yarn lint
