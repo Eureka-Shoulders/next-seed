@@ -89,19 +89,6 @@ function Index() {
                       label={translate('common.name')}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <FXAutocomplete
-                      options={getPersonTypes(translate)}
-                      name="person.type"
-                      label={translate('common.personType')}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FXCPFCNPJField
-                      name="person.identifier"
-                      typeField="person.type"
-                    />
-                  </Grid>
                   <Grid item xs={6}>
                     <FXDatePicker
                       name="person.birthDate"
@@ -110,6 +97,19 @@ function Index() {
                     />
                   </Grid>
                   <Grid item xs={6}>
+                    <FXAutocomplete
+                      options={getPersonTypes(translate)}
+                      name="person.type"
+                      label={translate('common.personType')}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FXCPFCNPJField
+                      name="person.identifier"
+                      typeField="person.type"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
                     <FXTextField
                       name="email"
                       label={translate('common.email')}
