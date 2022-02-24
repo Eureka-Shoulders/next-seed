@@ -27,6 +27,12 @@ build:
   image: docker
   services:
     - docker:dind
+  cache:
+    key: 
+      files:
+        - yarn.lock
+    paths:
+      - .yarn-cache/
   only:
     refs:
       - develop
