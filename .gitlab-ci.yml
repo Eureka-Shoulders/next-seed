@@ -4,6 +4,15 @@ stages:
   - build
   - deploy
 
+.yarn-cache: &yarn_cache
+  key: 
+    files:
+      - yarn.lock
+  policy: pull-push
+  paths:
+    - .yarn-cache/
+
+
 before_script:
   - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
   - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
@@ -12,11 +21,7 @@ test:
   stage: test
   image: node:16-alpine
   cache:
-    key: 
-      files:
-        - yarn.lock
-    paths:
-      - .yarn-cache/
+    - <<: *yarn_cache
   script:
     - yarn install --frozen-lockfile --no-progress
     - yarn lint
@@ -28,11 +33,7 @@ build:
   services:
     - docker:dind
   cache:
-    key: 
-      files:
-        - yarn.lock
-    paths:
-      - .yarn-cache/
+    - <<: *yarn_cache
   only:
     refs:
       - develop
