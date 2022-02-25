@@ -1,6 +1,8 @@
 import { Box, styled } from '@mui/material';
 import Image from 'next/image';
 
+import useTranslation from '@hooks/useTranslation';
+
 const LoginBannerContainer = styled(Box)({
   background:
     'linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), linear-gradient(214.16deg, #3AA3F8 0%, #063060 100%)',
@@ -11,11 +13,13 @@ const LoginBannerContainer = styled(Box)({
 });
 
 function LoginBanner() {
+  const { translate } = useTranslation();
+
   return (
     <LoginBannerContainer>
       <Image
         src="/shoulders-logo.svg"
-        alt="Shoulders Logo"
+        alt={translate('common.logoAlt')}
         width={200}
         height={200}
       />

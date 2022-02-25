@@ -17,6 +17,7 @@ import AppBarBuilder from '@components/AppBarBuilder';
 import BreadcrumbListener from '@components/Breadcrumbs/BreadcrumbListener';
 import ThemeProvider from '@components/ThemeProvider';
 import UserListener from '@components/UserListener';
+import ZodErrorMapBuilder from '@components/ZodErrorMapBuilder';
 
 import { AppBar } from '@euk-labs/componentz';
 
@@ -44,18 +45,26 @@ if (publicRuntimeConfig.useMirage) {
 enableStaticRendering(typeof window === 'undefined');
 
 function MyApp(props: MyAppProps) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps,
+    router,
+  } = props;
   const showAppBar = pageProps.showAppBar ?? true;
   const isPublicPage = pageProps.isPublic ?? false;
   const hydrationData: HydrationData = pageProps.hydrationData || {};
+  const locale = router.locale || router.defaultLocale;
+  const container = globalContainer(hydrationData, locale);
 
   return (
     <CacheProvider value={emotionCache}>
-      <Provider container={globalContainer(hydrationData)}>
+      <Provider container={container}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <BreadcrumbListener />
           <UserListener isPublicPage={isPublicPage} />
           <AppBarBuilder />
+          <ZodErrorMapBuilder />
 
           <ThemeProvider>
             <CssBaseline />

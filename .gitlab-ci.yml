@@ -1,10 +1,37 @@
 stages:
+  - test
   - build
   - deploy
+
+.yarn-cache: &yarn_cache
+  key:
+    files:
+      - yarn.lock
+  policy: pull-push
+  paths:
+    - .yarn-cache/
+
+before_script:
+  - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
+  - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
+
+test:
+  stage: test
+  image: node:16-alpine
+  cache:
+    - <<: *yarn_cache
+  script:
+    - yarn install --frozen-lockfile --no-progress
+    - yarn lint
+    - yarn test
 
 build:
   stage: build
   image: docker
+  services:
+    - docker:dind
+  cache:
+    - <<: *yarn_cache
   only:
     refs:
       - develop
@@ -16,12 +43,10 @@ build:
     - docker push ${REGISTRY_PATH}/next-seed
 
 deploy:
-  image:
-    name: bitnami/kubectl
-    entrypoint: ['']
+  image: bitnami/kubectl
   stage: deploy
   only:
     refs:
       - develop
   script:
-    - kubectl rollout restart deployment next-seed -n next-seed-ns
+    - kubectl rollout restart deployment next-seed-api -n next-seed-ns

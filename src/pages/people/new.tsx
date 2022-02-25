@@ -13,6 +13,8 @@ import { ContactType } from 'types';
 
 import TabPanel from '@components/TabPanel';
 
+import useTranslation from '@hooks/useTranslation';
+
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton } from '@euk-labs/formix-mui';
@@ -29,6 +31,7 @@ const initialValues = {
 function Index() {
   const [activeTab, setActiveTab] = useState(0);
   const router = useRouter();
+  const { translate } = useTranslation();
   const uiStore = useUIStore();
   const peopleRepository = usePeopleRepository();
 
@@ -47,7 +50,7 @@ function Index() {
       });
 
       uiStore.snackbar.show({
-        message: 'Pessoa criada com sucesso',
+        message: translate('feedbacks.person.created'),
         severity: 'success',
       });
 
@@ -56,8 +59,7 @@ function Index() {
       if (axios.isAxiosError(error))
         uiStore.snackbar.show({
           message:
-            error.response?.data.message ||
-            'Ocorreu um erro ao criar a pessoa!',
+            error.response?.data.message || translate('errors.person.creation'),
           severity: 'error',
         });
     }
@@ -78,9 +80,9 @@ function Index() {
                 onChange={handleChange}
                 aria-label="basic tabs example"
               >
-                <Tab label="Informações" />
-                <Tab label="Contatos" />
-                <Tab label="Endereços" />
+                <Tab label={translate('common.informations')} />
+                <Tab label={translate('common.contacts')} />
+                <Tab label={translate('common.addresses')} />
               </Tabs>
             </Box>
 
@@ -104,7 +106,7 @@ function Index() {
                   </Grid>
 
                   <Grid item xs={12} display="flex" justifyContent="flex-end">
-                    <FXSubmitButton label="Salvar" />
+                    <FXSubmitButton label={translate('actions.save')} />
                   </Grid>
                 </Grid>
               </Formix>

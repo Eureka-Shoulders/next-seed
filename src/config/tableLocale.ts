@@ -1,22 +1,27 @@
 import { GridLocaleText } from '@mui/x-data-grid';
 
-const tableLocaleText: Partial<GridLocaleText> = {
-  columnMenuUnsort: 'Desfazer ordenação',
-  columnMenuSortAsc: 'Ordem Crescente',
-  columnMenuSortDesc: 'Ordem Decrescente',
-  columnMenuFilter: 'Filtrar',
-  columnMenuHideColumn: 'Ocultar',
-  columnMenuShowColumns: 'Exibir colunas',
+import { TranslateFunc } from '@hooks/useTranslation';
 
-  columnsPanelHideAllButton: 'Ocultar tudo',
-  columnsPanelShowAllButton: 'Exibir tudo',
-  columnsPanelTextFieldLabel: 'Pesquisar coluna',
+export default function getTableLocaleText(
+  translate: TranslateFunc
+): Partial<GridLocaleText> {
+  return {
+    columnMenuUnsort: translate('actions.filters.undoSort'),
+    columnMenuSortAsc: translate('common.sortAsc'),
+    columnMenuSortDesc: translate('common.sortDesc'),
+    columnMenuFilter: translate('actions.filter'),
+    columnMenuHideColumn: translate('actions.hide'),
+    columnMenuShowColumns: translate('actions.showColumns'),
 
-  noRowsLabel: 'Nenhum registro encontrado',
+    columnsPanelHideAllButton: translate('actions.hideAll'),
+    columnsPanelShowAllButton: translate('actions.showAll'),
+    columnsPanelTextFieldLabel: translate('actions.searchColumn'),
 
-  MuiTablePagination: {
-    labelDisplayedRows: ({ from, to, count }) => `${from}–${to} de ${count}`,
-  },
-};
+    noRowsLabel: translate('feedbacks.noRegisters'),
 
-export default tableLocaleText;
+    MuiTablePagination: {
+      labelDisplayedRows: ({ from, to, count }) =>
+        `${from}–${to} ${translate('common.of')} ${count}`,
+    },
+  };
+}

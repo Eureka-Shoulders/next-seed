@@ -1,6 +1,9 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 
 import TabPanel from '@components/TabPanel';
+import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { FXMaskedField } from '@euk-labs/formix-mui';
 
@@ -11,24 +14,28 @@ interface CPFFilterProps {
 }
 
 export default function CPFFilter({ name, activeTab, index }: CPFFilterProps) {
+  const { translate } = useTranslation();
+
   return (
     <TabPanel value={activeTab} index={index}>
       <Box p={2}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography>Busque por um determinado CPF</Typography>
+            <Typography>
+              <Trans id="filters.cpf.title" />
+            </Typography>
           </Grid>
           <Grid item xs={12}>
             <FXMaskedField
               mask="999.999.999-99"
-              label="Pesquisar CPF"
+              label={translate('filters.cpf.label')}
               name={name}
             />
           </Grid>
 
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">
-              Aplicar
+              <Trans id="actions.filters.submit" />
             </Button>
           </Grid>
         </Grid>

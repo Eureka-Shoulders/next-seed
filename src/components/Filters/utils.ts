@@ -1,36 +1,109 @@
-import { GridColDef } from '@mui/x-data-grid';
+import { format } from 'date-fns';
+import {
+  filter,
+  fromPairs,
+  isEmpty,
+  join,
+  keys,
+  map,
+  pipe,
+  toPairs,
+} from 'ramda';
 
-import { Filter } from './types';
+import { EnumFilter, Filter, FilterEnum } from './types';
 
-// TODO: analyse use of ramda
-export function buildInitialValues(columns: GridColDef[]) {
-  const initialValues: { [key: string]: unknown } = {};
+function getEnumObject(enums: FilterEnum[]) {
+  const enumerationPairs = enums.map(
+    (enumeration) => [enumeration.value, false] as [string, boolean]
+  );
 
-  columns.forEach((column) => {
-    if (column.filterable || column.filterable === undefined) {
-      if (column.type === 'date') {
-        return (initialValues[column.field] = null);
+  return fromPairs(enumerationPairs);
+}
+
+export function buildInitialValues(filters: Filter[]) {
+  const pairs = filter(
+    Boolean,
+    map((filterObject) => {
+      if (filterObject.type === 'date') {
+        return [filterObject.field, null];
       }
 
-      return (initialValues[column.field] = '');
-    }
-  });
+      if (filterObject.type === 'enum') {
+        return [filterObject.field, getEnumObject(filterObject.enums)];
+      }
 
-  return initialValues;
+      return [filterObject.field, ''];
+    }, filters)
+  ) as [key: string, value: string | null][];
+  return fromPairs(pairs);
 }
 
 export function getFilterValue(
-  filter: Filter,
+  filterObject: Filter,
   values: Record<string, unknown>
 ) {
-  switch (filter.type) {
+  switch (filterObject.type) {
     case 'enum':
-      const enumerable = values[filter.field] as Record<string, boolean>;
-      return Object.entries(enumerable)
-        .filter(([, value]) => value)
-        .map(([key]) => key);
+      return pipe(
+        Object.entries,
+        filter(([, value]) => value),
+        map(([key]) => key)
+      )(values[filterObject.field] as Record<string, boolean>);
 
     default:
-      return values[filter.field];
+      return values[filterObject.field];
   }
+}
+
+export interface FilterChip {
+  title: string;
+  field: string;
+}
+
+export function getFilterChips(
+  filters: Filter[],
+  values: Record<string | number, unknown>
+) {
+  return pipe(
+    toPairs,
+    filter(([, value]) => value !== '' && value !== null),
+    map(([field, value]) => {
+      const chip = {
+        field,
+        title: value,
+      };
+
+      if (field === 'sort') {
+        return;
+      }
+      if (value instanceof Date) {
+        chip.title = format(value, 'dd/MM/yyyy');
+        return chip;
+      }
+      if (typeof value === 'object') {
+        if (isEmpty(filter(Boolean, value as Record<string, boolean>))) {
+          return;
+        }
+
+        const enumOptions = filters.find(
+          (filter) => filter.field === field
+        ) as EnumFilter;
+        const enumTitleGetter = pipe(
+          filter(Boolean),
+          keys,
+          map(
+            (key) =>
+              enumOptions.enums.find((enumOption) => enumOption.value === key)
+                ?.title || ''
+          ),
+          join(', ')
+        );
+
+        chip.title = enumTitleGetter(value);
+        return chip;
+      }
+
+      return chip;
+    })
+  )(values);
 }

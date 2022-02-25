@@ -1,9 +1,13 @@
 export default function clearFilters(urlSearchParams: URLSearchParams) {
-  urlSearchParams.forEach((filter) => {
-    if (filter === 'select' || filter === 'include' || filter === 'sort') {
+  const toDelete: string[] = [];
+
+  urlSearchParams.forEach((value, key) => {
+    if (key === 'select' || key === 'include' || key === 'sort') {
       return;
     }
 
-    urlSearchParams.delete(filter);
+    toDelete.push(key);
   });
+
+  toDelete.forEach((key) => urlSearchParams.delete(key));
 }

@@ -1,18 +1,22 @@
-import ERROR_MESSAGES from '@config/messages';
+import { getPasswordSchema } from '@config/schemas/password.schema';
 import * as zod from 'zod';
+
+import { TranslateFunc } from '@hooks/useTranslation';
 
 import { NewPersonSchema } from '@modules/people/people.schema';
 
-export const UserSchema = zod
-  .object({
-    email: zod.string().email(ERROR_MESSAGES.invalid_email),
-    password: zod.string().min(8, ERROR_MESSAGES.minimum_password),
-    confirmPassword: zod.string().min(8, ERROR_MESSAGES.minimum_password),
-    person: NewPersonSchema,
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: ERROR_MESSAGES.password_mismatch,
-    path: ['confirmPassword'],
-  });
+export function getUserSchema(translate: TranslateFunc) {
+  return zod
+    .object({
+      email: zod.string().email(),
+      password: getPasswordSchema(translate),
+      confirmPassword: getPasswordSchema(translate),
+      person: NewPersonSchema,
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: translate('errors.validation.password_mismatch'),
+      path: ['confirmPassword'],
+    });
+}
 
-export type UserSchema = zod.infer<typeof UserSchema>;
+export type UserSchema = zod.infer<ReturnType<typeof getUserSchema>>;

@@ -2,28 +2,32 @@ import { add, format } from 'date-fns';
 
 import { Filter } from '@components/Filters/types';
 
-export const filters: Filter[] = [
-  {
-    field: 'name',
-    title: 'Nome',
-    type: 'string',
-  },
-  {
-    field: 'identifier',
-    title: 'Identificador',
-    type: 'string',
-  },
-  {
-    field: 'birthDate',
-    title: 'Data de Nascimento',
-    type: 'date',
-  },
-  {
-    field: 'createdAt',
-    title: 'Data de criação',
-    type: 'date',
-  },
-];
+import { TranslateFunc } from '@hooks/useTranslation';
+
+export function getFilters(translate: TranslateFunc): Filter[] {
+  return [
+    {
+      field: 'name',
+      title: translate('common.name'),
+      type: 'string',
+    },
+    {
+      field: 'identifier',
+      title: translate('common.identifier'),
+      type: 'string',
+    },
+    {
+      field: 'birthDate',
+      title: translate('common.birthDate'),
+      type: 'date',
+    },
+    {
+      field: 'createdAt',
+      title: translate('common.createdAt'),
+      type: 'date',
+    },
+  ];
+}
 
 export function buildFilters(
   filters: Record<string, unknown>,

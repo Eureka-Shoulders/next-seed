@@ -1,87 +1,82 @@
-import AutocompleteSchema from '@config/autocomplete.schema';
-import ERROR_MESSAGES from '@config/messages';
+import { AutocompleteSchema } from '@config/schemas/autocomplete.schema';
 import validateCPForCNPJ from '@utils/validateCPForCNPJ';
 import * as zod from 'zod';
 
-// TODO: fix contact type validation
+/**
+ *  New Person Schema
+ */
 export const NewPersonSchema = zod.object({
-  name: zod.string().min(1, ERROR_MESSAGES.required),
+  name: zod.string().min(1),
   type: zod
     .object({
-      label: zod.string().min(1, ERROR_MESSAGES.required),
-      value: zod.string().min(1, ERROR_MESSAGES.required),
+      label: zod.string().min(1),
+      value: zod.string().min(1),
     })
     .nullable(),
   identifier: zod
     .string()
-    .min(1, ERROR_MESSAGES.required)
-    .refine(
-      (identifier) => validateCPForCNPJ(identifier.replace(/\D+/g, '')),
-      ERROR_MESSAGES.invalid_field
-    ),
+    .min(1)
+    .refine((identifier) => validateCPForCNPJ(identifier.replace(/\D+/g, ''))),
+  // TODO: make it accept a string that is a valid date
   birthDate: zod
     .date()
     .nullable()
-    .refine((value) => value !== null, ERROR_MESSAGES.required),
+    .refine((value) => value !== null),
   addresses: zod
     .array(
       zod.object({
-        street: zod.string().min(1, ERROR_MESSAGES.required),
-        number: zod.string().min(1, ERROR_MESSAGES.required),
-        neighborhood: zod.string().min(1, ERROR_MESSAGES.required),
-        city: zod.string().min(1, ERROR_MESSAGES.required),
-        state: zod.string().min(1, ERROR_MESSAGES.required),
-        country: zod.string().min(1, ERROR_MESSAGES.required),
-        zipcode: zod.string().min(1, ERROR_MESSAGES.required),
+        street: zod.string().min(1),
+        number: zod.string().min(1),
+        neighborhood: zod.string().min(1),
+        city: zod.string().min(1),
+        state: zod.string().min(1),
+        country: zod.string().min(1),
+        zipcode: zod.string().min(1),
       })
     )
-    .min(1, ERROR_MESSAGES.required),
+    .min(1),
+  // TODO: fix contact type validation
   contacts: zod
     .array(
       zod.object({
         type: AutocompleteSchema,
-        value: zod.string().min(1, ERROR_MESSAGES.required),
+        value: zod.string().min(1),
       })
     )
-    .min(1, ERROR_MESSAGES.required),
+    .min(1),
 });
-
 export type NewPersonSchema = zod.infer<typeof NewPersonSchema>;
 
+/**
+ *  Update Person Schema
+ */
 export const UpdatePersonSchema = zod.object({
-  name: zod.string().min(1, ERROR_MESSAGES.required),
+  name: zod.string().min(1),
   identifier: zod
     .string()
-    .min(1, ERROR_MESSAGES.required)
-    .refine(
-      (identifier) => validateCPForCNPJ(identifier),
-      ERROR_MESSAGES.invalid_field
-    ),
-  birthDate: zod.date({
-    invalid_type_error: ERROR_MESSAGES.required,
-    required_error: ERROR_MESSAGES.required,
-  }),
+    .min(1)
+    .refine((identifier) => validateCPForCNPJ(identifier)),
+  birthDate: zod.date(),
   addresses: zod
     .array(
       zod.object({
-        street: zod.string().min(1, ERROR_MESSAGES.required),
-        number: zod.string().min(1, ERROR_MESSAGES.required),
-        neighborhood: zod.string().min(1, ERROR_MESSAGES.required),
-        city: zod.string().min(1, ERROR_MESSAGES.required),
-        state: zod.string().min(1, ERROR_MESSAGES.required),
-        country: zod.string().min(1, ERROR_MESSAGES.required),
-        zipcode: zod.string().min(1, ERROR_MESSAGES.required),
+        street: zod.string().min(1),
+        number: zod.string().min(1),
+        neighborhood: zod.string().min(1),
+        city: zod.string().min(1),
+        state: zod.string().min(1),
+        country: zod.string().min(1),
+        zipcode: zod.string().min(1),
       })
     )
-    .min(1, ERROR_MESSAGES.required),
+    .min(1),
   contacts: zod
     .array(
       zod.object({
         type: AutocompleteSchema,
-        value: zod.string().min(1, ERROR_MESSAGES.required),
+        value: zod.string().min(1),
       })
     )
-    .min(1, ERROR_MESSAGES.required),
+    .min(1),
 });
-
 export type UpdatePersonSchema = zod.infer<typeof UpdatePersonSchema>;

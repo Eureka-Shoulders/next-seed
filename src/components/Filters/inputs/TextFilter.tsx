@@ -1,6 +1,9 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 
 import TabPanel from '@components/TabPanel';
+import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { FXTextField } from '@euk-labs/formix-mui';
 
@@ -15,19 +18,27 @@ export default function TextFilter({
   activeTab,
   index,
 }: TextFilterProps) {
+  const { translate } = useTranslation();
+
   return (
     <TabPanel value={activeTab} index={index}>
       <Box p={2}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography>Busque por um determinado texto</Typography>
+            <Typography>
+              <Trans id="filters.text.title" />
+            </Typography>
           </Grid>
           <Grid item xs={12}>
-            <FXTextField name={name} label="Pesquisar" fullWidth />
+            <FXTextField
+              name={name}
+              label={translate('filters.text.label')}
+              fullWidth
+            />
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">
-              Aplicar
+              <Trans id="actions.filters.submit" />
             </Button>
           </Grid>
         </Grid>

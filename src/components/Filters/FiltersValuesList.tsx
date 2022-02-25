@@ -1,30 +1,30 @@
 import { Grid } from '@mui/material';
-import { format } from 'date-fns';
-import { filter, map, pipe, toPairs } from 'ramda';
 
 import { useFormixContext } from '@euk-labs/formix';
 
 import FilterChip from './FilterChip';
+import { Filter } from './types';
+import { getFilterChips } from './utils';
 
-export default function FiltersValuesList() {
+interface Props {
+  filters: Filter[];
+}
+
+export default function FiltersValuesList({ filters }: Props) {
   const formix = useFormixContext<Record<string | number, unknown>, unknown>();
+  const chips = getFilterChips(filters, formix.values);
 
-  const renderChips = pipe(
-    toPairs,
-    filter(([, value]) => value !== '' && value !== null),
-    map(([field, value]) => {
-      let title = value;
-      if (field === 'sort') return;
+  return (
+    <>
+      {chips.map((chip) => {
+        if (!chip) return;
 
-      if (value instanceof Date) title = format(value, 'dd/MM/yyyy');
-
-      return (
-        <Grid item key={field}>
-          <FilterChip label={String(title)} key={field} field={field} />
-        </Grid>
-      );
-    })
+        return (
+          <Grid item key={chip.field}>
+            <FilterChip label={String(chip.title)} field={chip.field} />
+          </Grid>
+        );
+      })}
+    </>
   );
-
-  return <>{renderChips(formix.values)}</>;
 }

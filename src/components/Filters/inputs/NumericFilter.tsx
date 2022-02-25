@@ -1,14 +1,17 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 
 import TabPanel from '@components/TabPanel';
+import Trans from '@components/Trans';
 
-import { FXCurrencyField } from '@euk-labs/formix-mui';
+import useTranslation from '@hooks/useTranslation';
+
+import { FXNumericField } from '@euk-labs/formix-mui';
 
 interface NumericFilterProps {
   name: string;
   precision: number;
-  decimalChar?: string;
-  thousandChar?: string;
+  decimalChar: string;
+  thousandChar: string;
   activeTab: number;
   index: number;
 }
@@ -21,25 +24,29 @@ export default function NumericFilter({
   activeTab,
   index,
 }: NumericFilterProps) {
+  const { translate } = useTranslation();
+
   return (
     <TabPanel value={activeTab} index={index}>
       <Box p={2}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography>Busque por um determinado número</Typography>
+            <Typography>
+              <Trans id="filters.numeric.title" />
+            </Typography>
           </Grid>
           <Grid item xs={12}>
-            <FXCurrencyField
+            <FXNumericField
               name={name}
-              label="Pesquisar"
-              // precision={precision}
-              // decimalChar={decimalChar}
-              // thousandChar={thousandChar}
+              label={translate('filters.numeric.label')}
+              precision={precision}
+              decimalChar={decimalChar}
+              thousandChar={thousandChar}
             />
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">
-              Aplicar
+              <Trans id="actions.filters.submit" />
             </Button>
           </Grid>
         </Grid>

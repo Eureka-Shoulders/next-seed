@@ -1,13 +1,15 @@
 import { Ability, RawRuleOf } from '@casl/ability';
 import axios from 'axios';
 import TYPES from 'containers/global.types';
-import { decorate, inject, injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import Router from 'next/router';
 import { parseCookies, setCookie } from 'nookies';
 import { AppAbility, User } from 'types';
 
 import { HttpService } from '@euk-labs/fetchx';
+
+const ONE_DAY_IN_SECONDS = 60 * 60 * 24;
 
 export interface UserStoreType {
   user: User | null;
@@ -16,10 +18,11 @@ export interface UserStoreType {
   rawAbilities: RawRuleOf<AppAbility>[] | null;
   setRawAbilities(rawAbilities: RawRuleOf<AppAbility>[]): void;
 
-  login(accessToken: string): void;
+  login(accessToken: string, refreshToken: string, redirectTo?: string): void;
   logout(): void;
 
   getAccessToken(): string | null;
+  getRefreshToken(): string | null;
   verifyToken(): void;
 
   startTokenInjector(): void;
@@ -29,11 +32,18 @@ export interface UserStoreType {
   get isLogged(): boolean;
 }
 
-// TODO: add an isLogged property to know when the user is authenticated and authorized
-
+@injectable()
 class UserStore implements UserStoreType {
-  constructor(private apiService: HttpService) {
+  constructor(
+    @inject(TYPES.ApiService)
+    private apiService: HttpService
+  ) {
     makeAutoObservable(this, {}, { autoBind: true });
+  }
+
+  isRefreshingToken = false;
+  setRefreshingToken(value: boolean) {
+    this.isRefreshingToken = value;
   }
 
   user: User | null = null;
@@ -46,13 +56,17 @@ class UserStore implements UserStoreType {
     this.rawAbilities = rawAbilities;
   }
 
-  login(accessToken: string) {
+  login(accessToken: string, refreshToken: string, redirectTo?: string) {
     setCookie(null, 'user_token', accessToken, {
-      maxAge: 24 * 60 * 60,
+      maxAge: ONE_DAY_IN_SECONDS,
+      path: '/',
+    });
+    setCookie(null, 'refresh_token', refreshToken, {
+      maxAge: ONE_DAY_IN_SECONDS * 2,
       path: '/',
     });
 
-    Router.push('/');
+    Router.push(redirectTo || '/');
   }
 
   logout() {
@@ -61,7 +75,12 @@ class UserStore implements UserStoreType {
       maxAge: -1,
       path: '/',
     });
-    Router.push('/login');
+    setCookie(null, 'refresh_token', '', {
+      maxAge: -1,
+      path: '/',
+    });
+
+    window.location.href = '/';
   }
 
   getAccessToken() {
@@ -69,11 +88,35 @@ class UserStore implements UserStoreType {
     return cookies.user_token;
   }
 
+  getRefreshToken() {
+    const cookies = parseCookies();
+    return cookies.refresh_token;
+  }
+
   async verifyToken() {
     const accessToken = this.getAccessToken();
+    const refreshToken = this.getRefreshToken();
 
-    if (!accessToken) {
-      return Router.push('/login');
+    if (!accessToken && !refreshToken) {
+      return Router.push({
+        pathname: '/login',
+        search: `?redirect=${encodeURIComponent(Router.asPath)}`,
+      });
+    }
+
+    if (!accessToken && refreshToken) {
+      const newTokens = await this.refreshToken();
+
+      if (newTokens) {
+        setCookie(null, 'user_token', newTokens.accessToken, {
+          maxAge: ONE_DAY_IN_SECONDS,
+          path: '/',
+        });
+        setCookie(null, 'refresh_token', newTokens.refreshToken, {
+          maxAge: ONE_DAY_IN_SECONDS * 2,
+          path: '/',
+        });
+      }
     }
 
     try {
@@ -87,7 +130,28 @@ class UserStore implements UserStoreType {
         this.setRawAbilities(abilitiesResponse.data);
       }
     } catch (error) {
-      return Router.push('/login');
+      return Router.push({
+        pathname: '/login',
+        search: `?redirect=${encodeURIComponent(Router.asPath)}`,
+      });
+    }
+  }
+
+  async refreshToken() {
+    this.setRefreshingToken(true);
+
+    try {
+      const refreshToken = this.getRefreshToken();
+      const refreshResponse = await this.apiService.client.post<{
+        accessToken: string;
+        refreshToken: string;
+      }>('/auth/refresh', { refreshToken });
+
+      return refreshResponse.data;
+    } catch (error) {
+      return this.logout();
+    } finally {
+      this.setRefreshingToken(false);
     }
   }
 
@@ -113,14 +177,43 @@ class UserStore implements UserStoreType {
       (response) => {
         return response;
       },
-      (error) => {
+      async (error) => {
         if (axios.isAxiosError(error)) {
-          if (error.response?.status === 401) {
-            return Router.push('/login');
+          if (
+            error.response?.status === 401 ||
+            error.response?.data.message === 'Token is not allowed'
+          ) {
+            const isLoggingIn = error.config.url === '/auth/login';
+
+            if (this.isRefreshingToken || isLoggingIn) {
+              return error;
+            }
+
+            if (this.getRefreshToken()) {
+              const newTokens = await this.refreshToken();
+
+              if (newTokens) {
+                setCookie(null, 'user_token', newTokens.accessToken, {
+                  maxAge: ONE_DAY_IN_SECONDS,
+                  path: '/',
+                });
+                setCookie(null, 'refresh_token', newTokens.refreshToken, {
+                  maxAge: ONE_DAY_IN_SECONDS * 2,
+                  path: '/',
+                });
+
+                return await this.apiService.client({
+                  ...error.config,
+                });
+              }
+            }
+
+            this.logout();
+            return error;
           }
         }
 
-        throw error;
+        return Promise.reject(error);
       }
     );
   }
@@ -134,11 +227,8 @@ class UserStore implements UserStoreType {
   }
 
   get isLogged() {
-    return !!this.user;
+    return !!this.user && this.abilities !== null;
   }
 }
-
-decorate(injectable(), UserStore);
-decorate(inject(TYPES.ApiService), UserStore, 0);
 
 export default UserStore;

@@ -1,9 +1,7 @@
 import { Page } from '@euk-labs/componentz/components/AppBar/types';
 
-// TODO: try to improve this function with ramda
 export function getBreadcrumbPaths(pages: Page[], pathname: string): Page[] {
-  const regex = /\[([^\]]+)\]/g;
-  pathname = pathname.replace(regex, ':$1');
+  pathname = pathname.replace(/\[([^\]]+)\]/g, ':$1');
 
   const urlPaths = pathname.split('/');
   const paths = [];
@@ -11,10 +9,7 @@ export function getBreadcrumbPaths(pages: Page[], pathname: string): Page[] {
   if (urlPaths.length === 2 && urlPaths[1] === '') {
     const newPage = pages.find((page) => page.link === '/');
 
-    if (!newPage) {
-      return [];
-    }
-    return [newPage];
+    return newPage ? [newPage] : [];
   }
 
   for (const path of urlPaths) {

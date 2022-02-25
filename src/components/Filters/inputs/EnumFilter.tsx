@@ -2,6 +2,9 @@ import { Box, Button, Grid } from '@mui/material';
 import { useMemo } from 'react';
 
 import TabPanel from '@components/TabPanel';
+import Trans from '@components/Trans';
+
+import useTranslation from '@hooks/useTranslation';
 
 import { FXCheckboxGroup } from '@euk-labs/formix-mui';
 
@@ -20,13 +23,14 @@ export default function EnumFilter({
   index,
   options,
 }: EnumFilterProps) {
+  const { translate } = useTranslation();
   const checkboxOptions = useMemo(
     () =>
       options.map((option) => ({
-        name: option.value,
-        label: option.value,
+        name: `${name}.${option.value}`,
+        label: option.title,
       })),
-    [options]
+    [options, name]
   );
 
   return (
@@ -35,13 +39,13 @@ export default function EnumFilter({
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <FXCheckboxGroup
-              label="Escolha as opções"
+              label={translate('filters.enum.label')}
               options={checkboxOptions}
             />
           </Grid>
           <Grid item xs={12} justifyContent="flex-end">
             <Button type="submit" variant="contained">
-              Aplicar
+              <Trans id="actions.filters.submit" />
             </Button>
           </Grid>
         </Grid>

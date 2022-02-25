@@ -12,6 +12,8 @@ import { ContactTypeEnum, Person } from 'types';
 
 import TabPanel from '@components/TabPanel';
 
+import useTranslation from '@hooks/useTranslation';
+
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
@@ -32,6 +34,7 @@ function getInitialValues(person: Person): UpdatePersonSchema {
 }
 
 function Index() {
+  const { translate } = useTranslation();
   const uiStore = useUIStore();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
@@ -60,7 +63,7 @@ function Index() {
       });
 
       uiStore.snackbar.show({
-        message: 'Pessoa atualizada com sucesso!',
+        message: translate('feedbacks.person.updated'),
         severity: 'success',
       });
       router.push('/people');
@@ -68,8 +71,7 @@ function Index() {
       if (axios.isAxiosError(error)) {
         uiStore.snackbar.show({
           message:
-            error.response?.data.message ||
-            'Ocorreu um erro ao atualizar a pessoa!',
+            error.response?.data.message || translate('errors.people.update'),
           severity: 'error',
         });
       }
@@ -98,9 +100,9 @@ function Index() {
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label="Informações" />
-                  <Tab label="Contatos" />
-                  <Tab label="Endereços" />
+                  <Tab label={translate('common.informations')} />
+                  <Tab label={translate('common.contacts')} />
+                  <Tab label={translate('common.addresses')} />
                 </Tabs>
               </Box>
 
@@ -124,7 +126,7 @@ function Index() {
                     </Grid>
 
                     <Grid item xs={12} display="flex" justifyContent="flex-end">
-                      <FXSubmitButton label="Salvar" />
+                      <FXSubmitButton label={translate('actions.save')} />
                     </Grid>
                   </Grid>
                 </Formix>
@@ -137,11 +139,11 @@ function Index() {
   }
 
   if (personEntity.identifier === null || personEntity.loading) {
-    return <h1>Loading...</h1>;
+    return <h1>{translate('common.loading')}...</h1>;
   }
 
   if (personEntity.data === null) {
-    return <h1>Person not found</h1>;
+    return <h1>{translate('errors.people.notFound')}</h1>;
   }
 
   return null;

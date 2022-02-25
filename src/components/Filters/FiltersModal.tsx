@@ -82,7 +82,9 @@ function FiltersModalComponent({
                         <NumericFilter
                           key={key}
                           name={filter.field}
-                          precision={0}
+                          precision={filter.precision}
+                          decimalChar={filter.decimalChar}
+                          thousandChar={filter.thousandChar}
                           activeTab={activeTab}
                           index={index}
                         />
