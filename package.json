@@ -7,7 +7,8 @@
     "test": "jest",
     "build": "next build",
     "start": "next start",
-    "lint": "tsc --project ./tsconfig.json && next lint"
+    "lint": "tsc --project ./tsconfig.json && next lint",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@casl/ability": "^5.4.3",
