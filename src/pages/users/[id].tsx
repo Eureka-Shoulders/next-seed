@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { dissocPath, omit, pipe } from 'ramda';
 import { useEffect } from 'react';
 
-import FXCPFCNPJField from '@components/FXCPFCNPJField';
+import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
 
 import useTranslation from '@hooks/useTranslation';
 

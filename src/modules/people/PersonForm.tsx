@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 
-import FXCPFCNPJField from '@components/FXCPFCNPJField';
+import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
 
 import useTranslation from '@hooks/useTranslation';
 

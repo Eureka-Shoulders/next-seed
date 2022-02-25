@@ -6,7 +6,7 @@ import { UserSchema, getUserSchema } from 'modules/users/user.schema';
 import { useRouter } from 'next/router';
 import { dissocPath, omit, pipe } from 'ramda';
 
-import FXCPFCNPJField from '@components/FXCPFCNPJField';
+import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
 
 import useTranslation from '@hooks/useTranslation';
 
