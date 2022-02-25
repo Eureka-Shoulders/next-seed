@@ -5,7 +5,7 @@ import { UserSchema, getUserSchema } from 'modules/users/user.schema';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
-import FXCPFCNPJField from '@components/FXCPFCNPJField';
+import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
 import Trans from '@components/Trans';
 
 import useTranslation from '@hooks/useTranslation';
