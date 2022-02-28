@@ -23,6 +23,8 @@ const errors = {
     invalid_field: 'Campo inválido',
     invalid_type: 'Tipo inválido',
     password_mismatch: 'As senhas não conferem',
+    password_strength:
+      'A senha deve conter, no mínimo, uma letra maiúscula, uma letra minúscula, um número e um caractere especial',
     too_small: 'Deve conter no mínimo ${min} caractere(s)',
     too_small_array: 'Deve conter no mínimo ${min} item(ns)',
     too_big: 'Deve conter no máximo ${max} caractere(s)',

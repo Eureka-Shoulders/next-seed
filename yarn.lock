@@ -833,10 +833,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@euk-labs/beltz@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@euk-labs/beltz/-/beltz-2.2.0.tgz#076d6183f91ef49e422c9dfeee9b1c5d1dc43274"
-  integrity sha512-2EmMB1FBU+StiSpdrTgFSRPlL7g5TfUXYtxoMkJcEAT7L9Gtvsrw2m0g0VVOCEq3uYATOmDmqcZ7Pc4sVLeF+A==
+"@euk-labs/beltz@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@euk-labs/beltz/-/beltz-2.3.0.tgz#53196b6b8810f8d65ab872a941148dc6ea2b547a"
+  integrity sha512-KCsvVd1YYzYK7cm5IGwr/VajRhYoejZ+Cyf736s/VwE7NtwePhzIVvYcxjI39aLiN/pfMJqsdcD2D22iAoXZsA==
   dependencies:
     date-fns "^2.27.0"
 
