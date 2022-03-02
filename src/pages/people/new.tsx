@@ -1,4 +1,5 @@
 import { Box, Grid, Paper, Tab, Tabs } from '@mui/material';
+import { zodValidator } from '@utils/validators';
 import axios from 'axios';
 import { usePeopleRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
@@ -89,7 +90,7 @@ function Index() {
             <Box p={2}>
               <Formix
                 initialValues={initialValues}
-                zodSchema={NewPersonSchema}
+                validate={zodValidator(NewPersonSchema)}
                 onSubmit={handleSubmit}
               >
                 <Grid container spacing={2}>

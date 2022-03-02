@@ -1,16 +1,18 @@
 import { Box, Button, Grid, Paper, Skeleton, Typography } from '@mui/material';
+import { zodValidator } from '@utils/validators';
 import { withSSRAuth } from '@utils/withSSRAuth';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
-import { UserSchema, getUserSchema } from 'modules/users/user.schema';
 import { useEffect, useMemo } from 'react';
 import { Actions, Subjects, User } from 'types';
 
 import ProfileCard from '@components/ProfileCard';
 
 import useTranslation from '@hooks/useTranslation';
+
+import { ProfileSchema } from '@modules/users/profile.schema';
 
 import { useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
@@ -24,15 +26,10 @@ function Index() {
   const userEntity = useEntity(usersRepository);
   const { translate } = useTranslation();
   const initialValues = useMemo(
-    () =>
-      userStore.user
-        ? {
-            email: userStore.user.email,
-            person: {
-              name: userStore.user.person.name,
-            },
-          }
-        : {},
+    () => ({
+      name: userStore.user?.person.name || '',
+      email: userStore.user?.email || '',
+    }),
     [userStore.user]
   );
 
@@ -43,9 +40,14 @@ function Index() {
     }
   }, [userStore.user]); // eslint-disable-line
 
-  async function handleSubmit(values: UserSchema) {
+  async function handleSubmit(values: ProfileSchema) {
     try {
-      await userEntity.update(values);
+      await userEntity.update({
+        person: {
+          name: values.name,
+        },
+        email: values.email,
+      });
       uiStore.snackbar.show({
         message: translate('feedbacks.user.updated'),
         severity: 'success',
@@ -119,12 +121,12 @@ function Index() {
                 <Formix
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
-                  zodSchema={getUserSchema(translate)}
+                  validate={zodValidator(ProfileSchema)}
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       <FXTextField
-                        name="person.name"
+                        name="name"
                         label={translate('common.name')}
                       />
                     </Grid>

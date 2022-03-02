@@ -1,4 +1,5 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
+import { zodValidator } from '@utils/validators';
 import axios from 'axios';
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -23,6 +24,7 @@ interface ResetPasswordProps {
 
 const initialValues = {
   password: '',
+  confirmPassword: '',
 };
 
 const ResetPassword: NextPage<ResetPasswordProps> = () => {
@@ -92,7 +94,7 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
             <Grid item xs={12} sm={8}>
               <Formix
                 initialValues={initialValues}
-                zodSchema={getResetPasswordSchema(translate)}
+                validate={zodValidator(getResetPasswordSchema(translate))}
                 onSubmit={handleSubmit}
               >
                 <Grid container spacing={2}>

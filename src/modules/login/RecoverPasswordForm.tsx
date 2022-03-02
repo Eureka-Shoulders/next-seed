@@ -1,4 +1,5 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
+import { zodValidator } from '@utils/validators';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
@@ -60,7 +61,7 @@ export default function RecoverPasswordForm() {
         <Grid item xs={12} sm={8}>
           <Formix
             initialValues={initialValues}
-            zodSchema={RecoverPasswordSchema}
+            validate={zodValidator(RecoverPasswordSchema)}
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>

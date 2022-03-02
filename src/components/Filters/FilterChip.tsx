@@ -9,7 +9,7 @@ interface FilterChipProps {
 }
 
 export default function FilterChip({ label, field }: FilterChipProps) {
-  const formix = useFormixContext<Record<string, unknown>, unknown>();
+  const formix = useFormixContext<Record<string, unknown>>();
   const value = formix.values[field];
 
   function handleDelete() {

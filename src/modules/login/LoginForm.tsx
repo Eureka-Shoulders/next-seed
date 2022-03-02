@@ -1,4 +1,5 @@
 import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
+import { zodValidator } from '@utils/validators';
 import { useUsersRepository } from 'hooks/repositories';
 import { useUserStore } from 'hooks/stores';
 import NextLink from 'next/link';
@@ -68,7 +69,7 @@ export default function LoginForm() {
         <Grid item xs={12} sm={8}>
           <Formix
             initialValues={initialValues}
-            zodSchema={getLoginSchema(translate)}
+            validate={zodValidator(getLoginSchema(translate))}
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>

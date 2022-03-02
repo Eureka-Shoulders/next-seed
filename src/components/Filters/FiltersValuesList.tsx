@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function FiltersValuesList({ filters }: Props) {
-  const formix = useFormixContext<Record<string | number, unknown>, unknown>();
+  const formix = useFormixContext<Record<string | number, unknown>>();
   const chips = getFilterChips(filters, formix.values);
 
   return (

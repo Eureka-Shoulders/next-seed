@@ -1,4 +1,5 @@
 import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
+import { zodValidator } from '@utils/validators';
 import axios from 'axios';
 import { useUsersRepository } from 'hooks/repositories';
 import { UserSchema, getUserSchema } from 'modules/users/user.schema';
@@ -79,7 +80,7 @@ export default function RegisterForm() {
         <Grid item xs={12} sm={8}>
           <Formix
             initialValues={initialValues}
-            zodSchema={getUserSchema(translate)}
+            validate={zodValidator(getUserSchema(translate))}
             onSubmit={handleSubmit}
           >
             <Grid container spacing={2}>
