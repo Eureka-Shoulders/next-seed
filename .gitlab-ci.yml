@@ -1,4 +1,3 @@
-
 stages:
   - test
   - build
@@ -49,12 +48,13 @@ deploy:
     name: bitnami/kubectl
     entrypoint: [""]
   stage: deploy
-  
+  tags:
+    - new-k8s-homolog
   only:
     refs:
       - develop
   script:
-    - kubectl rollout restart deployment next-seed-api -n next-seed-ns
+    - kubectl rollout restart deployment next-seed-api -n nest-seed-ns
 
 
 
