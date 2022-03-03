@@ -21,7 +21,7 @@
     "@euk-labs/componentz": "^0.4.0",
     "@euk-labs/fetchx": "^0.4.0",
     "@euk-labs/formix": "^0.3.0",
-    "@euk-labs/formix-mui": "^0.2.0",
+    "@euk-labs/formix-mui": "^0.3.0",
     "@mui/icons-material": "^5.2.1",
     "@mui/lab": "^5.0.0-alpha.59",
     "@mui/material": "^5.2.6",

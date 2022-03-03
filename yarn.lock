@@ -860,10 +860,10 @@
     axios "^0.24.0"
     inversify "^6.0.1"
 
-"@euk-labs/formix-mui@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@euk-labs/formix-mui/-/formix-mui-0.2.0.tgz#a65bb7f6a7e9a3e7995bc51e34fe12c542fa9eb4"
-  integrity sha512-l/2nVd1T6hpkplimQxPvLGQosKyeHvEK15yj/mYoSVseNhhgLS43N1fodyOIhv8Og4HoAn1QkFmLi1UN9I0ycg==
+"@euk-labs/formix-mui@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@euk-labs/formix-mui/-/formix-mui-0.3.0.tgz#bedc36588c992f9e42c3213d031c671bbcc543a5"
+  integrity sha512-08QEDsp90sGdtIz8yB0xz0Zk/lEQg63Oqm4AnpZIdZXGRahGFFrRZyCIVIr8IhyqekbgoYJp+iOD8jgpC8VvQw==
   dependencies:
     react-dropzone "^11.5.1"
     react-input-mask "^2.0.4"
