@@ -56,7 +56,7 @@ deploy:
     refs:
       - develop
   script:
-    - kubectl rollout restart deployment next-seed-api -n nest-seed-ns
+    - kubectl rollout restart deployment next-seed-web -n nest-seed-ns
 
 
 
