@@ -1,25 +1,26 @@
 import 'reflect-metadata';
 
+import globalContainer from '@containers/global.inversify';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { CssBaseline } from '@mui/material';
-import globalContainer from 'containers/global.inversify';
-import createEmotionCache from 'createEmotionCache';
 import { Provider } from 'inversify-react';
 import { enableStaticRendering } from 'mobx-react-lite';
 import type { AppProps } from 'next/app';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
-import type { HydrationData } from 'types';
 
-import AppBarBuilder from '@components/AppBarBuilder';
-import BreadcrumbListener from '@components/Breadcrumbs/BreadcrumbListener';
-import ThemeProvider from '@components/ThemeProvider';
-import UserListener from '@components/UserListener';
-import ZodErrorMapBuilder from '@components/ZodErrorMapBuilder';
+import AppBarBuilder from '@core/components/AppBarBuilder';
+import BreadcrumbListener from '@core/components/Breadcrumbs/BreadcrumbListener';
+import ThemeProvider from '@core/components/ThemeProvider';
+import UserListener from '@core/components/UserListener';
+import ZodErrorMapBuilder from '@core/components/ZodErrorMapBuilder';
 
 import { AppBar } from '@euk-labs/componentz';
+
+import createEmotionCache from '../createEmotionCache';
+import type { HydrationData } from '../types';
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -37,7 +38,7 @@ const { publicRuntimeConfig } = getConfig();
 const clientSideEmotionCache = createEmotionCache();
 
 if (publicRuntimeConfig.useMirage) {
-  import('services/mockService').then((mod) => {
+  import('@core/services/mockService').then((mod) => {
     mod.default();
   });
 }

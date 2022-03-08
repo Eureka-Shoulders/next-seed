@@ -13,7 +13,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Actions, AppAbility, Subjects } from 'types';
 
-import { TranslateFunc } from '@hooks/useTranslation';
+import { TranslateFunc } from '@core/hooks/useTranslation';
 
 import { Identifier } from '@euk-labs/fetchx';
 

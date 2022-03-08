@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 
 import LoginBanner from '@components/Login/LoginBanner';
 
-import LoginForm from '@modules/login/LoginForm';
+import LoginForm from '@modules/login/components/LoginForm';
 
 const Login: NextPage = () => {
   return (

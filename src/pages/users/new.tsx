@@ -1,17 +1,18 @@
 import { Box, Grid, Paper } from '@mui/material';
-import { zodValidator } from '@utils/validators';
 import axios from 'axios';
-import { useUsersRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
-import { UserSchema, getUserSchema } from 'modules/users/user.schema';
 import { useRouter } from 'next/router';
 import { dissocPath, omit, pipe } from 'ramda';
 
+import useTranslation from '@core/hooks/useTranslation';
+import { zodValidator } from '@core/utils/validators';
+
 import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
 
-import useTranslation from '@hooks/useTranslation';
+import { useUsersRepository } from '@hooks/repositories';
 
 import { getPersonTypes } from '@modules/people/types';
+import { UserSchema, getUserSchema } from '@modules/users/user.schema';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';

@@ -1,8 +1,9 @@
 import { Grid } from '@mui/material';
-import RecoverPasswordForm from 'modules/login/RecoverPasswordForm';
 import type { NextPage } from 'next';
 
 import LoginBanner from '@components/Login/LoginBanner';
+
+import RecoverPasswordForm from '@modules/login/components/RecoverPasswordForm';
 
 const RecoverPassword: NextPage = () => {
   return (

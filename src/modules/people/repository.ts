@@ -1,4 +1,4 @@
-import TYPES from 'containers/global.types';
+import TYPES from '@containers/global.types';
 import { inject, injectable } from 'inversify';
 import { Contact } from 'types';
 

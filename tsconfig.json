@@ -20,7 +20,11 @@
     "noUnusedLocals": true,
     "noImplicitAny": true,
     "paths": {
+      "@core/*": ["./core/*"],
       "@components/*": ["./components/*"],
+      "@containers/*": ["./containers/*"],
+      "@services/*": ["./services/*"],
+      "@stores/*": ["./stores/*"],
       "@styles/*": ["./styles/*"],
       "@config/*": ["./config/*"],
       "@utils/*": ["./utils/*"],

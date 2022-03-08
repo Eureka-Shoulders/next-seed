@@ -1,24 +1,26 @@
 import { Box, Grid, Paper, Tab, Tabs } from '@mui/material';
-import { zodValidator } from '@utils/validators';
 import axios from 'axios';
-import { usePeopleRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
-import AddressesForm from 'modules/people/AddressesForm';
-import ContactsForm from 'modules/people/ContactsForm';
-import PersonForm from 'modules/people/PersonForm';
-import { NewPersonSchema } from 'modules/people/people.schema';
-import { ICreatePerson } from 'modules/people/repository';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { ContactType } from 'types';
 
-import TabPanel from '@components/TabPanel';
+import TabPanel from '@core/components/TabPanel';
+import useTranslation from '@core/hooks/useTranslation';
+import { zodValidator } from '@core/utils/validators';
 
-import useTranslation from '@hooks/useTranslation';
+import { usePeopleRepository } from '@hooks/repositories';
+
+import AddressesForm from '@modules/people/components/AddressesForm';
+import ContactsForm from '@modules/people/components/ContactsForm';
+import PersonForm from '@modules/people/components/PersonForm';
+import { NewPersonSchema } from '@modules/people/people.schema';
+import { ICreatePerson } from '@modules/people/repository';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton } from '@euk-labs/formix-mui';
+
+import { ContactType } from '../../types';
 
 const initialValues = {
   name: '',

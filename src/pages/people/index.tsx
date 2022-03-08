@@ -1,23 +1,24 @@
 import { Can } from '@casl/react';
 import { Box, Grid, Skeleton } from '@mui/material';
-import clearFilters from '@utils/clearFilters';
-import sortList from '@utils/sortList';
-import { usePeopleRepository } from 'hooks/repositories';
-import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
-import getPeopleColumns from 'modules/people/columns';
 import { GetServerSideProps } from 'next';
 import nookies from 'nookies';
 import { useEffect } from 'react';
 import { Actions, Subjects } from 'types';
 
+import { Filters } from '@core/components/Filters';
+import MuiTable from '@core/components/MuiTable';
+import useTranslation from '@core/hooks/useTranslation';
+import clearFilters from '@core/utils/clearFilters';
+import sortList from '@core/utils/sortList';
+
 import DeleteContent from '@components/DialogContents/DeleteContent';
-import { Filters } from '@components/Filters';
-import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
 
-import useTranslation from '@hooks/useTranslation';
+import { usePeopleRepository } from '@hooks/repositories';
+import { useUserStore } from '@hooks/stores';
 
+import getPeopleColumns from '@modules/people/columns';
 import { buildFilters, getFilters } from '@modules/people/filters';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';

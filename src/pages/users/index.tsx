@@ -1,26 +1,28 @@
 import { Can } from '@casl/react';
 import { Box, Grid, Skeleton } from '@mui/material';
-import clearFilters from '@utils/clearFilters';
-import setFilter from '@utils/setFilter';
-import sortList from '@utils/sortList';
-import { useUsersRepository } from 'hooks/repositories';
-import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
-import usersColumns from 'modules/users/columns';
 import { useEffect } from 'react';
-import { Actions, Subjects, User } from 'types';
+
+import { Filters } from '@core/components/Filters';
+import MuiTable from '@core/components/MuiTable';
+import useTranslation from '@core/hooks/useTranslation';
+import clearFilters from '@core/utils/clearFilters';
+import setFilter from '@core/utils/setFilter';
+import sortList from '@core/utils/sortList';
 
 import DeleteContent from '@components/DialogContents/DeleteContent';
-import { Filters } from '@components/Filters';
-import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
 
-import useTranslation from '@hooks/useTranslation';
+import { useUsersRepository } from '@hooks/repositories';
+import { useUserStore } from '@hooks/stores';
 
+import usersColumns from '@modules/users/columns';
 import { buildFilters, getFilters } from '@modules/users/filters';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Identifier, useList } from '@euk-labs/fetchx';
+
+import { Actions, Subjects, User } from '../../types';
 
 function Index() {
   const { translate } = useTranslation();

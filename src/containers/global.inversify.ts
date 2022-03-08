@@ -1,10 +1,12 @@
-import PeopleRepository from 'modules/people/repository';
-import UsersRepository from 'modules/users/repository';
-import httpService from 'services/httpService';
-import TranslationService from 'services/translationService';
-import ThemeStore from 'stores/ThemeStore';
-import UserStore from 'stores/UserStore';
+import httpService from '@services/httpService';
 import type { HydrationData } from 'types';
+
+import TranslationService from '@core/services/translationService';
+import ThemeStore from '@core/stores/ThemeStore';
+import UserStore from '@core/stores/UserStore';
+
+import PeopleRepository from '@modules/people/repository';
+import UsersRepository from '@modules/users/repository';
 
 import componentzContainer from '@euk-labs/componentz/containers/global.inversify';
 

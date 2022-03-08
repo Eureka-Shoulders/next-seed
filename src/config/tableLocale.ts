@@ -1,6 +1,6 @@
 import { GridLocaleText } from '@mui/x-data-grid';
 
-import { TranslateFunc } from '@hooks/useTranslation';
+import { TranslateFunc } from '@core/hooks/useTranslation';
 
 export default function getTableLocaleText(
   translate: TranslateFunc

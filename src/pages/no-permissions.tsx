@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import type { NextPage } from 'next';
 
-import UnauthorizedShower from '@components/Unauthorized';
+import UnauthorizedShower from '@core/components/Unauthorized';
 
 const NoPermissions: NextPage = () => {
   return (

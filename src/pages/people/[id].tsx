@@ -1,19 +1,20 @@
 import { Box, Grid, Paper, Tab, Tabs } from '@mui/material';
-import { zodValidator } from '@utils/validators';
 import axios from 'axios';
-import { usePeopleRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
-import AddressesForm from 'modules/people/AddressesForm';
-import ContactsForm from 'modules/people/ContactsForm';
-import PersonForm from 'modules/people/PersonForm';
-import { UpdatePersonSchema } from 'modules/people/people.schema';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ContactTypeEnum, Person } from 'types';
 
-import TabPanel from '@components/TabPanel';
+import TabPanel from '@core/components/TabPanel';
+import useTranslation from '@core/hooks/useTranslation';
+import { zodValidator } from '@core/utils/validators';
 
-import useTranslation from '@hooks/useTranslation';
+import { usePeopleRepository } from '@hooks/repositories';
+
+import AddressesForm from '@modules/people/components/AddressesForm';
+import ContactsForm from '@modules/people/components/ContactsForm';
+import PersonForm from '@modules/people/components/PersonForm';
+import { UpdatePersonSchema } from '@modules/people/people.schema';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';

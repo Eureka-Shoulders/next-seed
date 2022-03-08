@@ -1,6 +1,6 @@
 import { Box, Grid, Typography, styled } from '@mui/material';
 
-import useTranslation from '@hooks/useTranslation';
+import useTranslation from '@core/hooks/useTranslation';
 
 type DeleteContentProps = {
   title?: string;

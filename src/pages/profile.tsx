@@ -1,16 +1,17 @@
 import { Box, Button, Grid, Paper, Skeleton, Typography } from '@mui/material';
-import { zodValidator } from '@utils/validators';
-import { withSSRAuth } from '@utils/withSSRAuth';
 import axios from 'axios';
-import { useUsersRepository } from 'hooks/repositories';
-import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useMemo } from 'react';
 import { Actions, Subjects, User } from 'types';
 
+import useTranslation from '@core/hooks/useTranslation';
+import { zodValidator } from '@core/utils/validators';
+import { withSSRAuth } from '@core/utils/withSSRAuth';
+
 import ProfileCard from '@components/ProfileCard';
 
-import useTranslation from '@hooks/useTranslation';
+import { useUsersRepository } from '@hooks/repositories';
+import { useUserStore } from '@hooks/stores';
 
 import { ProfileSchema } from '@modules/users/profile.schema';
 

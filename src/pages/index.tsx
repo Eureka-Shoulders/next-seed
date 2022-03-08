@@ -1,11 +1,12 @@
 import { Box, Button, Typography } from '@mui/material';
-import { withSSRAuth } from '@utils/withSSRAuth';
-import { useThemeStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
 import type { NextPage } from 'next';
 import React from 'react';
 
-import useTranslation from '@hooks/useTranslation';
+import useTranslation from '@core/hooks/useTranslation';
+import { withSSRAuth } from '@core/utils/withSSRAuth';
+
+import { useThemeStore } from '@hooks/stores';
 
 import { Breadcrumb } from '@euk-labs/componentz';
 

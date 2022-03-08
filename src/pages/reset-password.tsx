@@ -1,13 +1,14 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
-import { zodValidator } from '@utils/validators';
 import axios from 'axios';
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
+import useTranslation from '@core/hooks/useTranslation';
+import { zodValidator } from '@core/utils/validators';
+
 import LoginBanner from '@components/Login/LoginBanner';
 
 import { useUsersRepository } from '@hooks/repositories';
-import useTranslation from '@hooks/useTranslation';
 
 import {
   ResetPasswordSchema,
