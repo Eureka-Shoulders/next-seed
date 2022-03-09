@@ -7,7 +7,7 @@ const feedbacks = {
     created: 'User created successfully!',
     updated: 'User updated successfully!',
   },
-  people: {
+  person: {
     created: 'Person created successfully!',
     updated: 'Person updated successfully!',
   },
