@@ -1,5 +1,4 @@
 import { Box, Grid, Paper, Tab, Tabs } from '@mui/material';
-import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -10,13 +9,14 @@ import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
 import { usePeopleRepository } from '@hooks/repositories';
+import { useNotificationService } from '@hooks/services';
 
 import AddressesForm from '@modules/people/components/AddressesForm';
 import ContactsForm from '@modules/people/components/ContactsForm';
 import PersonForm from '@modules/people/components/PersonForm';
 import { UpdatePersonSchema } from '@modules/people/people.schema';
 
-import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
+import { Breadcrumb } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton } from '@euk-labs/formix-mui';
@@ -37,7 +37,7 @@ function getInitialValues(person: Person): UpdatePersonSchema {
 
 function Index() {
   const { translate } = useTranslation();
-  const uiStore = useUIStore();
+  const notificationService = useNotificationService();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(0);
   const { id } = router.query;
@@ -49,35 +49,31 @@ function Index() {
   }
 
   async function handleSubmit(values: UpdatePersonSchema) {
-    try {
-      await personEntity.update({
-        identifier: values.identifier,
-        name: values.name,
-        contacts: values.contacts.map((contact) => ({
-          ...contact,
-          type: contact.type.value,
-          personId: undefined,
-        })),
-        addresses: values.addresses.map((address) => ({
-          ...address,
-          personId: undefined,
-        })),
-      });
-
-      uiStore.snackbar.show({
-        message: translate('feedbacks.person.updated'),
-        severity: 'success',
-      });
+    const newData = {
+      identifier: values.identifier,
+      name: values.name,
+      contacts: values.contacts.map((contact) => ({
+        ...contact,
+        type: contact.type.value,
+        personId: undefined,
+      })),
+      addresses: values.addresses.map((address) => ({
+        ...address,
+        personId: undefined,
+      })),
+    };
+    const onSuccess = () => {
       router.push('/people');
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message || translate('errors.people.update'),
-          severity: 'error',
-        });
+    };
+
+    await notificationService.handleHttpRequest(
+      () => personEntity.update(newData),
+      {
+        feedbackSuccess: translate('feedbacks.person.updated'),
+        feedbackError: translate('errors.people.update'),
+        onSuccess,
       }
-    }
+    );
   }
 
   useEffect(() => {

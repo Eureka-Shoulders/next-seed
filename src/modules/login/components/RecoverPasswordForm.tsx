@@ -1,5 +1,4 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 
 import Trans from '@core/components/Trans';
@@ -7,8 +6,8 @@ import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
 import { useUsersRepository } from '@hooks/repositories';
+import { useNotificationService } from '@hooks/services';
 
-import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 
@@ -20,28 +19,23 @@ const initialValues = {
 
 export default function RecoverPasswordForm() {
   const router = useRouter();
-  const uiStore = useUIStore();
+  const notificationService = useNotificationService();
   const usersRepository = useUsersRepository();
   const { translate } = useTranslation();
 
   async function handleSubmit(values: ReccoverPasswordSchema) {
-    try {
-      await usersRepository.recoverPassword(values.email);
-
-      uiStore.snackbar.show({
-        message: translate('feedbacks.recoverPassword'),
-        severity: 'success',
-      });
-
+    const onSuccess = () => {
       router.push('/login');
-    } catch (error) {
-      if (axios.isAxiosError(error))
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message || translate('errors.recoverPassword'),
-          severity: 'error',
-        });
-    }
+    };
+
+    await notificationService.handleHttpRequest(
+      () => usersRepository.recoverPassword(values.email),
+      {
+        feedbackSuccess: translate('feedbacks.recoverPassword'),
+        feedbackError: translate('errors.recoverPassword'),
+        onSuccess,
+      }
+    );
   }
 
   return (

@@ -1,5 +1,4 @@
 import { Box, Grid, Paper } from '@mui/material';
-import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { dissocPath, omit, pipe } from 'ramda';
@@ -11,11 +10,12 @@ import { zodValidator } from '@core/utils/validators';
 import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
 
 import { useUsersRepository } from '@hooks/repositories';
+import { useNotificationService } from '@hooks/services';
 
 import { getPersonTypes } from '@modules/people/types';
 import { UserSchema, getUserSchema } from '@modules/users/user.schema';
 
-import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
+import { Breadcrumb } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
 import {
@@ -28,7 +28,7 @@ import {
 
 function Index() {
   const { translate } = useTranslation();
-  const uiStore = useUIStore();
+  const notificationService = useNotificationService();
   const router = useRouter();
   const { id } = router.query;
 
@@ -40,27 +40,22 @@ function Index() {
   const userEntity = useEntity(usersRepository, id as string);
 
   async function handleSubmit(values: UserSchema) {
-    try {
-      const updatedUser = pipe(
-        omit(['confirmPassword']),
-        dissocPath(['person', 'type'])
-      )(values);
-
-      await userEntity.update(updatedUser);
-      uiStore.snackbar.show({
-        message: translate('feedbacks.user.updated'),
-        severity: 'success',
-      });
+    const onSuccess = () => {
       router.push('/users');
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message || translate('errors.user.update'),
-          severity: 'error',
-        });
+    };
+    const updatedUser = pipe(
+      omit(['confirmPassword']),
+      dissocPath(['person', 'type'])
+    )(values);
+
+    await notificationService.handleHttpRequest(
+      () => userEntity.update(updatedUser),
+      {
+        feedbackSuccess: translate('feedbacks.user.updated'),
+        feedbackError: translate('errors.user.update'),
+        onSuccess,
       }
-    }
+    );
   }
 
   useEffect(() => {

@@ -12,6 +12,7 @@ const TYPES = {
   ApiService: Symbol('ApiService'),
   Locale: Symbol('Locale'),
   TranslationService: Symbol('TranslationService'),
+  NotificationService: Symbol('NotificationService'),
 
   /**
    * Repositories

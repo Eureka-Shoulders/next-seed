@@ -1,4 +1,5 @@
 import httpService from '@services/http';
+import NotificationService from '@services/notification';
 import type { HydrationData } from 'types';
 
 import TranslationService from '@core/services/translation';
@@ -24,6 +25,10 @@ export default function globalContainer(
     container
       .bind(TYPES.TranslationService)
       .to(TranslationService)
+      .inSingletonScope();
+    container
+      .bind(TYPES.NotificationService)
+      .to(NotificationService)
       .inSingletonScope();
 
     container

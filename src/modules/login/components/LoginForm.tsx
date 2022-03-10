@@ -6,9 +6,9 @@ import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
 import { useUsersRepository } from '@hooks/repositories';
+import { useNotificationService } from '@hooks/services';
 import { useUserStore } from '@hooks/stores';
 
-import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import {
   FXPasswordField,
@@ -25,7 +25,7 @@ const initialValues = {
 
 export default function LoginForm() {
   const { translate } = useTranslation();
-  const uiStore = useUIStore();
+  const notificationService = useNotificationService();
   const userStore = useUserStore();
   const usersRepository = useUsersRepository();
 
@@ -45,10 +45,10 @@ export default function LoginForm() {
         redirectTo
       );
     } catch (error) {
-      uiStore.snackbar.show({
-        message: translate('errors.invalidCredentials'),
-        severity: 'error',
-      });
+      notificationService.notify(
+        translate('errors.invalidCredentials'),
+        'error'
+      );
     }
   }
 

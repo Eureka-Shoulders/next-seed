@@ -1,5 +1,4 @@
 import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
-import axios from 'axios';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -10,11 +9,11 @@ import { zodValidator } from '@core/utils/validators';
 import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
 
 import { useUsersRepository } from '@hooks/repositories';
+import { useNotificationService } from '@hooks/services';
 
 import { getPersonTypes } from '@modules/people/types';
 import { UserSchema, getUserSchema } from '@modules/users/user.schema';
 
-import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import {
   FXAutocomplete,
@@ -40,28 +39,23 @@ const initialValues = {
 
 export default function RegisterForm() {
   const { translate } = useTranslation();
-  const uiStore = useUIStore();
+  const notificationService = useNotificationService();
   const router = useRouter();
   const usersRepository = useUsersRepository();
 
   async function handleSubmit(values: UserSchema) {
-    try {
-      await usersRepository.register(values);
-
-      uiStore.snackbar.show({
-        message: translate('feedbacks.user.created'),
-        severity: 'success',
-      });
-
+    const onSuccess = () => {
       router.push('/login');
-    } catch (error) {
-      if (axios.isAxiosError(error))
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message || translate('errors.users.creation'),
-          severity: 'error',
-        });
-    }
+    };
+
+    await notificationService.handleHttpRequest(
+      () => usersRepository.register(values),
+      {
+        feedbackSuccess: translate('feedbacks.user.created'),
+        feedbackError: translate('errors.users.creation'),
+        onSuccess,
+      }
+    );
   }
 
   return (

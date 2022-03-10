@@ -1,5 +1,4 @@
 import { Box, Grid, Paper, Tab, Tabs } from '@mui/material';
-import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -9,6 +8,7 @@ import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
 import { usePeopleRepository } from '@hooks/repositories';
+import { useNotificationService } from '@hooks/services';
 
 import AddressesForm from '@modules/people/components/AddressesForm';
 import ContactsForm from '@modules/people/components/ContactsForm';
@@ -16,7 +16,7 @@ import PersonForm from '@modules/people/components/PersonForm';
 import { NewPersonSchema } from '@modules/people/people.schema';
 import { ICreatePerson } from '@modules/people/repository';
 
-import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
+import { Breadcrumb } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton } from '@euk-labs/formix-mui';
 
@@ -35,7 +35,7 @@ function Index() {
   const [activeTab, setActiveTab] = useState(0);
   const router = useRouter();
   const { translate } = useTranslation();
-  const uiStore = useUIStore();
+  const notificationService = useNotificationService();
   const peopleRepository = usePeopleRepository();
 
   function handleChange(event: React.SyntheticEvent, newValue: number) {
@@ -43,29 +43,25 @@ function Index() {
   }
 
   async function handleSubmit(values: NewPersonSchema) {
-    try {
-      await peopleRepository.create<ICreatePerson, ICreatePerson>({
-        ...values,
-        contacts: values.contacts.map((contact) => ({
-          ...contact,
-          type: contact.type.value as ContactType,
-        })),
-      });
-
-      uiStore.snackbar.show({
-        message: translate('feedbacks.person.created'),
-        severity: 'success',
-      });
-
+    const newData = {
+      ...values,
+      contacts: values.contacts.map((contact) => ({
+        ...contact,
+        type: contact.type.value as ContactType,
+      })),
+    };
+    const onSuccess = () => {
       router.push('/people');
-    } catch (error) {
-      if (axios.isAxiosError(error))
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message || translate('errors.person.creation'),
-          severity: 'error',
-        });
-    }
+    };
+
+    await notificationService.handleHttpRequest(
+      () => peopleRepository.create<ICreatePerson, ICreatePerson>(newData),
+      {
+        feedbackSuccess: translate('feedbacks.person.created'),
+        feedbackError: translate('errors.person.creation'),
+        onSuccess,
+      }
+    );
   }
 
   return (

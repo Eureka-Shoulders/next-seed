@@ -1,5 +1,4 @@
 import { Box, Grid, Paper } from '@mui/material';
-import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { dissocPath, omit, pipe } from 'ramda';
@@ -10,11 +9,12 @@ import { zodValidator } from '@core/utils/validators';
 import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
 
 import { useUsersRepository } from '@hooks/repositories';
+import { useNotificationService } from '@hooks/services';
 
 import { getPersonTypes } from '@modules/people/types';
 import { UserSchema, getUserSchema } from '@modules/users/user.schema';
 
-import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
+import { Breadcrumb } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import {
   FXAutocomplete,
@@ -41,31 +41,27 @@ const initialValues = {
 
 function Index() {
   const router = useRouter();
-  const uiStore = useUIStore();
+  const notificationService = useNotificationService();
   const usersRepository = useUsersRepository();
   const { translate } = useTranslation();
 
   async function handleSubmit(values: UserSchema) {
-    try {
-      const newUser = pipe(
-        omit(['confirmPassword']),
-        dissocPath(['person', 'type'])
-      )(values);
-
-      await usersRepository.create(newUser);
-      uiStore.snackbar.show({
-        message: translate('feedbacks.user.created'),
-        severity: 'success',
-      });
+    const newUser = pipe(
+      omit(['confirmPassword']),
+      dissocPath(['person', 'type'])
+    )(values);
+    const onSuccess = () => {
       router.push('/users');
-    } catch (error) {
-      if (axios.isAxiosError(error))
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message || translate('errors.users.creation'),
-          severity: 'error',
-        });
-    }
+    };
+
+    await notificationService.handleHttpRequest(
+      () => usersRepository.create(newUser),
+      {
+        feedbackSuccess: translate('feedbacks.user.created'),
+        feedbackError: translate('errors.users.creation'),
+        onSuccess,
+      }
+    );
   }
 
   return (

@@ -1,5 +1,4 @@
 import { Box, Button, Grid, Paper, Skeleton, Typography } from '@mui/material';
-import axios from 'axios';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useMemo } from 'react';
 import { Actions, Subjects, User } from 'types';
@@ -11,17 +10,17 @@ import { withSSRAuth } from '@core/utils/withSSRAuth';
 import ProfileCard from '@components/ProfileCard';
 
 import { useUsersRepository } from '@hooks/repositories';
+import { useNotificationService } from '@hooks/services';
 import { useUserStore } from '@hooks/stores';
 
 import { ProfileSchema } from '@modules/users/profile.schema';
 
-import { useUIStore } from '@euk-labs/componentz';
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 
 function Index() {
-  const uiStore = useUIStore();
+  const notificationService = useNotificationService();
   const userStore = useUserStore();
   const usersRepository = useUsersRepository();
   const userEntity = useEntity(usersRepository);
@@ -42,56 +41,43 @@ function Index() {
   }, [userStore.user]); // eslint-disable-line
 
   async function handleSubmit(values: ProfileSchema) {
-    try {
-      await userEntity.update({
-        person: {
-          name: values.name,
-        },
-        email: values.email,
-      });
-      uiStore.snackbar.show({
-        message: translate('feedbacks.user.updated'),
-        severity: 'success',
-      });
+    const newData = {
+      person: {
+        name: values.name,
+      },
+      email: values.email,
+    };
+    const onSuccess = () => {
       userStore.setUser(userEntity.data as User);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message || translate('errors.users.update'),
-          severity: 'error',
-        });
+    };
+
+    await notificationService.handleHttpRequest(
+      () => userEntity.update(newData),
+      {
+        feedbackSuccess: translate('feedbacks.user.updated'),
+        feedbackError: translate('errors.users.update'),
+        onSuccess,
       }
-    }
+    );
   }
 
   async function logoutDevices() {
     const refreshToken = userStore.getRefreshToken();
 
-    try {
-      if (!refreshToken) {
-        return uiStore.snackbar.show({
-          message: translate('errors.noRefreshToken'),
-          severity: 'error',
-        });
-      }
-
-      await usersRepository.logoutDevices(refreshToken);
-
-      uiStore.snackbar.show({
-        message: translate('feedbacks.logoutDevices'),
-        severity: 'success',
-      });
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message ||
-            translate('errors.user.logoutDevices'),
-          severity: 'error',
-        });
-      }
+    if (!refreshToken) {
+      return notificationService.notify(
+        translate('errors.noRefreshToken'),
+        'error'
+      );
     }
+
+    await notificationService.handleHttpRequest(
+      () => usersRepository.logoutDevices(refreshToken),
+      {
+        feedbackSuccess: translate('feedbacks.logoutDevices'),
+        feedbackError: translate('errors.user.logoutDevices'),
+      }
+    );
   }
 
   if (!userStore.user) {
