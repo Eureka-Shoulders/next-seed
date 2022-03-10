@@ -22,10 +22,7 @@ interface ResetPasswordDto {
 
 @injectable()
 class UsersRepository extends Repository {
-  constructor(
-    @inject(TYPES.ApiService)
-    private apiService: HttpService
-  ) {
+  constructor(@inject(TYPES.ApiService) private apiService: HttpService) {
     super(apiService, { path: '/users' });
   }
 

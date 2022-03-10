@@ -19,7 +19,10 @@ export interface ThemeStoreType {
 
 @injectable()
 class ThemeStore implements ThemeStoreType {
-  constructor(@inject(TYPES.HydrationData) hydrationData?: HydrationData) {
+  constructor(
+    @inject(TYPES.HydrationData)
+    hydrationData?: HydrationData
+  ) {
     makeAutoObservable(this, {}, { autoBind: true });
 
     if (hydrationData?.theme) this.theme = hydrationData.theme;

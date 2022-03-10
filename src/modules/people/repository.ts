@@ -12,10 +12,7 @@ export type ICreatePerson = Omit<NewPersonSchema, 'contacts'> & {
 
 @injectable()
 class PeopleRepository extends Repository {
-  constructor(
-    @inject(TYPES.ApiService)
-    apiService: HttpService
-  ) {
+  constructor(@inject(TYPES.ApiService) apiService: HttpService) {
     super(apiService, { path: '/people' });
   }
 }

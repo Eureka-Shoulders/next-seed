@@ -23,7 +23,10 @@ export interface NotificationServiceType {
 
 @injectable()
 class NotificationService implements NotificationServiceType {
-  constructor(@inject(TYPES.UIStore) private uiStore: UIStoreType) {}
+  constructor(
+    @inject(TYPES.UIStore)
+    private uiStore: UIStoreType
+  ) {}
 
   async handleHttpRequest<T>(
     func: () => Promise<T>,
