@@ -38,7 +38,7 @@ const { publicRuntimeConfig } = getConfig();
 const clientSideEmotionCache = createEmotionCache();
 
 if (publicRuntimeConfig.useMirage) {
-  import('@core/services/mockService').then((mod) => {
+  import('@core/services/mock').then((mod) => {
     mod.default();
   });
 }

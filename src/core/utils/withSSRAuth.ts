@@ -1,5 +1,5 @@
 import { Ability, RawRuleOf } from '@casl/ability';
-import httpService from '@services/httpService';
+import httpService from '@services/http';
 import {
   GetServerSideProps,
   GetServerSidePropsContext,

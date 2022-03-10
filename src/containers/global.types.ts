@@ -5,6 +5,9 @@ const TYPES = {
   ThemeStore: Symbol('ThemeStore'),
   UserStore: Symbol('UserStore'),
 
+  /**
+   * Services
+   */
   HydrationData: Symbol('HydrationData'),
   ApiService: Symbol('ApiService'),
   Locale: Symbol('Locale'),

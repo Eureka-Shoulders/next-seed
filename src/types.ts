@@ -1,6 +1,6 @@
 import { Ability } from '@casl/ability';
 
-import { ThemeType } from '@core/stores/ThemeStore';
+import { ThemeType } from '@core/stores/theme';
 import Enum from '@core/utils/Enum';
 
 export interface HydrationData {

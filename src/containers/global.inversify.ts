@@ -1,9 +1,9 @@
-import httpService from '@services/httpService';
+import httpService from '@services/http';
 import type { HydrationData } from 'types';
 
-import TranslationService from '@core/services/translationService';
-import ThemeStore from '@core/stores/ThemeStore';
-import UserStore from '@core/stores/UserStore';
+import TranslationService from '@core/services/translation';
+import ThemeStore from '@core/stores/theme';
+import UserStore from '@core/stores/user';
 
 import PeopleRepository from '@modules/people/repository';
 import UsersRepository from '@modules/users/repository';

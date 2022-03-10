@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import nookies from 'nookies';
 import { useEffect } from 'react';
 
-import { ThemeType } from '@core/stores/ThemeStore';
+import { ThemeType } from '@core/stores/theme';
 
 import { useThemeStore } from '@hooks/stores';
 
