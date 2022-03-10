@@ -23,10 +23,12 @@ const actions = {
   showAll: 'Exibir tudo',
   showColumns: 'Exibir colunas',
   searchColumn: 'Pesquisar coluna',
+  refresh: 'Atualizar',
   filters: {
     add: 'Adicionar filtro',
     submit: 'Aplicar',
     undoSort: 'Desfazer ordenação',
+    clearAll: 'Limpar filtros',
   },
 };
 

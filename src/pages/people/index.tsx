@@ -3,7 +3,7 @@ import { Box, Grid, Skeleton } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { GetServerSideProps } from 'next';
 import nookies from 'nookies';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Actions, Subjects } from 'types';
 
 import { Filters } from '@core/components/Filters';
@@ -28,6 +28,7 @@ function Index() {
   const { translate } = useTranslation();
   const userStore = useUserStore();
   const uiStore = useUIStore();
+  const [filters] = useState(() => getFilters(translate));
   const peopleRepository = usePeopleRepository();
   const peopleList = useList(peopleRepository, {
     limit: 10,
@@ -70,7 +71,7 @@ function Index() {
 
         <Grid item xs={12}>
           <Filters
-            filters={getFilters(translate)}
+            filters={filters}
             onFilter={(filters) => {
               buildFilters(filters, peopleList.filters);
               peopleList.fetch();

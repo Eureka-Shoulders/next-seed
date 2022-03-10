@@ -42,7 +42,7 @@ export default function EnumFilter({
               options={checkboxOptions}
             />
           </Grid>
-          <Grid item xs={12} justifyContent="flex-end">
+          <Grid item xs={12} display="flex" justifyContent="flex-end">
             <Button type="submit" variant="contained">
               <Trans id="actions.filters.submit" />
             </Button>
