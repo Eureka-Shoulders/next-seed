@@ -1,18 +1,19 @@
 import { Grid } from '@mui/material';
-
-import { useFormixContext } from '@euk-labs/formix';
+import { toJS } from 'mobx';
 
 import FilterChip from './FilterChip';
-import { Filter } from './types';
+import FiltersStore from './filters.store';
 import { getFilterChips } from './utils';
 
 interface Props {
-  filters: Filter[];
+  filtersStore: FiltersStore;
 }
 
-export default function FiltersValuesList({ filters }: Props) {
-  const formix = useFormixContext<Record<string | number, unknown>>();
-  const chips = getFilterChips(filters, formix.values);
+export default function FiltersValuesList({ filtersStore }: Props) {
+  const chips = getFilterChips(
+    filtersStore.filters,
+    toJS(filtersStore.values) ?? {}
+  );
 
   return (
     <>

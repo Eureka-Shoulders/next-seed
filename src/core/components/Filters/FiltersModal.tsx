@@ -107,7 +107,6 @@ function FiltersModalComponent({
                           name={filter.field}
                           activeTab={activeTab}
                           index={index}
-                          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                           options={filter.enums!}
                         />
                       );

@@ -1,4 +1,5 @@
 const filters = {
+  all: 'All filters',
   text: {
     title: 'Search for a text',
     label: 'Search',
