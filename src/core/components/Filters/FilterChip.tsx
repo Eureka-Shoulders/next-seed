@@ -17,9 +17,7 @@ export default function FilterChip({ label, field }: FilterChipProps) {
 
     if (value instanceof Date) {
       newValue = null;
-    }
-
-    if (typeof value === 'object' && value !== null) {
+    } else if (typeof value === 'object' && value !== null) {
       newValue = map(() => false, value) as Record<string, boolean>;
     }
 

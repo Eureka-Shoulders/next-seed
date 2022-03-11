@@ -1,7 +1,14 @@
-import { Grid } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+} from '@mui/material';
 import { observer } from 'mobx-react-lite';
 
-import { Formix } from '@euk-labs/formix';
+import { useFormixContext } from '@euk-labs/formix';
 import {
   FXDatePicker,
   FXMaskedField,
@@ -9,9 +16,8 @@ import {
   FXTextField,
 } from '@euk-labs/formix-mui';
 
-import When from '../Utility/When';
+import Trans from '../Trans';
 import FiltersStore from './filters.store';
-import { getFilterValue } from './utils';
 
 interface Props {
   filtersStore: FiltersStore;
@@ -34,9 +40,17 @@ function FiltersList({ filtersStore }: Props) {
                 thousandChar={filter.thousandChar}
               />
             );
+            break;
 
           case 'date':
-            field = <FXDatePicker name={filter.field} label={filter.title} />;
+            field = (
+              <FXDatePicker
+                name={filter.field}
+                label={filter.title}
+                inputFormat="dd/MM/yyyy"
+              />
+            );
+            break;
 
           // case 'enum':
           //   return (
@@ -51,6 +65,7 @@ function FiltersList({ filtersStore }: Props) {
                 mask="999.999.999-99"
               />
             );
+            break;
 
           default:
             field = <FXTextField name={filter.field} label={filter.title} />;
@@ -67,31 +82,30 @@ function FiltersList({ filtersStore }: Props) {
 }
 
 function AllFiltersModal({ filtersStore }: Props) {
-  // FIXME: duplicated code
-  function handleSubmit(values: Record<string, unknown>) {
-    const newFilters: Record<string, unknown> = {};
+  const formix = useFormixContext();
 
-    filtersStore.filters.forEach((filter) => {
-      if (values[filter.field] !== '')
-        newFilters[filter.field] = getFilterValue(filter, values);
-    });
-
-    filtersStore.setValues(newFilters);
-    filtersStore.closeAllFilters();
-  }
-
-  // TODO: keep values in sync
   return (
-    <When is={!!filtersStore.initialValues}>
-      <Formix
-        initialValues={filtersStore.initialValues!}
-        onSubmit={handleSubmit}
-      >
-        <Grid container spacing={2} mt="0px">
+    <Dialog
+      open={filtersStore.isAllFiltersModalOpen}
+      onClose={filtersStore.closeAllFilters}
+    >
+      <DialogTitle>
+        <Trans id="filters.all" />
+      </DialogTitle>
+      <DialogContent>
+        <Grid container spacing={2} mt={0}>
           <FiltersList filtersStore={filtersStore} />
         </Grid>
-      </Formix>
-    </When>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={filtersStore.closeAllFilters}>
+          <Trans id="actions.goBack" />
+        </Button>
+        <Button variant="contained" onClick={formix.submitForm}>
+          <Trans id="actions.filters.submit" />
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }
 

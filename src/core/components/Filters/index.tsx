@@ -11,7 +11,6 @@ import { useEffect, useRef, useState } from 'react';
 import Trans from '@core/components/Trans';
 import useTranslation from '@core/hooks/useTranslation';
 
-import { useUIStore } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 
 import When from '../Utility/When';
@@ -39,7 +38,6 @@ function FiltersComponent({
 }: FiltersProps) {
   const [filtersStore] = useState(() => new FiltersStore());
   const { translate } = useTranslation();
-  const uiStore = useUIStore();
   const anchorRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -62,14 +60,7 @@ function FiltersComponent({
 
     filtersStore.setValues(newFilters);
     filtersStore.closeFilters();
-  }
-
-  function showAllFilters() {
-    uiStore.dialog.set({
-      title: 'Filters',
-      content: <AllFiltersModal filtersStore={filtersStore} />,
-    });
-    uiStore.dialog.open();
+    filtersStore.closeAllFilters();
   }
 
   return (
@@ -81,7 +72,7 @@ function FiltersComponent({
         <Grid container spacing={2}>
           <Grid item xs>
             <Grid container spacing={2}>
-              <FiltersValuesList filters={filters} />
+              <FiltersValuesList filtersStore={filtersStore} />
 
               <Grid item>
                 <Button
@@ -98,7 +89,10 @@ function FiltersComponent({
 
           <Grid item>
             <Tooltip title={translate('filters.all')}>
-              <SmallButton variant="contained" onClick={showAllFilters}>
+              <SmallButton
+                variant="contained"
+                onClick={filtersStore.openAllFilters}
+              >
                 <FiltersIcon fontSize="small" />
               </SmallButton>
             </Tooltip>
@@ -123,6 +117,7 @@ function FiltersComponent({
           anchorEl={anchorRef.current}
           filters={filters}
         />
+        <AllFiltersModal filtersStore={filtersStore} />
       </Formix>
     </When>
   );
