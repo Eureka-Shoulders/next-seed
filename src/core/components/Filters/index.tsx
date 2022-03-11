@@ -26,16 +26,10 @@ import { getFilterValue } from './utils';
 interface FiltersProps {
   filters: Filter[];
   onFilter: (filters: Record<string, unknown>) => void;
-  onClear: () => void;
   onRefresh: () => void;
 }
 
-function FiltersComponent({
-  filters,
-  onFilter,
-  onClear,
-  onRefresh,
-}: FiltersProps) {
+function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
   const [filtersStore] = useState(() => new FiltersStore());
   const { translate } = useTranslation();
   const anchorRef = useRef<HTMLButtonElement>(null);
@@ -107,7 +101,7 @@ function FiltersComponent({
           </Grid>
 
           <Grid item>
-            <ClearFiltersButton onClear={onClear} />
+            <ClearFiltersButton />
           </Grid>
         </Grid>
 

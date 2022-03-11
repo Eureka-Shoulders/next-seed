@@ -9,7 +9,6 @@ import { Actions, Subjects } from 'types';
 import { Filters } from '@core/components/Filters';
 import MuiTable from '@core/components/MuiTable';
 import useTranslation from '@core/hooks/useTranslation';
-import clearFilters from '@core/utils/clearFilters';
 import sortList from '@core/utils/sortList';
 
 import DeleteContent from '@components/DialogContents/DeleteContent';
@@ -76,7 +75,6 @@ function Index() {
               buildFilters(filters, peopleList.filters);
               peopleList.fetch();
             }}
-            onClear={() => clearFilters(peopleList.filters)}
             onRefresh={peopleList.fetch}
           />
         </Grid>
@@ -114,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       hydrationData: {
-        theme: cookies.theme,
+        theme: cookies.theme || 'light',
       },
     },
   };

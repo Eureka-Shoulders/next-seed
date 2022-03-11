@@ -25,6 +25,15 @@ export function getFilters(translate: TranslateFunc): Filter[] {
       title: translate('common.createdAt'),
       type: 'date',
     },
+    {
+      field: 'teste',
+      title: 'enuuum',
+      type: 'enum',
+      enums: [
+        { title: 'Antony', value: 'Antony' },
+        { title: 'John', value: 'John' },
+      ],
+    },
   ];
 }
 

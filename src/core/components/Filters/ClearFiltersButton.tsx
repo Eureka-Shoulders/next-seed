@@ -7,18 +7,13 @@ import { useFormixContext } from '@euk-labs/formix';
 
 import SmallButton from './SmallButton';
 
-interface Props {
-  onClear: () => void;
-}
-
-export default function ClearFiltersButton({ onClear }: Props) {
+export default function ClearFiltersButton() {
   const formix = useFormixContext();
   const { translate } = useTranslation();
 
   function handleReset() {
     formix.resetForm();
     formix.submitForm();
-    // onClear();
   }
 
   return (

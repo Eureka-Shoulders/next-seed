@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import { Filters } from '@core/components/Filters';
 import MuiTable from '@core/components/MuiTable';
 import useTranslation from '@core/hooks/useTranslation';
-import clearFilters from '@core/utils/clearFilters';
 import setFilter from '@core/utils/setFilter';
 import sortList from '@core/utils/sortList';
 
@@ -82,7 +81,6 @@ function Index() {
               buildFilters(filters, usersList.filters);
               usersList.fetch();
             }}
-            onClear={() => clearFilters(usersList.filters)}
             onRefresh={usersList.fetch}
           />
         </Grid>

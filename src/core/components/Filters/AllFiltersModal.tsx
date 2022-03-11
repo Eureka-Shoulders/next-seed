@@ -10,6 +10,7 @@ import { observer } from 'mobx-react-lite';
 
 import { useFormixContext } from '@euk-labs/formix';
 import {
+  FXCheckboxGroup,
   FXDatePicker,
   FXMaskedField,
   FXNumericField,
@@ -52,10 +53,17 @@ function FiltersList({ filtersStore }: Props) {
             );
             break;
 
-          // case 'enum':
-          //   return (
-          //     <EnumFilter {...defaultProps} options={filter.enums!} />
-          //   );
+          case 'enum':
+            field = (
+              <FXCheckboxGroup
+                label={filter.title}
+                options={filter.enums!.map((option) => ({
+                  name: `${filter.field}.${option.value}`,
+                  label: option.title,
+                }))}
+              />
+            );
+            break;
 
           case 'cpf':
             field = (
