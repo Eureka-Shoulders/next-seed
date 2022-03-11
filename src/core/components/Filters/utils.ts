@@ -12,6 +12,8 @@ import {
 
 import { EnumFilter, Filter, FilterEnum } from './types';
 
+const getTrueKeys = pipe(filter(Boolean), keys);
+
 function getEnumObject(enums: FilterEnum[]) {
   const enumerationPairs = enums.map(
     (enumeration) => [enumeration.value, false] as [string, boolean]
@@ -44,11 +46,7 @@ export function getFilterValue(
 ) {
   switch (filterObject.type) {
     case 'enum':
-      return pipe(
-        Object.entries,
-        filter(([, value]) => value),
-        map(([key]) => key)
-      )(values[filterObject.field] as Record<string, boolean>);
+      return getTrueKeys(values[filterObject.field] as Record<string, boolean>);
 
     default:
       return values[filterObject.field];
