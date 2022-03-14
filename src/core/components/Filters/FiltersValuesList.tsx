@@ -10,10 +10,7 @@ interface Props {
 }
 
 export default function FiltersValuesList({ filtersStore }: Props) {
-  const chips = getFilterChips(
-    filtersStore.filters,
-    toJS(filtersStore.values) ?? {}
-  );
+  const chips = getFilterChips(toJS(filtersStore.values) ?? {});
 
   return (
     <>

@@ -74,40 +74,14 @@ describe('Filter Utils Tests', () => {
   });
 
   it('should get valid filter titles for chips', () => {
-    const filters: Filter[] = [
-      {
-        field: 'name',
-        title: 'Name',
-        type: 'string',
-      },
-      {
-        field: 'email',
-        title: 'E-mail',
-        type: 'string',
-      },
-      {
-        field: 'createdAt',
-        title: 'Created at',
-        type: 'date',
-      },
-      {
-        field: 'details',
-        title: 'Details',
-        type: 'enum',
-        enums: [{ title: 'Locked', value: 'locked' }],
-      },
-    ];
     const values = {
       sort: 'name-desc',
       name: 'Tony',
       email: 'tony@shouldersteam.com',
       createdAt: new Date(),
-      details: {
-        locked: true,
-        verified: false,
-      },
+      details: ['Locked'],
     };
-    const chips = getFilterChips(filters, values);
+    const chips = getFilterChips(values);
 
     expect(chips).toEqual([
       undefined,

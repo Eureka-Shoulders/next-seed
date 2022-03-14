@@ -10,7 +10,7 @@ import {
   toPairs,
 } from 'ramda';
 
-import { EnumFilter, Filter, FilterEnum } from './types';
+import { Filter, FilterEnum } from './types';
 
 const getTrueKeys = pipe(filter(Boolean), keys);
 
@@ -58,10 +58,7 @@ export interface FilterChip {
   field: string;
 }
 
-export function getFilterChips(
-  filters: Filter[],
-  values: Record<string | number, unknown>
-) {
+export function getFilterChips(values: Record<string | number, unknown>) {
   return pipe(
     toPairs,
     filter(([, value]) => value !== '' && value !== null),
@@ -83,21 +80,10 @@ export function getFilterChips(
           return;
         }
 
-        const enumOptions = filters.find(
-          (filter) => filter.field === field
-        ) as EnumFilter;
-        const enumTitleGetter = pipe(
-          filter(Boolean),
-          keys,
-          map(
-            (key) =>
-              enumOptions.enums.find((enumOption) => enumOption.value === key)
-                ?.title || ''
-          ),
-          join(', ')
-        );
+        if (Array.isArray(value)) {
+          chip.title = join(', ', value);
+        }
 
-        chip.title = enumTitleGetter(value);
         return chip;
       }
 
