@@ -69,8 +69,18 @@ class UserStore implements UserStoreType {
     Router.push(redirectTo || '/');
   }
 
-  logout() {
+  async logout() {
     this.user = null;
+
+    const accessToken = this.getAccessToken();
+    const refreshToken = this.getRefreshToken();
+
+    if (accessToken || refreshToken) {
+      await this.apiService.client.post('/auth/logout', {
+        refreshToken: this.getRefreshToken(),
+      });
+    }
+
     setCookie(null, 'user_token', '', {
       maxAge: -1,
       path: '/',
@@ -157,13 +167,13 @@ class UserStore implements UserStoreType {
 
   startTokenInjector() {
     this.apiService.setRequestInterceptor('tokenInjector', (config) => {
-      const accessToken = `Bearer ${this.getAccessToken()}`;
+      const accessToken = this.getAccessToken();
 
       if (config.headers) {
-        config.headers.Authorization = accessToken;
+        config.headers.Authorization = `Bearer ${accessToken}`;
       } else {
         config.headers = {
-          Authorization: accessToken,
+          Authorization: `Bearer ${accessToken}`,
         };
       }
 
