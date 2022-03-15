@@ -4,7 +4,7 @@ import { ThemeType } from '@core/stores/theme';
 import Enum from '@core/utils/Enum';
 
 export interface HydrationData {
-  theme: ThemeType;
+  theme?: ThemeType;
 }
 
 export enum Actions {

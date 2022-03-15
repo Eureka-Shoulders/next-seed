@@ -11,10 +11,8 @@ import type { AppProps } from 'next/app';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 
-import AppBarBuilder from '@core/components/AppBarBuilder';
-import BreadcrumbListener from '@core/components/Breadcrumbs/BreadcrumbListener';
+import CoreListener from '@core/components/CoreListener';
 import ThemeProvider from '@core/components/ThemeProvider';
-import UserListener from '@core/components/UserListener';
 import ZodErrorMapBuilder from '@core/components/ZodErrorMapBuilder';
 
 import { AppBar } from '@euk-labs/componentz';
@@ -62,9 +60,7 @@ function MyApp(props: MyAppProps) {
     <CacheProvider value={emotionCache}>
       <Provider container={container}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <BreadcrumbListener />
-          <UserListener isPublicPage={isPublicPage} />
-          <AppBarBuilder />
+          <CoreListener isPublicPage={isPublicPage} />
           <ZodErrorMapBuilder />
 
           <ThemeProvider>

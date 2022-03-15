@@ -112,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       hydrationData: {
-        theme: cookies.theme || 'light',
+        theme: cookies.theme,
       },
     },
   };

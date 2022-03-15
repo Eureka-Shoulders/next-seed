@@ -1,4 +1,5 @@
 import httpService from '@services/http';
+import HydrationService from '@services/hydration';
 import NotificationService from '@services/notification';
 import type { HydrationData } from 'types';
 
@@ -20,8 +21,10 @@ export default function globalContainer(
   return () => {
     const container = componentzContainer();
 
-    container.bind(TYPES.ApiService).toConstantValue(httpService);
     container.bind(TYPES.Locale).toConstantValue(locale);
+    container.bind(TYPES.HydrationData).toConstantValue(hydrationData);
+    container.bind(TYPES.ApiService).toConstantValue(httpService);
+
     container
       .bind(TYPES.TranslationService)
       .to(TranslationService)
@@ -29,6 +32,10 @@ export default function globalContainer(
     container
       .bind(TYPES.NotificationService)
       .to(NotificationService)
+      .inSingletonScope();
+    container
+      .bind(TYPES.HydrationService)
+      .to(HydrationService)
       .inSingletonScope();
 
     container
@@ -40,7 +47,6 @@ export default function globalContainer(
       .to(PeopleRepository)
       .inSingletonScope();
 
-    container.bind(TYPES.HydrationData).toConstantValue(hydrationData);
     container.bind(TYPES.ThemeStore).to(ThemeStore).inSingletonScope();
     container.bind(TYPES.UserStore).to(UserStore).inSingletonScope();
 
