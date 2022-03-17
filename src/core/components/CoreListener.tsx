@@ -23,6 +23,7 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
   const userStore = useUserStore();
   const router = useRouter();
   const { translate } = useTranslation();
+  const isPrivatePageWithAbilities = !isPublicPage && userStore.isLogged;
 
   useEffect(() => {
     /**
@@ -46,31 +47,26 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
     });
   }, []); // eslint-disable-line
 
-  /**
-   * Breadcrumb configuration
-   */
   useEffect(() => {
     if (userStore.abilities) {
       const pages = getPages(userStore.abilities, translate);
+
+      /**
+       * Breadcrumb configuration
+       */
       const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
 
       uiStore.breadcrumb.setPaths(breadcrumbPaths);
       uiStore.breadcrumb.setOnClickBreadcrumbPath((breadcrumbPath) => {
         router.push(breadcrumbPath.link);
       });
-    }
-  }, [router.pathname, userStore.abilities]); // eslint-disable-line
 
-  /**
-   * AppBar pages configuration based on user roles
-   */
-  useEffect(() => {
-    if (userStore.abilities) {
-      const pages = getPages(userStore.abilities, translate);
-
+      /**
+       * AppBar pages configuration
+       */
       uiStore.appBar.setPages(pages);
     }
-  }, [userStore.abilities]); // eslint-disable-line
+  }, [router.pathname, userStore.abilities]); // eslint-disable-line
 
   /**
    * User authentication on private pages
@@ -85,8 +81,8 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
    * Validating user permissions on private pages
    */
   useEffect(() => {
-    if (!isPublicPage && userStore.user && userStore.abilities) {
-      const pages = getPages(userStore.abilities, translate);
+    if (isPrivatePageWithAbilities) {
+      const pages = getPages(userStore.abilities!, translate);
       const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
       const lastPath = breadcrumbPaths.pop();
 
