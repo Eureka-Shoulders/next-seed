@@ -33,7 +33,6 @@ class ThemeStore implements ThemeStoreType {
   ) {
     makeAutoObservable(this, {}, { autoBind: true });
 
-    // server-side hydration
     this.hydrate();
   }
 
@@ -43,7 +42,10 @@ class ThemeStore implements ThemeStoreType {
   }
 
   hydrate() {
-    if (typeof window === 'undefined' && this.hydrationService.theme) {
+    const isServerSide = typeof window === 'undefined';
+    const hasHydratedTheme = this.hydrationService.theme;
+
+    if (isServerSide && hasHydratedTheme) {
       this.theme = this.hydrationService.theme;
       return;
     }
