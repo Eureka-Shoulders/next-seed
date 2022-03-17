@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+require('./checkEnvironmentVars');
 const withTM = require('next-transpile-modules')(
   [
     '@euk-labs/formix',
