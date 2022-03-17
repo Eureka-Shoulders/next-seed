@@ -1,7 +1,7 @@
 import { getPasswordSchema } from '@config/schemas/password.schema';
 import * as zod from 'zod';
 
-import { TranslateFunc } from '@hooks/useTranslation';
+import { TranslateFunc } from '@core/hooks/useTranslation';
 
 import { NewPersonSchema } from '@modules/people/people.schema';
 

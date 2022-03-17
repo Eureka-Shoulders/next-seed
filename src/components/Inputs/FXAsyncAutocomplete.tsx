@@ -1,11 +1,11 @@
-import { AutocompleteOption } from 'types';
-
 import useAutocomplete, {
   AutocompleteRepositoryType,
-} from '@hooks/useAutocomplete';
+} from '@core/hooks/useAutocomplete';
 
 import { FXAutocomplete } from '@euk-labs/formix-mui';
 import { InternalAutocompleteProps } from '@euk-labs/formix-mui/Autocomplete/FXAutocomplete';
+
+import { AutocompleteOption } from '../../types';
 
 type FXAsyncAutocompleteProps = {
   repository: AutocompleteRepositoryType;

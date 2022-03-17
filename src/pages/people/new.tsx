@@ -1,23 +1,26 @@
 import { Box, Grid, Paper, Tab, Tabs } from '@mui/material';
-import axios from 'axios';
-import { usePeopleRepository } from 'hooks/repositories';
 import { observer } from 'mobx-react-lite';
-import AddressesForm from 'modules/people/AddressesForm';
-import ContactsForm from 'modules/people/ContactsForm';
-import PersonForm from 'modules/people/PersonForm';
-import { NewPersonSchema } from 'modules/people/people.schema';
-import { ICreatePerson } from 'modules/people/repository';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { ContactType } from 'types';
 
-import TabPanel from '@components/TabPanel';
+import TabPanel from '@core/components/TabPanel';
+import useTranslation from '@core/hooks/useTranslation';
+import { zodValidator } from '@core/utils/validators';
 
-import useTranslation from '@hooks/useTranslation';
+import { usePeopleRepository } from '@hooks/repositories';
+import { useNotificationService } from '@hooks/services';
 
-import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
+import AddressesForm from '@modules/people/components/AddressesForm';
+import ContactsForm from '@modules/people/components/ContactsForm';
+import PersonForm from '@modules/people/components/PersonForm';
+import { NewPersonSchema } from '@modules/people/people.schema';
+import { ICreatePerson } from '@modules/people/repository';
+
+import { Breadcrumb } from '@euk-labs/componentz';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton } from '@euk-labs/formix-mui';
+
+import { ContactType } from '../../types';
 
 const initialValues = {
   name: '',
@@ -32,7 +35,7 @@ function Index() {
   const [activeTab, setActiveTab] = useState(0);
   const router = useRouter();
   const { translate } = useTranslation();
-  const uiStore = useUIStore();
+  const notificationService = useNotificationService();
   const peopleRepository = usePeopleRepository();
 
   function handleChange(event: React.SyntheticEvent, newValue: number) {
@@ -40,29 +43,25 @@ function Index() {
   }
 
   async function handleSubmit(values: NewPersonSchema) {
-    try {
-      await peopleRepository.create<ICreatePerson, ICreatePerson>({
-        ...values,
-        contacts: values.contacts.map((contact) => ({
-          ...contact,
-          type: contact.type.value as ContactType,
-        })),
-      });
-
-      uiStore.snackbar.show({
-        message: translate('feedbacks.person.created'),
-        severity: 'success',
-      });
-
+    const newData = {
+      ...values,
+      contacts: values.contacts.map((contact) => ({
+        ...contact,
+        type: contact.type.value as ContactType,
+      })),
+    };
+    const onSuccess = () => {
       router.push('/people');
-    } catch (error) {
-      if (axios.isAxiosError(error))
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message || translate('errors.person.creation'),
-          severity: 'error',
-        });
-    }
+    };
+
+    await notificationService.handleHttpRequest(
+      () => peopleRepository.create<ICreatePerson, ICreatePerson>(newData),
+      {
+        feedbackSuccess: translate('feedbacks.person.created'),
+        feedbackError: translate('errors.person.creation'),
+        onSuccess,
+      }
+    );
   }
 
   return (
@@ -89,7 +88,7 @@ function Index() {
             <Box p={2}>
               <Formix
                 initialValues={initialValues}
-                zodSchema={NewPersonSchema}
+                validate={zodValidator(NewPersonSchema)}
                 onSubmit={handleSubmit}
               >
                 <Grid container spacing={2}>

@@ -1,8 +1,7 @@
 import { add, format } from 'date-fns';
 
-import { Filter } from '@components/Filters/types';
-
-import { TranslateFunc } from '@hooks/useTranslation';
+import { Filter } from '@core/components/Filters/types';
+import { TranslateFunc } from '@core/hooks/useTranslation';
 
 export function getFilters(translate: TranslateFunc): Filter[] {
   return [

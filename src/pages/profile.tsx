@@ -1,38 +1,35 @@
 import { Box, Button, Grid, Paper, Skeleton, Typography } from '@mui/material';
-import { withSSRAuth } from '@utils/withSSRAuth';
-import axios from 'axios';
-import { useUsersRepository } from 'hooks/repositories';
-import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
-import { UserSchema, getUserSchema } from 'modules/users/user.schema';
 import { useEffect, useMemo } from 'react';
 import { Actions, Subjects, User } from 'types';
 
+import useTranslation from '@core/hooks/useTranslation';
+import { zodValidator } from '@core/utils/validators';
+import { withSSRAuth } from '@core/utils/withSSRAuth';
+
 import ProfileCard from '@components/ProfileCard';
 
-import useTranslation from '@hooks/useTranslation';
+import { useUsersRepository } from '@hooks/repositories';
+import { useNotificationService } from '@hooks/services';
+import { useUserStore } from '@hooks/stores';
 
-import { useUIStore } from '@euk-labs/componentz';
+import { ProfileSchema } from '@modules/users/profile.schema';
+
 import { useEntity } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 
 function Index() {
-  const uiStore = useUIStore();
+  const notificationService = useNotificationService();
   const userStore = useUserStore();
   const usersRepository = useUsersRepository();
   const userEntity = useEntity(usersRepository);
   const { translate } = useTranslation();
   const initialValues = useMemo(
-    () =>
-      userStore.user
-        ? {
-            email: userStore.user.email,
-            person: {
-              name: userStore.user.person.name,
-            },
-          }
-        : {},
+    () => ({
+      name: userStore.user?.person.name || '',
+      email: userStore.user?.email || '',
+    }),
     [userStore.user]
   );
 
@@ -43,52 +40,44 @@ function Index() {
     }
   }, [userStore.user]); // eslint-disable-line
 
-  async function handleSubmit(values: UserSchema) {
-    try {
-      await userEntity.update(values);
-      uiStore.snackbar.show({
-        message: translate('feedbacks.user.updated'),
-        severity: 'success',
-      });
+  async function handleSubmit(values: ProfileSchema) {
+    const newData = {
+      person: {
+        name: values.name,
+      },
+      email: values.email,
+    };
+    const onSuccess = () => {
       userStore.setUser(userEntity.data as User);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message || translate('errors.users.update'),
-          severity: 'error',
-        });
+    };
+
+    await notificationService.handleHttpRequest(
+      () => userEntity.update(newData),
+      {
+        feedbackSuccess: translate('feedbacks.user.updated'),
+        feedbackError: translate('errors.users.update'),
+        onSuccess,
       }
-    }
+    );
   }
 
   async function logoutDevices() {
     const refreshToken = userStore.getRefreshToken();
 
-    try {
-      if (!refreshToken) {
-        return uiStore.snackbar.show({
-          message: translate('errors.noRefreshToken'),
-          severity: 'error',
-        });
-      }
-
-      await usersRepository.logoutDevices(refreshToken);
-
-      uiStore.snackbar.show({
-        message: translate('feedbacks.logoutDevices'),
-        severity: 'success',
-      });
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        uiStore.snackbar.show({
-          message:
-            error.response?.data.message ||
-            translate('errors.user.logoutDevices'),
-          severity: 'error',
-        });
-      }
+    if (!refreshToken) {
+      return notificationService.notify(
+        translate('errors.noRefreshToken'),
+        'error'
+      );
     }
+
+    await notificationService.handleHttpRequest(
+      () => usersRepository.logoutDevices(refreshToken),
+      {
+        feedbackSuccess: translate('feedbacks.logoutDevices'),
+        feedbackError: translate('errors.user.logoutDevices'),
+      }
+    );
   }
 
   if (!userStore.user) {
@@ -119,12 +108,12 @@ function Index() {
                 <Formix
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
-                  zodSchema={getUserSchema(translate)}
+                  validate={zodValidator(ProfileSchema)}
                 >
                   <Grid container spacing={2}>
                     <Grid item xs={6}>
                       <FXTextField
-                        name="person.name"
+                        name="name"
                         label={translate('common.name')}
                       />
                     </Grid>

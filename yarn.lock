@@ -833,10 +833,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@euk-labs/beltz@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@euk-labs/beltz/-/beltz-2.2.0.tgz#076d6183f91ef49e422c9dfeee9b1c5d1dc43274"
-  integrity sha512-2EmMB1FBU+StiSpdrTgFSRPlL7g5TfUXYtxoMkJcEAT7L9Gtvsrw2m0g0VVOCEq3uYATOmDmqcZ7Pc4sVLeF+A==
+"@euk-labs/beltz@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@euk-labs/beltz/-/beltz-2.3.0.tgz#53196b6b8810f8d65ab872a941148dc6ea2b547a"
+  integrity sha512-KCsvVd1YYzYK7cm5IGwr/VajRhYoejZ+Cyf736s/VwE7NtwePhzIVvYcxjI39aLiN/pfMJqsdcD2D22iAoXZsA==
   dependencies:
     date-fns "^2.27.0"
 
@@ -860,18 +860,18 @@
     axios "^0.24.0"
     inversify "^6.0.1"
 
-"@euk-labs/formix-mui@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@euk-labs/formix-mui/-/formix-mui-0.2.0.tgz#a65bb7f6a7e9a3e7995bc51e34fe12c542fa9eb4"
-  integrity sha512-l/2nVd1T6hpkplimQxPvLGQosKyeHvEK15yj/mYoSVseNhhgLS43N1fodyOIhv8Og4HoAn1QkFmLi1UN9I0ycg==
+"@euk-labs/formix-mui@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@euk-labs/formix-mui/-/formix-mui-0.3.0.tgz#bedc36588c992f9e42c3213d031c671bbcc543a5"
+  integrity sha512-08QEDsp90sGdtIz8yB0xz0Zk/lEQg63Oqm4AnpZIdZXGRahGFFrRZyCIVIr8IhyqekbgoYJp+iOD8jgpC8VvQw==
   dependencies:
     react-dropzone "^11.5.1"
     react-input-mask "^2.0.4"
 
-"@euk-labs/formix@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@euk-labs/formix/-/formix-0.2.6.tgz#f11ae6cf6928757acfe58067396b34ce719cbdca"
-  integrity sha512-EU2xA9HM/8KmgilQvWx3gk35N9JM/2Fuo4DRx2DGkWXXxaatTUuN1xktpHegEZ9o+n+Xo6zGclUKGtW35eJRbg==
+"@euk-labs/formix@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@euk-labs/formix/-/formix-0.3.0.tgz#f12c5647ecddd861392ecd9847e3007995c8066d"
+  integrity sha512-0LWoIijkfyFYaFAskXLsRVG2BXc/AmAVFenxOpuDtpM+HVC4VCCpVdhQ3HfEHU2BQS8y1yOKmDdm0g1nQ8HICA==
   dependencies:
     yup "^0.32.11"
     zod "^3.11.6"

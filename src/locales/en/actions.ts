@@ -23,10 +23,12 @@ const actions = {
   showAll: 'Show all',
   showColumns: 'Show columns',
   searchColumn: 'Search column',
+  refresh: 'Refresh',
   filters: {
     add: 'Add filter',
     submit: 'Apply',
     undoSort: 'Undo sort',
+    clearAll: 'Clear all filters',
   },
 };
 

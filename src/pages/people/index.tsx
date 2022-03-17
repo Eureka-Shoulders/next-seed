@@ -1,23 +1,23 @@
 import { Can } from '@casl/react';
 import { Box, Grid, Skeleton } from '@mui/material';
-import clearFilters from '@utils/clearFilters';
-import sortList from '@utils/sortList';
-import { usePeopleRepository } from 'hooks/repositories';
-import { useUserStore } from 'hooks/stores';
 import { observer } from 'mobx-react-lite';
-import getPeopleColumns from 'modules/people/columns';
 import { GetServerSideProps } from 'next';
 import nookies from 'nookies';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Actions, Subjects } from 'types';
 
+import { Filters } from '@core/components/Filters';
+import MuiTable from '@core/components/MuiTable';
+import useTranslation from '@core/hooks/useTranslation';
+import sortList from '@core/utils/sortList';
+
 import DeleteContent from '@components/DialogContents/DeleteContent';
-import { Filters } from '@components/Filters';
-import MuiTable from '@components/MuiTable';
 import NewEntityButton from '@components/NewEntityButton';
 
-import useTranslation from '@hooks/useTranslation';
+import { usePeopleRepository } from '@hooks/repositories';
+import { useUserStore } from '@hooks/stores';
 
+import getPeopleColumns from '@modules/people/columns';
 import { buildFilters, getFilters } from '@modules/people/filters';
 
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
@@ -27,6 +27,7 @@ function Index() {
   const { translate } = useTranslation();
   const userStore = useUserStore();
   const uiStore = useUIStore();
+  const [filters] = useState(() => getFilters(translate));
   const peopleRepository = usePeopleRepository();
   const peopleList = useList(peopleRepository, {
     limit: 10,
@@ -69,12 +70,11 @@ function Index() {
 
         <Grid item xs={12}>
           <Filters
-            filters={getFilters(translate)}
+            filters={filters}
             onFilter={(filters) => {
               buildFilters(filters, peopleList.filters);
               peopleList.fetch();
             }}
-            onClear={() => clearFilters(peopleList.filters)}
             onRefresh={peopleList.fetch}
           />
         </Grid>
@@ -112,7 +112,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   return {
     props: {
       hydrationData: {
-        theme: cookies.theme,
+        theme: cookies.theme || 'light',
       },
     },
   };

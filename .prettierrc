@@ -5,6 +5,7 @@
   "importOrder": [
     "reflect-metadata",
     "<THIRD_PARTY_MODULES>",
+    "^@core/(.*)$",
     "^@components/(.*)$",
     "^@hooks/(.*)$",
     "^@modules/(.*)$",

@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 
-import Trans from '@components/Trans';
+import Trans from '@core/components/Trans';
 
 export default function LoginForm() {
   return (

@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material';
 import Image from 'next/image';
 
-import useTranslation from '@hooks/useTranslation';
+import useTranslation from '@core/hooks/useTranslation';
 
 const LoginBannerContainer = styled(Box)({
   background:

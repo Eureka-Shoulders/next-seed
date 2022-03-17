@@ -1,9 +1,10 @@
+import TYPES from '@containers/global.types';
 import { AxiosResponse } from 'axios';
-import TYPES from 'containers/global.types';
 import { inject, injectable } from 'inversify';
-import { LoginSchema } from 'modules/login/login.schema';
 import { dissocPath, omit, pipe } from 'ramda';
 import { User } from 'types';
+
+import { LoginSchema } from '@modules/login/login.schema';
 
 import { HttpService, Repository } from '@euk-labs/fetchx';
 
@@ -21,10 +22,7 @@ interface ResetPasswordDto {
 
 @injectable()
 class UsersRepository extends Repository {
-  constructor(
-    @inject(TYPES.ApiService)
-    private apiService: HttpService
-  ) {
+  constructor(@inject(TYPES.ApiService) private apiService: HttpService) {
     super(apiService, { path: '/users' });
   }
 

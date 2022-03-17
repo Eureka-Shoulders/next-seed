@@ -1,10 +1,13 @@
-import PeopleRepository from 'modules/people/repository';
-import UsersRepository from 'modules/users/repository';
-import httpService from 'services/httpService';
-import TranslationService from 'services/translationService';
-import ThemeStore from 'stores/ThemeStore';
-import UserStore from 'stores/UserStore';
+import httpService from '@services/http';
+import NotificationService from '@services/notification';
 import type { HydrationData } from 'types';
+
+import TranslationService from '@core/services/translation';
+import ThemeStore from '@core/stores/theme';
+import UserStore from '@core/stores/user';
+
+import PeopleRepository from '@modules/people/repository';
+import UsersRepository from '@modules/users/repository';
 
 import componentzContainer from '@euk-labs/componentz/containers/global.inversify';
 
@@ -22,6 +25,10 @@ export default function globalContainer(
     container
       .bind(TYPES.TranslationService)
       .to(TranslationService)
+      .inSingletonScope();
+    container
+      .bind(TYPES.NotificationService)
+      .to(NotificationService)
       .inSingletonScope();
 
     container

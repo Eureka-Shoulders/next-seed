@@ -1,4 +1,4 @@
-import TYPES from 'containers/global.types';
+import TYPES from '@containers/global.types';
 import { inject, injectable } from 'inversify';
 import { Contact } from 'types';
 
@@ -12,10 +12,7 @@ export type ICreatePerson = Omit<NewPersonSchema, 'contacts'> & {
 
 @injectable()
 class PeopleRepository extends Repository {
-  constructor(
-    @inject(TYPES.ApiService)
-    apiService: HttpService
-  ) {
+  constructor(@inject(TYPES.ApiService) apiService: HttpService) {
     super(apiService, { path: '/people' });
   }
 }

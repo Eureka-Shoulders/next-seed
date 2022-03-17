@@ -3,11 +3,11 @@ const feedbacks = {
   recoverPassword:
     'Recuperação enviada com sucesso! Confira sua caixa de entrada.',
   logoutDevices: 'Logout de outros dispositivos realizado com sucesso!',
-  users: {
+  user: {
     created: 'Usuário criado com sucesso!',
     updated: 'Usuário atualizado com sucesso!',
   },
-  people: {
+  person: {
     created: 'Pessoa criada com sucesso!',
     updated: 'Pessoa atualizada com sucesso!',
   },
