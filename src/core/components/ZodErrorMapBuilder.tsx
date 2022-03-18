@@ -24,16 +24,40 @@ export default function ZodErrorMapBuilder() {
               ),
             };
           }
+          if (issue.type === 'number') {
+            return {
+              message: translate('errors.validation.too_small_number').replace(
+                '${min}',
+                String(issue.minimum)
+              ),
+            };
+          }
           return {
-            message: translate('errors.validation.too_small').replace(
+            message: translate('errors.validation.too_small_string').replace(
               '${min}',
               String(issue.minimum)
             ),
           };
 
         case z.ZodIssueCode.too_big:
+          if (issue.type === 'array') {
+            return {
+              message: translate('errors.validation.too_big_array').replace(
+                '${max}',
+                String(issue.maximum)
+              ),
+            };
+          }
+          if (issue.type === 'number') {
+            return {
+              message: translate('errors.validation.too_big_number').replace(
+                '${max}',
+                String(issue.maximum)
+              ),
+            };
+          }
           return {
-            message: translate('errors.validation.too_big').replace(
+            message: translate('errors.validation.too_big_string').replace(
               '${max}',
               String(issue.maximum)
             ),
