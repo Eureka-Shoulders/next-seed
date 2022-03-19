@@ -1,6 +1,4 @@
-import { Can } from '@casl/react';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Link as MuiLink } from '@mui/material';
 import {
   GridActionsCellItem,
   GridActionsColDef,
@@ -9,16 +7,15 @@ import {
   GridValueFormatterParams,
 } from '@mui/x-data-grid';
 import { format } from 'date-fns';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-import { Actions, AppAbility, Subjects } from 'types';
+import { Actions, Subjects } from 'types';
 
+import Can from '@core/components/Can';
+import { renderEntityLink } from '@core/components/MuiTable/EntityLink';
 import { TranslateFunc } from '@core/hooks/useTranslation';
 
 import { Identifier } from '@euk-labs/fetchx';
 
 export default function getPeopleColumns(
-  abilities: AppAbility,
   handleDelete: (id: Identifier) => void,
   translate: TranslateFunc
 ): (GridActionsColDef | GridColDef)[] {
@@ -28,20 +25,7 @@ export default function getPeopleColumns(
       headerName: translate('common.name'),
       minWidth: 200,
       flex: 1,
-      renderCell: (rowData) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const router = useRouter();
-
-        if (abilities.can(Actions.Update, Subjects.User)) {
-          return (
-            <NextLink href={`${router.pathname}/${rowData.id}`} passHref>
-              <MuiLink>{rowData.value}</MuiLink>
-            </NextLink>
-          );
-        }
-
-        return rowData.value;
-      },
+      renderCell: renderEntityLink(Actions.Update, Subjects.Person),
     },
     {
       field: 'identifier',
@@ -71,12 +55,7 @@ export default function getPeopleColumns(
       headerName: translate('common.actions'),
       type: 'actions',
       getActions: (params: GridRowParams) => [
-        <Can
-          I={Actions.Delete}
-          an={Subjects.Person}
-          ability={abilities}
-          key={params.id}
-        >
+        <Can action={Actions.Delete} subject={Subjects.Person} key="delete-btn">
           <GridActionsCellItem
             icon={<DeleteIcon />}
             onClick={() => handleDelete(params.id)}

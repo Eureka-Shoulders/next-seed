@@ -1,11 +1,10 @@
 import { Box, Button, Grid, Paper, Skeleton, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useMemo } from 'react';
-import { Actions, Subjects, User } from 'types';
+import { User } from 'types';
 
 import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
-import { withSSRAuth } from '@core/utils/withSSRAuth';
 
 import ProfileCard from '@components/ProfileCard';
 
@@ -151,10 +150,3 @@ function Index() {
 }
 
 export default observer(Index);
-
-export const getServerSideProps = withSSRAuth(async () => ({ props: {} }), {
-  can: [
-    { action: Actions.Read, subject: Subjects.User },
-    { action: Actions.Update, subject: Subjects.User },
-  ],
-});
