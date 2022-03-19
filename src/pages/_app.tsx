@@ -10,6 +10,7 @@ import { enableStaticRendering } from 'mobx-react-lite';
 import type { AppProps } from 'next/app';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
 
 import AppBarBuilder from '@core/components/AppBarBuilder';
 import BreadcrumbListener from '@core/components/Breadcrumbs/BreadcrumbListener';
@@ -59,30 +60,36 @@ function MyApp(props: MyAppProps) {
   const container = globalContainer(hydrationData, locale);
 
   return (
-    <CacheProvider value={emotionCache}>
-      <Provider container={container}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <BreadcrumbListener />
-          <UserListener isPublicPage={isPublicPage} />
-          <AppBarBuilder />
-          <ZodErrorMapBuilder />
+    <>
+      <Head>
+        <title>Shoulders Next Seed</title>
+      </Head>
 
-          <ThemeProvider>
-            <CssBaseline />
-            {showAppBar ? (
-              <AppBar>
+      <CacheProvider value={emotionCache}>
+        <Provider container={container}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <BreadcrumbListener />
+            <UserListener isPublicPage={isPublicPage} />
+            <AppBarBuilder />
+            <ZodErrorMapBuilder />
+
+            <ThemeProvider>
+              <CssBaseline />
+              {showAppBar ? (
+                <AppBar>
+                  <Component {...pageProps} />
+                </AppBar>
+              ) : (
                 <Component {...pageProps} />
-              </AppBar>
-            ) : (
-              <Component {...pageProps} />
-            )}
+              )}
 
-            <Snackbar autoHideDuration={6000} />
-            <Dialog />
-          </ThemeProvider>
-        </LocalizationProvider>
-      </Provider>
-    </CacheProvider>
+              <Snackbar autoHideDuration={6000} />
+              <Dialog />
+            </ThemeProvider>
+          </LocalizationProvider>
+        </Provider>
+      </CacheProvider>
+    </>
   );
 }
 

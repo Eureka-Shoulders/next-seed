@@ -1,3 +1,4 @@
+import { Box, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 
@@ -24,11 +25,21 @@ function EntityUpdateWrapper({ children, entityStore }: Props) {
   }
 
   if (entityStore.identifier === null || entityStore.loading) {
-    return <h1>{translate('common.loading')}...</h1>;
+    return (
+      <Box p={3}>
+        <Typography variant="h4">{translate('common.loading')}...</Typography>
+      </Box>
+    );
   }
 
   if (entityStore.data === null) {
-    return <h1>{translate('errors.people.notFound')}</h1>;
+    return (
+      <Box p={3}>
+        <Typography variant="h4">
+          {translate('errors.people.notFound')}
+        </Typography>
+      </Box>
+    );
   }
 
   return null;
