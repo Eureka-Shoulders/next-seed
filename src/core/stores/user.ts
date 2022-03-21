@@ -196,7 +196,7 @@ class UserStore implements UserStoreType {
             const isLoggingIn = error.config.url === '/auth/login';
 
             if (this.isRefreshingToken || isLoggingIn) {
-              return error;
+              return Promise.reject(error);
             }
 
             if (this.getRefreshToken()) {
