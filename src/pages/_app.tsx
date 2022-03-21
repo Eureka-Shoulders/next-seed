@@ -12,16 +12,13 @@ import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-import AppBarBuilder from '@core/components/AppBarBuilder';
-import BreadcrumbListener from '@core/components/Breadcrumbs/BreadcrumbListener';
+import CoreListener from '@core/components/CoreListener';
 import ThemeProvider from '@core/components/ThemeProvider';
-import UserListener from '@core/components/UserListener';
 import ZodErrorMapBuilder from '@core/components/ZodErrorMapBuilder';
 
 import { AppBar } from '@euk-labs/componentz';
 
 import createEmotionCache from '../createEmotionCache';
-import type { HydrationData } from '../types';
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -55,9 +52,8 @@ function MyApp(props: MyAppProps) {
   } = props;
   const showAppBar = pageProps.showAppBar ?? true;
   const isPublicPage = pageProps.isPublic ?? false;
-  const hydrationData: HydrationData = pageProps.hydrationData || {};
   const locale = router.locale || router.defaultLocale;
-  const container = globalContainer(hydrationData, locale);
+  const container = globalContainer(locale);
 
   return (
     <>
@@ -68,9 +64,7 @@ function MyApp(props: MyAppProps) {
       <CacheProvider value={emotionCache}>
         <Provider container={container}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <BreadcrumbListener />
-            <UserListener isPublicPage={isPublicPage} />
-            <AppBarBuilder />
+            <CoreListener isPublicPage={isPublicPage} />
             <ZodErrorMapBuilder />
 
             <ThemeProvider>

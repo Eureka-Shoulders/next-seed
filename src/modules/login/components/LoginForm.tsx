@@ -1,13 +1,13 @@
 import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 
 import Trans from '@core/components/Trans';
 import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
 import { useUsersRepository } from '@hooks/repositories';
-import { useNotificationService } from '@hooks/services';
-import { useUserStore } from '@hooks/stores';
+import { useAuthService, useNotificationService } from '@hooks/services';
 
 import { Formix } from '@euk-labs/formix';
 import {
@@ -16,17 +16,14 @@ import {
   FXTextField,
 } from '@euk-labs/formix-mui';
 
+import { initialValuesForLogin } from '../initialValues';
 import { LoginSchema, getLoginSchema } from '../login.schema';
-
-const initialValues = {
-  email: '',
-  password: '',
-};
 
 export default function LoginForm() {
   const { translate } = useTranslation();
+  const router = useRouter();
   const notificationService = useNotificationService();
-  const userStore = useUserStore();
+  const authService = useAuthService();
   const usersRepository = useUsersRepository();
 
   async function handleSubmit(values: LoginSchema) {
@@ -39,11 +36,11 @@ export default function LoginForm() {
         values.password
       );
 
-      userStore.login(
+      authService.saveTokens(
         response.data.accessToken,
-        response.data.refreshToken,
-        redirectTo
+        response.data.refreshToken
       );
+      router.push(redirectTo || '/');
     } catch (error) {
       notificationService.notify(
         translate('errors.invalidCredentials'),
@@ -68,7 +65,7 @@ export default function LoginForm() {
 
         <Grid item xs={12} sm={8}>
           <Formix
-            initialValues={initialValues}
+            initialValues={initialValuesForLogin}
             validate={zodValidator(getLoginSchema(translate))}
             onSubmit={handleSubmit}
           >

@@ -9,7 +9,7 @@ import { zodValidator } from '@core/utils/validators';
 import ProfileCard from '@components/ProfileCard';
 
 import { useUsersRepository } from '@hooks/repositories';
-import { useNotificationService } from '@hooks/services';
+import { useAuthService, useNotificationService } from '@hooks/services';
 import { useUserStore } from '@hooks/stores';
 
 import { ProfileSchema } from '@modules/users/profile.schema';
@@ -20,6 +20,7 @@ import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 
 function Index() {
   const notificationService = useNotificationService();
+  const authService = useAuthService();
   const userStore = useUserStore();
   const usersRepository = useUsersRepository();
   const userEntity = useEntity(usersRepository);
@@ -61,7 +62,7 @@ function Index() {
   }
 
   async function logoutDevices() {
-    const refreshToken = userStore.getRefreshToken();
+    const refreshToken = authService.getRefreshToken();
 
     if (!refreshToken) {
       return notificationService.notify(
