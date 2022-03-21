@@ -12,7 +12,6 @@ const TYPES = {
   Locale: Symbol('Locale'),
   TranslationService: Symbol('TranslationService'),
   NotificationService: Symbol('NotificationService'),
-  HydrationService: Symbol('HydrationService'),
 
   /**
    * Repositories
