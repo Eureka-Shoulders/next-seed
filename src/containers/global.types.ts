@@ -8,7 +8,6 @@ const TYPES = {
   /**
    * Services
    */
-  HydrationData: Symbol('HydrationData'),
   ApiService: Symbol('ApiService'),
   AuthService: Symbol('AuthService'),
   Locale: Symbol('Locale'),

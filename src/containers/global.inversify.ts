@@ -1,7 +1,6 @@
 import AuthService from '@services/auth';
 import httpService from '@services/http';
 import NotificationService from '@services/notification';
-import type { HydrationData } from 'types';
 
 import TranslationService from '@core/services/translation';
 import ThemeStore from '@core/stores/theme';
@@ -14,15 +13,13 @@ import componentzContainer from '@euk-labs/componentz/containers/global.inversif
 
 import TYPES from './global.types';
 
-export default function globalContainer(
-  hydrationData: HydrationData,
-  locale = ''
-) {
+export default function globalContainer(locale = '') {
   return () => {
     const container = componentzContainer();
 
-    container.bind(TYPES.ApiService).toConstantValue(httpService);
     container.bind(TYPES.Locale).toConstantValue(locale);
+    container.bind(TYPES.ApiService).toConstantValue(httpService);
+
     container
       .bind(TYPES.TranslationService)
       .to(TranslationService)
@@ -42,7 +39,6 @@ export default function globalContainer(
       .to(PeopleRepository)
       .inSingletonScope();
 
-    container.bind(TYPES.HydrationData).toConstantValue(hydrationData);
     container.bind(TYPES.ThemeStore).to(ThemeStore).inSingletonScope();
     container.bind(TYPES.UserStore).to(UserStore).inSingletonScope();
 
