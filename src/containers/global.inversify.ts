@@ -2,6 +2,7 @@ import httpService from '@services/http';
 import NotificationService from '@services/notification';
 import type { HydrationData } from 'types';
 
+import LoggerService from '@core/services/logger';
 import TranslationService from '@core/services/translation';
 import ThemeStore from '@core/stores/theme';
 import UserStore from '@core/stores/user';
@@ -30,6 +31,7 @@ export default function globalContainer(
       .bind(TYPES.NotificationService)
       .to(NotificationService)
       .inSingletonScope();
+    container.bind(TYPES.LoggerService).to(LoggerService).inSingletonScope();
 
     container
       .bind(TYPES.UsersRepository)

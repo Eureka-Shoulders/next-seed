@@ -1,4 +1,8 @@
+import TYPES from '@containers/global.types';
+import { resolve } from 'inversify-react';
 import { Component, ErrorInfo, ReactNode } from 'react';
+
+import { LoggerServiceType } from '@core/services/logger';
 
 import OhNoScreen from './OhNoScreen';
 
@@ -11,6 +15,9 @@ interface State {
 }
 
 class ErrorBoundary extends Component<Props, State> {
+  @resolve(TYPES.LoggerService)
+  private readonly loggerService!: LoggerServiceType;
+
   state: State = {
     hasError: false,
   };
@@ -21,7 +28,7 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+    this.loggerService.log(error, errorInfo);
   }
 
   render() {
