@@ -1,8 +1,6 @@
 import { Can } from '@casl/react';
 import { Box, Grid, Skeleton } from '@mui/material';
 import { observer } from 'mobx-react-lite';
-import { GetServerSideProps } from 'next';
-import nookies from 'nookies';
 import { useEffect, useState } from 'react';
 import { Actions, Subjects } from 'types';
 
@@ -105,15 +103,3 @@ function Index() {
 }
 
 export default observer(Index);
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const cookies = nookies.get(ctx);
-
-  return {
-    props: {
-      hydrationData: {
-        theme: cookies.theme || 'light',
-      },
-    },
-  };
-};

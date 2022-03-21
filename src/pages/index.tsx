@@ -38,4 +38,6 @@ const Home: NextPage = () => {
 
 export default observer(Home);
 
-export const getServerSideProps = withSSRAuth(async () => ({ props: {} }));
+export const getServerSideProps = withSSRAuth(async () => ({
+  props: {},
+}));
