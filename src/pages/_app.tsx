@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic';
 
 import AppBarBuilder from '@core/components/AppBarBuilder';
 import BreadcrumbListener from '@core/components/Breadcrumbs/BreadcrumbListener';
+import ErrorBoundary from '@core/components/ErrorBoundary';
 import ThemeProvider from '@core/components/ThemeProvider';
 import UserListener from '@core/components/UserListener';
 import ZodErrorMapBuilder from '@core/components/ZodErrorMapBuilder';
@@ -69,16 +70,18 @@ function MyApp(props: MyAppProps) {
 
           <ThemeProvider>
             <CssBaseline />
-            {showAppBar ? (
-              <AppBar>
+            <ErrorBoundary>
+              {showAppBar ? (
+                <AppBar>
+                  <Component {...pageProps} />
+                </AppBar>
+              ) : (
                 <Component {...pageProps} />
-              </AppBar>
-            ) : (
-              <Component {...pageProps} />
-            )}
+              )}
 
-            <Snackbar autoHideDuration={6000} />
-            <Dialog />
+              <Snackbar autoHideDuration={6000} />
+              <Dialog />
+            </ErrorBoundary>
           </ThemeProvider>
         </LocalizationProvider>
       </Provider>
