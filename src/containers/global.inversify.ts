@@ -1,3 +1,4 @@
+import AuthService from '@services/auth';
 import httpService from '@services/http';
 import NotificationService from '@services/notification';
 import type { HydrationData } from 'types';
@@ -30,6 +31,7 @@ export default function globalContainer(
       .bind(TYPES.NotificationService)
       .to(NotificationService)
       .inSingletonScope();
+    container.bind(TYPES.AuthService).to(AuthService).inSingletonScope();
 
     container
       .bind(TYPES.UsersRepository)

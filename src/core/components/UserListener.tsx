@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { getBreadcrumbPaths } from '@core/components/Breadcrumbs/getBreadcrumbPaths';
 import useTranslation from '@core/hooks/useTranslation';
 
+import { useAuthService } from '@hooks/services';
 import { useUserStore } from '@hooks/stores';
 
 interface UserListenerProps {
@@ -14,17 +15,18 @@ interface UserListenerProps {
 
 function UserListener({ isPublicPage }: UserListenerProps) {
   const userStore = useUserStore();
+  const authService = useAuthService();
   const router = useRouter();
   const { translate } = useTranslation();
 
   useEffect(() => {
-    userStore.startTokenInjector();
-    userStore.catchUnauthorizedErrors();
+    authService.startTokenInjector();
+    authService.catchUnauthorizedErrors();
   }, []); // eslint-disable-line
 
   useEffect(() => {
     if (!isPublicPage) {
-      userStore.verifyToken();
+      authService.verifyToken();
     }
   }, [isPublicPage]); // eslint-disable-line
 
