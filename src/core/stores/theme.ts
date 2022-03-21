@@ -1,7 +1,5 @@
-import TYPES from '@containers/global.types';
 import { ThemeOptions } from '@mui/material';
-import HydrationService from '@services/hydration';
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import { setCookie } from 'nookies';
 
@@ -15,7 +13,6 @@ export interface ThemeStoreType {
   themes: Record<ThemeType, ThemeOptions>;
   setTheme(theme: ThemeType): void;
 
-  hydrate(): void;
   persist(): void;
 }
 
@@ -27,30 +24,13 @@ class ThemeStore implements ThemeStoreType {
     dark: darkTheme,
   };
 
-  constructor(
-    @inject(TYPES.HydrationService)
-    private hydrationService: HydrationService
-  ) {
+  constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
-
-    this.hydrate();
   }
 
   setTheme(theme: ThemeType) {
     this.theme = theme;
     this.persist();
-  }
-
-  hydrate() {
-    const isServerSide = typeof window === 'undefined';
-    const hasHydratedTheme = this.hydrationService.theme;
-
-    if (isServerSide && hasHydratedTheme) {
-      this.theme = this.hydrationService.theme;
-      return;
-    }
-
-    this.setTheme(this.hydrationService.theme);
   }
 
   persist() {

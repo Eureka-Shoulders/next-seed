@@ -18,7 +18,6 @@ import ZodErrorMapBuilder from '@core/components/ZodErrorMapBuilder';
 import { AppBar } from '@euk-labs/componentz';
 
 import createEmotionCache from '../createEmotionCache';
-import type { HydrationData } from '../types';
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -52,9 +51,8 @@ function MyApp(props: MyAppProps) {
   } = props;
   const showAppBar = pageProps.showAppBar ?? true;
   const isPublicPage = pageProps.isPublic ?? false;
-  const hydrationData: HydrationData = pageProps.hydrationData || {};
   const locale = router.locale || router.defaultLocale;
-  const container = globalContainer(hydrationData, locale);
+  const container = globalContainer(locale);
 
   return (
     <CacheProvider value={emotionCache}>

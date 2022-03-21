@@ -1,9 +1,13 @@
 import { getPages } from '@config/pages';
+import TYPES from '@containers/global.types';
+import { useContainer } from 'inversify-react';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
+import { parseCookies } from 'nookies';
 import { useEffect } from 'react';
 
 import useTranslation from '@core/hooks/useTranslation';
+import { ThemeType } from '@core/stores/theme';
 
 import { useThemeStore, useUserStore } from '@hooks/stores';
 
@@ -18,28 +22,30 @@ interface CoreListenerProps {
 }
 
 function CoreListener({ isPublicPage }: CoreListenerProps) {
-  const themeStore = useThemeStore();
+  const { translate } = useTranslation();
+  const container = useContainer();
   const uiStore = useUIStore();
   const userStore = useUserStore();
+  const themeStore = useThemeStore();
   const router = useRouter();
-  const { translate } = useTranslation();
-  const isPrivatePageWithAbilities = !isPublicPage && userStore.isLogged;
 
   useEffect(() => {
-    /**
-     * Hydrating stores on client-side
-     */
-    themeStore.hydrate();
+    if (router.locale) {
+      container.rebind(TYPES.Locale).toConstantValue(router.locale);
+    }
+  }, [router.locale]); // eslint-disable-line
 
-    /**
-     * Starting API interceptors
-     */
+  useEffect(() => {
+    const cookies = parseCookies();
+    const themeFromCookies = cookies.theme as ThemeType | null;
+
+    if (themeFromCookies) {
+      themeStore.setTheme(themeFromCookies);
+    }
+
     userStore.startTokenInjector();
     userStore.catchUnauthorizedErrors();
 
-    /**
-     * AppBar configuration
-     */
     uiStore.appBar.setDrawerHeaderContent(<DrawerHeader />);
     uiStore.appBar.setAppBarHeaderContent(<AppBarHeader />);
     uiStore.appBar.setOnClickDrawerOption((page) => {
@@ -48,49 +54,30 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
   }, []); // eslint-disable-line
 
   useEffect(() => {
+    if (!isPublicPage) {
+      userStore.verifyToken();
+    }
+  }, [isPublicPage]); // eslint-disable-line
+
+  useEffect(() => {
     if (userStore.abilities) {
       const pages = getPages(userStore.abilities, translate);
-
-      /**
-       * Breadcrumb configuration
-       */
       const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
 
       uiStore.breadcrumb.setPaths(breadcrumbPaths);
       uiStore.breadcrumb.setOnClickBreadcrumbPath((breadcrumbPath) => {
         router.push(breadcrumbPath.link);
       });
-
-      /**
-       * AppBar pages configuration
-       */
       uiStore.appBar.setPages(pages);
-    }
-  }, [router.pathname, userStore.abilities]); // eslint-disable-line
 
-  /**
-   * User authentication on private pages
-   */
-  useEffect(() => {
-    if (!isPublicPage) {
-      userStore.verifyToken();
-    }
-  }, [isPublicPage]); // eslint-disable-line
-
-  /**
-   * Validating user permissions on private pages
-   */
-  useEffect(() => {
-    if (isPrivatePageWithAbilities) {
-      const pages = getPages(userStore.abilities!, translate);
-      const breadcrumbPaths = getBreadcrumbPaths(pages, router.pathname);
-      const lastPath = breadcrumbPaths.pop();
-
-      if (lastPath?.disabled) {
-        router.push('/no-permissions');
+      if (!isPublicPage) {
+        const lastPath = breadcrumbPaths.pop();
+        if (lastPath?.disabled) {
+          router.push('/no-permissions');
+        }
       }
     }
-  }, [isPublicPage, userStore.abilities, userStore.user]); // eslint-disable-line
+  }, [router.pathname, userStore.abilities]); // eslint-disable-line
 
   return null;
 }
