@@ -1,3 +1,4 @@
+import AuthService from '@services/auth';
 import httpService from '@services/http';
 import NotificationService from '@services/notification';
 
@@ -27,6 +28,7 @@ export default function globalContainer(locale = '') {
       .bind(TYPES.NotificationService)
       .to(NotificationService)
       .inSingletonScope();
+    container.bind(TYPES.AuthService).to(AuthService).inSingletonScope();
 
     container
       .bind(TYPES.UsersRepository)

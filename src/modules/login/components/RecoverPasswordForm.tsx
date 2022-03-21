@@ -11,11 +11,8 @@ import { useNotificationService } from '@hooks/services';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 
+import { initialValuesForRecoverPassword } from '../initialValues';
 import { ReccoverPasswordSchema, RecoverPasswordSchema } from '../login.schema';
-
-const initialValues = {
-  email: '',
-};
 
 export default function RecoverPasswordForm() {
   const router = useRouter();
@@ -54,7 +51,7 @@ export default function RecoverPasswordForm() {
 
         <Grid item xs={12} sm={8}>
           <Formix
-            initialValues={initialValues}
+            initialValues={initialValuesForRecoverPassword}
             validate={zodValidator(RecoverPasswordSchema)}
             onSubmit={handleSubmit}
           >
