@@ -33,13 +33,6 @@ function Index() {
     [userStore.user]
   );
 
-  useEffect(() => {
-    if (userStore.user?.id) {
-      userEntity.setIdentifier(userStore.user.id);
-      userEntity.fetch();
-    }
-  }, [userStore.user]); // eslint-disable-line
-
   async function handleSubmit(values: ProfileSchema) {
     const newData = {
       person: {
@@ -79,6 +72,13 @@ function Index() {
       }
     );
   }
+
+  useEffect(() => {
+    if (userStore.user?.id) {
+      userEntity.setIdentifier(userStore.user.id);
+      userEntity.fetch();
+    }
+  }, [userStore.user]); // eslint-disable-line
 
   if (!userStore.user) {
     return (
