@@ -14,6 +14,10 @@ const pages = {
     description: `You don't got the necessary permissions to access this page`,
     buttonLabel: 'Home page',
   },
+  notFound: {
+    title: 'Page not found',
+    description: 'The page you are trying to access does not exist',
+  },
 };
 
 export default pages;

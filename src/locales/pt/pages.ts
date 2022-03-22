@@ -15,6 +15,10 @@ const pages = {
       'Você não tem as permissões necessárias para acessar esta página',
     buttonLabel: 'Página inicial',
   },
+  notFound: {
+    title: 'Página não encontrada',
+    description: 'A página que você está tentando acessar não existe',
+  },
 };
 
 export default pages;

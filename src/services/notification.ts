@@ -1,8 +1,11 @@
+import TYPES from '@containers/global.types';
 import { AlertColor } from '@mui/material';
 import axios from 'axios';
 import { inject, injectable } from 'inversify';
 
-import TYPES from '@euk-labs/componentz/containers/global.bindings';
+import { LoggerServiceType } from '@core/services/logger';
+
+import Bindings from '@euk-labs/componentz/containers/global.bindings';
 import { UIStoreType } from '@euk-labs/componentz/stores/types';
 
 interface AsyncNotifyOptions<T> {
@@ -24,8 +27,10 @@ export interface NotificationServiceType {
 @injectable()
 class NotificationService implements NotificationServiceType {
   constructor(
-    @inject(TYPES.UIStore)
-    private uiStore: UIStoreType
+    @inject(Bindings.UIStore)
+    private uiStore: UIStoreType,
+    @inject(TYPES.LoggerService)
+    private loggerService: LoggerServiceType
   ) {}
 
   async handleHttpRequest<T>(
@@ -42,6 +47,8 @@ class NotificationService implements NotificationServiceType {
           err.response?.data.message || options.feedbackError,
           'error'
         );
+      } else {
+        this.loggerService.log(err as Error);
       }
 
       options.onError && options.onError(err);

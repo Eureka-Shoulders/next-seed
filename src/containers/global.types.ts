@@ -9,6 +9,7 @@ const TYPES = {
    * Services
    */
   ApiService: Symbol('ApiService'),
+  LoggerService: Symbol('LoggerService'),
   AuthService: Symbol('AuthService'),
   Locale: Symbol('Locale'),
   TranslationService: Symbol('TranslationService'),
