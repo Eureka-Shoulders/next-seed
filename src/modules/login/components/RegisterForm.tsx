@@ -23,19 +23,7 @@ import {
   FXTextField,
 } from '@euk-labs/formix-mui';
 
-const initialValues = {
-  person: {
-    name: '',
-    identifier: '',
-    type: null,
-    birthDate: null,
-    addresses: [],
-    contacts: [],
-  },
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
+import { initialValuesForRegister } from '../initialValues';
 
 export default function RegisterForm() {
   const { translate } = useTranslation();
@@ -74,7 +62,7 @@ export default function RegisterForm() {
 
         <Grid item xs={12} sm={8}>
           <Formix
-            initialValues={initialValues}
+            initialValues={initialValuesForRegister}
             validate={zodValidator(getUserSchema(translate))}
             onSubmit={handleSubmit}
           >

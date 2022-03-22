@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import useTranslation from '@core/hooks/useTranslation';
 import { ThemeType } from '@core/stores/theme';
 
+import { useAuthService } from '@hooks/services';
 import { useThemeStore, useUserStore } from '@hooks/stores';
 
 import { useUIStore } from '@euk-labs/componentz';
@@ -26,6 +27,7 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
   const container = useContainer();
   const uiStore = useUIStore();
   const userStore = useUserStore();
+  const authService = useAuthService();
   const themeStore = useThemeStore();
   const router = useRouter();
 
@@ -43,8 +45,8 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
       themeStore.setTheme(themeFromCookies);
     }
 
-    userStore.startTokenInjector();
-    userStore.catchUnauthorizedErrors();
+    authService.startTokenInjector();
+    authService.catchUnauthorizedErrors();
 
     uiStore.appBar.setDrawerHeaderContent(<DrawerHeader />);
     uiStore.appBar.setAppBarHeaderContent(<AppBarHeader />);
@@ -55,7 +57,7 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
 
   useEffect(() => {
     if (!isPublicPage) {
-      userStore.verifyToken();
+      authService.verifyToken();
     }
   }, [isPublicPage]); // eslint-disable-line
 
