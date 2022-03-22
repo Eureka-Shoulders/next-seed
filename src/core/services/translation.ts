@@ -14,10 +14,10 @@ export interface TranslationServiceType {
 
 @injectable()
 class TranslationService implements TranslationServiceType {
-  @inject(TYPES.Locale)
-  private readonly locale!: string;
-
-  constructor() {
+  constructor(
+    @inject(TYPES.Locale)
+    private readonly locale: string
+  ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 

@@ -34,13 +34,12 @@ export interface AuthServiceType {
 
 @injectable()
 class AuthService implements AuthServiceType {
-  @inject(TYPES.UserStore)
-  private readonly userStore!: UserStoreType;
-
-  @inject(TYPES.ApiService)
-  private readonly apiService!: HttpService;
-
-  constructor() {
+  constructor(
+    @inject(TYPES.UserStore)
+    private userStore: UserStoreType,
+    @inject(TYPES.ApiService)
+    private apiService: HttpService
+  ) {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
