@@ -25,7 +25,7 @@ function UpdateProfileForm({ userEntity }: Props) {
   async function handleSubmit(values: ProfileSchema) {
     const newData = {
       person: {
-        name: values.name,
+        name: values.person.name,
       },
       email: values.email,
     };
@@ -51,7 +51,7 @@ function UpdateProfileForm({ userEntity }: Props) {
     >
       <Grid container spacing={2}>
         <Grid item xs={6}>
-          <FXTextField name="name" label={translate('common.name')} />
+          <FXTextField name="person.name" label={translate('common.name')} />
         </Grid>
         <Grid item xs={6}>
           <FXTextField name="email" label={translate('common.email')} />

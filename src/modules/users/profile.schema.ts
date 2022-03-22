@@ -1,7 +1,9 @@
 import * as zod from 'zod';
 
 export const ProfileSchema = zod.object({
-  name: zod.string().min(1),
+  person: zod.object({
+    name: zod.string().min(1),
+  }),
   email: zod.string().email(),
 });
 
