@@ -4,7 +4,6 @@ import type { NextPage } from 'next';
 import React from 'react';
 
 import useTranslation from '@core/hooks/useTranslation';
-import { withSSRAuth } from '@core/utils/withSSRAuth';
 
 import { useThemeStore } from '@hooks/stores';
 
@@ -37,7 +36,3 @@ const Home: NextPage = () => {
 };
 
 export default observer(Home);
-
-export const getServerSideProps = withSSRAuth(async () => ({
-  props: {},
-}));

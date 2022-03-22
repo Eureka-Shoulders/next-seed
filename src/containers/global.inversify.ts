@@ -21,25 +21,13 @@ export default function globalContainer(locale = '') {
     container.bind(TYPES.Locale).toConstantValue(locale);
     container.bind(TYPES.ApiService).toConstantValue(httpService);
 
-    container
-      .bind(TYPES.TranslationService)
-      .to(TranslationService)
-      .inSingletonScope();
-    container
-      .bind(TYPES.NotificationService)
-      .to(NotificationService)
-      .inSingletonScope();
-    container.bind(TYPES.LoggerService).to(LoggerService).inSingletonScope();
-    container.bind(TYPES.AuthService).to(AuthService).inSingletonScope();
+    container.bind(TYPES.TranslationService).to(TranslationService);
+    container.bind(TYPES.NotificationService).to(NotificationService);
+    container.bind(TYPES.LoggerService).to(LoggerService);
+    container.bind(TYPES.AuthService).to(AuthService);
 
-    container
-      .bind(TYPES.UsersRepository)
-      .to(UsersRepository)
-      .inSingletonScope();
-    container
-      .bind(TYPES.PeopleRepository)
-      .to(PeopleRepository)
-      .inSingletonScope();
+    container.bind(TYPES.UsersRepository).to(UsersRepository);
+    container.bind(TYPES.PeopleRepository).to(PeopleRepository);
 
     container.bind(TYPES.ThemeStore).to(ThemeStore).inSingletonScope();
     container.bind(TYPES.UserStore).to(UserStore).inSingletonScope();

@@ -1,5 +1,6 @@
 import TYPES from '@containers/global.types';
 import { inject, injectable } from 'inversify';
+import { makeAutoObservable } from 'mobx';
 import { ErrorInfo } from 'react';
 
 import { HttpService } from '@euk-labs/fetchx';
@@ -13,7 +14,9 @@ class LoggerService implements LoggerServiceType {
   constructor(
     @inject(TYPES.ApiService)
     private apiService: HttpService
-  ) {}
+  ) {
+    makeAutoObservable(this, {}, { autoBind: true });
+  }
 
   async log(error: Error, errorInfo?: ErrorInfo) {
     try {

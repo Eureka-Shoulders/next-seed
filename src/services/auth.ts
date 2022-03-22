@@ -2,6 +2,7 @@ import { RawRuleOf } from '@casl/ability';
 import TYPES from '@containers/global.types';
 import axios from 'axios';
 import { inject, injectable } from 'inversify';
+import { makeAutoObservable } from 'mobx';
 import { parseCookies, setCookie } from 'nookies';
 import { AppAbility, User } from 'types';
 
@@ -38,7 +39,9 @@ class AuthService implements AuthServiceType {
     private userStore: UserStoreType,
     @inject(TYPES.ApiService)
     private apiService: HttpService
-  ) {}
+  ) {
+    makeAutoObservable(this, {}, { autoBind: true });
+  }
 
   getAccessToken() {
     const cookies = parseCookies();
