@@ -10,6 +10,7 @@ import { enableStaticRendering } from 'mobx-react-lite';
 import type { AppProps } from 'next/app';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
 
 import CoreListener from '@core/components/CoreListener';
 import ErrorBoundary from '@core/components/ErrorBoundary';
@@ -56,30 +57,36 @@ function MyApp(props: MyAppProps) {
   const container = globalContainer(locale);
 
   return (
-    <CacheProvider value={emotionCache}>
-      <Provider container={container}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <CoreListener isPublicPage={isPublicPage} />
-          <ZodErrorMapBuilder />
+    <>
+      <Head>
+        <title>Shoulders Next Seed</title>
+      </Head>
 
-          <ThemeProvider>
-            <CssBaseline />
-            <ErrorBoundary>
-              {showAppBar ? (
-                <AppBar>
+      <CacheProvider value={emotionCache}>
+        <Provider container={container}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <CoreListener isPublicPage={isPublicPage} />
+            <ZodErrorMapBuilder />
+
+            <ThemeProvider>
+              <CssBaseline />
+              <ErrorBoundary>
+                {showAppBar ? (
+                  <AppBar>
+                    <Component {...pageProps} />
+                  </AppBar>
+                ) : (
                   <Component {...pageProps} />
-                </AppBar>
-              ) : (
-                <Component {...pageProps} />
-              )}
+                )}
 
-              <Snackbar autoHideDuration={6000} />
-              <Dialog />
-            </ErrorBoundary>
-          </ThemeProvider>
-        </LocalizationProvider>
-      </Provider>
-    </CacheProvider>
+                <Snackbar autoHideDuration={6000} />
+                <Dialog />
+              </ErrorBoundary>
+            </ThemeProvider>
+          </LocalizationProvider>
+        </Provider>
+      </CacheProvider>
+    </>
   );
 }
 

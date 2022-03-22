@@ -16,7 +16,7 @@ import CustomLoadingOverlay from './CustomLoadingOverlay';
 import CustomNoRowsOverlay from './CustomNoRowsOverlay';
 import CustomPagination from './CustomPagination';
 
-interface MuiTableProps {
+export interface MuiTableProps {
   columns: GridColDef[];
   rows: GridRowsProp;
   pageSize?: number;
