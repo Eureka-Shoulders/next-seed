@@ -2,6 +2,7 @@ import TYPES from '@containers/global.types';
 import { AlertColor } from '@mui/material';
 import axios from 'axios';
 import { inject, injectable } from 'inversify';
+import { makeAutoObservable } from 'mobx';
 
 import { LoggerServiceType } from '@core/services/logger';
 
@@ -31,7 +32,9 @@ class NotificationService implements NotificationServiceType {
     private uiStore: UIStoreType,
     @inject(TYPES.LoggerService)
     private loggerService: LoggerServiceType
-  ) {}
+  ) {
+    makeAutoObservable(this, {}, { autoBind: true });
+  }
 
   async handleHttpRequest<T>(
     func: () => Promise<T>,
