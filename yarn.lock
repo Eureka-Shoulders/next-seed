@@ -860,18 +860,18 @@
     axios "^0.24.0"
     inversify "^6.0.1"
 
-"@euk-labs/formix-mui@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@euk-labs/formix-mui/-/formix-mui-0.3.0.tgz#bedc36588c992f9e42c3213d031c671bbcc543a5"
-  integrity sha512-08QEDsp90sGdtIz8yB0xz0Zk/lEQg63Oqm4AnpZIdZXGRahGFFrRZyCIVIr8IhyqekbgoYJp+iOD8jgpC8VvQw==
+"@euk-labs/formix-mui@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@euk-labs/formix-mui/-/formix-mui-0.4.0.tgz#fe8d90e36701476d4889d4098ec0dc37461d14b9"
+  integrity sha512-jPNrPyDFLeAtRXVC2RDZIk/uvDBc4KxLB29I1fowt5g64iZ8fWf/pplo5jJl10Xqn6jAkxzdpPYjQBAaKUgKVw==
   dependencies:
     react-dropzone "^11.5.1"
     react-input-mask "^2.0.4"
 
-"@euk-labs/formix@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@euk-labs/formix/-/formix-0.3.0.tgz#f12c5647ecddd861392ecd9847e3007995c8066d"
-  integrity sha512-0LWoIijkfyFYaFAskXLsRVG2BXc/AmAVFenxOpuDtpM+HVC4VCCpVdhQ3HfEHU2BQS8y1yOKmDdm0g1nQ8HICA==
+"@euk-labs/formix@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@euk-labs/formix/-/formix-0.4.1.tgz#50753d7f43e94e8a56d436f9394543cbfc74ca7e"
+  integrity sha512-kH9to5V3vdIVbJyiqUVEiugDfFk+9r0tu5YHcAnVMTyfsl60njBv65hk6o5a3KPmWVoXquCMUweSWnhjJbQC0Q==
   dependencies:
     yup "^0.32.11"
     zod "^3.11.6"
