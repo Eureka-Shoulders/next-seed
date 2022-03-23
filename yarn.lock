@@ -852,10 +852,10 @@
     react-input-mask "^2.0.4"
     react-number-format "^4.9.1"
 
-"@euk-labs/fetchx@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@euk-labs/fetchx/-/fetchx-0.4.0.tgz#44ee9de8d742b57ed4193ac3b8062151932f4925"
-  integrity sha512-3VTVD3i/+vQ+IS8y+SVPkLRpQT+gEWm+VlyCagp9A9sP5+bUVdovLTBed26NZDOer8DnYIoicdl6GZX5H5MeDQ==
+"@euk-labs/fetchx@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@euk-labs/fetchx/-/fetchx-0.5.1.tgz#c8058e8c4b1687252305544bd490a5b02a5485fa"
+  integrity sha512-okbtPjs01MLWGA/Zh9RWjMqQsvObsqT0EasdX/SIiDpcZXwYq9q+23FB6WQwtdXSJuHRRsAYs25zpJOdblxhwA==
   dependencies:
     axios "^0.24.0"
     inversify "^6.0.1"
