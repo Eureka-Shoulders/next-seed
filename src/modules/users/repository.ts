@@ -29,6 +29,8 @@ class UsersRepository extends Repository {
   register(values: UserSchema) {
     const newUser = pipe(
       omit(['confirmPassword']),
+      dissocPath(['person', 'addresses']),
+      dissocPath(['person', 'contacts']),
       dissocPath(['person', 'type'])
     )(values);
 
