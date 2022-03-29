@@ -52,7 +52,7 @@ function Index() {
       },
       usersList.filters
     );
-  }, []); // eslint-disable-line
+  }, []);
 
   return (
     <AuthLoader>
