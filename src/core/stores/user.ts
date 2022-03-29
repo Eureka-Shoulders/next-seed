@@ -1,4 +1,5 @@
 import { Ability, RawRuleOf } from '@casl/ability';
+import * as Sentry from '@sentry/browser';
 import { injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import { AppAbility, User } from 'types';
@@ -31,6 +32,12 @@ class UserStore implements UserStoreType {
   user: User | null = null;
   setUser(user: User | null) {
     this.user = user;
+
+    if (user) {
+      Sentry.setUser(user);
+    } else {
+      Sentry.configureScope((scope) => scope.setUser(null));
+    }
   }
 
   rawAbilities: RawRuleOf<AppAbility>[] | null = null;
