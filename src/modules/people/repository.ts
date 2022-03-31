@@ -6,7 +6,7 @@ import { HttpService, Repository } from '@euk-labs/fetchx';
 
 import { NewPersonSchema } from './people.schema';
 
-export type ICreatePerson = Omit<NewPersonSchema, 'contacts'> & {
+export type ICreatePerson = Omit<NewPersonSchema, 'contacts' | 'type'> & {
   contacts: Omit<Contact, 'id'>[];
 };
 

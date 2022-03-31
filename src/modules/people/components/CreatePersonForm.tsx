@@ -35,7 +35,8 @@ function CreatePersonForm() {
   async function handleSubmit(values: NewPersonSchema) {
     const newData = {
       ...values,
-      contacts: values.contacts.map((contact) => ({
+      type: undefined,
+      contacts: values.contacts?.map((contact) => ({
         ...contact,
         type: contact.type.value as ContactType,
       })),
