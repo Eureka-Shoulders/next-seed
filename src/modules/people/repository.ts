@@ -2,7 +2,9 @@ import TYPES from '@containers/global.types';
 import { inject, injectable } from 'inversify';
 import { Contact } from 'types';
 
-import { HttpService, Repository } from '@euk-labs/fetchx';
+import Repository from '@core/utils/Repository';
+
+import { HttpService } from '@euk-labs/fetchx';
 
 import { NewPersonSchema } from './people.schema';
 
