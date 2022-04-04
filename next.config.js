@@ -31,6 +31,7 @@ const moduleExports = {
   },
 };
 
+/** @type {import('@sentry/nextjs').SentryWebpackPluginOptions} */
 const sentryWebpackPluginOptions = {
   silent: true,
 };
