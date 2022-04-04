@@ -15,7 +15,15 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+ARG use_mirage
 ARG api_url
+ARG sentry_dsn
+ARG sentry_auth_token
+ARG sentry_org
+ARG sentry_project
+ARG sentry_url
+
+ENV USE_MIRAGE=$use_mirage
 ENV API_URL=$api_url
 ENV NEXT_PUBLIC_SENTRY_DSN=$sentry_dsn
 ENV SENTRY_AUTH_TOKEN=$sentry_auth_token
@@ -43,9 +51,14 @@ USER nextjs
 
 EXPOSE 3000
 
+ARG use_mirage=false
 ARG api_url
+ARG sentry_dsn
+
+ENV USE_MIRAGE=$use_mirage
 ENV API_URL=$api_url
 ENV NEXT_PUBLIC_SENTRY_DSN=$sentry_dsn
+
 ENV PORT 3000
 
 CMD ["node", "server.js"]
