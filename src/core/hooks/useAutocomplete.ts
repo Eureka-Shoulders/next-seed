@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Repository } from '@euk-labs/fetchx';
+import Repository from '@core/utils/Repository';
 
 interface AutocompleteOptions {
   label: string;
