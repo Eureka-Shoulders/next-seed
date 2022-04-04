@@ -41,6 +41,11 @@ build:
   script:
     - docker build
       --build-arg api_url="${API_URL_HOMOLOG}"
+      --build-arg sentry_dsn="${SENTRY_DSN}"
+      --build-arg sentry_auth_token="${SENTRY_AUTH_TOKEN}"
+      --build-arg sentry_org="${SENTRY_ORG}"
+      --build-arg sentry_project="${SENTRY_PROJECT}"
+      --build-arg sentry_url="${SENTRY_URL}"
       -t ${REGISTRY_PATH}/next-seed .
     - docker push ${REGISTRY_PATH}/next-seed
 

@@ -43,11 +43,11 @@ function CustomFooter() {
       rowsListener();
       clearInterval(lastUpdatedInterval);
     };
-  }, []); // eslint-disable-line
+  }, []);
 
   useEffect(() => {
     updateLastUpdatedText();
-  }, [date]); // eslint-disable-line
+  }, [date]);
 
   return (
     <Box

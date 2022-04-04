@@ -12,9 +12,10 @@ const withTM = require('next-transpile-modules')(
     resolveSymlinks: false,
   }
 );
+const { withSentryConfig } = require('@sentry/nextjs');
 
 /** @type {import('next').NextConfig} */
-module.exports = withTM({
+const moduleExports = {
   reactStrictMode: true,
   swcMinify: true,
   publicRuntimeConfig: {
@@ -28,4 +29,13 @@ module.exports = withTM({
   experimental: {
     outputStandalone: true,
   },
-});
+};
+
+/** @type {import('@sentry/nextjs').SentryWebpackPluginOptions} */
+const sentryWebpackPluginOptions = {
+  silent: true,
+};
+
+module.exports = withTM(
+  withSentryConfig(moduleExports, sentryWebpackPluginOptions)
+);

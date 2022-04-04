@@ -36,13 +36,13 @@ function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
 
   useEffect(() => {
     filtersStore.setFilters(filters);
-  }, [filters]); // eslint-disable-line
+  }, [filters]);
 
   useEffect(() => {
     if (!!filtersStore.values) {
       onFilter(filtersStore.values);
     }
-  }, [filtersStore.values]); // eslint-disable-line
+  }, [filtersStore.values]);
 
   function handleSubmit(values: Record<string, unknown>) {
     const newFilters: Record<string, unknown> = {};

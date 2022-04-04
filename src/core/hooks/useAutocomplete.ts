@@ -24,7 +24,7 @@ const useAutocomplete = (repository: AutocompleteRepositoryType) => {
 
   useEffect(() => {
     getOptions();
-  }, []); // eslint-disable-line
+  }, []);
 
   return {
     options,

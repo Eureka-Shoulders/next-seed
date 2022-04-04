@@ -18,7 +18,7 @@ function EntityUpdateWrapper({ children, entityStore }: Props) {
     if (entityStore.identifier) {
       entityStore.fetch();
     }
-  }, [entityStore.identifier]); // eslint-disable-line
+  }, [entityStore.identifier]);
 
   if (entityStore.data && entityStore.identifier) {
     return <>{children}</>;
