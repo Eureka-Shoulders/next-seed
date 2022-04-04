@@ -10,17 +10,16 @@ import { enableStaticRendering } from 'mobx-react-lite';
 import type { AppProps } from 'next/app';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
 
-import AppBarBuilder from '@core/components/AppBarBuilder';
-import BreadcrumbListener from '@core/components/Breadcrumbs/BreadcrumbListener';
+import CoreListener from '@core/components/CoreListener';
+import ErrorBoundary from '@core/components/ErrorBoundary';
 import ThemeProvider from '@core/components/ThemeProvider';
-import UserListener from '@core/components/UserListener';
 import ZodErrorMapBuilder from '@core/components/ZodErrorMapBuilder';
 
 import { AppBar } from '@euk-labs/componentz';
 
 import createEmotionCache from '../createEmotionCache';
-import type { HydrationData } from '../types';
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -54,35 +53,40 @@ function MyApp(props: MyAppProps) {
   } = props;
   const showAppBar = pageProps.showAppBar ?? true;
   const isPublicPage = pageProps.isPublic ?? false;
-  const hydrationData: HydrationData = pageProps.hydrationData || {};
   const locale = router.locale || router.defaultLocale;
-  const container = globalContainer(hydrationData, locale);
+  const container = globalContainer(locale);
 
   return (
-    <CacheProvider value={emotionCache}>
-      <Provider container={container}>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <BreadcrumbListener />
-          <UserListener isPublicPage={isPublicPage} />
-          <AppBarBuilder />
-          <ZodErrorMapBuilder />
+    <>
+      <Head>
+        <title>Shoulders Next Seed</title>
+      </Head>
 
-          <ThemeProvider>
-            <CssBaseline />
-            {showAppBar ? (
-              <AppBar>
-                <Component {...pageProps} />
-              </AppBar>
-            ) : (
-              <Component {...pageProps} />
-            )}
+      <CacheProvider value={emotionCache}>
+        <Provider container={container}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <CoreListener isPublicPage={isPublicPage} />
+            <ZodErrorMapBuilder />
 
-            <Snackbar autoHideDuration={6000} />
-            <Dialog />
-          </ThemeProvider>
-        </LocalizationProvider>
-      </Provider>
-    </CacheProvider>
+            <ThemeProvider>
+              <CssBaseline />
+              <ErrorBoundary>
+                {showAppBar ? (
+                  <AppBar>
+                    <Component {...pageProps} />
+                  </AppBar>
+                ) : (
+                  <Component {...pageProps} />
+                )}
+
+                <Snackbar autoHideDuration={6000} />
+                <Dialog />
+              </ErrorBoundary>
+            </ThemeProvider>
+          </LocalizationProvider>
+        </Provider>
+      </CacheProvider>
+    </>
   );
 }
 

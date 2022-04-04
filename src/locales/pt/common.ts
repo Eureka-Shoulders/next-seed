@@ -43,6 +43,8 @@ const common = {
     legal: 'Jurídica',
     private: 'Física',
   },
+  updated: 'Atualizado',
+  updatedJustNow: 'Atualizado agora há pouco',
 };
 
 export default common;

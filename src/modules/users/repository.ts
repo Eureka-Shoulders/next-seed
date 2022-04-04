@@ -4,9 +4,11 @@ import { inject, injectable } from 'inversify';
 import { dissocPath, omit, pipe } from 'ramda';
 import { User } from 'types';
 
+import Repository from '@core/utils/Repository';
+
 import { LoginSchema } from '@modules/login/login.schema';
 
-import { HttpService, Repository } from '@euk-labs/fetchx';
+import { HttpService } from '@euk-labs/fetchx';
 
 import { UserSchema } from './user.schema';
 
@@ -29,6 +31,8 @@ class UsersRepository extends Repository {
   register(values: UserSchema) {
     const newUser = pipe(
       omit(['confirmPassword']),
+      dissocPath(['person', 'addresses']),
+      dissocPath(['person', 'contacts']),
       dissocPath(['person', 'type'])
     )(values);
 

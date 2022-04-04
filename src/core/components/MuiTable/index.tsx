@@ -2,6 +2,7 @@ import getTableLocaleText from '@config/tableLocale';
 import { Paper } from '@mui/material';
 import {
   DataGrid,
+  DataGridProps,
   GridColDef,
   GridRowIdGetter,
   GridRowsProp,
@@ -12,11 +13,11 @@ import React from 'react';
 
 import useTranslation from '@core/hooks/useTranslation';
 
+import CustomFooter from './CustomFooter';
 import CustomLoadingOverlay from './CustomLoadingOverlay';
 import CustomNoRowsOverlay from './CustomNoRowsOverlay';
-import CustomPagination from './CustomPagination';
 
-interface MuiTableProps {
+export interface MuiTableProps extends DataGridProps {
   columns: GridColDef[];
   rows: GridRowsProp;
   pageSize?: number;
@@ -41,12 +42,14 @@ export default function MuiTable(props: MuiTableProps) {
     onPageChange,
     onSortModelChange,
     getRowId,
+    ...otherProps
   } = props;
   const { translate } = useTranslation();
 
   return (
     <Paper elevation={0} sx={{ height: 400 }}>
       <DataGrid
+        {...otherProps}
         rows={toJS(rows)}
         columns={columns}
         rowCount={totalCount}
@@ -63,9 +66,10 @@ export default function MuiTable(props: MuiTableProps) {
         paginationMode="server"
         sortingMode="server"
         components={{
-          Pagination: CustomPagination,
+          Footer: CustomFooter,
           LoadingOverlay: CustomLoadingOverlay,
           NoRowsOverlay: CustomNoRowsOverlay,
+          ...otherProps.components,
         }}
       />
     </Paper>

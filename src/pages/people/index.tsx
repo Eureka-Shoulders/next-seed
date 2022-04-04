@@ -1,21 +1,17 @@
-import { Can } from '@casl/react';
-import { Box, Grid, Skeleton } from '@mui/material';
-import { observer } from 'mobx-react-lite';
-import { GetServerSideProps } from 'next';
-import nookies from 'nookies';
-import { useEffect, useState } from 'react';
-import { Actions, Subjects } from 'types';
+import { defaultListParams } from '@config/defaultListParams';
+import { Box, Grid } from '@mui/material';
+import { Actions, Person, Subjects } from 'types';
 
+import AuthLoader from '@core/components/AuthLoader';
+import Can from '@core/components/Can';
+import FetchxList from '@core/components/FetchxList';
 import { Filters } from '@core/components/Filters';
-import MuiTable from '@core/components/MuiTable';
 import useTranslation from '@core/hooks/useTranslation';
-import sortList from '@core/utils/sortList';
 
 import DeleteContent from '@components/DialogContents/DeleteContent';
 import NewEntityButton from '@components/NewEntityButton';
 
 import { usePeopleRepository } from '@hooks/repositories';
-import { useUserStore } from '@hooks/stores';
 
 import getPeopleColumns from '@modules/people/columns';
 import { buildFilters, getFilters } from '@modules/people/filters';
@@ -25,15 +21,9 @@ import { Identifier, useList } from '@euk-labs/fetchx';
 
 function Index() {
   const { translate } = useTranslation();
-  const userStore = useUserStore();
   const uiStore = useUIStore();
-  const [filters] = useState(() => getFilters(translate));
   const peopleRepository = usePeopleRepository();
-  const peopleList = useList(peopleRepository, {
-    limit: 10,
-    limitField: 'take',
-    resultsField: 'data',
-  });
+  const peopleList = useList<Person>(peopleRepository, defaultListParams);
 
   const deletePeople = async (id: Identifier) => {
     await peopleRepository.delete(id);
@@ -51,69 +41,40 @@ function Index() {
     uiStore.dialog.open();
   };
 
-  useEffect(() => {
-    if (userStore.isLogged) {
-      peopleList.fetch();
-    }
-  }, [peopleList.page, userStore.isLogged]); // eslint-disable-line
-
-  if (!userStore.abilities || !userStore.isLogged) {
-    return <Skeleton variant="rectangular" width="100%" height={500} />;
-  }
-
   return (
-    <Box p={3} mb={10}>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Breadcrumb />
+    <AuthLoader>
+      <Box p={3} mb={10}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Breadcrumb />
+          </Grid>
+
+          <Grid item xs={12}>
+            <Filters
+              filters={getFilters(translate)}
+              onFilter={(filters) => {
+                buildFilters(filters, peopleList.filters);
+                peopleList.fetch();
+              }}
+              onRefresh={peopleList.fetch}
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <FetchxList
+              listStore={peopleList}
+              pageSize={10}
+              columns={getPeopleColumns(handleDelete, translate)}
+            />
+          </Grid>
         </Grid>
 
-        <Grid item xs={12}>
-          <Filters
-            filters={filters}
-            onFilter={(filters) => {
-              buildFilters(filters, peopleList.filters);
-              peopleList.fetch();
-            }}
-            onRefresh={peopleList.fetch}
-          />
-        </Grid>
-
-        <Grid item xs={12}>
-          <MuiTable
-            page={peopleList.page - 1}
-            pageSize={10}
-            columns={getPeopleColumns(
-              userStore.abilities,
-              handleDelete,
-              translate
-            )}
-            rows={peopleList.list as Record<string, unknown>[]}
-            isLoading={peopleList.loading}
-            totalCount={peopleList.totalCount}
-            onPageChange={(page) => peopleList.setPage(page + 1)}
-            onSortModelChange={sortList(peopleList)}
-          />
-        </Grid>
-      </Grid>
-
-      <Can I={Actions.Create} a={Subjects.Person} ability={userStore.abilities}>
-        <NewEntityButton />
-      </Can>
-    </Box>
+        <Can action={Actions.Create} subject={Subjects.Person}>
+          <NewEntityButton />
+        </Can>
+      </Box>
+    </AuthLoader>
   );
 }
 
-export default observer(Index);
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const cookies = nookies.get(ctx);
-
-  return {
-    props: {
-      hydrationData: {
-        theme: cookies.theme || 'light',
-      },
-    },
-  };
-};
+export default Index;

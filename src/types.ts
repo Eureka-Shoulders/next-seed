@@ -1,11 +1,6 @@
 import { Ability } from '@casl/ability';
 
-import { ThemeType } from '@core/stores/theme';
 import Enum from '@core/utils/Enum';
-
-export interface HydrationData {
-  theme: ThemeType;
-}
 
 export enum Actions {
   Create = 'create',
