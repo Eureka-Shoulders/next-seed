@@ -20,6 +20,10 @@ test:
   image: node:16-alpine
   cache:
     - <<: *yarn_cache
+  variables:
+    USE_MIRAGE: "false"
+    API_URL: ${API_URL_HOMOLOG}
+    NEXT_PUBLIC_SENTRY_DSN: ${SENTRY_DSN}
   script:
     - yarn install --frozen-lockfile --no-progress
     - yarn lint
