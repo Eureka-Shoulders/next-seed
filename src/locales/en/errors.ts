@@ -26,10 +26,10 @@ const errors = {
     password_strength:
       'Password must have at least one uppercase letter, one lowercase letter, one number and one special character',
     too_small_string: 'Must contain at least ${min} character(s)',
-    too_small_number: 'The value must be greater than ${min}',
+    too_small_number: 'The value must be greater or equal to ${min}',
     too_small_array: 'Must contain at least ${min} item(s)',
     too_big_string: 'Must contain at most ${max} character(s)',
-    too_big_number: 'The value must be less than ${max}',
+    too_big_number: 'The value must be less or equal to ${max}',
     too_big_array: 'Must contain at most ${max} item(s)',
   },
 };
