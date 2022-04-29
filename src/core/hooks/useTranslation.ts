@@ -4,7 +4,7 @@ import en from 'locales/en';
 import pt from 'locales/pt';
 import { path, split } from 'ramda';
 
-import { TranslationServiceType } from '@core/services/translation';
+import type { TranslationServiceType } from '@core/services/translation';
 
 export type TranslateFunc = (id: string) => string;
 
