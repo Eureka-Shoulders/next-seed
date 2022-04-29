@@ -12,7 +12,6 @@ const withTM = require('next-transpile-modules')(
     resolveSymlinks: false,
   }
 );
-const { withSentryConfig } = require('@sentry/nextjs');
 
 /** @type {import('next').NextConfig} */
 const moduleExports = {
@@ -31,11 +30,4 @@ const moduleExports = {
   },
 };
 
-/** @type {import('@sentry/nextjs').SentryWebpackPluginOptions} */
-const sentryWebpackPluginOptions = {
-  silent: true,
-};
-
-module.exports = withTM(
-  withSentryConfig(moduleExports, sentryWebpackPluginOptions)
-);
+module.exports = withTM(moduleExports);
