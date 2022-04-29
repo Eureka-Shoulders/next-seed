@@ -4,10 +4,10 @@ import axios from 'axios';
 import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 
-import { LoggerServiceType } from '@core/services/logger';
+import type { LoggerServiceType } from '@core/services/logger';
 
 import Bindings from '@euk-labs/componentz/containers/global.bindings';
-import { UIStoreType } from '@euk-labs/componentz/stores/types';
+import type { UIStoreType } from '@euk-labs/componentz/stores/types';
 
 interface AsyncNotifyOptions<T> {
   feedbackSuccess: string;

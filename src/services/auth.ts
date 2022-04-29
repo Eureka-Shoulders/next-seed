@@ -6,7 +6,7 @@ import { makeAutoObservable } from 'mobx';
 import { parseCookies, setCookie } from 'nookies';
 import { AppAbility, User } from 'types';
 
-import { UserStoreType } from '@core/stores/user';
+import type { UserStoreType } from '@core/stores/user';
 
 import { HttpService } from '@euk-labs/fetchx';
 
