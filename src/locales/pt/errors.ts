@@ -26,10 +26,10 @@ const errors = {
     password_strength:
       'A senha deve conter, no mínimo, uma letra maiúscula, uma letra minúscula, um número e um caractere especial',
     too_small_string: 'Deve conter no mínimo ${min} caractere(s)',
-    too_small_number: 'O valor deve ser maior que ${min}',
+    too_small_number: 'O valor deve ser maior ou igual a ${min}',
     too_small_array: 'Deve conter no mínimo ${min} item(ns)',
     too_big_string: 'Deve conter no máximo ${max} caractere(s)',
-    too_big_number: 'O valor deve ser menor que ${max}',
+    too_big_number: 'O valor deve ser menor ou igual a ${max}',
     too_big_array: 'Deve conter no máximo ${max} item(ns)',
   },
 };

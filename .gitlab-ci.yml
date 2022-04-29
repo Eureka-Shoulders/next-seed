@@ -20,10 +20,6 @@ test:
   image: node:16-alpine
   cache:
     - <<: *yarn_cache
-  variables:
-    USE_MIRAGE: "false"
-    API_URL: ${API_URL_HOMOLOG}
-    NEXT_PUBLIC_SENTRY_DSN: ${SENTRY_DSN}
   script:
     - yarn install --frozen-lockfile --no-progress
     - yarn lint
@@ -44,12 +40,7 @@ build:
     - cp $REGISTRY_DG_AUTH ~/.docker/config.json
   script:
     - docker build
-      --build-arg api_url="${API_URL_HOMOLOG}"
-      --build-arg sentry_dsn="${SENTRY_DSN}"
-      --build-arg sentry_auth_token="${SENTRY_AUTH_TOKEN}"
-      --build-arg sentry_org="${SENTRY_ORG}"
-      --build-arg sentry_project="${SENTRY_PROJECT}"
-      --build-arg sentry_url="${SENTRY_URL}"
+      --build-arg api_url="${API_URL}"
       -t ${REGISTRY_PATH}/next-seed .
     - docker push ${REGISTRY_PATH}/next-seed
 
