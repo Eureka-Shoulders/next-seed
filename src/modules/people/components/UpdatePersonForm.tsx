@@ -71,7 +71,7 @@ function EditPersonForm({ personEntity }: Props) {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label={translate('common.informations')} />
+          <Tab label={translate('common.information')} />
           <Tab label={translate('common.contacts')} />
           <Tab label={translate('common.addresses')} />
         </Tabs>

@@ -1,7 +1,8 @@
 import TYPES from '@containers/global.types';
+import en from '@locales/en';
+import pt from '@locales/pt';
+import { Locale } from '@locales/types';
 import { useInjection } from 'inversify-react';
-import en from 'locales/en';
-import pt from 'locales/pt';
 import { path, split } from 'ramda';
 
 import { TranslationServiceType } from '@core/services/translation';
@@ -9,7 +10,7 @@ import { TranslationServiceType } from '@core/services/translation';
 export type TranslateFunc = (id: string) => string;
 
 export function serverSideTranslate(locale = '', id: string) {
-  const locales: Record<string, unknown> = { pt, en };
+  const locales: Record<string, Locale> = { pt, en };
   const translations = locales[locale];
   const splitPath = split(/[[\].]/);
   const localeValue = path(splitPath(id), translations);

@@ -1,4 +1,6 @@
-const errors = {
+import { Errors } from '@locales/types/errors';
+
+const errors: Errors = {
   user: {
     creation: 'An error occurred while creating the user!',
     update: 'An error occurred while updating the user!',

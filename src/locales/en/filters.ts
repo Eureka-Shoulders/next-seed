@@ -1,4 +1,6 @@
-const filters = {
+import { Filters } from '@locales/types/filters';
+
+const filters: Filters = {
   all: 'All filters',
   text: {
     title: 'Search for a text',

@@ -1,4 +1,6 @@
-const feedbacks = {
+import { Feedbacks } from '@locales/types/feedbacks';
+
+const feedbacks: Feedbacks = {
   changePassword: 'Password changed successfully!',
   recoverPassword:
     'Recover sent successfully! Check your e-mail to recover your password.',

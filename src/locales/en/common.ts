@@ -1,4 +1,6 @@
-const common = {
+import { Common } from '@locales/types/common';
+
+const common: Common = {
   title: 'Shoulders',
   logoAlt: 'Shoulders Logo',
   type: 'Type',
@@ -34,7 +36,7 @@ const common = {
   noName: 'No name',
   profile: 'Profile',
   currentTheme: 'Current Theme',
-  informations: 'Informations',
+  information: 'Information',
   settings: 'Settings',
   of: 'of',
   sortAsc: 'Sort Asc',
