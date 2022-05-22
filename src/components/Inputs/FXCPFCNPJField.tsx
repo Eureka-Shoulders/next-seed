@@ -36,7 +36,7 @@ function FXCPFCNPJField({ name, typeField }: FXCPFCNPJFieldProps) {
     if (!type?.value) {
       formix.setFieldValue(name, '');
     }
-  }, [type]); // eslint-disable-line
+  }, [type]);
 
   return (
     <FXMaskedField

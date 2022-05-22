@@ -35,7 +35,7 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
     if (router.locale) {
       container.rebind(TYPES.Locale).toConstantValue(router.locale);
     }
-  }, [router.locale]); // eslint-disable-line
+  }, [router.locale]);
 
   useEffect(() => {
     const cookies = parseCookies();
@@ -53,13 +53,13 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
     uiStore.appBar.setOnClickDrawerOption((page) => {
       router.push(page.link);
     });
-  }, []); // eslint-disable-line
+  }, []);
 
   useEffect(() => {
     if (!isPublicPage) {
       authService.verifyToken();
     }
-  }, [isPublicPage]); // eslint-disable-line
+  }, [isPublicPage]);
 
   useEffect(() => {
     if (userStore.abilities) {
@@ -79,7 +79,7 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
         }
       }
     }
-  }, [router.pathname, userStore.abilities]); // eslint-disable-line
+  }, [router.pathname, userStore.abilities]);
 
   return null;
 }

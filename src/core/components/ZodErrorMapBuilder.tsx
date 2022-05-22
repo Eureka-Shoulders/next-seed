@@ -78,7 +78,7 @@ export default function ZodErrorMapBuilder() {
     };
 
     z.setErrorMap(customErrorMap);
-  }, []); // eslint-disable-line
+  }, []);
 
   return null;
 }

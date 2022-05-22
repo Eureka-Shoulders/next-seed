@@ -16,7 +16,7 @@ interface Props extends Omit<MuiTableProps, 'rows'> {
 function FetchxList({ listStore, ...props }: Props) {
   useEffect(() => {
     listStore.fetch();
-  }, [listStore.page]); // eslint-disable-line
+  }, [listStore.page]);
 
   return (
     <MuiTable

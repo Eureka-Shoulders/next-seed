@@ -3,5 +3,6 @@ export const defaultListParams = {
   limitField: 'take',
   resultsField: 'data',
   skipField: 'skip',
+  totalCountField: 'totalCount',
   refetchOnFocus: true,
 };
