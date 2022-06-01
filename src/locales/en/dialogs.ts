@@ -1,4 +1,6 @@
-const dialogs = {
+import { Dialogs } from '@locales/types/dialogs';
+
+const dialogs: Dialogs = {
   delete: {
     title: 'Are you sure to delete?',
     description: 'On confirm your registry will be deleted!',

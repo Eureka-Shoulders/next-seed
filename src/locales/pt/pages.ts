@@ -1,4 +1,6 @@
-const pages = {
+import { Pages } from '@locales/types/pages';
+
+const pages: Pages = {
   users: {
     list: 'Usuários',
     create: 'Criar usuário',

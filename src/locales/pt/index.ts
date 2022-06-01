@@ -1,3 +1,5 @@
+import { Locale } from '@locales/types';
+
 import actions from './actions';
 import common from './common';
 import dialogs from './dialogs';
@@ -7,7 +9,7 @@ import filters from './filters';
 import pages from './pages';
 import placeholders from './placeholders';
 
-const pt = {
+const pt: Locale = {
   actions,
   common,
   errors,

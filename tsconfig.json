@@ -28,6 +28,7 @@
       "@styles/*": ["./styles/*"],
       "@config/*": ["./config/*"],
       "@utils/*": ["./utils/*"],
+      "@locales/*": ["./locales/*"],
       "@modules/*": ["./modules/*"],
       "@hooks/*": ["./hooks/*"]
     }

@@ -1,4 +1,6 @@
-const common = {
+import { Common } from '@locales/types/common';
+
+const common: Common = {
   title: 'Ombros',
   logoAlt: 'Logo da Ombros',
   type: 'Tipo',
@@ -34,7 +36,7 @@ const common = {
   noName: 'Sem nome',
   profile: 'Perfil',
   currentTheme: 'Tema atual',
-  informations: 'Informações',
+  information: 'Informações',
   settings: 'Configurações',
   of: 'de',
   sortAsc: 'Ordem Crescente',

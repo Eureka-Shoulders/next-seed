@@ -1,9 +1,9 @@
 import TYPES from '@containers/global.types';
+import en from '@locales/en';
+import pt from '@locales/pt';
 import { Locale } from 'date-fns';
 import { enUS, ptBR } from 'date-fns/locale';
 import { inject, injectable } from 'inversify';
-import en from 'locales/en';
-import pt from 'locales/pt';
 import { makeAutoObservable } from 'mobx';
 import { path, split } from 'ramda';
 

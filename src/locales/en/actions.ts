@@ -1,4 +1,6 @@
-const actions = {
+import { Actions } from '@locales/types/actions';
+
+const actions: Actions = {
   search: 'Search',
   goBack: 'Back',
   login: 'Login',
