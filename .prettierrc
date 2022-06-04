@@ -6,14 +6,23 @@
     "reflect-metadata",
     "<THIRD_PARTY_MODULES>",
     "^@core/(.*)$",
+    "^@config/(.*)$",
     "^@components/(.*)$",
+    "^@containers/(.*)$",
     "^@hooks/(.*)$",
+    "^@stores/(.*)$",
     "^@modules/(.*)$",
+    "^@repositories/(.*)$",
+    "^@services/(.*)$",
     "^@styles/(.*)$",
-    "^@euk-labs/(.*)$",
+    "^@utils/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
-  "importOrderParserPlugins": ["typescript", "decorators-legacy", "jsx"]
+  "importOrderParserPlugins": [
+    "typescript",
+    "decorators-legacy",
+    "jsx"
+  ]
 }
