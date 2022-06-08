@@ -3,6 +3,8 @@ import { injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import { setCookie } from 'nookies';
 
+import { ONE_YEAR_IN_SECONDS } from '@config/constants';
+
 import darkTheme from '@styles/dark.theme';
 import lightTheme from '@styles/light.theme';
 
@@ -12,21 +14,21 @@ export interface ThemeStoreType {
   theme: ThemeType;
   themes: Record<ThemeType, ThemeOptions>;
   setTheme(theme: ThemeType): void;
-
   persist(): void;
+  toggleTheme(): void;
 }
 
 @injectable()
 class ThemeStore implements ThemeStoreType {
+  constructor() {
+    makeAutoObservable(this, {}, { autoBind: true });
+  }
+
   theme: ThemeType = 'light';
   themes = {
     light: lightTheme,
     dark: darkTheme,
   };
-
-  constructor() {
-    makeAutoObservable(this, {}, { autoBind: true });
-  }
 
   setTheme(theme: ThemeType) {
     this.theme = theme;
@@ -35,9 +37,14 @@ class ThemeStore implements ThemeStoreType {
 
   persist() {
     setCookie(null, 'theme', this.theme || 'light', {
-      maxAge: 30 * 24 * 60 * 60,
+      maxAge: ONE_YEAR_IN_SECONDS,
       path: '/',
     });
+  }
+
+  toggleTheme() {
+    this.theme = this.theme === 'light' ? 'dark' : 'light';
+    this.persist();
   }
 }
 

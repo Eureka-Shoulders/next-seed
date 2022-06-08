@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
-import globalContainer from '@containers/global.inversify';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { AppBar } from '@euk-labs/componentz';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { CssBaseline } from '@mui/material';
@@ -17,7 +17,7 @@ import ErrorBoundary from '@core/components/ErrorBoundary';
 import ThemeProvider from '@core/components/ThemeProvider';
 import ZodErrorMapBuilder from '@core/components/ZodErrorMapBuilder';
 
-import { AppBar } from '@euk-labs/componentz';
+import globalContainer from '@containers/global.inversify';
 
 import createEmotionCache from '../createEmotionCache';
 
@@ -25,10 +25,7 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-const Snackbar = dynamic(
-  () => import('@euk-labs/componentz/components/Snackbar'),
-  { ssr: false }
-);
+const Snackbar = dynamic(() => import('@euk-labs/componentz/components/Snackbar'), { ssr: false });
 const Dialog = dynamic(() => import('@euk-labs/componentz/components/Dialog'), {
   ssr: false,
 });
@@ -45,12 +42,7 @@ if (publicRuntimeConfig.useMirage) {
 enableStaticRendering(typeof window === 'undefined');
 
 function MyApp(props: MyAppProps) {
-  const {
-    Component,
-    emotionCache = clientSideEmotionCache,
-    pageProps,
-    router,
-  } = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps, router } = props;
   const showAppBar = pageProps.showAppBar ?? true;
   const isPublicPage = pageProps.isPublic ?? false;
   const locale = router.locale || router.defaultLocale;

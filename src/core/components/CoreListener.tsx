@@ -1,5 +1,4 @@
-import { getPages } from '@config/pages';
-import TYPES from '@containers/global.types';
+import { useUIStore } from '@euk-labs/componentz';
 import { useContainer } from 'inversify-react';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
@@ -7,12 +6,14 @@ import { parseCookies } from 'nookies';
 import { useEffect } from 'react';
 
 import useTranslation from '@core/hooks/useTranslation';
-import { ThemeType } from '@core/stores/theme';
 
-import { useAuthService } from '@hooks/services';
+import { getPages } from '@config/pages';
+
+import TYPES from '@containers/global.types';
+
 import { useThemeStore, useUserStore } from '@hooks/stores';
 
-import { useUIStore } from '@euk-labs/componentz';
+import { ThemeType } from '@stores/theme';
 
 import AppBarHeader from './AppBarBuilder/AppBarHeader';
 import DrawerHeader from './AppBarBuilder/DrawerHeader';
@@ -27,7 +28,6 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
   const container = useContainer();
   const uiStore = useUIStore();
   const userStore = useUserStore();
-  const authService = useAuthService();
   const themeStore = useThemeStore();
   const router = useRouter();
 
@@ -45,8 +45,9 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
       themeStore.setTheme(themeFromCookies);
     }
 
-    authService.startTokenInjector();
-    authService.catchUnauthorizedErrors();
+    userStore.startTokenInjector();
+    userStore.catchUnauthorizedErrors();
+    userStore.catchForbiddenErrors();
 
     uiStore.appBar.setDrawerHeaderContent(<DrawerHeader />);
     uiStore.appBar.setAppBarHeaderContent(<AppBarHeader />);
@@ -57,7 +58,7 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
 
   useEffect(() => {
     if (!isPublicPage) {
-      authService.verifyToken();
+      userStore.verifyToken();
     }
   }, [isPublicPage]);
 

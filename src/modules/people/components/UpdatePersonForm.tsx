@@ -1,3 +1,6 @@
+import { EntityStore } from '@euk-labs/fetchx';
+import { Formix } from '@euk-labs/formix';
+import { FXSubmitButton } from '@euk-labs/formix-mui';
 import { Grid, Tab, Tabs } from '@mui/material';
 import { Box } from '@mui/system';
 import { observer } from 'mobx-react-lite';
@@ -10,10 +13,6 @@ import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
 import { useNotificationService } from '@hooks/services';
-
-import { EntityStore } from '@euk-labs/fetchx';
-import { Formix } from '@euk-labs/formix';
-import { FXSubmitButton } from '@euk-labs/formix-mui';
 
 import { getInitialValuesForUpdate } from '../initialValues';
 import { UpdatePersonSchema } from '../people.schema';
@@ -41,7 +40,7 @@ function EditPersonForm({ personEntity }: Props) {
       name: values.name,
       contacts: values.contacts.map((contact) => ({
         ...contact,
-        type: contact.type.value,
+        type: contact?.type?.value,
         personId: undefined,
       })),
       addresses: values.addresses.map((address) => ({

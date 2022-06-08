@@ -1,8 +1,7 @@
 import { Grid } from '@mui/material';
 import type { NextPage } from 'next';
 
-import LoginBanner from '@components/Login/LoginBanner';
-
+import LoginBanner from '@modules/login/components/LoginBanner';
 import RegisterForm from '@modules/login/components/RegisterForm';
 
 const Register: NextPage = () => {

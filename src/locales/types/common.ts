@@ -45,4 +45,6 @@ export interface Common {
     legal: string;
     private: string;
   };
+  makeLogin: string;
+  welcomeBack: string;
 }

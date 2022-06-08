@@ -11,7 +11,7 @@ const Custom404: NextPage = () => {
 
   return (
     <Box p={3}>
-      <Grid container spacing={2} justifyContent="center">
+      <Grid container spacing={3} justifyContent="center">
         <Grid item xs="auto">
           <NotFoundSVG />
         </Grid>
@@ -19,7 +19,7 @@ const Custom404: NextPage = () => {
           <Typography align="center" variant="h4">
             {translate('pages.notFound.title')}
           </Typography>
-          <Typography align="center">
+          <Typography align="center" sx={{ marginY: 2 }}>
             {translate('pages.notFound.description')}
           </Typography>
         </Grid>

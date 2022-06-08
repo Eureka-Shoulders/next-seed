@@ -47,6 +47,8 @@ const common: Common = {
   },
   updated: 'Updated',
   updatedJustNow: 'Updated just now',
+  makeLogin: 'Make your login',
+  welcomeBack: 'Welcome back',
 };
 
 export default common;

@@ -14,7 +14,6 @@ import { useState } from 'react';
 
 import Trans from '@core/components/Trans';
 
-import { useAuthService } from '@hooks/services';
 import { useThemeStore, useUserStore } from '@hooks/stores';
 
 import ThemeIcon from './ThemeIcon';
@@ -23,7 +22,6 @@ function AppBarHeader() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const userStore = useUserStore();
-  const authService = useAuthService();
   const themeStore = useThemeStore();
   const router = useRouter();
 
@@ -70,7 +68,7 @@ function AppBarHeader() {
           </ListItemIcon>
           <Trans id="actions.changeTheme" />
         </MenuItem>
-        <MenuItem onClick={authService.logout}>
+        <MenuItem onClick={userStore.logout}>
           <ListItemIcon>
             <LogoutIcon />
           </ListItemIcon>

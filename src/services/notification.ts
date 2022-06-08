@@ -1,16 +1,11 @@
-import TYPES from '@containers/global.types';
+import TYPES from '@euk-labs/componentz/containers/global.bindings';
+import type { UIStoreType } from '@euk-labs/componentz/stores/types';
 import { AlertColor } from '@mui/material';
 import axios from 'axios';
 import { inject, injectable } from 'inversify';
-import { makeAutoObservable } from 'mobx';
-
-import type { LoggerServiceType } from '@core/services/logger';
-
-import Bindings from '@euk-labs/componentz/containers/global.bindings';
-import type { UIStoreType } from '@euk-labs/componentz/stores/types';
 
 interface AsyncNotifyOptions<T> {
-  feedbackSuccess: string;
+  feedbackSuccess?: string;
   feedbackError: string;
   onSuccess?: (data: T) => void;
   onError?: (err: unknown) => void;
@@ -28,13 +23,9 @@ export interface NotificationServiceType {
 @injectable()
 class NotificationService implements NotificationServiceType {
   constructor(
-    @inject(Bindings.UIStore)
-    private uiStore: UIStoreType,
-    @inject(TYPES.LoggerService)
-    private loggerService: LoggerServiceType
-  ) {
-    makeAutoObservable(this, {}, { autoBind: true });
-  }
+    @inject(TYPES.UIStore)
+    private uiStore: UIStoreType
+  ) {}
 
   async handleHttpRequest<T>(
     func: () => Promise<T>,
@@ -42,7 +33,8 @@ class NotificationService implements NotificationServiceType {
   ) {
     try {
       const data = await func();
-      this.notify(options.feedbackSuccess, 'success');
+      options.feedbackSuccess &&
+        this.notify(options.feedbackSuccess, 'success');
       options.onSuccess && options.onSuccess(data);
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -50,8 +42,6 @@ class NotificationService implements NotificationServiceType {
           err.response?.data.message || options.feedbackError,
           'error'
         );
-      } else {
-        this.loggerService.log(err as Error);
       }
 
       options.onError && options.onError(err);

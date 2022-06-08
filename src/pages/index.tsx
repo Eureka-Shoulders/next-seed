@@ -1,3 +1,4 @@
+import { Breadcrumb } from '@euk-labs/componentz';
 import { Box, Button, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import type { NextPage } from 'next';
@@ -7,9 +8,6 @@ import useTranslation from '@core/hooks/useTranslation';
 
 import { useThemeStore } from '@hooks/stores';
 
-import { Breadcrumb } from '@euk-labs/componentz';
-
-// TODO: make a beautiful design for the homepage
 const Home: NextPage = () => {
   const themeStore = useThemeStore();
   const { translate } = useTranslation();

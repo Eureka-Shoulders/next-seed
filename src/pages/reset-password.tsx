@@ -1,3 +1,5 @@
+import { Formix } from '@euk-labs/formix';
+import { FXPasswordField, FXSubmitButton } from '@euk-labs/formix-mui';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
@@ -5,18 +7,11 @@ import { useRouter } from 'next/router';
 import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
-import LoginBanner from '@components/Login/LoginBanner';
-
 import { useUsersRepository } from '@hooks/repositories';
 import { useNotificationService } from '@hooks/services';
 
-import {
-  ResetPasswordSchema,
-  getResetPasswordSchema,
-} from '@modules/login/login.schema';
-
-import { Formix } from '@euk-labs/formix';
-import { FXPasswordField, FXSubmitButton } from '@euk-labs/formix-mui';
+import LoginBanner from '@modules/login/components/LoginBanner';
+import { ResetPasswordSchema, getResetPasswordSchema } from '@modules/login/login.schema';
 
 interface ResetPasswordProps {
   token: string;
@@ -35,20 +30,19 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
 
   async function handleSubmit(values: ResetPasswordSchema) {
     const params = new URLSearchParams(window.location.search);
-    const newData = {
-      token: params.get('token') || '',
-      password: values.password,
-    };
-    const onSuccess = () => {
-      router.push('/login');
-    };
 
     await notificationService.handleHttpRequest(
-      () => usersRepository.resetPassword(newData),
+      () =>
+        usersRepository.resetPassword({
+          token: params.get('token') || '',
+          password: values.password,
+        }),
       {
         feedbackSuccess: translate('feedbacks.changePassword'),
         feedbackError: translate('errors.changePassword'),
-        onSuccess,
+        onSuccess: () => {
+          router.push('/login');
+        },
       }
     );
   }
@@ -65,23 +59,11 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
       >
         <LoginBanner />
       </Grid>
-      <Grid
-        item
-        xs={12}
-        md={6}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
+      <Grid item xs={12} md={6} display="flex" alignItems="center" justifyContent="center">
         <Box p={4}>
           <Grid container component="main" spacing={2} justifyContent="center">
             <Grid item xs={12}>
-              <Typography
-                align="center"
-                variant="h4"
-                component="h1"
-                fontWeight={700}
-              >
+              <Typography align="center" variant="h4" component="h1" fontWeight={700}>
                 {translate('actions.changePassword')}
               </Typography>
             </Grid>
@@ -94,10 +76,7 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
               >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
-                    <FXPasswordField
-                      name="password"
-                      label={translate('common.password')}
-                    />
+                    <FXPasswordField name="password" label={translate('common.password')} />
                   </Grid>
                   <Grid item xs={12}>
                     <FXPasswordField
@@ -107,19 +86,11 @@ const ResetPassword: NextPage<ResetPasswordProps> = () => {
                   </Grid>
 
                   <Grid item xs={12} display="flex" justifyContent="center">
-                    <FXSubmitButton
-                      fullWidth
-                      label={translate('actions.change')}
-                    />
+                    <FXSubmitButton fullWidth label={translate('actions.change')} />
                   </Grid>
 
                   <Grid item xs={12} display="flex" justifyContent="center">
-                    <Button
-                      fullWidth
-                      color="primary"
-                      type="submit"
-                      href="/login"
-                    >
+                    <Button fullWidth color="primary" type="submit" href="/login">
                       {translate('actions.goBack')}
                     </Button>
                   </Grid>

@@ -1,16 +1,16 @@
-import AuthService from '@services/auth';
-import httpService from '@services/http';
-import NotificationService from '@services/notification';
+import componentzContainer from '@euk-labs/componentz/containers/global.inversify';
 
 import LoggerService from '@core/services/logger';
 import TranslationService from '@core/services/translation';
-import ThemeStore from '@core/stores/theme';
-import UserStore from '@core/stores/user';
+
+import ThemeStore from '@stores/theme';
+import UserStore from '@stores/user';
 
 import PeopleRepository from '@modules/people/repository';
 import UsersRepository from '@modules/users/repository';
 
-import componentzContainer from '@euk-labs/componentz/containers/global.inversify';
+import httpService from '@services/http';
+import NotificationService from '@services/notification';
 
 import TYPES from './global.types';
 
@@ -24,7 +24,6 @@ export default function globalContainer(locale = '') {
     container.bind(TYPES.TranslationService).to(TranslationService);
     container.bind(TYPES.NotificationService).to(NotificationService);
     container.bind(TYPES.LoggerService).to(LoggerService);
-    container.bind(TYPES.AuthService).to(AuthService);
 
     container.bind(TYPES.UsersRepository).to(UsersRepository);
     container.bind(TYPES.PeopleRepository).to(PeopleRepository);

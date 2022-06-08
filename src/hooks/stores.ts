@@ -1,8 +1,9 @@
-import TYPES from '@containers/global.types';
 import { useInjection } from 'inversify-react';
 
-import type { ThemeStoreType } from '@core/stores/theme';
-import type { UserStoreType } from '@core/stores/user';
+import TYPES from '@containers/global.types';
+
+import type { ThemeStoreType } from '@stores/theme';
+import type { UserStoreType } from '@stores/user';
 
 export function useUserStore() {
   return useInjection<UserStoreType>(TYPES.UserStore);

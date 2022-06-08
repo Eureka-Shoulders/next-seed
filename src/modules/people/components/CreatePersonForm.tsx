@@ -1,3 +1,5 @@
+import { Formix } from '@euk-labs/formix';
+import { FXSubmitButton } from '@euk-labs/formix-mui';
 import { Grid, Tab, Tabs } from '@mui/material';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
@@ -10,9 +12,6 @@ import { zodValidator } from '@core/utils/validators';
 
 import { usePeopleRepository } from '@hooks/repositories';
 import { useNotificationService } from '@hooks/services';
-
-import { Formix } from '@euk-labs/formix';
-import { FXSubmitButton } from '@euk-labs/formix-mui';
 
 import { initialValuesForCreate } from '../initialValues';
 import { NewPersonSchema } from '../people.schema';
@@ -38,7 +37,7 @@ function CreatePersonForm() {
       type: undefined,
       contacts: values.contacts?.map((contact) => ({
         ...contact,
-        type: contact.type.value as ContactType,
+        type: contact?.type?.value as unknown as ContactType,
       })),
     };
     const onSuccess = () => {

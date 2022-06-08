@@ -1,6 +1,9 @@
 import * as zod from 'zod';
 
-export const AutocompleteSchema = zod.object({
-  label: zod.string(),
-  value: zod.unknown(),
-});
+export const autocompleteSchema = zod
+  .object({
+    label: zod.string(),
+    value: zod.unknown(),
+  })
+  .nullable()
+  .refine((value) => value !== null);

@@ -5,7 +5,7 @@ type UnauthorizedSvgProps = {
   height?: number | string;
 };
 
-const UnauthorizedSvg = ({ width, height }: UnauthorizedSvgProps) => {
+export const UnauthorizedSvg = ({ width, height }: UnauthorizedSvgProps) => {
   const theme = useTheme();
   return (
     <svg
@@ -422,5 +422,3 @@ const UnauthorizedSvg = ({ width, height }: UnauthorizedSvgProps) => {
     </svg>
   );
 };
-
-export default UnauthorizedSvg;
