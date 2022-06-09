@@ -1,5 +1,5 @@
-import en from '@locales/en';
-import pt from '@locales/pt';
+import { en } from '@locales/en';
+import { pt } from '@locales/pt';
 import { Locale, LocaleType } from '@locales/types';
 import { Locale as DateFnsLocale } from 'date-fns';
 import { enUS, ptBR } from 'date-fns/locale';
@@ -25,7 +25,7 @@ export interface TranslationServiceType {
 }
 
 @injectable()
-class TranslationService implements TranslationServiceType {
+export class TranslationService implements TranslationServiceType {
   locale: LocaleType;
 
   constructor(@inject(TYPES.Locale) locale: LocaleType) {
@@ -56,8 +56,6 @@ class TranslationService implements TranslationServiceType {
     return locales[this.locale];
   }
 }
-
-export default TranslationService;
 
 export function serverSideTranslate(locale = '', id: string) {
   const locales: Record<string, Locale> = { pt, en };

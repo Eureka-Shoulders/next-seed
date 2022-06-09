@@ -1,12 +1,9 @@
 import { Ability, RawRuleOf } from '@casl/ability';
-import httpService from '@services/http';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-} from 'next';
+import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { parseCookies } from 'nookies';
 import { Actions, AppAbility, Subjects } from 'types';
+
+import { httpService } from '@services/http';
 
 type WithSSRAuthOptions = {
   can: {
@@ -15,21 +12,16 @@ type WithSSRAuthOptions = {
   }[];
 };
 
-export function withSSRAuth<P>(
-  fn: GetServerSideProps<P>,
-  options?: WithSSRAuthOptions
-) {
-  return async (
-    ctx: GetServerSidePropsContext
-  ): Promise<GetServerSidePropsResult<P>> => {
+export function withSSRAuth<P>(fn: GetServerSideProps<P>, options?: WithSSRAuthOptions) {
+  return async (ctx: GetServerSidePropsContext): Promise<GetServerSidePropsResult<P>> => {
     const { user_token } = parseCookies(ctx);
 
     if (!user_token && !ctx.req.rawHeaders.some((i) => i.includes('/login'))) {
       return {
         redirect: {
-          destination: `/${
-            ctx.locale || ctx.defaultLocale
-          }/login?redirect=${encodeURIComponent(ctx.req.url || '/')}`,
+          destination: `/${ctx.locale || ctx.defaultLocale}/login?redirect=${encodeURIComponent(
+            ctx.req.url || '/'
+          )}`,
           permanent: false,
         },
       };
@@ -39,18 +31,17 @@ export function withSSRAuth<P>(
       const { can } = options;
 
       try {
-        const abilitiesResponse = await httpService.client.get<
-          RawRuleOf<AppAbility>[]
-        >('/auth/abilities', {
-          headers: {
-            Authorization: `Bearer ${user_token}`,
-          },
-        });
+        const abilitiesResponse = await httpService.client.get<RawRuleOf<AppAbility>[]>(
+          '/auth/abilities',
+          {
+            headers: {
+              Authorization: `Bearer ${user_token}`,
+            },
+          }
+        );
 
         if (abilitiesResponse.data) {
-          const userAbilities = new Ability(
-            abilitiesResponse.data
-          ) as AppAbility;
+          const userAbilities = new Ability(abilitiesResponse.data) as AppAbility;
 
           can.forEach(({ action, subject }) => {
             if (userAbilities.cannot(action, subject)) throw new Error();

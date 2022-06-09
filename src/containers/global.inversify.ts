@@ -2,15 +2,15 @@ import componentzContainer from '@euk-labs/componentz/containers/global.inversif
 
 import LoggerService from '@core/services/logger';
 
-import ThemeStore from '@stores/theme';
-import UserStore from '@stores/user';
+import { ThemeStore } from '@stores/theme';
+import { UserStore } from '@stores/user';
 
 import PeopleRepository from '@modules/people/repository';
 import UsersRepository from '@modules/users/repository';
 
-import httpService from '@services/http';
-import NotificationService from '@services/notification';
-import TranslationService from '@services/translation';
+import { httpService } from '@services/http';
+import { NotificationService } from '@services/notification';
+import { TranslationService } from '@services/translation';
 
 import TYPES from './global.types';
 

@@ -2,7 +2,7 @@ import * as zod from 'zod';
 
 import { autocompleteSchema } from '@config/schemas/autocomplete.schema';
 
-import validateCPForCNPJ from '@utils/validateCPForCNPJ';
+import { validateCPForCNPJ } from '@utils/validateCPForCNPJ';
 
 /**
  *  New Person Schema

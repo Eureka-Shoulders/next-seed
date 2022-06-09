@@ -1,6 +1,6 @@
 import { Pages } from '@locales/types/pages';
 
-const pages: Pages = {
+export const pages: Pages = {
   users: {
     list: 'Users',
     create: 'Create User',
@@ -21,5 +21,3 @@ const pages: Pages = {
     description: 'The page you are trying to access does not exist',
   },
 };
-
-export default pages;

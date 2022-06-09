@@ -1,6 +1,6 @@
 import { Filters } from '@locales/types/filters';
 
-const filters: Filters = {
+export const filters: Filters = {
   all: 'All filters',
   text: {
     title: 'Search for a text',
@@ -20,5 +20,3 @@ const filters: Filters = {
     label: 'Search CPF',
   },
 };
-
-export default filters;

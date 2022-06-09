@@ -1,6 +1,6 @@
 import { Common } from '@locales/types/common';
 
-const common: Common = {
+export const common: Common = {
   title: 'Shoulders',
   logoAlt: 'Shoulders Logo',
   type: 'Type',
@@ -50,5 +50,3 @@ const common: Common = {
   makeLogin: 'Make your login',
   welcomeBack: 'Welcome back',
 };
-
-export default common;

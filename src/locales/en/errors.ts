@@ -1,6 +1,6 @@
 import { Errors } from '@locales/types/errors';
 
-const errors: Errors = {
+export const errors: Errors = {
   user: {
     creation: 'An error occurred while creating the user!',
     update: 'An error occurred while updating the user!',
@@ -35,5 +35,3 @@ const errors: Errors = {
     too_big_array: 'Must contain at most ${max} item(s)',
   },
 };
-
-export default errors;

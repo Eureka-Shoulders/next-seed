@@ -19,7 +19,7 @@ export interface ThemeStoreType {
 }
 
 @injectable()
-class ThemeStore implements ThemeStoreType {
+export class ThemeStore implements ThemeStoreType {
   constructor() {
     makeAutoObservable(this, {}, { autoBind: true });
   }
@@ -47,5 +47,3 @@ class ThemeStore implements ThemeStoreType {
     this.persist();
   }
 }
-
-export default ThemeStore;

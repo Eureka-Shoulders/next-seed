@@ -1,9 +1,8 @@
 import { Feedbacks } from '@locales/types/feedbacks';
 
-const feedbacks: Feedbacks = {
+export const feedbacks: Feedbacks = {
   changePassword: 'Senha alterada com sucesso!',
-  recoverPassword:
-    'Recuperação enviada com sucesso! Confira sua caixa de entrada.',
+  recoverPassword: 'Recuperação enviada com sucesso! Confira sua caixa de entrada.',
   logoutDevices: 'Logout de outros dispositivos realizado com sucesso!',
   user: {
     created: 'Usuário criado com sucesso!',
@@ -15,5 +14,3 @@ const feedbacks: Feedbacks = {
   },
   noRegisters: 'Nenhum registro encontrado!',
 };
-
-export default feedbacks;

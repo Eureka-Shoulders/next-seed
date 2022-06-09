@@ -1,6 +1,6 @@
 import { Pages } from '@locales/types/pages';
 
-const pages: Pages = {
+export const pages: Pages = {
   users: {
     list: 'Usuários',
     create: 'Criar usuário',
@@ -13,8 +13,7 @@ const pages: Pages = {
   },
   noPermissions: {
     title: 'Acesso negado',
-    description:
-      'Você não tem as permissões necessárias para acessar esta página',
+    description: 'Você não tem as permissões necessárias para acessar esta página',
     buttonLabel: 'Página inicial',
   },
   notFound: {
@@ -22,5 +21,3 @@ const pages: Pages = {
     description: 'A página que você está tentando acessar não existe',
   },
 };
-
-export default pages;

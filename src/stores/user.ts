@@ -37,7 +37,7 @@ export interface UserStoreType {
 }
 
 @injectable()
-class UserStore implements UserStoreType {
+export class UserStore implements UserStoreType {
   constructor(
     @inject(TYPES.ApiService)
     private apiService: HttpService,
@@ -282,5 +282,3 @@ class UserStore implements UserStoreType {
     return !!this.user && this.abilities !== null;
   }
 }
-
-export default UserStore;
