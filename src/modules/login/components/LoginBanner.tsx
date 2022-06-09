@@ -1,7 +1,7 @@
 import { Box, styled } from '@mui/material';
 import Image from 'next/image';
 
-import useTranslation from '@core/hooks/useTranslation';
+import { useTranslation } from '@hooks/services';
 
 const LoginBannerContainer = styled(Box)({
   background:
@@ -17,12 +17,7 @@ function LoginBanner() {
 
   return (
     <LoginBannerContainer>
-      <Image
-        src="/shoulders-logo.svg"
-        alt={translate('common.logoAlt')}
-        width={200}
-        height={200}
-      />
+      <Image src="/shoulders-logo.svg" alt={translate('common.logoAlt')} width={200} height={200} />
     </LoginBannerContainer>
   );
 }

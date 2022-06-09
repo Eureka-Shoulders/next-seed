@@ -1,4 +1,5 @@
-import { defaultListParams } from '@config/defaultListParams';
+import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
+import { Identifier, useList } from '@euk-labs/fetchx';
 import { Box, Grid } from '@mui/material';
 import { useEffect } from 'react';
 
@@ -6,19 +7,18 @@ import AuthLoader from '@core/components/AuthLoader';
 import Can from '@core/components/Can';
 import FetchxList from '@core/components/FetchxList';
 import { Filters } from '@core/components/Filters';
-import useTranslation from '@core/hooks/useTranslation';
 import setFilter from '@core/utils/setFilter';
+
+import { defaultListParams } from '@config/defaultListParams';
 
 import DeleteContent from '@components/DialogContents/DeleteContent';
 import NewEntityButton from '@components/NewEntityButton';
 
 import { useUsersRepository } from '@hooks/repositories';
+import { useTranslation } from '@hooks/services';
 
 import usersColumns from '@modules/users/columns';
 import { buildFilters, getFilters } from '@modules/users/filters';
-
-import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
-import { Identifier, useList } from '@euk-labs/fetchx';
 
 import { Actions, Subjects, User } from '../../types';
 

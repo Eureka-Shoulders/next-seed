@@ -4,7 +4,8 @@ import { NextPage } from 'next';
 import NextLink from 'next/link';
 
 import NotFoundSVG from '@core/components/ErrorBoundary/NotFoundSVG';
-import useTranslation from '@core/hooks/useTranslation';
+
+import { useTranslation } from '@hooks/services';
 
 const Custom404: NextPage = () => {
   const { translate } = useTranslation();

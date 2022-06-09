@@ -1,35 +1,39 @@
-import TYPES from '@containers/global.types';
 import en from '@locales/en';
 import pt from '@locales/pt';
-import { Locale } from 'date-fns';
+import { Locale, LocaleType } from '@locales/types';
+import { Locale as DateFnsLocale } from 'date-fns';
 import { enUS, ptBR } from 'date-fns/locale';
 import { inject, injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import { path, split } from 'ramda';
 
-const locales: Record<string, unknown> = { pt, en };
-const dateFnsLocales: Record<string, Locale> = {
+import TYPES from '@containers/global.types';
+
+export type TranslateFunc = (id: string) => string;
+
+const locales: Record<string, Locale> = { pt, en };
+const dateFnsLocales: Record<LocaleType, DateFnsLocale> = {
   en: enUS,
   pt: ptBR,
 };
 
 export interface TranslationServiceType {
-  translations: unknown;
-  dateFnsLocale: Locale;
-  setLocale: (locale: string) => void;
+  translations: Locale;
+  dateFnsLocale: DateFnsLocale;
+  setLocale: (locale: LocaleType) => void;
   translate: (id: string) => string;
 }
 
 @injectable()
 class TranslationService implements TranslationServiceType {
-  locale: string;
+  locale: LocaleType;
 
-  constructor(@inject(TYPES.Locale) locale: string) {
+  constructor(@inject(TYPES.Locale) locale: LocaleType) {
     makeAutoObservable(this, {}, { autoBind: true });
     this.locale = locale;
   }
 
-  setLocale(locale: string) {
+  setLocale(locale: LocaleType) {
     this.locale = locale;
   }
 
@@ -54,3 +58,16 @@ class TranslationService implements TranslationServiceType {
 }
 
 export default TranslationService;
+
+export function serverSideTranslate(locale = '', id: string) {
+  const locales: Record<string, Locale> = { pt, en };
+  const translations = locales[locale];
+  const splitPath = split(/[[\].]/);
+  const localeValue = path(splitPath(id), translations);
+
+  if (typeof localeValue === 'string') {
+    return localeValue;
+  }
+
+  return `[${id}]`;
+}

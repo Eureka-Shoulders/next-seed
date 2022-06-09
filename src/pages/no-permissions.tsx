@@ -1,9 +1,9 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { NextPage } from 'next';
 
-import useTranslation from '@core/hooks/useTranslation';
-
 import { UnauthorizedSvg } from '@components/svg/UnauthorizedSvg';
+
+import { useTranslation } from '@hooks/services';
 
 const NoPermissions: NextPage = () => {
   const { translate } = useTranslation();

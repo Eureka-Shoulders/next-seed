@@ -1,9 +1,7 @@
-import useAutocomplete, {
-  AutocompleteRepositoryType,
-} from '@core/hooks/useAutocomplete';
-
 import { FXAutocomplete } from '@euk-labs/formix-mui';
 import { InternalAutocompleteProps } from '@euk-labs/formix-mui/Autocomplete/FXAutocomplete';
+
+import { AutocompleteRepositoryType, useAutocomplete } from '@hooks/useAutocomplete';
 
 import { AutocompleteOption } from '../../types';
 
@@ -14,18 +12,15 @@ type FXAsyncAutocompleteProps = {
   'options' | 'onDebouncedInputChange' | 'loading'
 >;
 
-const FXAsyncAutocomplete = ({
-  repository,
-  ...rest
-}: FXAsyncAutocompleteProps) => {
-  const autocomplete = useAutocomplete(repository);
+const FXAsyncAutocomplete = ({ repository, ...rest }: FXAsyncAutocompleteProps) => {
+  const { options, getOptions, loading } = useAutocomplete(repository);
 
   return (
     <FXAutocomplete
       {...rest}
-      options={autocomplete.options}
-      onDebouncedInputChange={(value) => autocomplete.getOptions(value)}
-      loading={autocomplete.loading}
+      options={options}
+      onDebouncedInputChange={getOptions}
+      loading={loading}
     />
   );
 };

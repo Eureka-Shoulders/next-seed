@@ -1,10 +1,9 @@
+import { EntityStore } from '@euk-labs/fetchx';
 import { Box, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 
-import useTranslation from '@core/hooks/useTranslation';
-
-import { EntityStore } from '@euk-labs/fetchx';
+import { useTranslation } from '@hooks/services';
 
 interface Props {
   children: React.ReactNode;
@@ -35,9 +34,7 @@ function EntityUpdateWrapper({ children, entityStore }: Props) {
   if (entityStore.data === null) {
     return (
       <Box p={3}>
-        <Typography variant="h4">
-          {translate('errors.people.notFound')}
-        </Typography>
+        <Typography variant="h4">{translate('errors.people.notFound')}</Typography>
       </Box>
     );
   }

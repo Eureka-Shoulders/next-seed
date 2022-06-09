@@ -1,4 +1,4 @@
-import useTranslation from '@core/hooks/useTranslation';
+import { useTranslation } from '@hooks/services';
 
 interface TransProps {
   id: string;

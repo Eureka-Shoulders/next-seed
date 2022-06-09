@@ -1,4 +1,3 @@
-import getTableLocaleText from '@config/tableLocale';
 import { Paper } from '@mui/material';
 import {
   DataGrid,
@@ -11,7 +10,9 @@ import {
 import { toJS } from 'mobx';
 import React from 'react';
 
-import useTranslation from '@core/hooks/useTranslation';
+import getTableLocaleText from '@config/tableLocale';
+
+import { useTranslation } from '@hooks/services';
 
 import CustomFooter from './CustomFooter';
 import CustomLoadingOverlay from './CustomLoadingOverlay';

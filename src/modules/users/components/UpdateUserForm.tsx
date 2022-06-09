@@ -1,16 +1,3 @@
-import { Grid } from '@mui/material';
-import { useRouter } from 'next/router';
-import { dissocPath, omit, pipe } from 'ramda';
-
-import useTranslation from '@core/hooks/useTranslation';
-import { zodValidator } from '@core/utils/validators';
-
-import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
-
-import { useNotificationService } from '@hooks/services';
-
-import { getPersonTypes } from '@modules/people/types';
-
 import { EntityStore } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
 import {
@@ -20,6 +7,18 @@ import {
   FXSubmitButton,
   FXTextField,
 } from '@euk-labs/formix-mui';
+import { Grid } from '@mui/material';
+import { useRouter } from 'next/router';
+import { dissocPath, omit, pipe } from 'ramda';
+
+import { zodValidator } from '@core/utils/validators';
+
+import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
+
+import { useTranslation } from '@hooks/services';
+import { useNotificationService } from '@hooks/services';
+
+import { getPersonTypes } from '@modules/people/types';
 
 import { UserSchema, getUserSchema } from '../user.schema';
 
@@ -36,19 +35,13 @@ function UpdateUserForm({ userEntity }: Props) {
     const onSuccess = () => {
       router.push('/users');
     };
-    const updatedUser = pipe(
-      omit(['confirmPassword']),
-      dissocPath(['person', 'type'])
-    )(values);
+    const updatedUser = pipe(omit(['confirmPassword']), dissocPath(['person', 'type']))(values);
 
-    await notificationService.handleHttpRequest(
-      () => userEntity.update(updatedUser),
-      {
-        feedbackSuccess: translate('feedbacks.user.updated'),
-        feedbackError: translate('errors.user.update'),
-        onSuccess,
-      }
-    );
+    await notificationService.handleHttpRequest(() => userEntity.update(updatedUser), {
+      feedbackSuccess: translate('feedbacks.user.updated'),
+      feedbackError: translate('errors.user.update'),
+      onSuccess,
+    });
   }
 
   return (
@@ -82,16 +75,10 @@ function UpdateUserForm({ userEntity }: Props) {
           <FXTextField name="email" label={translate('common.email')} />
         </Grid>
         <Grid item xs={6}>
-          <FXPasswordField
-            name="password"
-            label={translate('common.password')}
-          />
+          <FXPasswordField name="password" label={translate('common.password')} />
         </Grid>
         <Grid item xs={6}>
-          <FXPasswordField
-            name="confirmPassword"
-            label={translate('actions.confirmPassword')}
-          />
+          <FXPasswordField name="confirmPassword" label={translate('actions.confirmPassword')} />
         </Grid>
 
         <Grid item xs={12} display="flex" justifyContent="flex-end">

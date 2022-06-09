@@ -5,12 +5,11 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useEffect } from 'react';
 
-import useTranslation from '@core/hooks/useTranslation';
-
 import { getPages } from '@config/pages';
 
 import TYPES from '@containers/global.types';
 
+import { useTranslation } from '@hooks/services';
 import { useThemeStore, useUserStore } from '@hooks/stores';
 
 import { ThemeType } from '@stores/theme';

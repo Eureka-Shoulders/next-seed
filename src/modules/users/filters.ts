@@ -1,7 +1,8 @@
 import { add, format } from 'date-fns';
 
 import { Filter } from '@core/components/Filters/types';
-import { TranslateFunc } from '@core/hooks/useTranslation';
+
+import { TranslateFunc } from '@services/translation';
 
 export function getFilters(translate: TranslateFunc): Filter[] {
   return [
@@ -23,10 +24,7 @@ export function getFilters(translate: TranslateFunc): Filter[] {
   ];
 }
 
-export function buildFilters(
-  filters: Record<string, unknown>,
-  urlSearchParams: URLSearchParams
-) {
+export function buildFilters(filters: Record<string, unknown>, urlSearchParams: URLSearchParams) {
   const whereObject: Record<string, unknown> = {};
 
   if (filters.name) {

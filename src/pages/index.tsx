@@ -4,8 +4,7 @@ import { observer } from 'mobx-react-lite';
 import type { NextPage } from 'next';
 import React from 'react';
 
-import useTranslation from '@core/hooks/useTranslation';
-
+import { useTranslation } from '@hooks/services';
 import { useThemeStore } from '@hooks/stores';
 
 const Home: NextPage = () => {

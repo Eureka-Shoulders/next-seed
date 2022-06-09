@@ -1,4 +1,4 @@
-import { TranslateFunc } from '@core/hooks/useTranslation';
+import { TranslateFunc } from '@services/translation';
 
 export default function getPersonType(value: string, translate: TranslateFunc) {
   if (value.length === 11) {

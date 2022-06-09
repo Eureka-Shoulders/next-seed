@@ -1,7 +1,6 @@
 import componentzContainer from '@euk-labs/componentz/containers/global.inversify';
 
 import LoggerService from '@core/services/logger';
-import TranslationService from '@core/services/translation';
 
 import ThemeStore from '@stores/theme';
 import UserStore from '@stores/user';
@@ -11,6 +10,7 @@ import UsersRepository from '@modules/users/repository';
 
 import httpService from '@services/http';
 import NotificationService from '@services/notification';
+import TranslationService from '@services/translation';
 
 import TYPES from './global.types';
 

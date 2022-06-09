@@ -8,11 +8,10 @@ import Router from 'next/router';
 import { parseCookies, setCookie } from 'nookies';
 import { AppAbility, User } from 'types';
 
-import type { TranslationServiceType } from '@core/services/translation';
-
 import { ONE_DAY_IN_SECONDS } from '@config/constants';
 
 import type { NotificationServiceType } from '@services/notification';
+import type { TranslationServiceType } from '@services/translation';
 
 export interface UserStoreType {
   user: User | null;
@@ -113,9 +112,9 @@ class UserStore implements UserStoreType {
   }
 
   async getAbilities() {
-    const abilitiesResponse = await this.apiService.client.get<
-      RawRuleOf<AppAbility>[]
-    >('/auth/abilities');
+    const abilitiesResponse = await this.apiService.client.get<RawRuleOf<AppAbility>[]>(
+      '/auth/abilities'
+    );
 
     if (abilitiesResponse?.data) {
       this.setRawAbilities(abilitiesResponse.data);
@@ -208,10 +207,7 @@ class UserStore implements UserStoreType {
       async (error) => {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 403) {
-            if (
-              error.config.url === '/auth/abilities' ||
-              error.config.url === '/auth/me'
-            ) {
+            if (error.config.url === '/auth/abilities' || error.config.url === '/auth/me') {
               return Router.reload();
             }
             return this.notificationService.notify(
@@ -236,8 +232,7 @@ class UserStore implements UserStoreType {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 401) {
             const isLoggingIn = error.config.url === '/auth/login';
-            const isChangingPassword =
-              error.config.url === '/auth/change-password-user';
+            const isChangingPassword = error.config.url === '/auth/change-password-user';
 
             if (this.isRefreshingToken || isLoggingIn || isChangingPassword) {
               return Promise.reject(error);

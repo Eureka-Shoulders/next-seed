@@ -1,4 +1,5 @@
-import { defaultListParams } from '@config/defaultListParams';
+import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
+import { Identifier, useList } from '@euk-labs/fetchx';
 import { Box, Grid } from '@mui/material';
 import { Actions, Person, Subjects } from 'types';
 
@@ -6,18 +7,17 @@ import AuthLoader from '@core/components/AuthLoader';
 import Can from '@core/components/Can';
 import FetchxList from '@core/components/FetchxList';
 import { Filters } from '@core/components/Filters';
-import useTranslation from '@core/hooks/useTranslation';
+
+import { defaultListParams } from '@config/defaultListParams';
 
 import DeleteContent from '@components/DialogContents/DeleteContent';
 import NewEntityButton from '@components/NewEntityButton';
 
 import { usePeopleRepository } from '@hooks/repositories';
+import { useTranslation } from '@hooks/services';
 
 import getPeopleColumns from '@modules/people/columns';
 import { buildFilters, getFilters } from '@modules/people/filters';
-
-import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
-import { Identifier, useList } from '@euk-labs/fetchx';
 
 function Index() {
   const { translate } = useTranslation();

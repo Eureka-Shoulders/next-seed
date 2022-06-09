@@ -2,12 +2,12 @@ import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 import { Button, Grid } from '@mui/material';
 
-import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
 import UnloadListener from '@components/Listeners/UnloadListener';
 
 import { useUsersRepository } from '@hooks/repositories';
+import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 
 import { RecoverPasswordSchema, RecoverPasswordValues } from '../login.schema';
@@ -47,23 +47,14 @@ export default function RecoverPasswordForm({
       <UnloadListener />
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <FXTextField
-            name="email"
-            label={translate('common.email')}
-            type="email"
-          />
+          <FXTextField name="email" label={translate('common.email')} type="email" />
         </Grid>
 
         <Grid item xs={12} display="flex" justifyContent="center">
           <FXSubmitButton fullWidth label={translate('actions.recover')} />
         </Grid>
         <Grid item xs={12} display="flex" justifyContent="center">
-          <Button
-            onClick={onCancel}
-            color="primary"
-            variant="outlined"
-            fullWidth
-          >
+          <Button onClick={onCancel} color="primary" variant="outlined" fullWidth>
             {translate('actions.goBack')}
           </Button>
         </Grid>

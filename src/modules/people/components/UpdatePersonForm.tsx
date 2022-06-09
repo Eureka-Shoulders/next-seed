@@ -9,9 +9,9 @@ import { useState } from 'react';
 import { Person } from 'types';
 
 import TabPanel from '@core/components/TabPanel';
-import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
+import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 
 import { getInitialValuesForUpdate } from '../initialValues';
@@ -52,24 +52,17 @@ function EditPersonForm({ personEntity }: Props) {
       router.push('/people');
     };
 
-    await notificationService.handleHttpRequest(
-      () => personEntity.update(newData),
-      {
-        feedbackSuccess: translate('feedbacks.person.updated'),
-        feedbackError: translate('errors.people.update'),
-        onSuccess,
-      }
-    );
+    await notificationService.handleHttpRequest(() => personEntity.update(newData), {
+      feedbackSuccess: translate('feedbacks.person.updated'),
+      feedbackError: translate('errors.people.update'),
+      onSuccess,
+    });
   }
 
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          value={activeTab}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
+        <Tabs value={activeTab} onChange={handleChange} aria-label="basic tabs example">
           <Tab label={translate('common.information')} />
           <Tab label={translate('common.contacts')} />
           <Tab label={translate('common.addresses')} />

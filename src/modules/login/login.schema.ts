@@ -1,8 +1,8 @@
 import * as zod from 'zod';
 
-import { TranslateFunc } from '@core/hooks/useTranslation';
-
 import { getPasswordSchema } from '@config/schemas/password.schema';
+
+import { TranslateFunc } from '@services/translation';
 
 /**
  * Login Schema
@@ -37,9 +37,7 @@ export function getResetPasswordSchema(translate: TranslateFunc) {
       path: ['confirmPassword'],
     });
 }
-export type ResetPasswordSchema = zod.infer<
-  ReturnType<typeof getResetPasswordSchema>
->;
+export type ResetPasswordSchema = zod.infer<ReturnType<typeof getResetPasswordSchema>>;
 
 /**
  * Confirm Password Schema
@@ -49,6 +47,4 @@ export function getChangePasswordSchema(translate: TranslateFunc) {
     newPassword: getPasswordSchema(translate),
   });
 }
-export type ChangePasswordValues = zod.infer<
-  ReturnType<typeof getChangePasswordSchema>
->;
+export type ChangePasswordValues = zod.infer<ReturnType<typeof getChangePasswordSchema>>;

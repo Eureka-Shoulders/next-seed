@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import useTranslation from '@core/hooks/useTranslation';
+import { useTranslation } from '@hooks/services';
 
 import LoginBanner from '@modules/login/components/LoginBanner';
 import RecoverPasswordForm from '@modules/login/components/RecoverPasswordForm';

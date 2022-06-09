@@ -1,10 +1,10 @@
+import { FXDatePicker } from '@euk-labs/formix-mui';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
 import TabPanel from '@core/components/TabPanel';
 import Trans from '@core/components/Trans';
-import useTranslation from '@core/hooks/useTranslation';
 
-import { FXDatePicker } from '@euk-labs/formix-mui';
+import { useTranslation } from '@hooks/services';
 
 interface DateFilterProps {
   name: string;
@@ -12,11 +12,7 @@ interface DateFilterProps {
   index: number;
 }
 
-export default function DateFilter({
-  name,
-  activeTab,
-  index,
-}: DateFilterProps) {
+export default function DateFilter({ name, activeTab, index }: DateFilterProps) {
   const { translate } = useTranslation();
 
   return (

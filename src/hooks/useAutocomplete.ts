@@ -11,7 +11,7 @@ export interface AutocompleteRepositoryType extends Repository {
   getAutocompleteOptions: (value?: string) => Promise<AutocompleteOptions[]>;
 }
 
-const useAutocomplete = (repository: AutocompleteRepositoryType) => {
+export const useAutocomplete = (repository: AutocompleteRepositoryType) => {
   const [options, setOptions] = useState<AutocompleteOptions[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -29,8 +29,6 @@ const useAutocomplete = (repository: AutocompleteRepositoryType) => {
   return {
     options,
     loading,
-    getOptions: (value?: string) => getOptions(value),
+    getOptions,
   };
 };
-
-export default useAutocomplete;

@@ -5,7 +5,7 @@ import { differenceInSeconds, formatDistanceToNowStrict } from 'date-fns';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 
-import useTranslation from '@core/hooks/useTranslation';
+import { useTranslation } from '@hooks/services';
 
 const ONE_MINUTE = 60 * 1000;
 
@@ -50,13 +50,7 @@ function CustomFooter() {
   }, [date]);
 
   return (
-    <Box
-      p={1}
-      width="100%"
-      display="flex"
-      justifyContent="space-between"
-      alignItems="center"
-    >
+    <Box p={1} width="100%" display="flex" justifyContent="space-between" alignItems="center">
       <Box display="flex" alignItems="center" gap={1}>
         <RefreshIcon color="disabled" />
         <Typography color="text.secondary" variant="body2">

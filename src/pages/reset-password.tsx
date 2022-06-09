@@ -4,10 +4,10 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
 import { useUsersRepository } from '@hooks/repositories';
+import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 
 import LoginBanner from '@modules/login/components/LoginBanner';

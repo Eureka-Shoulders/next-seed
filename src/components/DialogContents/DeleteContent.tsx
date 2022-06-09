@@ -1,6 +1,6 @@
 import { Box, Grid, Typography, styled } from '@mui/material';
 
-import useTranslation from '@core/hooks/useTranslation';
+import { useTranslation } from '@hooks/services';
 
 type DeleteContentProps = {
   title?: string;
@@ -21,12 +21,7 @@ function DeleteContent(props: DeleteContentProps) {
   } = props;
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      spacing={2}
-      sx={{ maxWidth: '400px' }}
-    >
+    <Grid container justifyContent="center" spacing={2} sx={{ maxWidth: '400px' }}>
       <Grid item xs="auto">
         <StyledImage src={src} alt="Delete Illustration" height="250px" />
       </Grid>

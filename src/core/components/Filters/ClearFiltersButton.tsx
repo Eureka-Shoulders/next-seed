@@ -1,9 +1,8 @@
+import { useFormixContext } from '@euk-labs/formix';
 import { Delete as DeleteIcon } from '@mui/icons-material';
 import { Tooltip } from '@mui/material';
 
-import useTranslation from '@core/hooks/useTranslation';
-
-import { useFormixContext } from '@euk-labs/formix';
+import { useTranslation } from '@hooks/services';
 
 import SmallButton from './SmallButton';
 

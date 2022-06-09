@@ -1,3 +1,5 @@
+import { useArrayField } from '@euk-labs/formix';
+import { FXTextField } from '@euk-labs/formix-mui';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
@@ -6,10 +8,8 @@ import { Fragment } from 'react';
 
 import Trans from '@core/components/Trans';
 import When from '@core/components/Utility/When';
-import useTranslation from '@core/hooks/useTranslation';
 
-import { useArrayField } from '@euk-labs/formix';
-import { FXTextField } from '@euk-labs/formix-mui';
+import { useTranslation } from '@hooks/services';
 
 function AddressesField() {
   const name = 'addresses';
@@ -41,22 +41,13 @@ function AddressesField() {
           </Grid>
 
           <Grid item xs={3}>
-            <FXTextField
-              name={`${name}.${index}.zipcode`}
-              label={translate('common.zipcode')}
-            />
+            <FXTextField name={`${name}.${index}.zipcode`} label={translate('common.zipcode')} />
           </Grid>
           <Grid item xs={6}>
-            <FXTextField
-              name={`${name}.${index}.street`}
-              label={translate('common.street')}
-            />
+            <FXTextField name={`${name}.${index}.street`} label={translate('common.street')} />
           </Grid>
           <Grid item xs={3}>
-            <FXTextField
-              name={`${name}.${index}.number`}
-              label={translate('common.number')}
-            />
+            <FXTextField name={`${name}.${index}.number`} label={translate('common.number')} />
           </Grid>
           <Grid item xs={6}>
             <FXTextField
@@ -65,22 +56,13 @@ function AddressesField() {
             />
           </Grid>
           <Grid item xs={6}>
-            <FXTextField
-              name={`${name}.${index}.city`}
-              label={translate('common.city')}
-            />
+            <FXTextField name={`${name}.${index}.city`} label={translate('common.city')} />
           </Grid>
           <Grid item xs={6}>
-            <FXTextField
-              name={`${name}.${index}.state`}
-              label={translate('common.state')}
-            />
+            <FXTextField name={`${name}.${index}.state`} label={translate('common.state')} />
           </Grid>
           <Grid item xs={6}>
-            <FXTextField
-              name={`${name}.${index}.country`}
-              label={translate('common.country')}
-            />
+            <FXTextField name={`${name}.${index}.country`} label={translate('common.country')} />
           </Grid>
 
           <When isNot={isLastItem(index)}>

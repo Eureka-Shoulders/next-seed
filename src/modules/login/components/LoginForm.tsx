@@ -1,19 +1,15 @@
 import { Formix } from '@euk-labs/formix';
-import {
-  FXPasswordField,
-  FXSubmitButton,
-  FXTextField,
-} from '@euk-labs/formix-mui';
+import { FXPasswordField, FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import Link from 'next/link';
 
 import Trans from '@core/components/Trans';
-import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
 // TODO: Logo
 // import GPLogoImage from '@components/GPLogoImage';
 import { useUsersRepository } from '@hooks/repositories';
+import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 import { useUserStore } from '@hooks/stores';
 
@@ -38,11 +34,7 @@ function LoginForm() {
       {
         feedbackError: translate('errors.systemError'),
         onSuccess: (response) => {
-          userStore.login(
-            response.data.accessToken,
-            response.data.refreshToken,
-            redirectTo
-          );
+          userStore.login(response.data.accessToken, response.data.refreshToken, redirectTo);
         },
       }
     );
@@ -58,12 +50,7 @@ function LoginForm() {
           <Typography align="center">
             <Trans id="common.welcomeBack" />
           </Typography>
-          <Typography
-            align="center"
-            variant="h4"
-            component="h1"
-            fontWeight={700}
-          >
+          <Typography align="center" variant="h4" component="h1" fontWeight={700}>
             <Trans id="common.makeLogin" />
           </Typography>
         </Grid>
@@ -79,10 +66,7 @@ function LoginForm() {
                 <FXTextField name="email" label={translate('common.email')} />
               </Grid>
               <Grid item xs={12}>
-                <FXPasswordField
-                  name="password"
-                  label={translate('common.password')}
-                />
+                <FXPasswordField name="password" label={translate('common.password')} />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">

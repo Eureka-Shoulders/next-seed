@@ -1,10 +1,10 @@
+import { FXNumericField } from '@euk-labs/formix-mui';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
 import TabPanel from '@core/components/TabPanel';
 import Trans from '@core/components/Trans';
-import useTranslation from '@core/hooks/useTranslation';
 
-import { FXNumericField } from '@euk-labs/formix-mui';
+import { useTranslation } from '@hooks/services';
 
 interface NumericFilterProps {
   name: string;

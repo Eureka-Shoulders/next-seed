@@ -7,10 +7,10 @@ import { useState } from 'react';
 import { ContactType } from 'types';
 
 import TabPanel from '@core/components/TabPanel';
-import useTranslation from '@core/hooks/useTranslation';
 import { zodValidator } from '@core/utils/validators';
 
 import { usePeopleRepository } from '@hooks/repositories';
+import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 
 import { initialValuesForCreate } from '../initialValues';
@@ -57,11 +57,7 @@ function CreatePersonForm() {
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          value={activeTab}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
+        <Tabs value={activeTab} onChange={handleChange} aria-label="basic tabs example">
           <Tab label={translate('common.information')} />
           <Tab label={translate('common.contacts')} />
           <Tab label={translate('common.addresses')} />

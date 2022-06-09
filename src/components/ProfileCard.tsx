@@ -1,8 +1,7 @@
 import { Avatar, Box, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 
-import useTranslation from '@core/hooks/useTranslation';
-
+import { useTranslation } from '@hooks/services';
 import { useUserStore } from '@hooks/stores';
 
 function ProfileCard() {

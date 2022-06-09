@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { z } from 'zod';
 
-import useTranslation from '@core/hooks/useTranslation';
+import { useTranslation } from '@hooks/services';
 
 export default function ZodErrorMapBuilder() {
   const { translate } = useTranslation();
