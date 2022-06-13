@@ -13,3 +13,10 @@ export const PUBLIC_ROUTES = [
   '/recover-password',
   '/entity-not-found',
 ];
+
+export const defaultCookieConfig = {
+  path: '/',
+  maxAge: ONE_DAY_IN_SECONDS,
+  httpOnly: true,
+  sameSite: true,
+};

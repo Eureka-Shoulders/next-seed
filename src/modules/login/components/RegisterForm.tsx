@@ -10,8 +10,6 @@ import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
-import { zodValidator } from '@core/utils/validators';
-
 import FXCPFCNPJField from '@components/form/FXCPFCNPJField';
 import Trans from '@components/utility/Trans';
 
@@ -21,6 +19,8 @@ import { useNotificationService } from '@hooks/services';
 
 import { getPersonTypes } from '@modules/people/types';
 import { UserSchema, getUserSchema } from '@modules/users/user.schema';
+
+import { zodValidator } from '@utils/zodValidator';
 
 import { initialValuesForRegister } from '../initialValues';
 

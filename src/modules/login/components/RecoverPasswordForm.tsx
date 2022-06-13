@@ -2,13 +2,13 @@ import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 import { Button, Grid } from '@mui/material';
 
-import { zodValidator } from '@core/utils/validators';
-
 import UnloadListener from '@components/listener/UnloadListener';
 
 import { useUsersRepository } from '@hooks/repositories';
 import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
+
+import { zodValidator } from '@utils/zodValidator';
 
 import { RecoverPasswordSchema, RecoverPasswordValues } from '../login.schema';
 

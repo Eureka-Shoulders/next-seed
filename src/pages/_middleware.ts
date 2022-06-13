@@ -1,13 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-import { ONE_DAY_IN_SECONDS, PUBLIC_ROUTES } from '@config/constants';
-
-const cookieConfig = {
-  path: '/',
-  maxAge: ONE_DAY_IN_SECONDS,
-  httpOnly: true,
-  sameSite: true,
-};
+import { PUBLIC_ROUTES, defaultCookieConfig } from '@config/constants';
 
 // TODO: implement i18n
 export function middleware(req: NextRequest): Promise<Response | undefined> | Response | undefined {
@@ -21,20 +14,20 @@ export function middleware(req: NextRequest): Promise<Response | undefined> | Re
 
   if (userToken && pageName === '/login') {
     const res = NextResponse.redirect(`${origin}/`);
-    res.cookie('isPublicPage', String(isPublicPage), cookieConfig);
+    res.cookie('isPublicPage', String(isPublicPage), defaultCookieConfig);
     return res;
   }
 
   if (userToken || isPublicPage) {
     const res = NextResponse.next();
-    res.cookie('isPublicPage', String(isPublicPage), cookieConfig);
+    res.cookie('isPublicPage', String(isPublicPage), defaultCookieConfig);
     return res;
   }
 
   const res = NextResponse.redirect(`${origin}/login`);
 
   if (isPublicPage) {
-    res.cookie('isPublicPage', String(isPublicPage), cookieConfig);
+    res.cookie('isPublicPage', String(isPublicPage), defaultCookieConfig);
   }
 
   return res;

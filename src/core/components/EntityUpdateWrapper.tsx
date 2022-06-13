@@ -25,6 +25,7 @@ function EntityUpdateWrapper({ children, entityStore }: Props) {
     return <>{children}</>;
   }
 
+  // TODO: implement a loading animation
   if (entityStore.identifier === null || entityStore.loading) {
     return (
       <Box p={3}>

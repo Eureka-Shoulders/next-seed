@@ -4,11 +4,11 @@ import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
 import { Grid } from '@mui/material';
 import { User } from 'types';
 
-import { zodValidator } from '@core/utils/validators';
-
 import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 import { useUserStore } from '@hooks/stores';
+
+import { zodValidator } from '@utils/zodValidator';
 
 import { ProfileSchema } from '../profile.schema';
 

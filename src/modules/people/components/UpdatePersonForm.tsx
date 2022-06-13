@@ -8,12 +8,12 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Person } from 'types';
 
-import { zodValidator } from '@core/utils/validators';
-
 import TabPanel from '@components/utility/TabPanel';
 
 import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
+
+import { zodValidator } from '@utils/zodValidator';
 
 import { getInitialValuesForUpdate } from '../initialValues';
 import { UpdatePersonSchema } from '../people.schema';

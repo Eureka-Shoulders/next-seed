@@ -10,8 +10,6 @@ import { Grid } from '@mui/material';
 import { useRouter } from 'next/router';
 import { dissocPath, omit, pipe } from 'ramda';
 
-import { zodValidator } from '@core/utils/validators';
-
 import FXCPFCNPJField from '@components/form/FXCPFCNPJField';
 
 import { useUsersRepository } from '@hooks/repositories';
@@ -19,6 +17,8 @@ import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 
 import { getPersonTypes } from '@modules/people/types';
+
+import { zodValidator } from '@utils/zodValidator';
 
 import { initialValuesForCreate } from '../initialValues';
 import { UserSchema, getUserSchema } from '../user.schema';

@@ -12,6 +12,7 @@ import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
+import AuthLoader from '@components/AuthLoader';
 import ErrorBoundary from '@components/ErrorBoundary';
 import CoreListener from '@components/listener/CoreListener';
 import ZodErrorMapBuilder from '@components/utility/ZodErrorMapBuilder';
@@ -65,10 +66,14 @@ function MyApp(props: MyAppProps) {
               <ErrorBoundary>
                 {showAppBar ? (
                   <AppBar>
-                    <Component {...pageProps} />
+                    <AuthLoader>
+                      <Component {...pageProps} />
+                    </AuthLoader>
                   </AppBar>
                 ) : (
-                  <Component {...pageProps} />
+                  <AuthLoader>
+                    <Component {...pageProps} />
+                  </AuthLoader>
                 )}
 
                 <Snackbar autoHideDuration={6000} />

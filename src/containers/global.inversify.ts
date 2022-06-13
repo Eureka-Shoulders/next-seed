@@ -1,7 +1,5 @@
 import componentzContainer from '@euk-labs/componentz/containers/global.inversify';
 
-import LoggerService from '@core/services/logger';
-
 import { ThemeStore } from '@stores/theme';
 import { UserStore } from '@stores/user';
 
@@ -9,6 +7,7 @@ import PeopleRepository from '@modules/people/repository';
 import UsersRepository from '@modules/users/repository';
 
 import { httpService } from '@services/http';
+import { LoggerService } from '@services/logger';
 import { NotificationService } from '@services/notification';
 import { TranslationService } from '@services/translation';
 

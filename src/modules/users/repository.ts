@@ -4,11 +4,11 @@ import { inject, injectable } from 'inversify';
 import { dissocPath, omit, pipe } from 'ramda';
 import { User } from 'types';
 
-import Repository from '@core/utils/Repository';
-
 import TYPES from '@containers/global.types';
 
 import { LoginSchema } from '@modules/login/login.schema';
+
+import Repository from '@services/http';
 
 import { UserSchema } from './user.schema';
 

@@ -3,10 +3,8 @@ import { Identifier, useList } from '@euk-labs/fetchx';
 import { Box, Grid } from '@mui/material';
 import { useEffect } from 'react';
 
-import AuthLoader from '@core/components/AuthLoader';
 import FetchxList from '@core/components/FetchxList';
 import { Filters } from '@core/components/Filters';
-import setFilter from '@core/utils/setFilter';
 
 import { defaultListParams } from '@config/defaultListParams';
 
@@ -19,6 +17,8 @@ import { useTranslation } from '@hooks/services';
 
 import usersColumns from '@modules/users/columns';
 import { buildFilters, getFilters } from '@modules/users/filters';
+
+import setFilter from '@utils/table/setFilter';
 
 import { Actions, Subjects, User } from '../../types';
 
@@ -58,38 +58,36 @@ function Index() {
   }, []);
 
   return (
-    <AuthLoader>
-      <Box p={3} mb={10}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Breadcrumb />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Filters
-              filters={getFilters(translate)}
-              onFilter={(filters) => {
-                buildFilters(filters, usersList.filters);
-                usersList.fetch();
-              }}
-              onRefresh={usersList.fetch}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <FetchxList
-              listStore={usersList}
-              pageSize={10}
-              columns={usersColumns(handleDelete, translate)}
-            />
-          </Grid>
+    <Box p={3} mb={10}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Breadcrumb />
         </Grid>
 
-        <Can action={Actions.Create} subject={Subjects.User}>
-          <NewEntityFab />
-        </Can>
-      </Box>
-    </AuthLoader>
+        <Grid item xs={12}>
+          <Filters
+            filters={getFilters(translate)}
+            onFilter={(filters) => {
+              buildFilters(filters, usersList.filters);
+              usersList.fetch();
+            }}
+            onRefresh={usersList.fetch}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <FetchxList
+            listStore={usersList}
+            pageSize={10}
+            columns={usersColumns(handleDelete, translate)}
+          />
+        </Grid>
+      </Grid>
+
+      <Can action={Actions.Create} subject={Subjects.User}>
+        <NewEntityFab />
+      </Can>
+    </Box>
   );
 }
 

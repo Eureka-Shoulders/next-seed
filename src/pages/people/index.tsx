@@ -3,7 +3,6 @@ import { Identifier, useList } from '@euk-labs/fetchx';
 import { Box, Grid } from '@mui/material';
 import { Actions, Person, Subjects } from 'types';
 
-import AuthLoader from '@core/components/AuthLoader';
 import FetchxList from '@core/components/FetchxList';
 import { Filters } from '@core/components/Filters';
 
@@ -45,38 +44,36 @@ function Index() {
   };
 
   return (
-    <AuthLoader>
-      <Box p={3} mb={10}>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Breadcrumb />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Filters
-              filters={getFilters(translate)}
-              onFilter={(filters) => {
-                buildFilters(filters, peopleList.filters);
-                peopleList.fetch();
-              }}
-              onRefresh={peopleList.fetch}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <FetchxList
-              listStore={peopleList}
-              pageSize={10}
-              columns={getPeopleColumns(handleDelete, translate)}
-            />
-          </Grid>
+    <Box p={3} mb={10}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Breadcrumb />
         </Grid>
 
-        <Can action={Actions.Create} subject={Subjects.Person}>
-          <NewEntityFab />
-        </Can>
-      </Box>
-    </AuthLoader>
+        <Grid item xs={12}>
+          <Filters
+            filters={getFilters(translate)}
+            onFilter={(filters) => {
+              buildFilters(filters, peopleList.filters);
+              peopleList.fetch();
+            }}
+            onRefresh={peopleList.fetch}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <FetchxList
+            listStore={peopleList}
+            pageSize={10}
+            columns={getPeopleColumns(handleDelete, translate)}
+          />
+        </Grid>
+      </Grid>
+
+      <Can action={Actions.Create} subject={Subjects.Person}>
+        <NewEntityFab />
+      </Can>
+    </Box>
   );
 }
 

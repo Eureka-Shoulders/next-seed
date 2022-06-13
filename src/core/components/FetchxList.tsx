@@ -3,7 +3,7 @@ import { GridRowsProp } from '@mui/x-data-grid';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 
-import sortList from '@core/utils/sortList';
+import sortList from '@utils/table/sortList';
 
 import { MuiTable, MuiTableProps } from './MuiTable';
 

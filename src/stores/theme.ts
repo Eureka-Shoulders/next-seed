@@ -3,7 +3,7 @@ import { injectable } from 'inversify';
 import { makeAutoObservable } from 'mobx';
 import { setCookie } from 'nookies';
 
-import { ONE_YEAR_IN_SECONDS } from '@config/constants';
+import { ONE_YEAR_IN_SECONDS, defaultCookieConfig } from '@config/constants';
 
 import darkTheme from '@styles/dark.theme';
 import lightTheme from '@styles/light.theme';
@@ -37,8 +37,8 @@ export class ThemeStore implements ThemeStoreType {
 
   persist() {
     setCookie(null, 'theme', this.theme || 'light', {
+      ...defaultCookieConfig,
       maxAge: ONE_YEAR_IN_SECONDS,
-      path: '/',
     });
   }
 

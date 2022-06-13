@@ -6,13 +6,13 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ContactType } from 'types';
 
-import { zodValidator } from '@core/utils/validators';
-
 import TabPanel from '@components/utility/TabPanel';
 
 import { usePeopleRepository } from '@hooks/repositories';
 import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
+
+import { zodValidator } from '@utils/zodValidator';
 
 import { initialValuesForCreate } from '../initialValues';
 import { NewPersonSchema } from '../people.schema';

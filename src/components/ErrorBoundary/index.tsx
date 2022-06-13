@@ -1,8 +1,9 @@
-import TYPES from '@containers/global.types';
 import { resolve } from 'inversify-react';
 import { Component, ErrorInfo, ReactNode } from 'react';
 
-import type { LoggerServiceType } from '@core/services/logger';
+import TYPES from '@containers/global.types';
+
+import type { LoggerServiceType } from '@services/logger';
 
 import OhNoScreen from './OhNoScreen';
 

@@ -3,8 +3,6 @@ import { FXPasswordField, FXSubmitButton, FXTextField } from '@euk-labs/formix-m
 import { Box, Button, Grid, Typography } from '@mui/material';
 import Link from 'next/link';
 
-import { zodValidator } from '@core/utils/validators';
-
 import Trans from '@components/utility/Trans';
 
 // TODO: Logo
@@ -13,6 +11,8 @@ import { useUsersRepository } from '@hooks/repositories';
 import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 import { useUserStore } from '@hooks/stores';
+
+import { zodValidator } from '@utils/zodValidator';
 
 import { LoginSchema, getLoginSchema } from '../login.schema';
 

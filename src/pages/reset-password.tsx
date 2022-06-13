@@ -4,14 +4,14 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import type { GetStaticProps, NextPage } from 'next';
 import { useRouter } from 'next/router';
 
-import { zodValidator } from '@core/utils/validators';
-
 import { useUsersRepository } from '@hooks/repositories';
 import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 
 import LoginBanner from '@modules/login/components/LoginBanner';
 import { ResetPasswordSchema, getResetPasswordSchema } from '@modules/login/login.schema';
+
+import { zodValidator } from '@utils/zodValidator';
 
 interface ResetPasswordProps {
   token: string;

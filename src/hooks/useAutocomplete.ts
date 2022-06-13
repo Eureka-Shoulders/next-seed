@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import Repository from '@core/utils/Repository';
+import Repository from '@services/http';
 
 import { useUserStore } from './stores';
 

@@ -7,6 +7,7 @@ interface Props {
   children: React.ReactNode;
 }
 
+// TODO: implement loading animation
 function AuthLoader({ children }: Props) {
   const userStore = useUserStore();
 

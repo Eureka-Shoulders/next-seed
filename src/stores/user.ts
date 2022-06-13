@@ -8,7 +8,7 @@ import Router from 'next/router';
 import { parseCookies, setCookie } from 'nookies';
 import { AppAbility, User } from 'types';
 
-import { ONE_DAY_IN_SECONDS } from '@config/constants';
+import { ONE_DAY_IN_SECONDS, defaultCookieConfig } from '@config/constants';
 
 import type { NotificationServiceType } from '@services/notification';
 import type { TranslationServiceType } from '@services/translation';
@@ -65,13 +65,10 @@ export class UserStore implements UserStoreType {
   }
 
   login(accessToken: string, refreshToken: string, redirectTo?: string) {
-    setCookie(null, 'user_token', accessToken, {
-      maxAge: ONE_DAY_IN_SECONDS,
-      path: '/',
-    });
+    setCookie(null, 'user_token', accessToken, defaultCookieConfig);
     setCookie(null, 'refresh_token', refreshToken, {
+      ...defaultCookieConfig,
       maxAge: ONE_DAY_IN_SECONDS * 2,
-      path: '/',
     });
 
     Router.push(redirectTo || '/');
@@ -84,12 +81,12 @@ export class UserStore implements UserStoreType {
     const refreshToken = this.getRefreshToken();
 
     setCookie(null, 'user_token', '', {
+      ...defaultCookieConfig,
       maxAge: -1,
-      path: '/',
     });
     setCookie(null, 'refresh_token', '', {
+      ...defaultCookieConfig,
       maxAge: -1,
-      path: '/',
     });
 
     if (accessToken || refreshToken) {
@@ -136,13 +133,10 @@ export class UserStore implements UserStoreType {
       const newTokens = await this.refreshToken();
 
       if (newTokens) {
-        setCookie(null, 'user_token', newTokens.accessToken, {
-          maxAge: ONE_DAY_IN_SECONDS,
-          path: '/',
-        });
+        setCookie(null, 'user_token', newTokens.accessToken, defaultCookieConfig);
         setCookie(null, 'refresh_token', newTokens.refreshToken, {
+          ...defaultCookieConfig,
           maxAge: ONE_DAY_IN_SECONDS * 2,
-          path: '/',
         });
       }
     }
@@ -246,13 +240,10 @@ export class UserStore implements UserStoreType {
               const newTokens = await this.refreshToken();
 
               if (newTokens) {
-                setCookie(null, 'user_token', newTokens.accessToken, {
-                  maxAge: ONE_DAY_IN_SECONDS,
-                  path: '/',
-                });
+                setCookie(null, 'user_token', newTokens.accessToken, defaultCookieConfig);
                 setCookie(null, 'refresh_token', newTokens.refreshToken, {
+                  ...defaultCookieConfig,
                   maxAge: ONE_DAY_IN_SECONDS * 2,
-                  path: '/',
                 });
 
                 return await this.apiService.client({
