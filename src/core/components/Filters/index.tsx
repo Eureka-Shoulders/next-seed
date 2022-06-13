@@ -9,11 +9,11 @@ import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 
-import Trans from '@core/components/Trans';
+import Trans from '@components/utility/Trans';
+import When from '@components/utility/When';
 
 import { useTranslation } from '@hooks/services';
 
-import When from '../Utility/When';
 import AllFiltersModal from './AllFiltersModal';
 import ClearFiltersButton from './ClearFiltersButton';
 import { FiltersModal } from './FiltersModal';

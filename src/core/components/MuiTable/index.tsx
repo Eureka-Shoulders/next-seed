@@ -14,9 +14,9 @@ import getTableLocaleText from '@config/tableLocale';
 
 import { useTranslation } from '@hooks/services';
 
-import CustomFooter from './CustomFooter';
-import CustomLoadingOverlay from './CustomLoadingOverlay';
-import CustomNoRowsOverlay from './CustomNoRowsOverlay';
+import Footer from './Footer';
+import { LoadingOverlay } from './LoadingOverlay';
+import { NoRowsOverlay } from './NoRowsOverlay';
 
 export interface MuiTableProps extends DataGridProps {
   columns: GridColDef[];
@@ -31,7 +31,7 @@ export interface MuiTableProps extends DataGridProps {
   getRowId?: GridRowIdGetter;
 }
 
-export default function MuiTable(props: MuiTableProps) {
+export function MuiTable(props: MuiTableProps) {
   const {
     columns,
     rows,
@@ -67,9 +67,9 @@ export default function MuiTable(props: MuiTableProps) {
         paginationMode="server"
         sortingMode="server"
         components={{
-          Footer: CustomFooter,
-          LoadingOverlay: CustomLoadingOverlay,
-          NoRowsOverlay: CustomNoRowsOverlay,
+          Footer,
+          LoadingOverlay,
+          NoRowsOverlay,
           ...otherProps.components,
         }}
       />

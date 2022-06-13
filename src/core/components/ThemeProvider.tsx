@@ -9,12 +9,9 @@ interface ThemeProviderProps {
 
 function ThemeProvider({ children }: ThemeProviderProps) {
   const themeStore = useThemeStore();
+  const theme = createTheme(themeStore.themes[themeStore.theme || 'light']);
 
-  return (
-    <MuiThemeProvider theme={createTheme(themeStore.themes[themeStore.theme])}>
-      {children}
-    </MuiThemeProvider>
-  );
+  return <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>;
 }
 
 export default observer(ThemeProvider);

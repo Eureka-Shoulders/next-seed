@@ -10,10 +10,10 @@ import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
-import Trans from '@core/components/Trans';
 import { zodValidator } from '@core/utils/validators';
 
 import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
+import Trans from '@components/utility/Trans';
 
 import { useUsersRepository } from '@hooks/repositories';
 import { useTranslation } from '@hooks/services';

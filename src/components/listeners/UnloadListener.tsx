@@ -4,16 +4,13 @@ import { observer } from 'mobx-react-lite';
 import { equals } from 'ramda';
 import { useEffect } from 'react';
 
-const UnloadListener = observer(() => {
+function UnloadListener() {
   const formix = useFormixContext<Record<string, unknown>>();
 
   function checkFormValues(e: BeforeUnloadEvent) {
     e.preventDefault();
 
-    const isSafeToClose = equals(
-      toJS(formix.initialValues),
-      toJS(formix.values)
-    );
+    const isSafeToClose = equals(toJS(formix.initialValues), toJS(formix.values));
 
     if (!isSafeToClose) {
       e.returnValue = '';
@@ -31,6 +28,6 @@ const UnloadListener = observer(() => {
   }, []); //eslint-disable-line
 
   return null;
-});
+}
 
-export default UnloadListener;
+export default observer(UnloadListener);

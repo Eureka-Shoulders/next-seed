@@ -3,8 +3,9 @@ import { FXPasswordField, FXSubmitButton, FXTextField } from '@euk-labs/formix-m
 import { Box, Button, Grid, Typography } from '@mui/material';
 import Link from 'next/link';
 
-import Trans from '@core/components/Trans';
 import { zodValidator } from '@core/utils/validators';
+
+import Trans from '@components/utility/Trans';
 
 // TODO: Logo
 // import GPLogoImage from '@components/GPLogoImage';

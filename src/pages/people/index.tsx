@@ -4,7 +4,6 @@ import { Box, Grid } from '@mui/material';
 import { Actions, Person, Subjects } from 'types';
 
 import AuthLoader from '@core/components/AuthLoader';
-import Can from '@core/components/Can';
 import FetchxList from '@core/components/FetchxList';
 import { Filters } from '@core/components/Filters';
 
@@ -12,6 +11,7 @@ import { defaultListParams } from '@config/defaultListParams';
 
 import DeleteContent from '@components/DialogContents/DeleteContent';
 import NewEntityButton from '@components/NewEntityButton';
+import Can from '@components/utility/Can';
 
 import { usePeopleRepository } from '@hooks/repositories';
 import { useTranslation } from '@hooks/services';

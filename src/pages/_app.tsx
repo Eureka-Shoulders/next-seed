@@ -12,10 +12,11 @@ import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-import CoreListener from '@core/components/CoreListener';
 import ErrorBoundary from '@core/components/ErrorBoundary';
 import ThemeProvider from '@core/components/ThemeProvider';
-import ZodErrorMapBuilder from '@core/components/ZodErrorMapBuilder';
+
+import CoreListener from '@components/listeners/CoreListener';
+import ZodErrorMapBuilder from '@components/utility/ZodErrorMapBuilder';
 
 import globalContainer from '@containers/global.inversify';
 

@@ -6,8 +6,8 @@ import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 
-import Trans from '@core/components/Trans';
-import When from '@core/components/Utility/When';
+import Trans from '@components/utility/Trans';
+import When from '@components/utility/When';
 
 import { useTranslation } from '@hooks/services';
 

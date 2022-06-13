@@ -8,7 +8,7 @@ const StyledGridOverlay = styled(GridOverlay)(() => ({
   alignItems: 'center',
 }));
 
-function CustomNoRowsOverlay() {
+export function NoRowsOverlay() {
   const apiRef = useGridApiContext();
   const noRowsLabel = apiRef.current.getLocaleText('noRowsLabel');
 
@@ -19,5 +19,3 @@ function CustomNoRowsOverlay() {
     </StyledGridOverlay>
   );
 }
-
-export default CustomNoRowsOverlay;

@@ -1,18 +1,11 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import {
-  Avatar,
-  IconButton,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Typography,
-} from '@mui/material';
+import { Avatar, IconButton, ListItemIcon, Menu, MenuItem, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-import Trans from '@core/components/Trans';
+import Trans from '@components/utility/Trans';
 
 import { useThemeStore, useUserStore } from '@hooks/stores';
 

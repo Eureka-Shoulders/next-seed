@@ -5,7 +5,12 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useEffect } from 'react';
 
+import { getBreadcrumbPaths } from '@core/components/Breadcrumbs/getBreadcrumbPaths';
+
 import { getPages } from '@config/pages';
+
+import AppBarHeader from '@components/AppBar/AppBarHeader';
+import DrawerHeader from '@components/AppBar/DrawerHeader';
 
 import TYPES from '@containers/global.types';
 
@@ -13,10 +18,6 @@ import { useTranslation } from '@hooks/services';
 import { useThemeStore, useUserStore } from '@hooks/stores';
 
 import { ThemeType } from '@stores/theme';
-
-import AppBarHeader from './AppBarBuilder/AppBarHeader';
-import DrawerHeader from './AppBarBuilder/DrawerHeader';
-import { getBreadcrumbPaths } from './Breadcrumbs/getBreadcrumbPaths';
 
 interface CoreListenerProps {
   isPublicPage: boolean;

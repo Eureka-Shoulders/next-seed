@@ -10,8 +10,9 @@ import {
 import { format } from 'date-fns';
 import { Actions, Subjects } from 'types';
 
-import Can from '@core/components/Can';
 import { renderEntityLink } from '@core/components/MuiTable/EntityLink';
+
+import Can from '@components/utility/Can';
 
 import { TranslateFunc } from '@services/translation';
 

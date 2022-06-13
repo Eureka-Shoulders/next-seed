@@ -1,7 +1,7 @@
 import { LinearProgress } from '@mui/material';
 import { GridOverlay } from '@mui/x-data-grid';
 
-function CustomLoadingOverlay() {
+export function LoadingOverlay() {
   return (
     <GridOverlay>
       <div style={{ position: 'absolute', top: 0, width: '100%' }}>
@@ -10,5 +10,3 @@ function CustomLoadingOverlay() {
     </GridOverlay>
   );
 }
-
-export default CustomLoadingOverlay;

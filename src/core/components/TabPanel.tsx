@@ -1,4 +1,4 @@
-import When from './Utility/When';
+import When from '@components/utility/When';
 
 interface TabPanelProps {
   children?: React.ReactNode;

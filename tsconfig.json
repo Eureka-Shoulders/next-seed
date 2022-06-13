@@ -31,7 +31,8 @@
       "@locales/*": ["./locales/*"],
       "@modules/*": ["./modules/*"],
       "@repositories/*": ["./repositories/*"],
-      "@hooks/*": ["./hooks/*"]
+      "@hooks/*": ["./hooks/*"],
+      "@types": ["./types.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
