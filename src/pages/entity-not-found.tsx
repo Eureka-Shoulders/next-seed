@@ -32,7 +32,6 @@ const EntityNotFound: NextPage = () => {
 
 export default EntityNotFound;
 
-// TODO: withSSRAuth
 export const getStaticProps = async () => {
   return {
     props: {

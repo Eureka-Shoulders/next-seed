@@ -32,7 +32,6 @@ const NoPermissions: NextPage = () => {
 
 export default NoPermissions;
 
-// TODO: withSSRAuth
 export const getStaticProps = async () => {
   return {
     props: {

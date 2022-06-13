@@ -1,7 +1,7 @@
 import { FXAutocomplete, FXDatePicker, FXTextField } from '@euk-labs/formix-mui';
 import { Grid } from '@mui/material';
 
-import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
+import FXCPFCNPJField from '@components/form/FXCPFCNPJField';
 
 import { useTranslation } from '@hooks/services';
 

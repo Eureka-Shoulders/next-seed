@@ -1,8 +1,7 @@
 import { FXMaskedField } from '@euk-labs/formix-mui';
 import { Box, Button, Grid, Typography } from '@mui/material';
 
-import TabPanel from '@core/components/TabPanel';
-
+import TabPanel from '@components/utility/TabPanel';
 import Trans from '@components/utility/Trans';
 
 import { useTranslation } from '@hooks/services';

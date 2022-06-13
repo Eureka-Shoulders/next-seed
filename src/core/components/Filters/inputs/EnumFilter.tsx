@@ -2,8 +2,7 @@ import { FXCheckboxGroup } from '@euk-labs/formix-mui';
 import { Box, Button, Grid } from '@mui/material';
 import { useMemo } from 'react';
 
-import TabPanel from '@core/components/TabPanel';
-
+import TabPanel from '@components/utility/TabPanel';
 import Trans from '@components/utility/Trans';
 
 import { useTranslation } from '@hooks/services';

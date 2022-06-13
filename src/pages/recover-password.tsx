@@ -8,7 +8,7 @@ import { useTranslation } from '@hooks/services';
 import LoginBanner from '@modules/login/components/LoginBanner';
 import RecoverPasswordForm from '@modules/login/components/RecoverPasswordForm';
 
-// TODO: Add project image
+// TODO: Logo
 // import GPLogoImage from '@components/GPLogoImage';
 
 const RecoverPassword: NextPage = () => {
@@ -63,7 +63,6 @@ export const getStaticProps = async () => {
   return {
     props: {
       showAppBar: false,
-      isPublic: true,
     },
   };
 };

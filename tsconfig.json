@@ -32,6 +32,7 @@
       "@modules/*": ["./modules/*"],
       "@repositories/*": ["./repositories/*"],
       "@hooks/*": ["./hooks/*"],
+      "@providers/*": ["./providers/*"],
       "@types": ["./types.ts"]
     }
   },

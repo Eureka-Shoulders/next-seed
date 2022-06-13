@@ -42,7 +42,6 @@ export const getStaticProps = () => {
   return {
     props: {
       showAppBar: false,
-      isPublic: true,
     },
   };
 };

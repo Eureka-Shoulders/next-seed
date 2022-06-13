@@ -110,7 +110,6 @@ export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
       showAppBar: false,
-      isPublic: true,
     },
   };
 };

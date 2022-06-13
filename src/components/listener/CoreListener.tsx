@@ -5,8 +5,6 @@ import { useRouter } from 'next/router';
 import { parseCookies } from 'nookies';
 import { useEffect } from 'react';
 
-import { getBreadcrumbPaths } from '@core/components/Breadcrumbs/getBreadcrumbPaths';
-
 import { getPages } from '@config/pages';
 
 import AppBarHeader from '@components/AppBar/AppBarHeader';
@@ -19,17 +17,17 @@ import { useThemeStore, useUserStore } from '@hooks/stores';
 
 import { ThemeType } from '@stores/theme';
 
-interface CoreListenerProps {
-  isPublicPage: boolean;
-}
+import { getBreadcrumbPaths } from '@utils/getBreadcrumbPaths';
 
-function CoreListener({ isPublicPage }: CoreListenerProps) {
+function CoreListener() {
   const { translate } = useTranslation();
   const container = useContainer();
   const uiStore = useUIStore();
   const userStore = useUserStore();
   const themeStore = useThemeStore();
   const router = useRouter();
+  const cookies = parseCookies();
+  const isPublicPage = cookies.isPublicPage === 'true';
 
   useEffect(() => {
     if (router.locale) {
@@ -38,7 +36,6 @@ function CoreListener({ isPublicPage }: CoreListenerProps) {
   }, [router.locale]);
 
   useEffect(() => {
-    const cookies = parseCookies();
     const themeFromCookies = cookies.theme as ThemeType | null;
 
     if (themeFromCookies) {

@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 
 import { zodValidator } from '@core/utils/validators';
 
-import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
+import FXCPFCNPJField from '@components/form/FXCPFCNPJField';
 import Trans from '@components/utility/Trans';
 
 import { useUsersRepository } from '@hooks/repositories';

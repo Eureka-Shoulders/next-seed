@@ -6,8 +6,9 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ContactType } from 'types';
 
-import TabPanel from '@core/components/TabPanel';
 import { zodValidator } from '@core/utils/validators';
+
+import TabPanel from '@components/utility/TabPanel';
 
 import { usePeopleRepository } from '@hooks/repositories';
 import { useTranslation } from '@hooks/services';

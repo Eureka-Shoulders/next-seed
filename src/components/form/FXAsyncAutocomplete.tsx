@@ -12,7 +12,7 @@ type FXAsyncAutocompleteProps = {
   'options' | 'onDebouncedInputChange' | 'loading'
 >;
 
-const FXAsyncAutocomplete = ({ repository, ...rest }: FXAsyncAutocompleteProps) => {
+export default function FXAsyncAutocomplete({ repository, ...rest }: FXAsyncAutocompleteProps) {
   const { options, getOptions, loading } = useAutocomplete(repository);
 
   return (
@@ -23,6 +23,4 @@ const FXAsyncAutocomplete = ({ repository, ...rest }: FXAsyncAutocompleteProps) 
       loading={loading}
     />
   );
-};
-
-export default FXAsyncAutocomplete;
+}

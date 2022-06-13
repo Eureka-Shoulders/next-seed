@@ -12,7 +12,7 @@ import { dissocPath, omit, pipe } from 'ramda';
 
 import { zodValidator } from '@core/utils/validators';
 
-import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
+import FXCPFCNPJField from '@components/form/FXCPFCNPJField';
 
 import { useUsersRepository } from '@hooks/repositories';
 import { useTranslation } from '@hooks/services';

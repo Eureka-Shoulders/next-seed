@@ -12,13 +12,13 @@ import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-import ErrorBoundary from '@core/components/ErrorBoundary';
-import ThemeProvider from '@core/components/ThemeProvider';
-
-import CoreListener from '@components/listeners/CoreListener';
+import ErrorBoundary from '@components/ErrorBoundary';
+import CoreListener from '@components/listener/CoreListener';
 import ZodErrorMapBuilder from '@components/utility/ZodErrorMapBuilder';
 
 import globalContainer from '@containers/global.inversify';
+
+import ThemeProvider from '@providers/ThemeProvider';
 
 import createEmotionCache from '../createEmotionCache';
 
@@ -45,7 +45,6 @@ enableStaticRendering(typeof window === 'undefined');
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps, router } = props;
   const showAppBar = pageProps.showAppBar ?? true;
-  const isPublicPage = pageProps.isPublic ?? false;
   const locale = router.locale || router.defaultLocale;
   const container = globalContainer(locale);
 
@@ -58,7 +57,7 @@ function MyApp(props: MyAppProps) {
       <CacheProvider value={emotionCache}>
         <Provider container={container}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <CoreListener isPublicPage={isPublicPage} />
+            <CoreListener />
             <ZodErrorMapBuilder />
 
             <ThemeProvider>

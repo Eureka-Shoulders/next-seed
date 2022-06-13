@@ -52,8 +52,7 @@ export default function OhNoScreen() {
             Ops! Algo deu errado
           </Typography>
           <Typography variant="body1" color="text.secondary" mb={2}>
-            Algo muito estranho aconteceu enquanto você utilizava nossa
-            aplicação
+            Algo muito estranho aconteceu enquanto você utilizava nossa aplicação
           </Typography>
 
           <NextLink href="/" passHref>

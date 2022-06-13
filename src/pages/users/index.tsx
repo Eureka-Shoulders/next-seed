@@ -10,8 +10,8 @@ import setFilter from '@core/utils/setFilter';
 
 import { defaultListParams } from '@config/defaultListParams';
 
-import DeleteContent from '@components/DialogContents/DeleteContent';
-import NewEntityButton from '@components/NewEntityButton';
+import DeleteContent from '@components/dialog/DeleteContent';
+import NewEntityFab from '@components/form/fab/NewEntityFab';
 import Can from '@components/utility/Can';
 
 import { useUsersRepository } from '@hooks/repositories';
@@ -86,7 +86,7 @@ function Index() {
         </Grid>
 
         <Can action={Actions.Create} subject={Subjects.User}>
-          <NewEntityButton />
+          <NewEntityFab />
         </Can>
       </Box>
     </AuthLoader>

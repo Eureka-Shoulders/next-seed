@@ -2,9 +2,8 @@ import { FXAutocomplete } from '@euk-labs/formix-mui';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { AutocompleteOption } from '@types';
 
-import TabPanel from '@core/components/TabPanel';
-
-import FXAsyncAutocomplete from '@components/Inputs/FXAsyncAutocomplete';
+import FXAsyncAutocomplete from '@components/form/FXAsyncAutocomplete';
+import TabPanel from '@components/utility/TabPanel';
 import Trans from '@components/utility/Trans';
 
 import { useTranslation } from '@hooks/services';

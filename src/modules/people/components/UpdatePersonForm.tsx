@@ -8,8 +8,9 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Person } from 'types';
 
-import TabPanel from '@core/components/TabPanel';
 import { zodValidator } from '@core/utils/validators';
+
+import TabPanel from '@components/utility/TabPanel';
 
 import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';

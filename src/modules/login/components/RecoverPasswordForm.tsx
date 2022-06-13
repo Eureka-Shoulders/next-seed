@@ -4,7 +4,7 @@ import { Button, Grid } from '@mui/material';
 
 import { zodValidator } from '@core/utils/validators';
 
-import UnloadListener from '@components/listeners/UnloadListener';
+import UnloadListener from '@components/listener/UnloadListener';
 
 import { useUsersRepository } from '@hooks/repositories';
 import { useTranslation } from '@hooks/services';
