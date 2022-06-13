@@ -17,6 +17,5 @@ export const PUBLIC_ROUTES = [
 export const defaultCookieConfig = {
   path: '/',
   maxAge: ONE_DAY_IN_SECONDS,
-  httpOnly: true,
   sameSite: true,
 };
