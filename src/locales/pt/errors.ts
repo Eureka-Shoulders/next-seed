@@ -12,6 +12,7 @@ export const errors: Errors = {
     update: 'Ocorreu um erro ao atualizar a pessoa!',
     notFound: 'Pessoa não encontrada!',
   },
+  notFound: 'Não encontrado!',
   changePassword: 'Ocorreu um erro ao alterar a senha!',
   recoverPassword: 'Ocorreu um erro ao solicitar recuperação de senha!',
   invalidCredentials: 'Usuário ou senha inválidos',

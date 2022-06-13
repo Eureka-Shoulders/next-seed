@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material';
 
-export default function NotFoundSVG() {
+export function NotFoundSvg() {
   const theme = useTheme();
 
   return (
@@ -128,47 +128,17 @@ export default function NotFoundSVG() {
         transform="translate(-169.93432 -164.42601)"
         fill={theme.palette.primary.dark}
       />
-      <circle
-        cx="95.24878"
-        cy="439"
-        r="11"
-        fill={theme.palette.secondary.dark}
-      />
-      <circle
-        cx="227.24878"
-        cy="559"
-        r="11"
-        fill={theme.palette.secondary.dark}
-      />
-      <circle
-        cx="728.24878"
-        cy="559"
-        r="11"
-        fill={theme.palette.secondary.dark}
-      />
-      <circle
-        cx="755.24878"
-        cy="419"
-        r="11"
-        fill={theme.palette.secondary.dark}
-      />
-      <circle
-        cx="723.24878"
-        cy="317"
-        r="11"
-        fill={theme.palette.secondary.dark}
-      />
+      <circle cx="95.24878" cy="439" r="11" fill={theme.palette.secondary.dark} />
+      <circle cx="227.24878" cy="559" r="11" fill={theme.palette.secondary.dark} />
+      <circle cx="728.24878" cy="559" r="11" fill={theme.palette.secondary.dark} />
+      <circle cx="755.24878" cy="419" r="11" fill={theme.palette.secondary.dark} />
+      <circle cx="723.24878" cy="317" r="11" fill={theme.palette.secondary.dark} />
       <path
         d="M434.1831,583.426a10.949,10.949,0,1,1-.21-2.16A10.9921,10.9921,0,0,1,434.1831,583.426Z"
         transform="translate(-169.93432 -164.42601)"
         fill={theme.palette.secondary.dark}
       />
-      <circle
-        cx="484.24878"
-        cy="349"
-        r="11"
-        fill={theme.palette.secondary.dark}
-      />
+      <circle cx="484.24878" cy="349" r="11" fill={theme.palette.secondary.dark} />
       <path
         d="M545.1831,513.426a10.949,10.949,0,1,1-.21-2.16A10.9921,10.9921,0,0,1,545.1831,513.426Z"
         transform="translate(-169.93432 -164.42601)"
@@ -179,18 +149,8 @@ export default function NotFoundSVG() {
         transform="translate(-169.93432 -164.42601)"
         fill={theme.palette.secondary.dark}
       />
-      <circle
-        cx="599.24878"
-        cy="443"
-        r="11"
-        fill={theme.palette.secondary.dark}
-      />
-      <circle
-        cx="426.24878"
-        cy="338"
-        r="16"
-        fill={theme.palette.secondary.dark}
-      />
+      <circle cx="599.24878" cy="443" r="11" fill={theme.palette.secondary.dark} />
+      <circle cx="426.24878" cy="338" r="16" fill={theme.palette.secondary.dark} />
       <path
         d="M1028.875,735.26666l-857.75.30733a1.19068,1.19068,0,1,1,0-2.38136l857.75-.30734a1.19069,1.19069,0,0,1,0,2.38137Z"
         transform="translate(-169.93432 -164.42601)"

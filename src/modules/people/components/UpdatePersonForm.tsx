@@ -54,7 +54,7 @@ function EditPersonForm({ personEntity }: Props) {
 
     await notificationService.handleHttpRequest(() => personEntity.update(newData), {
       feedbackSuccess: translate('feedbacks.person.updated'),
-      feedbackError: translate('errors.people.update'),
+      feedbackError: translate('errors.person.update'),
       onSuccess,
     });
   }

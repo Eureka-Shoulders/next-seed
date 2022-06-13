@@ -1,7 +1,7 @@
+import { ListStore } from '@euk-labs/fetchx';
 import { GridSortModel } from '@mui/x-data-grid';
 
-import { ListStore } from '@euk-labs/fetchx';
-
+// TODO: review sort field
 export default function sortList(list: ListStore) {
   return (model: GridSortModel) => {
     if (model.length) {

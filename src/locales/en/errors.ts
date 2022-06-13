@@ -12,6 +12,7 @@ export const errors: Errors = {
     update: 'An error occurred while updating the person!',
     notFound: 'Person not found!',
   },
+  notFound: 'Not found!',
   changePassword: 'An error occurred while changing the password!',
   recoverPassword: 'An error occurred while recovering the password!',
   invalidCredentials: 'Invalid credentials!',

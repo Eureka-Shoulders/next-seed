@@ -3,7 +3,7 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import { NextPage } from 'next';
 import NextLink from 'next/link';
 
-import NotFoundSVG from '@core/components/ErrorBoundary/NotFoundSVG';
+import { NotFoundSvg } from '@components/svg/NotFoundSvg';
 
 import { useTranslation } from '@hooks/services';
 
@@ -14,7 +14,7 @@ const Custom404: NextPage = () => {
     <Box p={3}>
       <Grid container spacing={3} justifyContent="center">
         <Grid item xs="auto">
-          <NotFoundSVG />
+          <NotFoundSvg />
         </Grid>
         <Grid item xs={12}>
           <Typography align="center" variant="h4">

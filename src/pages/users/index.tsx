@@ -39,7 +39,10 @@ function Index() {
       rejectLabel: translate('dialogs.delete.rejectLabel'),
       acceptLabel: translate('dialogs.delete.acceptLabel'),
       onReject: () => uiStore.dialog.close(),
-      onAccept: () => deleteUser(id),
+      onAccept: () => {
+        deleteUser(id);
+        uiStore.dialog.close();
+      },
     });
     uiStore.dialog.open();
   };

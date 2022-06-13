@@ -20,4 +20,8 @@ export const pages: Pages = {
     title: 'Página não encontrada',
     description: 'A página que você está tentando acessar não existe',
   },
+  entityNotFound: {
+    title: 'Entidade não encontrada',
+    description: 'A entidade que você está tentando acessar não existe',
+  },
 };

@@ -1,6 +1,7 @@
 import { EntityStore } from '@euk-labs/fetchx';
 import { Box, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 import { useTranslation } from '@hooks/services';
@@ -12,6 +13,7 @@ interface Props {
 
 function EntityUpdateWrapper({ children, entityStore }: Props) {
   const { translate } = useTranslation();
+  const router = useRouter();
 
   useEffect(() => {
     if (entityStore.identifier) {
@@ -32,11 +34,7 @@ function EntityUpdateWrapper({ children, entityStore }: Props) {
   }
 
   if (entityStore.data === null) {
-    return (
-      <Box p={3}>
-        <Typography variant="h4">{translate('errors.people.notFound')}</Typography>
-      </Box>
-    );
+    router.push('/entity-not-found');
   }
 
   return null;
