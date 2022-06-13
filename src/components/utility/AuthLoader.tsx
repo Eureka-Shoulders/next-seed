@@ -1,5 +1,6 @@
-import { Box, Skeleton } from '@mui/material';
 import { observer } from 'mobx-react-lite';
+
+import Loading from '@components/Loading';
 
 import { useUserStore } from '@hooks/stores';
 
@@ -7,17 +8,10 @@ interface Props {
   children: React.ReactNode;
 }
 
-// TODO: implement loading animation
 function AuthLoader({ children }: Props) {
   const userStore = useUserStore();
 
-  if (!userStore.isLogged) {
-    return (
-      <Box p={3}>
-        <Skeleton variant="rectangular" width="100%" height={500} />
-      </Box>
-    );
-  }
+  if (!userStore.isLogged) return <Loading />;
 
   return <>{children}</>;
 }

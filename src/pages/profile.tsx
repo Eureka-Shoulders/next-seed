@@ -2,9 +2,8 @@ import { useEntity } from '@euk-labs/fetchx';
 import { Box, Button, Grid, Paper, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 
-import EntityUpdateWrapper from '@core/components/EntityUpdateWrapper';
-
 import ProfileCard from '@components/ProfileCard';
+import EntityUpdateWrapper from '@components/utility/EntityUpdateWrapper';
 
 import { useUsersRepository } from '@hooks/repositories';
 import { useTranslation } from '@hooks/services';

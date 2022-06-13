@@ -3,7 +3,7 @@ import { useEntity } from '@euk-labs/fetchx';
 import { Box, Grid, Paper } from '@mui/material';
 import { useRouter } from 'next/router';
 
-import EntityUpdateWrapper from '@core/components/EntityUpdateWrapper';
+import EntityUpdateWrapper from '@components/utility/EntityUpdateWrapper';
 
 import { useUsersRepository } from '@hooks/repositories';
 

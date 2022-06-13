@@ -1,10 +1,9 @@
 import { EntityStore } from '@euk-labs/fetchx';
-import { Box, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { useTranslation } from '@hooks/services';
+import Loading from '@components/Loading';
 
 interface Props {
   children: React.ReactNode;
@@ -12,7 +11,6 @@ interface Props {
 }
 
 function EntityUpdateWrapper({ children, entityStore }: Props) {
-  const { translate } = useTranslation();
   const router = useRouter();
 
   useEffect(() => {
@@ -25,13 +23,8 @@ function EntityUpdateWrapper({ children, entityStore }: Props) {
     return <>{children}</>;
   }
 
-  // TODO: implement a loading animation
   if (entityStore.identifier === null || entityStore.loading) {
-    return (
-      <Box p={3}>
-        <Typography variant="h4">{translate('common.loading')}...</Typography>
-      </Box>
-    );
+    return <Loading />;
   }
 
   if (entityStore.data === null) {

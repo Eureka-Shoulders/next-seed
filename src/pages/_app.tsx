@@ -12,9 +12,9 @@ import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-import AuthLoader from '@components/AuthLoader';
 import ErrorBoundary from '@components/ErrorBoundary';
 import CoreListener from '@components/listener/CoreListener';
+import AuthLoader from '@components/utility/AuthLoader';
 import ZodErrorMapBuilder from '@components/utility/ZodErrorMapBuilder';
 
 import globalContainer from '@containers/global.inversify';
