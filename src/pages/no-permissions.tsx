@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { NextPage } from 'next';
+import NextLink from 'next/link';
 
 import { UnauthorizedSvg } from '@components/svg/UnauthorizedSvg';
 
@@ -21,9 +22,11 @@ const NoPermissions: NextPage = () => {
           <Typography align="center">{translate('pages.noPermissions.description')}</Typography>
         </Grid>
         <Grid item xs="auto">
-          <Button href={'/'} color="primary" variant="contained">
-            {translate('pages.noPermissions.buttonLabel')}
-          </Button>
+          <NextLink href="/" passHref>
+            <Button fullWidth color="primary" variant="contained">
+              {translate('actions.goBack')}
+            </Button>
+          </NextLink>
         </Grid>
       </Grid>
     </Box>

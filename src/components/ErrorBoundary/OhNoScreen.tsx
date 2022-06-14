@@ -1,8 +1,43 @@
 /* eslint-disable @next/next/no-img-element */
 import { Button, Container, Grid, Typography } from '@mui/material';
-import NextLink from 'next/link';
+import { useRouter } from 'next/router';
+import { destroyCookie } from 'nookies';
 
-export default function OhNoScreen() {
+import { useTranslation } from '@hooks/services';
+
+import { LogParams } from '@services/logger';
+
+const possibleCookies = ['locale', 'theme', 'refresh_token', 'user_token'];
+
+export default function OhNoScreen({
+  onDisableError,
+}: {
+  error: Error;
+  onDisableError: () => void;
+  onSendFeedback: (params: LogParams) => Promise<void>;
+}) {
+  const router = useRouter();
+  // const cookies = parseCookies();
+  const { translate } = useTranslation();
+
+  function handleClick() {
+    possibleCookies.forEach((cookie) => destroyCookie(null, cookie, { path: '/', sameSite: true }));
+    onDisableError();
+    router.reload();
+    router.push('/login');
+  }
+
+  // TODO: get feedback from user
+  // function handleFeedback() {
+  //   onSendFeedback({
+  //     error,
+  //     user: {
+  //       token: cookies.user_token,
+  //       message: '',
+  //     },
+  //   });
+  // }
+
   return (
     <Container
       sx={{
@@ -49,15 +84,15 @@ export default function OhNoScreen() {
           }}
         >
           <Typography variant="h4" fontWeight="bold" gutterBottom>
-            Ops! Algo deu errado
+            {translate('pages.ohNo.title')}
           </Typography>
           <Typography variant="body1" color="text.secondary" mb={2}>
-            Algo muito estranho aconteceu enquanto você utilizava nossa aplicação
+            {translate('pages.ohNo.description')}
           </Typography>
 
-          <NextLink href="/" passHref>
-            <Button variant="contained">Voltar ao início</Button>
-          </NextLink>
+          <Button onClick={handleClick} variant="contained">
+            {translate('actions.goBack')}
+          </Button>
         </Grid>
       </Grid>
     </Container>

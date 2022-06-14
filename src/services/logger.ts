@@ -5,8 +5,17 @@ import { ErrorInfo } from 'react';
 
 import TYPES from '@containers/global.types';
 
+export type LogParams = {
+  error: Error;
+  errorInfo?: ErrorInfo;
+  user: {
+    token?: string;
+    message?: string;
+  };
+};
+
 export interface LoggerServiceType {
-  log(error: Error, errorInfo?: ErrorInfo): Promise<void>;
+  log(params: LogParams): Promise<void>;
 }
 
 @injectable()
@@ -18,9 +27,10 @@ export class LoggerService implements LoggerServiceType {
     makeAutoObservable(this, {}, { autoBind: true });
   }
 
-  async log(error: Error, errorInfo?: ErrorInfo) {
+  async log({ error, user, errorInfo }: LogParams) {
     try {
       await this.apiService.client.post('/logger', {
+        user,
         error: error.message,
         stack: error.stack,
         errorInfo: errorInfo,

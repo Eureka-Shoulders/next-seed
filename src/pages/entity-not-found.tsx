@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { NextPage } from 'next';
+import NextLink from 'next/link';
 
 import { NotFoundSvg } from '@components/svg/NotFoundSvg';
 
@@ -21,9 +22,11 @@ const EntityNotFound: NextPage = () => {
           <Typography align="center">{translate('pages.entityNotFound.description')}</Typography>
         </Grid>
         <Grid item xs="auto">
-          <Button href="/" color="primary" variant="contained">
-            {translate('actions.goBack')}
-          </Button>
+          <NextLink href="/" passHref>
+            <Button fullWidth color="primary" variant="contained">
+              {translate('actions.goBack')}
+            </Button>
+          </NextLink>
         </Grid>
       </Grid>
     </Box>

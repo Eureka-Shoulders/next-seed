@@ -24,4 +24,9 @@ export const pages: Pages = {
     title: 'Entidade não encontrada',
     description: 'A entidade que você está tentando acessar não existe',
   },
+  ohNo: {
+    title: 'Ops! Algo deu errado',
+    description:
+      'Algo estranho aconteceu enquanto você utilizava nossa aplicação. Vamos analisar o problema e tentar corrigi-lo o mais rápido possível. Não se preocupe, seus dados permanecem seguros.',
+  },
 };

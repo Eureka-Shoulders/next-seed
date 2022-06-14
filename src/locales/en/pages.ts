@@ -24,4 +24,9 @@ export const pages: Pages = {
     title: 'Entity not found',
     description: 'The entity you are trying to access does not exist',
   },
+  ohNo: {
+    title: 'Oh no!',
+    description:
+      "Something unexpected happened while you were using our application. We are going to analyze the problem and try to fix it as soon as possible. Please, don't worry, your data is safe.",
+  },
 };

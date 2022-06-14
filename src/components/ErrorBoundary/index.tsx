@@ -1,4 +1,5 @@
 import { resolve } from 'inversify-react';
+import { parseCookies } from 'nookies';
 import { Component, ErrorInfo, ReactNode } from 'react';
 
 import TYPES from '@containers/global.types';
@@ -12,29 +13,43 @@ interface Props {
 }
 
 interface State {
-  hasError: boolean;
+  error: Error | null;
 }
 
 class ErrorBoundary extends Component<Props, State> {
   @resolve(TYPES.LoggerService)
   private readonly loggerService!: LoggerServiceType;
 
-  state: State = {
-    hasError: false,
-  };
+  state: State = { error: null };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  static getDerivedStateFromError(_: Error): State {
-    return { hasError: true };
+  static getDerivedStateFromError(error: Error): State {
+    return { error };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    this.loggerService.log(error, errorInfo);
+    const cookies = parseCookies();
+
+    this.setState({ error });
+
+    this.loggerService.log({
+      error,
+      errorInfo,
+      user: {
+        token: cookies.user_token,
+      },
+    });
   }
 
   render() {
-    if (this.state.hasError) {
-      return <OhNoScreen />;
+    if (this.state.error) {
+      return (
+        <OhNoScreen
+          onDisableError={() => this.setState({ error: null })}
+          onSendFeedback={this.loggerService.log}
+          error={this.state.error}
+        />
+      );
     }
 
     return this.props.children;

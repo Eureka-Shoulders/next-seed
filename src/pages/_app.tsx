@@ -71,9 +71,7 @@ function MyApp(props: MyAppProps) {
                     </AuthLoader>
                   </AppBar>
                 ) : (
-                  <AuthLoader>
-                    <Component {...pageProps} />
-                  </AuthLoader>
+                  <Component {...pageProps} />
                 )}
 
                 <Snackbar autoHideDuration={6000} />
