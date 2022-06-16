@@ -1,3 +1,4 @@
+import { Identifier } from '@euk-labs/fetchx';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
   GridActionsCellItem,
@@ -9,11 +10,11 @@ import {
 import { format } from 'date-fns';
 import { Actions, Subjects } from 'types';
 
-import Can from '@core/components/Can';
 import { renderEntityLink } from '@core/components/MuiTable/EntityLink';
-import { TranslateFunc } from '@core/hooks/useTranslation';
 
-import { Identifier } from '@euk-labs/fetchx';
+import Can from '@components/utility/Can';
+
+import { TranslateFunc } from '@services/translation';
 
 export default function getPeopleColumns(
   handleDelete: (id: Identifier) => void,

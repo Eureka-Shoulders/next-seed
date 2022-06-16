@@ -1,14 +1,14 @@
-import TYPES from '@containers/global.types';
+import { HttpService } from '@euk-labs/fetchx';
 import { AxiosResponse } from 'axios';
 import { inject, injectable } from 'inversify';
 import { dissocPath, omit, pipe } from 'ramda';
 import { User } from 'types';
 
-import Repository from '@core/utils/Repository';
+import TYPES from '@containers/global.types';
 
 import { LoginSchema } from '@modules/login/login.schema';
 
-import { HttpService } from '@euk-labs/fetchx';
+import Repository from '@services/http';
 
 import { UserSchema } from './user.schema';
 
@@ -40,14 +40,13 @@ class UsersRepository extends Repository {
   }
 
   login(email: string, password: string) {
-    return this.apiService.client.post<
-      LoginResponse,
-      AxiosResponse<LoginResponse>,
-      LoginSchema
-    >('/auth/login', {
-      email,
-      password,
-    });
+    return this.apiService.client.post<LoginResponse, AxiosResponse<LoginResponse>, LoginSchema>(
+      '/auth/login',
+      {
+        email,
+        password,
+      }
+    );
   }
 
   recoverPassword(email: string) {
@@ -57,10 +56,7 @@ class UsersRepository extends Repository {
   }
 
   resetPassword(resetPasswordDto: ResetPasswordDto) {
-    return this.apiService.client.post(
-      '/auth/reset-password',
-      resetPasswordDto
-    );
+    return this.apiService.client.post('/auth/reset-password', resetPasswordDto);
   }
 
   logoutDevices(refreshToken: string) {
@@ -73,7 +69,10 @@ class UsersRepository extends Repository {
     const where = {
       person: value ? { name: { contains: value } } : undefined,
     };
-    const response = await this.read<{ data: User[] }>({
+    const response = await this.read<{
+      totalCount: number;
+      data: User[];
+    }>({
       params: {
         include: {
           person: {
@@ -86,10 +85,13 @@ class UsersRepository extends Repository {
       },
     });
 
-    return response.data.data.map((user) => ({
-      label: user.person.name,
-      value: user.id,
-    }));
+    return {
+      options: response.data.data.map((user) => ({
+        label: user.person.name,
+        value: user.id,
+      })),
+      totalCount: response.data.totalCount,
+    };
   }
 }
 

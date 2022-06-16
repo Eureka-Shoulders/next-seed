@@ -7,6 +7,8 @@ import { Filters } from './filters';
 import { Pages } from './pages';
 import { Placeholders } from './placeholders';
 
+export type LocaleType = 'en' | 'pt';
+
 export interface Locale {
   actions: Actions;
   common: Common;

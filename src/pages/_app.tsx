@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
-import globalContainer from '@containers/global.inversify';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { AppBar } from '@euk-labs/componentz';
 import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { CssBaseline } from '@mui/material';
@@ -12,12 +12,14 @@ import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
-import CoreListener from '@core/components/CoreListener';
-import ErrorBoundary from '@core/components/ErrorBoundary';
-import ThemeProvider from '@core/components/ThemeProvider';
-import ZodErrorMapBuilder from '@core/components/ZodErrorMapBuilder';
+import ErrorBoundary from '@components/ErrorBoundary';
+import CoreListener from '@components/listener/CoreListener';
+import AuthLoader from '@components/utility/AuthLoader';
+import ZodErrorMapBuilder from '@components/utility/ZodErrorMapBuilder';
 
-import { AppBar } from '@euk-labs/componentz';
+import globalContainer from '@containers/global.inversify';
+
+import ThemeProvider from '@providers/ThemeProvider';
 
 import createEmotionCache from '../createEmotionCache';
 
@@ -25,10 +27,7 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-const Snackbar = dynamic(
-  () => import('@euk-labs/componentz/components/Snackbar'),
-  { ssr: false }
-);
+const Snackbar = dynamic(() => import('@euk-labs/componentz/components/Snackbar'), { ssr: false });
 const Dialog = dynamic(() => import('@euk-labs/componentz/components/Dialog'), {
   ssr: false,
 });
@@ -37,7 +36,7 @@ const { publicRuntimeConfig } = getConfig();
 const clientSideEmotionCache = createEmotionCache();
 
 if (publicRuntimeConfig.useMirage) {
-  import('@core/services/mock').then((mod) => {
+  import('@services/mock').then((mod) => {
     mod.default();
   });
 }
@@ -45,14 +44,8 @@ if (publicRuntimeConfig.useMirage) {
 enableStaticRendering(typeof window === 'undefined');
 
 function MyApp(props: MyAppProps) {
-  const {
-    Component,
-    emotionCache = clientSideEmotionCache,
-    pageProps,
-    router,
-  } = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps, router } = props;
   const showAppBar = pageProps.showAppBar ?? true;
-  const isPublicPage = pageProps.isPublic ?? false;
   const locale = router.locale || router.defaultLocale;
   const container = globalContainer(locale);
 
@@ -65,7 +58,7 @@ function MyApp(props: MyAppProps) {
       <CacheProvider value={emotionCache}>
         <Provider container={container}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <CoreListener isPublicPage={isPublicPage} />
+            <CoreListener />
             <ZodErrorMapBuilder />
 
             <ThemeProvider>
@@ -73,7 +66,9 @@ function MyApp(props: MyAppProps) {
               <ErrorBoundary>
                 {showAppBar ? (
                   <AppBar>
-                    <Component {...pageProps} />
+                    <AuthLoader>
+                      <Component {...pageProps} />
+                    </AuthLoader>
                   </AppBar>
                 ) : (
                   <Component {...pageProps} />

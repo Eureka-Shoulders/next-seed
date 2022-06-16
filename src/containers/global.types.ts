@@ -10,7 +10,6 @@ const TYPES = {
    */
   ApiService: Symbol('ApiService'),
   LoggerService: Symbol('LoggerService'),
-  AuthService: Symbol('AuthService'),
   Locale: Symbol('Locale'),
   TranslationService: Symbol('TranslationService'),
   NotificationService: Symbol('NotificationService'),

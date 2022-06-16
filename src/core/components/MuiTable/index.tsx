@@ -1,4 +1,3 @@
-import getTableLocaleText from '@config/tableLocale';
 import { Paper } from '@mui/material';
 import {
   DataGrid,
@@ -11,11 +10,13 @@ import {
 import { toJS } from 'mobx';
 import React from 'react';
 
-import useTranslation from '@core/hooks/useTranslation';
+import getTableLocaleText from '@config/tableLocale';
 
-import CustomFooter from './CustomFooter';
-import CustomLoadingOverlay from './CustomLoadingOverlay';
-import CustomNoRowsOverlay from './CustomNoRowsOverlay';
+import { useTranslation } from '@hooks/services';
+
+import Footer from './Footer';
+import { LoadingOverlay } from './LoadingOverlay';
+import { NoRowsOverlay } from './NoRowsOverlay';
 
 export interface MuiTableProps extends DataGridProps {
   columns: GridColDef[];
@@ -30,7 +31,7 @@ export interface MuiTableProps extends DataGridProps {
   getRowId?: GridRowIdGetter;
 }
 
-export default function MuiTable(props: MuiTableProps) {
+export function MuiTable(props: MuiTableProps) {
   const {
     columns,
     rows,
@@ -66,9 +67,9 @@ export default function MuiTable(props: MuiTableProps) {
         paginationMode="server"
         sortingMode="server"
         components={{
-          Footer: CustomFooter,
-          LoadingOverlay: CustomLoadingOverlay,
-          NoRowsOverlay: CustomNoRowsOverlay,
+          Footer,
+          LoadingOverlay,
+          NoRowsOverlay,
           ...otherProps.components,
         }}
       />

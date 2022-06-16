@@ -10,6 +10,7 @@ export interface Errors {
     update: string;
     notFound: string;
   };
+  notFound: string;
   changePassword: string;
   recoverPassword: string;
   invalidCredentials: string;

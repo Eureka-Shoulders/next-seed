@@ -2,6 +2,7 @@
   "singleQuote": true,
   "semi": true,
   "tabWidth": 2,
+  "printWidth": 100,
   "importOrder": [
     "reflect-metadata",
     "<THIRD_PARTY_MODULES>",
@@ -13,6 +14,7 @@
     "^@stores/(.*)$",
     "^@modules/(.*)$",
     "^@repositories/(.*)$",
+    "^@providers/(.*)$",
     "^@services/(.*)$",
     "^@styles/(.*)$",
     "^@utils/(.*)$",

@@ -1,13 +1,3 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Grid,
-} from '@mui/material';
-import { observer } from 'mobx-react-lite';
-
 import { useFormixContext } from '@euk-labs/formix';
 import {
   FXCheckboxGroup,
@@ -16,8 +6,11 @@ import {
   FXNumericField,
   FXTextField,
 } from '@euk-labs/formix-mui';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid } from '@mui/material';
+import { observer } from 'mobx-react-lite';
 
-import Trans from '../Trans';
+import Trans from '@components/utility/Trans';
+
 import FiltersStore from './filters.store';
 
 interface Props {
@@ -45,11 +38,7 @@ function FiltersList({ filtersStore }: Props) {
 
           case 'date':
             field = (
-              <FXDatePicker
-                name={filter.field}
-                label={filter.title}
-                inputFormat="dd/MM/yyyy"
-              />
+              <FXDatePicker name={filter.field} label={filter.title} inputFormat="dd/MM/yyyy" />
             );
             break;
 
@@ -67,11 +56,7 @@ function FiltersList({ filtersStore }: Props) {
 
           case 'cpf':
             field = (
-              <FXMaskedField
-                name={filter.field}
-                label={filter.title}
-                mask="999.999.999-99"
-              />
+              <FXMaskedField name={filter.field} label={filter.title} mask="999.999.999-99" />
             );
             break;
 
@@ -93,10 +78,7 @@ function AllFiltersModal({ filtersStore }: Props) {
   const formix = useFormixContext();
 
   return (
-    <Dialog
-      open={filtersStore.isAllFiltersModalOpen}
-      onClose={filtersStore.closeAllFilters}
-    >
+    <Dialog open={filtersStore.isAllFiltersModalOpen} onClose={filtersStore.closeAllFilters}>
       <DialogTitle>
         <Trans id="filters.all" />
       </DialogTitle>

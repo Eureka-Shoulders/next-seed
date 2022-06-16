@@ -1,9 +1,10 @@
-import { getPasswordSchema } from '@config/schemas/password.schema';
 import * as zod from 'zod';
 
-import { TranslateFunc } from '@core/hooks/useTranslation';
+import { getPasswordSchema } from '@config/schemas/password.schema';
 
 import { NewPersonSchema } from '@modules/people/people.schema';
+
+import { TranslateFunc } from '@services/translation';
 
 export function getUserSchema(translate: TranslateFunc) {
   return zod

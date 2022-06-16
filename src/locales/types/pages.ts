@@ -18,4 +18,12 @@ export interface Pages {
     title: string;
     description: string;
   };
+  entityNotFound: {
+    title: string;
+    description: string;
+  };
+  ohNo: {
+    title: string;
+    description: string;
+  };
 }

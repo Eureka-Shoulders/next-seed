@@ -1,15 +1,15 @@
+import { useArrayField } from '@euk-labs/formix';
+import { FXAutocomplete, FXTextField } from '@euk-labs/formix-mui';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 
-import Trans from '@core/components/Trans';
-import When from '@core/components/Utility/When';
-import useTranslation from '@core/hooks/useTranslation';
+import Trans from '@components/utility/Trans';
+import When from '@components/utility/When';
 
-import { useArrayField } from '@euk-labs/formix';
-import { FXAutocomplete, FXTextField } from '@euk-labs/formix-mui';
+import { useTranslation } from '@hooks/services';
 
 function ContactsField() {
   const { translate } = useTranslation();
@@ -76,10 +76,7 @@ function ContactsField() {
             />
           </Grid>
           <Grid item xs={6}>
-            <FXTextField
-              name={`contacts.${index}.value`}
-              label={translate('common.contact')}
-            />
+            <FXTextField name={`contacts.${index}.value`} label={translate('common.contact')} />
           </Grid>
 
           <When isNot={isLastItem(index)}>

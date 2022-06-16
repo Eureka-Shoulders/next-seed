@@ -9,15 +9,21 @@ export default class MyDocument extends Document {
       <Html lang="pt-BR">
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link
-            rel="preconnect"
-            href="https://fonts.gstatic.com"
-            crossOrigin=""
-          />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
+          <meta name="theme-color" content="#1976d2" />
+          <link rel="shortcut icon" href="/shoulders-logo.svg" />
+          <meta property="og:locale" content="pt_BR" />
+          <meta property="og:url" content="https://" />
+          <meta property="og:title" content="Shoulders Seed" />
+          <meta property="og:site_name" content="Shoulders Seed" />
+          <meta property="og:image" content="https://" />
+          <meta property="og:image:type" content="image/png" />
+          <meta property="og:image:width" content="400" />
+          <meta property="og:image:height" content="400" />
         </Head>
         <body>
           <Main />
@@ -56,9 +62,6 @@ MyDocument.getInitialProps = async (ctx) => {
 
   return {
     ...initialProps,
-    styles: [
-      ...emotionStyleTags,
-      ...React.Children.toArray(initialProps.styles),
-    ],
+    styles: [...emotionStyleTags, ...React.Children.toArray(initialProps.styles)],
   };
 };

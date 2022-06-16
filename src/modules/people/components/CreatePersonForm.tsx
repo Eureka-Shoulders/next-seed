@@ -1,18 +1,18 @@
+import { Formix } from '@euk-labs/formix';
+import { FXSubmitButton } from '@euk-labs/formix-mui';
 import { Grid, Tab, Tabs } from '@mui/material';
 import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ContactType } from 'types';
 
-import TabPanel from '@core/components/TabPanel';
-import useTranslation from '@core/hooks/useTranslation';
-import { zodValidator } from '@core/utils/validators';
+import TabPanel from '@components/utility/TabPanel';
 
 import { usePeopleRepository } from '@hooks/repositories';
+import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 
-import { Formix } from '@euk-labs/formix';
-import { FXSubmitButton } from '@euk-labs/formix-mui';
+import { zodValidator } from '@utils/zodValidator';
 
 import { initialValuesForCreate } from '../initialValues';
 import { NewPersonSchema } from '../people.schema';
@@ -38,7 +38,7 @@ function CreatePersonForm() {
       type: undefined,
       contacts: values.contacts?.map((contact) => ({
         ...contact,
-        type: contact.type.value as ContactType,
+        type: contact?.type?.value as unknown as ContactType,
       })),
     };
     const onSuccess = () => {
@@ -58,11 +58,7 @@ function CreatePersonForm() {
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          value={activeTab}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
+        <Tabs value={activeTab} onChange={handleChange} aria-label="basic tabs example">
           <Tab label={translate('common.information')} />
           <Tab label={translate('common.contacts')} />
           <Tab label={translate('common.addresses')} />

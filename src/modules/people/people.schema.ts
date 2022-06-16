@@ -1,6 +1,8 @@
-import { AutocompleteSchema } from '@config/schemas/autocomplete.schema';
-import validateCPForCNPJ from '@utils/validateCPForCNPJ';
 import * as zod from 'zod';
+
+import { autocompleteSchema } from '@config/schemas/autocomplete.schema';
+
+import { validateCPForCNPJ } from '@utils/validateCPForCNPJ';
 
 /**
  *  New Person Schema
@@ -39,7 +41,7 @@ export const NewPersonSchema = zod.object({
   contacts: zod
     .array(
       zod.object({
-        type: AutocompleteSchema,
+        type: autocompleteSchema,
         value: zod.string().min(1),
       })
     )
@@ -73,7 +75,7 @@ export const UpdatePersonSchema = zod.object({
   contacts: zod
     .array(
       zod.object({
-        type: AutocompleteSchema,
+        type: autocompleteSchema,
         value: zod.string().min(1),
       })
     )

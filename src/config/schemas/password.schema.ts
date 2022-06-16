@@ -1,8 +1,7 @@
+import { strongPassword } from '@euk-labs/beltz';
 import * as zod from 'zod';
 
-import { TranslateFunc } from '@core/hooks/useTranslation';
-
-import { strongPassword } from '@euk-labs/beltz';
+import { TranslateFunc } from '@services/translation';
 
 export function getPasswordSchema(translate: TranslateFunc) {
   return zod

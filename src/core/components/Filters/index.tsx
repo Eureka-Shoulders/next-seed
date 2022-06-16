@@ -1,3 +1,4 @@
+import { Formix } from '@euk-labs/formix';
 import {
   Add as AddIcon,
   FilterList as FiltersIcon,
@@ -8,12 +9,11 @@ import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 
-import Trans from '@core/components/Trans';
-import useTranslation from '@core/hooks/useTranslation';
+import Trans from '@components/utility/Trans';
+import When from '@components/utility/When';
 
-import { Formix } from '@euk-labs/formix';
+import { useTranslation } from '@hooks/services';
 
-import When from '../Utility/When';
 import AllFiltersModal from './AllFiltersModal';
 import ClearFiltersButton from './ClearFiltersButton';
 import { FiltersModal } from './FiltersModal';
@@ -48,8 +48,7 @@ function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
     const newFilters: Record<string, unknown> = {};
 
     filters.forEach((filter) => {
-      if (values[filter.field] !== '')
-        newFilters[filter.field] = getFilterValue(filter, values);
+      if (values[filter.field] !== '') newFilters[filter.field] = getFilterValue(filter, values);
     });
 
     filtersStore.setValues(newFilters);
@@ -59,21 +58,14 @@ function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
 
   return (
     <When is={!!filtersStore.initialValues}>
-      <Formix
-        initialValues={toJS(filtersStore.initialValues!)}
-        onSubmit={handleSubmit}
-      >
+      <Formix initialValues={toJS(filtersStore.initialValues!)} onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           <Grid item xs>
             <Grid container spacing={2}>
               <FiltersValuesList filtersStore={filtersStore} />
 
               <Grid item>
-                <Button
-                  size="small"
-                  onClick={filtersStore.openFilters}
-                  ref={anchorRef}
-                >
+                <Button size="small" onClick={filtersStore.openFilters} ref={anchorRef}>
                   <AddIcon />
                   <Trans id="actions.filters.add" />
                 </Button>
@@ -83,10 +75,7 @@ function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
 
           <Grid item>
             <Tooltip title={translate('filters.all')}>
-              <SmallButton
-                variant="contained"
-                onClick={filtersStore.openAllFilters}
-              >
+              <SmallButton variant="contained" onClick={filtersStore.openAllFilters}>
                 <FiltersIcon fontSize="small" />
               </SmallButton>
             </Tooltip>

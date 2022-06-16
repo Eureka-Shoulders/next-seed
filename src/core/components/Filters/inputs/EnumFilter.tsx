@@ -1,11 +1,11 @@
+import { FXCheckboxGroup } from '@euk-labs/formix-mui';
 import { Box, Button, Grid } from '@mui/material';
 import { useMemo } from 'react';
 
-import TabPanel from '@core/components/TabPanel';
-import Trans from '@core/components/Trans';
-import useTranslation from '@core/hooks/useTranslation';
+import TabPanel from '@components/utility/TabPanel';
+import Trans from '@components/utility/Trans';
 
-import { FXCheckboxGroup } from '@euk-labs/formix-mui';
+import { useTranslation } from '@hooks/services';
 
 import { FilterEnum } from '../types';
 
@@ -16,12 +16,7 @@ interface EnumFilterProps {
   options: FilterEnum[];
 }
 
-export default function EnumFilter({
-  name,
-  activeTab,
-  index,
-  options,
-}: EnumFilterProps) {
+export default function EnumFilter({ name, activeTab, index, options }: EnumFilterProps) {
   const { translate } = useTranslation();
   const checkboxOptions = useMemo(
     () =>
@@ -35,14 +30,11 @@ export default function EnumFilter({
   return (
     <TabPanel value={activeTab} index={index}>
       <Box p={2}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} justifyContent="flex-end">
           <Grid item xs={12}>
-            <FXCheckboxGroup
-              label={translate('filters.enum.label')}
-              options={checkboxOptions}
-            />
+            <FXCheckboxGroup label={translate('filters.enum.label')} options={checkboxOptions} />
           </Grid>
-          <Grid item xs={12} display="flex" justifyContent="flex-end">
+          <Grid item xs="auto">
             <Button type="submit" variant="contained">
               <Trans id="actions.filters.submit" />
             </Button>

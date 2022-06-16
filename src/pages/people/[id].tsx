@@ -1,15 +1,13 @@
+import { Breadcrumb } from '@euk-labs/componentz';
+import { useEntity } from '@euk-labs/fetchx';
 import { Box, Grid, Paper } from '@mui/material';
 import { useRouter } from 'next/router';
 
-import AuthLoader from '@core/components/AuthLoader';
-import EntityUpdateWrapper from '@core/components/EntityUpdateWrapper';
+import EntityUpdateWrapper from '@components/utility/EntityUpdateWrapper';
 
 import { usePeopleRepository } from '@hooks/repositories';
 
 import UpdatePersonForm from '@modules/people/components/UpdatePersonForm';
-
-import { Breadcrumb } from '@euk-labs/componentz';
-import { useEntity } from '@euk-labs/fetchx';
 
 function Index() {
   const router = useRouter();
@@ -19,23 +17,21 @@ function Index() {
   const personEntity = useEntity(peopleRepository, id as string);
 
   return (
-    <AuthLoader>
-      <EntityUpdateWrapper entityStore={personEntity}>
-        <Box p={3} mb={10}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Breadcrumb />
-            </Grid>
-
-            <Grid item xs={12}>
-              <Paper variant="outlined">
-                <UpdatePersonForm personEntity={personEntity} />
-              </Paper>
-            </Grid>
+    <EntityUpdateWrapper entityStore={personEntity}>
+      <Box p={3} mb={10}>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Breadcrumb />
           </Grid>
-        </Box>
-      </EntityUpdateWrapper>
-    </AuthLoader>
+
+          <Grid item xs={12}>
+            <Paper variant="outlined">
+              <UpdatePersonForm personEntity={personEntity} />
+            </Paper>
+          </Grid>
+        </Grid>
+      </Box>
+    </EntityUpdateWrapper>
   );
 }
 
