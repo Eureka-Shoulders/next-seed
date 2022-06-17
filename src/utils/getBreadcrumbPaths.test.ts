@@ -50,25 +50,28 @@ describe('Breadcrumb Tests', () => {
     const route = '/app/users';
     const paths = getBreadcrumbPaths(pages, route);
 
-    expect(paths).toHaveLength(1);
-    expect(paths[0].label).toBe('Users');
+    expect(paths).toHaveLength(2);
+    expect(paths[0].label).toBe('Home');
+    expect(paths[1].label).toBe('Users');
   });
 
   it('should get users create path', () => {
     const route = '/app/users/new';
     const paths = getBreadcrumbPaths(pages, route);
 
-    expect(paths).toHaveLength(2);
-    expect(paths[0].label).toBe('Users');
-    expect(paths[1].label).toBe('Create');
+    expect(paths).toHaveLength(3);
+    expect(paths[0].label).toBe('Home');
+    expect(paths[1].label).toBe('Users');
+    expect(paths[2].label).toBe('Create');
   });
 
   it('should get users edit path', () => {
     const route = '/app/users/[id]';
     const paths = getBreadcrumbPaths(pages, route);
 
-    expect(paths).toHaveLength(2);
-    expect(paths[0].label).toBe('Users');
-    expect(paths[1].label).toBe('Edit');
+    expect(paths).toHaveLength(3);
+    expect(paths[0].label).toBe('Home');
+    expect(paths[1].label).toBe('Users');
+    expect(paths[2].label).toBe('Edit');
   });
 });

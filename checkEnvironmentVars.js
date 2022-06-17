@@ -26,14 +26,16 @@ const exampleVariables = getExampleEnvNames(exampleVariablesFile);
 const declaredVariables = keys(loadedEnvsByNext.combinedEnv);
 const missingVariables = difference(exampleVariables, declaredVariables);
 
-if (missingVariables.length === 0) {
-  console.log('envcheck - All needed variables in .env.example are declared in an .env file :)');
-} else {
-  console.error(
-    `envcheck - The following variables are declared in .env.example, but missing in a .env file: ${missingVariables.join(
-      ', '
-    )}`
-  );
+if (loadedEnvsByNext.combinedEnv.NODE_ENV !== 'test') {
+  if (missingVariables.length === 0) {
+    console.log('envcheck - All needed variables in .env.example are declared in an .env file :)');
+  } else {
+    console.error(
+      `envcheck - The following variables are declared in .env.example, but missing in a .env file: ${missingVariables.join(
+        ', '
+      )}`
+    );
 
-  process.exit(1);
+    process.exit(1);
+  }
 }

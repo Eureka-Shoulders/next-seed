@@ -3,29 +3,19 @@ import { Page } from '@euk-labs/componentz/components/AppBar/types';
 export function getBreadcrumbPaths(pages: Page[], pathname: string): Page[] {
   pathname = pathname.replace(/\[([^\]]+)\]/g, ':$1');
 
-  const urlPaths = pathname.split('/');
-  const paths = [];
+  const paths: Page[] = [];
 
-  if (urlPaths.length === 2 && urlPaths[1] === '') {
-    const newPage = pages.find((page) => page.link === '/app');
+  pages.forEach((page) => {
+    if (pathname.includes(page.link)) {
+      paths.push(page);
 
-    return newPage ? [newPage] : [];
-  }
-
-  for (const path of urlPaths) {
-    if (path === '') {
-      continue;
+      if (page.sub) {
+        const currentPath = page.sub.find((sub) => pathname.includes(sub.link));
+        if (!currentPath) return;
+        paths.push(currentPath);
+      }
     }
-
-    const newPage = pages.find((page) => page.link === `/${path}`);
-
-    if (!newPage) {
-      return paths;
-    }
-
-    pages = newPage.sub ?? [];
-    paths.push({ ...newPage, sub: undefined });
-  }
+  });
 
   return paths;
 }
