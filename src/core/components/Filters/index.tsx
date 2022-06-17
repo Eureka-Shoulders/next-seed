@@ -4,7 +4,7 @@ import {
   FilterList as FiltersIcon,
   Refresh as RefreshIcon,
 } from '@mui/icons-material';
-import { Button, Grid, Tooltip } from '@mui/material';
+import { Button, Grid, Tooltip, Typography } from '@mui/material';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
@@ -24,15 +24,38 @@ import { Filter } from './types';
 import { getFilterValue } from './utils';
 
 interface FiltersProps {
+  title?: string;
   filters: Filter[];
+  useAutocompleteValue?: string[];
   onFilter: (filters: Record<string, unknown>) => void;
+  onClear: () => void;
   onRefresh: () => void;
 }
 
-function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
+function FiltersComponent({
+  title,
+  filters,
+  useAutocompleteValue,
+  onFilter,
+  onClear,
+  onRefresh,
+}: FiltersProps) {
   const [filtersStore] = useState(() => new FiltersStore());
   const { translate } = useTranslation();
   const anchorRef = useRef<HTMLButtonElement>(null);
+
+  function handleSubmit(values: Record<string, unknown>) {
+    const newFilters: Record<string, unknown> = {};
+
+    filters.forEach((filter) => {
+      if (values[filter.field] !== '')
+        newFilters[filter.field] = getFilterValue(filter, values, useAutocompleteValue);
+    });
+
+    filtersStore.setValues(newFilters);
+    filtersStore.closeFilters();
+    filtersStore.closeAllFilters();
+  }
 
   useEffect(() => {
     filtersStore.setFilters(filters);
@@ -44,28 +67,27 @@ function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
     }
   }, [filtersStore.values]);
 
-  function handleSubmit(values: Record<string, unknown>) {
-    const newFilters: Record<string, unknown> = {};
-
-    filters.forEach((filter) => {
-      if (values[filter.field] !== '') newFilters[filter.field] = getFilterValue(filter, values);
-    });
-
-    filtersStore.setValues(newFilters);
-    filtersStore.closeFilters();
-    filtersStore.closeAllFilters();
-  }
-
   return (
     <When is={!!filtersStore.initialValues}>
       <Formix initialValues={toJS(filtersStore.initialValues!)} onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} alignItems="center">
+          {title && (
+            <Grid item xs={12}>
+              <Typography variant="h5">{title}</Typography>
+            </Grid>
+          )}
+
           <Grid item xs>
             <Grid container spacing={2}>
               <FiltersValuesList filtersStore={filtersStore} />
 
               <Grid item>
-                <Button size="small" onClick={filtersStore.openFilters} ref={anchorRef}>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={filtersStore.openFilters}
+                  ref={anchorRef}
+                >
                   <AddIcon />
                   <Trans id="actions.filters.add" />
                 </Button>
@@ -90,7 +112,7 @@ function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
           </Grid>
 
           <Grid item>
-            <ClearFiltersButton />
+            <ClearFiltersButton onClear={onClear} />
           </Grid>
         </Grid>
 

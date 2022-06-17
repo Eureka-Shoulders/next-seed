@@ -21,6 +21,16 @@ export interface HydrationData {
   theme?: ThemeType;
 }
 
+export interface AutocompleteOption {
+  label: string;
+  value: unknown;
+}
+
+export interface DateRangeOption {
+  start: Date;
+  end: Date;
+}
+
 export enum Actions {
   Create = 'create',
   Read = 'read',
@@ -92,9 +102,4 @@ export interface User {
   person: Person;
   personId: string;
   password?: string;
-}
-
-export interface AutocompleteOption {
-  label: string;
-  value: unknown;
 }

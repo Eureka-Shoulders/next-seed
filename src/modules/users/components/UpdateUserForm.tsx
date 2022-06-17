@@ -33,7 +33,7 @@ function UpdateUserForm({ userEntity }: Props) {
 
   async function handleSubmit(values: UserSchema) {
     const onSuccess = () => {
-      router.push('/users');
+      router.push('/app/users');
     };
     const updatedUser = pipe(omit(['confirmPassword']), dissocPath(['person', 'type']))(values);
 

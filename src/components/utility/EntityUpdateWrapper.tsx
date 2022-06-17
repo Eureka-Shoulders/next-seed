@@ -13,9 +13,17 @@ interface Props {
 function EntityUpdateWrapper({ children, entityStore }: Props) {
   const router = useRouter();
 
+  async function fetch() {
+    try {
+      await entityStore.fetch();
+    } catch (error) {
+      router.push('/app/entity-not-found');
+    }
+  }
+
   useEffect(() => {
     if (entityStore.identifier) {
-      entityStore.fetch();
+      fetch();
     }
   }, [entityStore.identifier]);
 
@@ -23,15 +31,7 @@ function EntityUpdateWrapper({ children, entityStore }: Props) {
     return <>{children}</>;
   }
 
-  if (entityStore.identifier === null || entityStore.loading) {
-    return <Loading />;
-  }
-
-  if (entityStore.data === null) {
-    router.push('/entity-not-found');
-  }
-
-  return null;
+  return <Loading />;
 }
 
 export default observer(EntityUpdateWrapper);

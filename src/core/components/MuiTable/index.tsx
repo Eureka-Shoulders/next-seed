@@ -1,11 +1,15 @@
 import { Paper } from '@mui/material';
 import {
   DataGrid,
-  DataGridProps,
+  GridCallbackDetails,
   GridColDef,
+  GridFeatureMode,
   GridRowIdGetter,
+  GridRowParams,
   GridRowsProp,
+  GridSlotsComponent,
   GridSortModel,
+  MuiEvent,
 } from '@mui/x-data-grid';
 import { toJS } from 'mobx';
 import React from 'react';
@@ -14,11 +18,13 @@ import getTableLocaleText from '@config/tableLocale';
 
 import { useTranslation } from '@hooks/services';
 
-import Footer from './Footer';
+import { Footer } from './Footer';
 import { LoadingOverlay } from './LoadingOverlay';
 import { NoRowsOverlay } from './NoRowsOverlay';
 
-export interface MuiTableProps extends DataGridProps {
+export interface MuiTableProps {
+  height?: number | string;
+  width?: number | string;
   columns: GridColDef[];
   rows: GridRowsProp;
   pageSize?: number;
@@ -29,10 +35,19 @@ export interface MuiTableProps extends DataGridProps {
   onPageChange?: (page: number) => void;
   onSortModelChange?: (model: GridSortModel) => void;
   getRowId?: GridRowIdGetter;
+  onRowClick?: (
+    params: GridRowParams,
+    event: MuiEvent<React.MouseEvent>,
+    details: GridCallbackDetails
+  ) => void;
+  components?: Partial<GridSlotsComponent>;
+  paginationMode?: GridFeatureMode | undefined;
 }
 
 export function MuiTable(props: MuiTableProps) {
   const {
+    height,
+    width,
     columns,
     rows,
     page,
@@ -40,23 +55,39 @@ export function MuiTable(props: MuiTableProps) {
     rowsPerPageOptions,
     totalCount,
     isLoading,
+    onRowClick,
     onPageChange,
     onSortModelChange,
     getRowId,
-    ...otherProps
+    components,
+    paginationMode = 'server',
   } = props;
   const { translate } = useTranslation();
 
   return (
-    <Paper elevation={0} sx={{ height: 400 }}>
+    <Paper
+      elevation={0}
+      sx={{
+        height: height || '85vh',
+        width,
+        '& .rowClickable': { cursor: 'pointer' },
+      }}
+    >
       <DataGrid
-        {...otherProps}
+        sx={{
+          '& .MuiDataGrid-cell:focus-within, & .MuiDataGrid-cell:focus': {
+            outline: 'none',
+          },
+          '& .MuiDataGrid-columnHeaders :focus-within, & .MuiDataGrid-columnHeaders :focus': {
+            outline: 'none',
+          },
+        }}
         rows={toJS(rows)}
         columns={columns}
         rowCount={totalCount}
         page={page}
-        pageSize={pageSize || 100}
-        rowsPerPageOptions={rowsPerPageOptions || [pageSize || 100]}
+        pageSize={pageSize || 10}
+        rowsPerPageOptions={rowsPerPageOptions || [pageSize || 10]}
         localeText={getTableLocaleText(translate)}
         loading={isLoading}
         onPageChange={onPageChange}
@@ -64,14 +95,16 @@ export function MuiTable(props: MuiTableProps) {
         disableSelectionOnClick
         disableColumnFilter
         getRowId={getRowId}
-        paginationMode="server"
-        sortingMode="server"
+        paginationMode={paginationMode}
+        sortingMode={paginationMode}
+        getRowClassName={() => (onRowClick ? `rowClickable` : '')}
         components={{
           Footer,
           LoadingOverlay,
           NoRowsOverlay,
-          ...otherProps.components,
+          ...components,
         }}
+        onRowClick={onRowClick}
       />
     </Paper>
   );

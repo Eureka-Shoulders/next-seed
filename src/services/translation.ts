@@ -1,6 +1,6 @@
 import { en } from '@locales/en';
 import { pt } from '@locales/pt';
-import { Locale, LocaleType } from '@locales/types';
+import type { Locale, LocaleType } from '@locales/types';
 import { Locale as DateFnsLocale } from 'date-fns';
 import { enUS, ptBR } from 'date-fns/locale';
 import { inject, injectable } from 'inversify';

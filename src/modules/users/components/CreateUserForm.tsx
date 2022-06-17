@@ -32,7 +32,7 @@ function CreateUserForm() {
   async function handleSubmit(values: UserSchema) {
     const newUser = pipe(omit(['confirmPassword']), dissocPath(['person', 'type']))(values);
     const onSuccess = () => {
-      router.push('/users');
+      router.push('/app/users');
     };
 
     await notificationService.handleHttpRequest(() => usersRepository.create(newUser), {

@@ -1,52 +1,67 @@
+import { AutocompleteOption, DateRangeOption } from '@types';
 import { format } from 'date-fns';
-import {
-  filter,
-  fromPairs,
-  isEmpty,
-  join,
-  keys,
-  map,
-  pipe,
-  toPairs,
-} from 'ramda';
+import * as R from 'ramda';
 
-import { Filter, FilterEnum } from './types';
+import { EnumFilter, Filter, FilterEnum } from './types';
 
-const getTrueKeys = pipe(filter(Boolean), keys);
+const getTrueKeys = R.pipe(R.filter(Boolean), R.keys);
 
 function getEnumObject(enums: FilterEnum[]) {
   const enumerationPairs = enums.map(
     (enumeration) => [enumeration.value, false] as [string, boolean]
   );
 
-  return fromPairs(enumerationPairs);
+  return R.fromPairs(enumerationPairs);
 }
 
 export function buildInitialValues(filters: Filter[]) {
-  const pairs = filter(
-    Boolean,
-    map((filterObject) => {
-      if (filterObject.type === 'date') {
-        return [filterObject.field, null];
-      }
+  return R.pipe(
+    R.map((filterObject: Filter): [string, unknown] => {
+      switch (filterObject.type) {
+        case 'date':
+          return [filterObject.field, null];
 
-      if (filterObject.type === 'enum') {
-        return [filterObject.field, getEnumObject(filterObject.enums)];
-      }
+        case 'autocomplete':
+          return filterObject.multiple ? [filterObject.field, []] : [filterObject.field, null];
 
-      return [filterObject.field, ''];
-    }, filters)
-  ) as [key: string, value: string | null][];
-  return fromPairs(pairs);
+        case 'dateRange':
+          return [filterObject.field, { start: null, end: null }];
+
+        case 'enum':
+          return [filterObject.field, getEnumObject(filterObject.enums)];
+
+        default:
+          return [filterObject.field, ''];
+      }
+    }),
+    R.filter(Boolean),
+    R.fromPairs
+  )(filters);
 }
 
 export function getFilterValue(
   filterObject: Filter,
-  values: Record<string, unknown>
+  values: Record<string, unknown>,
+  useAutocompleteValue?: string[]
 ) {
   switch (filterObject.type) {
     case 'enum':
       return getTrueKeys(values[filterObject.field] as Record<string, boolean>);
+
+    case 'autocomplete': {
+      if (filterObject.multiple) {
+        const autocompleteValue = values[filterObject.field] as AutocompleteOption[] | [];
+        if (useAutocompleteValue?.includes(filterObject.field)) {
+          return autocompleteValue.map((option) => option.value);
+        }
+        return autocompleteValue.map((option) => option.label);
+      }
+      const autocompleteValue = values[filterObject.field] as AutocompleteOption | null;
+      if (useAutocompleteValue?.includes(filterObject.field)) {
+        return autocompleteValue?.value;
+      }
+      return autocompleteValue?.label;
+    }
 
     default:
       return values[filterObject.field];
@@ -58,32 +73,76 @@ export interface FilterChip {
   field: string;
 }
 
-export function getFilterChips(values: Record<string | number, unknown>) {
-  return pipe(
-    toPairs,
-    filter(([, value]) => value !== '' && value !== null),
-    map(([field, value]) => {
+export const isAutocompleteOption = (x: unknown): x is AutocompleteOption =>
+  R.has('label', x) && R.has('value', x);
+
+export const isAutocompleteMultipleOption = (x: unknown): x is AutocompleteOption[] => {
+  if (Array.isArray(x)) {
+    return x.every((y) => isAutocompleteOption(y));
+  }
+  return false;
+};
+
+export const isDateRangeOption = (x: unknown): x is DateRangeOption =>
+  R.has('start', x) || R.has('end', x);
+
+export function getFilterChips(filters: Filter[], values: Record<string | number, unknown>) {
+  return R.pipe(
+    R.toPairs,
+    R.filter(([, value]) => value !== '' && value !== null),
+    R.map(([field, value]) => {
       const chip = {
         field,
         title: value,
       };
 
-      if (field === 'sort') {
+      if (field === 'orderBy') {
         return;
       }
       if (value instanceof Date) {
         chip.title = format(value, 'dd/MM/yyyy');
         return chip;
       }
+
+      if (isAutocompleteOption(value)) {
+        chip.title = value.label;
+        return chip;
+      }
+
+      if (isAutocompleteMultipleOption(value)) {
+        if (value.length === 0) return;
+        chip.title = R.join(
+          ', ',
+          value.map((x) => x.label)
+        );
+        return chip;
+      }
+
+      if (isDateRangeOption(value)) {
+        const start = value.start ? format(value.start, 'dd/MM/yyyy') : null;
+        const end = value.end ? format(value.end, 'dd/MM/yyyy') : null;
+        if (!start && !end) return;
+        chip.title = start && end ? `${start} -> ${end}` : start;
+        return chip;
+      }
+
       if (typeof value === 'object') {
-        if (isEmpty(filter(Boolean, value as Record<string, boolean>))) {
+        if (R.isEmpty(R.filter(Boolean, value as Record<string, boolean>))) {
           return;
         }
 
-        if (Array.isArray(value)) {
-          chip.title = join(', ', value);
-        }
+        const enumOptions = filters.find((filter) => filter.field === field) as EnumFilter;
 
+        const enumTitleGetter = R.pipe(
+          R.filter(Boolean),
+          R.keys,
+          R.map(
+            (key) => enumOptions.enums.find((enumOption) => enumOption.value === key)?.title || ''
+          ),
+          R.join(', ')
+        );
+
+        chip.title = enumTitleGetter(value);
         return chip;
       }
 

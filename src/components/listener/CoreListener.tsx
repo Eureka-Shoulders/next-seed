@@ -27,7 +27,6 @@ function CoreListener() {
   const themeStore = useThemeStore();
   const router = useRouter();
   const cookies = parseCookies();
-  const isPublicPage = cookies.isPublicPage === 'true';
 
   useEffect(() => {
     if (router.locale) {
@@ -54,10 +53,12 @@ function CoreListener() {
   }, []);
 
   useEffect(() => {
-    if (!isPublicPage) {
-      userStore.verifyToken();
+    const privatePath = router.pathname.split('/')[1];
+
+    if (privatePath === 'app' && !userStore.isLogged) {
+      userStore.fetchUserInfo();
     }
-  }, [isPublicPage]);
+  }, [router.pathname, userStore.isLogged]);
 
   useEffect(() => {
     if (userStore.abilities) {
@@ -70,11 +71,10 @@ function CoreListener() {
       });
       uiStore.appBar.setPages(pages);
 
-      if (!isPublicPage) {
-        const lastPath = breadcrumbPaths.pop();
-        if (lastPath?.disabled) {
-          router.push('/no-permissions');
-        }
+      const lastPath = breadcrumbPaths[breadcrumbPaths.length - 1];
+
+      if (lastPath?.disabled) {
+        router.push('/app/no-permissions');
       }
     }
   }, [router.pathname, userStore.abilities]);

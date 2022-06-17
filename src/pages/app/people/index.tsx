@@ -18,6 +18,8 @@ import { useTranslation } from '@hooks/services';
 import getPeopleColumns from '@modules/people/columns';
 import { buildFilters, getFilters } from '@modules/people/filters';
 
+import clearFilters from '@utils/table/clearFilters';
+
 function Index() {
   const { translate } = useTranslation();
   const uiStore = useUIStore();
@@ -57,6 +59,7 @@ function Index() {
               buildFilters(filters, peopleList.filters);
               peopleList.fetch();
             }}
+            onClear={() => clearFilters(peopleList.filters)}
             onRefresh={peopleList.fetch}
           />
         </Grid>

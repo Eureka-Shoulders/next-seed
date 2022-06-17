@@ -50,7 +50,7 @@ function EditPersonForm({ personEntity }: Props) {
       })),
     };
     const onSuccess = () => {
-      router.push('/people');
+      router.push('/app/people');
     };
 
     await notificationService.handleHttpRequest(() => personEntity.update(newData), {

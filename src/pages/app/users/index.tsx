@@ -1,6 +1,7 @@
 import { Breadcrumb, useUIStore } from '@euk-labs/componentz';
 import { Identifier, useList } from '@euk-labs/fetchx';
 import { Box, Grid } from '@mui/material';
+import { Actions, Subjects, User } from '@types';
 import { useEffect } from 'react';
 
 import FetchxList from '@core/components/FetchxList';
@@ -18,9 +19,8 @@ import { useTranslation } from '@hooks/services';
 import usersColumns from '@modules/users/columns';
 import { buildFilters, getFilters } from '@modules/users/filters';
 
+import clearFilters from '@utils/table/clearFilters';
 import setFilter from '@utils/table/setFilter';
-
-import { Actions, Subjects, User } from '../../types';
 
 function Index() {
   const { translate } = useTranslation();
@@ -71,6 +71,7 @@ function Index() {
               buildFilters(filters, usersList.filters);
               usersList.fetch();
             }}
+            onClear={() => clearFilters(usersList.filters)}
             onRefresh={usersList.fetch}
           />
         </Grid>

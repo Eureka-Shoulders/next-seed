@@ -18,7 +18,6 @@ export interface UserStoreType {
   setUser(user: User): void;
 
   rawAbilities: RawRuleOf<AppAbility>[] | null;
-  getAbilities(): void;
   setRawAbilities(rawAbilities: RawRuleOf<AppAbility>[]): void;
 
   login(accessToken: string, refreshToken: string, redirectTo?: string): void;
@@ -26,7 +25,7 @@ export interface UserStoreType {
 
   getAccessToken(): string | null;
   getRefreshToken(): string | null;
-  verifyToken(): void;
+  fetchUserInfo(): Promise<void>;
 
   startTokenInjector(): void;
   catchUnauthorizedErrors(): void;
@@ -71,7 +70,7 @@ export class UserStore implements UserStoreType {
       maxAge: ONE_DAY_IN_SECONDS * 2,
     });
 
-    Router.push(redirectTo || '/');
+    Router.push(redirectTo || '/app');
   }
 
   async logout() {
@@ -108,53 +107,15 @@ export class UserStore implements UserStoreType {
     return cookies.refresh_token;
   }
 
-  async getAbilities() {
+  async fetchUserInfo() {
+    const userResponse = await this.apiService.client.get<User>('/auth/me');
     const abilitiesResponse = await this.apiService.client.get<RawRuleOf<AppAbility>[]>(
       '/auth/abilities'
     );
 
+    this.setUser(userResponse.data);
     if (abilitiesResponse?.data) {
       this.setRawAbilities(abilitiesResponse.data);
-    }
-  }
-
-  async verifyToken() {
-    const accessToken = this.getAccessToken();
-    const refreshToken = this.getRefreshToken();
-
-    if (!accessToken && !refreshToken) {
-      return Router.push({
-        pathname: '/login',
-        search: `?redirect=${encodeURIComponent(Router.asPath)}`,
-      });
-    }
-
-    if (!accessToken && refreshToken) {
-      const newTokens = await this.refreshToken();
-
-      if (newTokens) {
-        setCookie(null, 'user_token', newTokens.accessToken, defaultCookieConfig);
-        setCookie(null, 'refresh_token', newTokens.refreshToken, {
-          ...defaultCookieConfig,
-          maxAge: ONE_DAY_IN_SECONDS * 2,
-        });
-      }
-    }
-
-    try {
-      const userResponse = await this.apiService.client.get<User>('/auth/me');
-
-      this.setUser(userResponse.data);
-      await this.getAbilities();
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status !== 403) {
-          return Router.push({
-            pathname: '/login',
-            search: `?redirect=${encodeURIComponent(Router.asPath)}`,
-          });
-        }
-      }
     }
   }
 

@@ -6,13 +6,18 @@ import { useTranslation } from '@hooks/services';
 
 import SmallButton from './SmallButton';
 
-export default function ClearFiltersButton() {
+interface Props {
+  onClear: () => void;
+}
+
+export default function ClearFiltersButton({ onClear }: Props) {
   const formix = useFormixContext();
   const { translate } = useTranslation();
 
   function handleReset() {
     formix.resetForm();
     formix.submitForm();
+    onClear();
   }
 
   return (

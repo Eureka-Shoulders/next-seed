@@ -26,7 +26,7 @@ function AppBarHeader() {
   }
 
   function goToProfile() {
-    router.push('/profile');
+    router.push('/app/profile');
     handleClose();
   }
 

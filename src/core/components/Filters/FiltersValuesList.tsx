@@ -9,8 +9,9 @@ interface Props {
   filtersStore: FiltersStore;
 }
 
+// TODO: test reactions
 export default function FiltersValuesList({ filtersStore }: Props) {
-  const chips = getFilterChips(toJS(filtersStore.values) ?? {});
+  const chips = getFilterChips(filtersStore.filters, toJS(filtersStore.values) ?? {});
 
   return (
     <>

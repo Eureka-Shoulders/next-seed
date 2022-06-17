@@ -2,15 +2,17 @@ import 'reflect-metadata';
 
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { AppBar } from '@euk-labs/componentz';
-import { LocalizationProvider } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { CssBaseline } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers';
 import { Provider } from 'inversify-react';
 import { enableStaticRendering } from 'mobx-react-lite';
 import type { AppProps } from 'next/app';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
+
+import { DEFAULT_LOCALE } from '@config/constants';
 
 import ErrorBoundary from '@components/ErrorBoundary';
 import CoreListener from '@components/listener/CoreListener';
@@ -46,7 +48,7 @@ enableStaticRendering(typeof window === 'undefined');
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps, router } = props;
   const showAppBar = pageProps.showAppBar ?? true;
-  const locale = router.locale || router.defaultLocale;
+  const locale = router.locale || DEFAULT_LOCALE;
   const container = globalContainer(locale);
 
   return (
@@ -71,7 +73,9 @@ function MyApp(props: MyAppProps) {
                     </AuthLoader>
                   </AppBar>
                 ) : (
-                  <Component {...pageProps} />
+                  <AuthLoader>
+                    <Component {...pageProps} />
+                  </AuthLoader>
                 )}
 
                 <Snackbar autoHideDuration={6000} />

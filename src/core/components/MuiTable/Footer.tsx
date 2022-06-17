@@ -9,7 +9,7 @@ import { useTranslation } from '@hooks/services';
 
 const ONE_MINUTE = 60 * 1000;
 
-function Footer() {
+export const Footer = observer(() => {
   const { translate, dateFnsLocale } = useTranslation();
   const apiRef = useGridApiContext();
   const [date, setDate] = useState(new Date());
@@ -66,6 +66,4 @@ function Footer() {
       />
     </Box>
   );
-}
-
-export default observer(Footer);
+});

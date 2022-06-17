@@ -7,7 +7,7 @@ export function getBreadcrumbPaths(pages: Page[], pathname: string): Page[] {
   const paths = [];
 
   if (urlPaths.length === 2 && urlPaths[1] === '') {
-    const newPage = pages.find((page) => page.link === '/');
+    const newPage = pages.find((page) => page.link === '/app');
 
     return newPage ? [newPage] : [];
   }

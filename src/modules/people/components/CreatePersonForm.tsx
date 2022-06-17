@@ -42,7 +42,7 @@ function CreatePersonForm() {
       })),
     };
     const onSuccess = () => {
-      router.push('/people');
+      router.push('/app/people');
     };
 
     await notificationService.handleHttpRequest(

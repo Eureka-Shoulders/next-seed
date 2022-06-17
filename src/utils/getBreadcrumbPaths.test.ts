@@ -5,11 +5,11 @@ import { getBreadcrumbPaths } from './getBreadcrumbPaths';
 const pages = [
   {
     label: 'Home',
-    link: '/',
+    link: '/app',
   },
   {
     label: 'Users',
-    link: '/users',
+    link: '/app/users',
     sub: [
       {
         label: 'Create',
@@ -23,7 +23,7 @@ const pages = [
   },
   {
     label: 'People',
-    link: '/people',
+    link: '/app/people',
     sub: [
       {
         label: 'Create',
@@ -39,7 +39,7 @@ const pages = [
 
 describe('Breadcrumb Tests', () => {
   it('should get only home path', () => {
-    const route = '/';
+    const route = '/app';
     const paths = getBreadcrumbPaths(pages, route);
 
     expect(paths).toHaveLength(1);
@@ -47,7 +47,7 @@ describe('Breadcrumb Tests', () => {
   });
 
   it('should get users path', () => {
-    const route = '/users';
+    const route = '/app/users';
     const paths = getBreadcrumbPaths(pages, route);
 
     expect(paths).toHaveLength(1);
@@ -55,7 +55,7 @@ describe('Breadcrumb Tests', () => {
   });
 
   it('should get users create path', () => {
-    const route = '/users/new';
+    const route = '/app/users/new';
     const paths = getBreadcrumbPaths(pages, route);
 
     expect(paths).toHaveLength(2);
@@ -64,7 +64,7 @@ describe('Breadcrumb Tests', () => {
   });
 
   it('should get users edit path', () => {
-    const route = '/users/[id]';
+    const route = '/app/users/[id]';
     const paths = getBreadcrumbPaths(pages, route);
 
     expect(paths).toHaveLength(2);

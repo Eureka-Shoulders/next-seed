@@ -9,7 +9,7 @@ export function getPages(abilities: AppAbility, translate: TranslateFunc): Page[
   return [
     {
       label: translate('pages.users.list'),
-      link: '/users',
+      link: '/app/users',
       Icon: UserIcon,
       disabled: abilities.cannot(Actions.Read, Subjects.User),
       sub: [
@@ -31,7 +31,7 @@ export function getPages(abilities: AppAbility, translate: TranslateFunc): Page[
     },
     {
       label: translate('pages.people.list'),
-      link: '/people',
+      link: '/app/people',
       Icon: PeopleIcon,
       disabled: abilities.cannot(Actions.Read, Subjects.Person),
       sub: [
