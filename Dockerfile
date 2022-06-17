@@ -15,11 +15,13 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ARG use_mirage
-ARG api_url
+ARG USE_MIRAGE
+ARG API_URL
+ARG JWT_SECRET
 
-ENV USE_MIRAGE=$use_mirage
-ENV API_URL=$api_url
+ENV USE_MIRAGE=$USE_MIRAGE
+ENV API_URL=$API_URL
+ENV JWT_SECRET=$JWT_SECRET
 
 RUN yarn build
 
@@ -41,11 +43,13 @@ USER nextjs
 
 EXPOSE 3000
 
-ARG use_mirage=false
-ARG api_url
+ARG USE_MIRAGE=false
+ARG API_URL
+ARG JWT_SECRET
 
-ENV USE_MIRAGE=$use_mirage
-ENV API_URL=$api_url
+ENV USE_MIRAGE=$USE_MIRAGE
+ENV API_URL=$API_URL
+ENV JWT_SECRET=$JWT_SECRET
 
 ENV PORT 3000
 
