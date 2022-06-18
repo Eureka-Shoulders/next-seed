@@ -1,6 +1,6 @@
 import { validateCNPJ, validateCPF } from '@euk-labs/beltz';
 
-export default function validateCPForCNPJ(value: string) {
+export function validateCPForCNPJ(value: string) {
   if (value.length === 11) {
     return validateCPF(value);
   }

@@ -28,8 +28,12 @@
       "@styles/*": ["./styles/*"],
       "@config/*": ["./config/*"],
       "@utils/*": ["./utils/*"],
+      "@locales/*": ["./locales/*"],
       "@modules/*": ["./modules/*"],
-      "@hooks/*": ["./hooks/*"]
+      "@repositories/*": ["./repositories/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@providers/*": ["./providers/*"],
+      "@types": ["./types.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

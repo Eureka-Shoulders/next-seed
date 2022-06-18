@@ -1,6 +1,35 @@
 import { Ability } from '@casl/ability';
+import { find, keys } from 'ramda';
 
-import Enum from '@core/utils/Enum';
+import { ThemeType } from '@stores/theme';
+
+class Enum<T extends Record<string, string>> {
+  private notFound = 'Enum not found';
+
+  constructor(private enumerable: T) {}
+
+  getKey(value: string) {
+    return find((key) => this.enumerable[key] === value, keys(this.enumerable)) || this.notFound;
+  }
+
+  getValue(key: string) {
+    return this.enumerable[key] || this.notFound;
+  }
+}
+
+export interface HydrationData {
+  theme?: ThemeType;
+}
+
+export interface AutocompleteOption {
+  label: string;
+  value: unknown;
+}
+
+export interface DateRangeOption {
+  start: Date;
+  end: Date;
+}
 
 export enum Actions {
   Create = 'create',
@@ -73,9 +102,4 @@ export interface User {
   person: Person;
   personId: string;
   password?: string;
-}
-
-export interface AutocompleteOption {
-  label: string;
-  value: unknown;
 }

@@ -1,10 +1,8 @@
 import { GridLocaleText } from '@mui/x-data-grid';
 
-import { TranslateFunc } from '@core/hooks/useTranslation';
+import { TranslateFunc } from '@services/translation';
 
-export default function getTableLocaleText(
-  translate: TranslateFunc
-): Partial<GridLocaleText> {
+export default function getTableLocaleText(translate: TranslateFunc): Partial<GridLocaleText> {
   return {
     columnMenuUnsort: translate('actions.filters.undoSort'),
     columnMenuSortAsc: translate('common.sortAsc'),

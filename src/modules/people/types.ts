@@ -1,4 +1,4 @@
-import { TranslateFunc } from '@core/hooks/useTranslation';
+import { TranslateFunc } from '@services/translation';
 
 export function getPersonTypes(translate: TranslateFunc) {
   return [

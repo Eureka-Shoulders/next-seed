@@ -1,4 +1,6 @@
-const dialogs = {
+import { Dialogs } from '@locales/types/dialogs';
+
+export const dialogs: Dialogs = {
   delete: {
     title: 'Deseja mesmo deletar?',
     description: 'Ao confirmar o seu registro será deletado!',
@@ -6,5 +8,3 @@ const dialogs = {
     rejectLabel: 'Cancelar',
   },
 };
-
-export default dialogs;

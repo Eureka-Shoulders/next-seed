@@ -1,11 +1,14 @@
-import getConfig from 'next/config';
-
 import { HttpService } from '@euk-labs/fetchx';
+import { Repository } from '@euk-labs/fetchx';
+import { decorate, injectable, unmanaged } from 'inversify';
+import getConfig from 'next/config';
 
 const { publicRuntimeConfig } = getConfig();
 
-const httpService = new HttpService({
+export const httpService = new HttpService({
   baseURL: publicRuntimeConfig.apiUrl,
 });
 
-export default httpService;
+decorate(injectable(), Repository);
+decorate(unmanaged(), Repository, 1);
+export default Repository;

@@ -1,71 +1,64 @@
-import { Box, Grid, Link as MuiLink, Typography } from '@mui/material';
-import NextLink from 'next/link';
-import { useRouter } from 'next/router';
-
-import Trans from '@core/components/Trans';
-import useTranslation from '@core/hooks/useTranslation';
-import { zodValidator } from '@core/utils/validators';
-
-import { useUsersRepository } from '@hooks/repositories';
-import { useAuthService, useNotificationService } from '@hooks/services';
-
 import { Formix } from '@euk-labs/formix';
-import {
-  FXPasswordField,
-  FXSubmitButton,
-  FXTextField,
-} from '@euk-labs/formix-mui';
+import { FXPasswordField, FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
+import { Box, Button, Grid, Typography } from '@mui/material';
+import Link from 'next/link';
 
-import { initialValuesForLogin } from '../initialValues';
+import Trans from '@components/utility/Trans';
+
+// TODO: Logo
+// import GPLogoImage from '@components/GPLogoImage';
+import { useUsersRepository } from '@hooks/repositories';
+import { useTranslation } from '@hooks/services';
+import { useNotificationService } from '@hooks/services';
+import { useUserStore } from '@hooks/stores';
+
+import { zodValidator } from '@utils/zodValidator';
+
 import { LoginSchema, getLoginSchema } from '../login.schema';
 
-export default function LoginForm() {
+const initialValues = {
+  email: '',
+  password: '',
+};
+
+function LoginForm() {
   const { translate } = useTranslation();
-  const router = useRouter();
-  const notificationService = useNotificationService();
-  const authService = useAuthService();
+  const userStore = useUserStore();
   const usersRepository = useUsersRepository();
+  const notificationService = useNotificationService();
 
   async function handleSubmit(values: LoginSchema) {
     const params = new URLSearchParams(window.location.search);
     const redirectTo = params.get('redirect') || undefined;
-
-    try {
-      const response = await usersRepository.login(
-        values.email,
-        values.password
-      );
-
-      authService.saveTokens(
-        response.data.accessToken,
-        response.data.refreshToken
-      );
-      router.push(redirectTo || '/');
-    } catch (error) {
-      notificationService.notify(
-        translate('errors.invalidCredentials'),
-        'error'
-      );
-    }
+    await notificationService.handleHttpRequest(
+      () => usersRepository.login(values.email, values.password),
+      {
+        feedbackError: translate('errors.systemError'),
+        onSuccess: (response) => {
+          userStore.login(response.data.accessToken, response.data.refreshToken, redirectTo);
+        },
+      }
+    );
   }
 
   return (
     <Box p={4}>
       <Grid container component="main" spacing={2} justifyContent="center">
+        <Grid item xs="auto">
+          {/* <GPLogoImage height={350} /> */}
+        </Grid>
         <Grid item xs={12}>
-          <Typography
-            align="center"
-            variant="h4"
-            component="h1"
-            fontWeight={700}
-          >
-            <Trans id="actions.login" />
+          <Typography align="center">
+            <Trans id="common.welcomeBack" />
+          </Typography>
+          <Typography align="center" variant="h4" component="h1" fontWeight={700}>
+            <Trans id="common.makeLogin" />
           </Typography>
         </Grid>
 
         <Grid item xs={12} sm={8}>
           <Formix
-            initialValues={initialValuesForLogin}
+            initialValues={initialValues}
             validate={zodValidator(getLoginSchema(translate))}
             onSubmit={handleSubmit}
           >
@@ -74,30 +67,18 @@ export default function LoginForm() {
                 <FXTextField name="email" label={translate('common.email')} />
               </Grid>
               <Grid item xs={12}>
-                <FXPasswordField
-                  name="password"
-                  label={translate('common.password')}
-                />
-              </Grid>
-
-              <Grid item xs={12} display="flex" justifyContent="flex-end">
-                <NextLink href="/recover-password" passHref>
-                  <MuiLink>
-                    <Trans id="common.forgotPassword" />
-                  </MuiLink>
-                </NextLink>
+                <FXPasswordField name="password" label={translate('common.password')} />
               </Grid>
 
               <Grid item xs={12} display="flex" justifyContent="center">
                 <FXSubmitButton fullWidth label={translate('actions.login')} />
               </Grid>
-
-              <Grid item xs={12} display="flex" justifyContent="center">
-                <NextLink href="/register" passHref>
-                  <MuiLink>
-                    <Trans id="actions.createAccount" />
-                  </MuiLink>
-                </NextLink>
+              <Grid item xs={12} display="flex" justifyContent="flex-end">
+                <Link href="/recover-password" passHref>
+                  <Button variant="outlined" fullWidth color="primary">
+                    <Trans id="common.forgotPassword" />
+                  </Button>
+                </Link>
               </Grid>
             </Grid>
           </Formix>
@@ -106,3 +87,5 @@ export default function LoginForm() {
     </Box>
   );
 }
+
+export default LoginForm;

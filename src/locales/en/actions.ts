@@ -1,4 +1,6 @@
-const actions = {
+import { Actions } from '@locales/types/actions';
+
+export const actions: Actions = {
   search: 'Search',
   goBack: 'Back',
   login: 'Login',
@@ -31,5 +33,3 @@ const actions = {
     clearAll: 'Clear all filters',
   },
 };
-
-export default actions;

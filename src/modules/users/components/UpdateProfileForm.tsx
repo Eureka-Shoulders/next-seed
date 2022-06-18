@@ -1,15 +1,14 @@
-import { Grid } from '@mui/material';
-import { User } from 'types';
-
-import useTranslation from '@core/hooks/useTranslation';
-import { zodValidator } from '@core/utils/validators';
-
-import { useNotificationService } from '@hooks/services';
-import { useUserStore } from '@hooks/stores';
-
 import { EntityStore } from '@euk-labs/fetchx';
 import { Formix } from '@euk-labs/formix';
 import { FXSubmitButton, FXTextField } from '@euk-labs/formix-mui';
+import { Grid } from '@mui/material';
+import { User } from 'types';
+
+import { useTranslation } from '@hooks/services';
+import { useNotificationService } from '@hooks/services';
+import { useUserStore } from '@hooks/stores';
+
+import { zodValidator } from '@utils/zodValidator';
 
 import { ProfileSchema } from '../profile.schema';
 
@@ -33,14 +32,11 @@ function UpdateProfileForm({ userEntity }: Props) {
       userStore.setUser(userEntity.data as User);
     };
 
-    await notificationService.handleHttpRequest(
-      () => userEntity.update(newData),
-      {
-        feedbackSuccess: translate('feedbacks.user.updated'),
-        feedbackError: translate('errors.users.update'),
-        onSuccess,
-      }
-    );
+    await notificationService.handleHttpRequest(() => userEntity.update(newData), {
+      feedbackSuccess: translate('feedbacks.user.updated'),
+      feedbackError: translate('errors.users.update'),
+      onSuccess,
+    });
   }
 
   return (

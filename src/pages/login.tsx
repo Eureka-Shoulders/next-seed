@@ -1,8 +1,7 @@
 import { Grid } from '@mui/material';
 import type { NextPage } from 'next';
 
-import LoginBanner from '@components/Login/LoginBanner';
-
+import LoginBanner from '@modules/login/components/LoginBanner';
 import LoginForm from '@modules/login/components/LoginForm';
 
 const Login: NextPage = () => {
@@ -18,14 +17,7 @@ const Login: NextPage = () => {
       >
         <LoginBanner />
       </Grid>
-      <Grid
-        item
-        xs={12}
-        md={6}
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
+      <Grid item xs={12} md={6} display="flex" alignItems="center" justifyContent="center">
         <LoginForm />
       </Grid>
     </Grid>
@@ -38,7 +30,6 @@ export const getStaticProps = async () => {
   return {
     props: {
       showAppBar: false,
-      isPublic: true,
     },
   };
 };

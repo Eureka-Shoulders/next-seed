@@ -1,19 +1,15 @@
+import { Page } from '@euk-labs/componentz/components/AppBar/types';
 import UserIcon from '@mui/icons-material/AccountCircle';
 import PeopleIcon from '@mui/icons-material/People';
-import { Actions, AppAbility, Subjects } from 'types';
+import { Actions, AppAbility, Subjects } from '@types';
 
-import { TranslateFunc } from '@core/hooks/useTranslation';
+import { TranslateFunc } from '@services/translation';
 
-import { Page } from '@euk-labs/componentz/components/AppBar/types';
-
-export function getPages(
-  abilities: AppAbility,
-  translate: TranslateFunc
-): Page[] {
+export function getPages(abilities: AppAbility, translate: TranslateFunc): Page[] {
   return [
     {
       label: translate('pages.users.list'),
-      link: '/users',
+      link: '/app/users',
       Icon: UserIcon,
       disabled: abilities.cannot(Actions.Read, Subjects.User),
       sub: [
@@ -35,7 +31,7 @@ export function getPages(
     },
     {
       label: translate('pages.people.list'),
-      link: '/people',
+      link: '/app/people',
       Icon: PeopleIcon,
       disabled: abilities.cannot(Actions.Read, Subjects.Person),
       sub: [

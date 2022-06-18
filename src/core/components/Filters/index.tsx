@@ -1,19 +1,19 @@
+import { Formix } from '@euk-labs/formix';
 import {
   Add as AddIcon,
   FilterList as FiltersIcon,
   Refresh as RefreshIcon,
 } from '@mui/icons-material';
-import { Button, Grid, Tooltip } from '@mui/material';
+import { Button, Grid, Tooltip, Typography } from '@mui/material';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef, useState } from 'react';
 
-import Trans from '@core/components/Trans';
-import useTranslation from '@core/hooks/useTranslation';
+import Trans from '@components/utility/Trans';
+import When from '@components/utility/When';
 
-import { Formix } from '@euk-labs/formix';
+import { useTranslation } from '@hooks/services';
 
-import When from '../Utility/When';
 import AllFiltersModal from './AllFiltersModal';
 import ClearFiltersButton from './ClearFiltersButton';
 import { FiltersModal } from './FiltersModal';
@@ -24,15 +24,38 @@ import { Filter } from './types';
 import { getFilterValue } from './utils';
 
 interface FiltersProps {
+  title?: string;
   filters: Filter[];
+  useAutocompleteValue?: string[];
   onFilter: (filters: Record<string, unknown>) => void;
+  onClear: () => void;
   onRefresh: () => void;
 }
 
-function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
+function FiltersComponent({
+  title,
+  filters,
+  useAutocompleteValue,
+  onFilter,
+  onClear,
+  onRefresh,
+}: FiltersProps) {
   const [filtersStore] = useState(() => new FiltersStore());
   const { translate } = useTranslation();
   const anchorRef = useRef<HTMLButtonElement>(null);
+
+  function handleSubmit(values: Record<string, unknown>) {
+    const newFilters: Record<string, unknown> = {};
+
+    filters.forEach((filter) => {
+      if (values[filter.field] !== '')
+        newFilters[filter.field] = getFilterValue(filter, values, useAutocompleteValue);
+    });
+
+    filtersStore.setValues(newFilters);
+    filtersStore.closeFilters();
+    filtersStore.closeAllFilters();
+  }
 
   useEffect(() => {
     filtersStore.setFilters(filters);
@@ -44,26 +67,16 @@ function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
     }
   }, [filtersStore.values]);
 
-  function handleSubmit(values: Record<string, unknown>) {
-    const newFilters: Record<string, unknown> = {};
-
-    filters.forEach((filter) => {
-      if (values[filter.field] !== '')
-        newFilters[filter.field] = getFilterValue(filter, values);
-    });
-
-    filtersStore.setValues(newFilters);
-    filtersStore.closeFilters();
-    filtersStore.closeAllFilters();
-  }
-
   return (
     <When is={!!filtersStore.initialValues}>
-      <Formix
-        initialValues={toJS(filtersStore.initialValues!)}
-        onSubmit={handleSubmit}
-      >
-        <Grid container spacing={2}>
+      <Formix initialValues={toJS(filtersStore.initialValues!)} onSubmit={handleSubmit}>
+        <Grid container spacing={2} alignItems="center">
+          {title && (
+            <Grid item xs={12}>
+              <Typography variant="h5">{title}</Typography>
+            </Grid>
+          )}
+
           <Grid item xs>
             <Grid container spacing={2}>
               <FiltersValuesList filtersStore={filtersStore} />
@@ -71,6 +84,7 @@ function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
               <Grid item>
                 <Button
                   size="small"
+                  variant="outlined"
                   onClick={filtersStore.openFilters}
                   ref={anchorRef}
                 >
@@ -83,10 +97,7 @@ function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
 
           <Grid item>
             <Tooltip title={translate('filters.all')}>
-              <SmallButton
-                variant="contained"
-                onClick={filtersStore.openAllFilters}
-              >
+              <SmallButton variant="contained" onClick={filtersStore.openAllFilters}>
                 <FiltersIcon fontSize="small" />
               </SmallButton>
             </Tooltip>
@@ -101,7 +112,7 @@ function FiltersComponent({ filters, onFilter, onRefresh }: FiltersProps) {
           </Grid>
 
           <Grid item>
-            <ClearFiltersButton />
+            <ClearFiltersButton onClear={onClear} />
           </Grid>
         </Grid>
 

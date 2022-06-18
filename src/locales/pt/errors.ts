@@ -1,4 +1,6 @@
-const errors = {
+import { Errors } from '@locales/types/errors';
+
+export const errors: Errors = {
   user: {
     creation: 'Ocorreu um erro ao criar o usuário!',
     update: 'Ocorreu um erro ao atualizar o usuário!',
@@ -10,6 +12,7 @@ const errors = {
     update: 'Ocorreu um erro ao atualizar a pessoa!',
     notFound: 'Pessoa não encontrada!',
   },
+  notFound: 'Não encontrado!',
   changePassword: 'Ocorreu um erro ao alterar a senha!',
   recoverPassword: 'Ocorreu um erro ao solicitar recuperação de senha!',
   invalidCredentials: 'Usuário ou senha inválidos',
@@ -18,7 +21,7 @@ const errors = {
   noRefreshToken: 'Não foi possível obter o token de atualização!',
   validation: {
     invalid_email: 'E-mail invalido',
-    minimum_password: 'A senha deve conter, no minimo, 8 caracteres',
+    minimum_password: 'A senha deve conter, no mínimo, 8 caracteres',
     required: 'Campo obrigatório',
     invalid_field: 'Campo inválido',
     invalid_type: 'Tipo inválido',
@@ -33,5 +36,3 @@ const errors = {
     too_big_array: 'Deve conter no máximo ${max} item(ns)',
   },
 };
-
-export default errors;

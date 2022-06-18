@@ -2,18 +2,29 @@
   "singleQuote": true,
   "semi": true,
   "tabWidth": 2,
+  "printWidth": 100,
   "importOrder": [
     "reflect-metadata",
     "<THIRD_PARTY_MODULES>",
     "^@core/(.*)$",
+    "^@config/(.*)$",
     "^@components/(.*)$",
+    "^@containers/(.*)$",
     "^@hooks/(.*)$",
+    "^@stores/(.*)$",
     "^@modules/(.*)$",
+    "^@repositories/(.*)$",
+    "^@providers/(.*)$",
+    "^@services/(.*)$",
     "^@styles/(.*)$",
-    "^@euk-labs/(.*)$",
+    "^@utils/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
-  "importOrderParserPlugins": ["typescript", "decorators-legacy", "jsx"]
+  "importOrderParserPlugins": [
+    "typescript",
+    "decorators-legacy",
+    "jsx"
+  ]
 }

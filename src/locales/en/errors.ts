@@ -1,4 +1,6 @@
-const errors = {
+import { Errors } from '@locales/types/errors';
+
+export const errors: Errors = {
   user: {
     creation: 'An error occurred while creating the user!',
     update: 'An error occurred while updating the user!',
@@ -10,6 +12,7 @@ const errors = {
     update: 'An error occurred while updating the person!',
     notFound: 'Person not found!',
   },
+  notFound: 'Not found!',
   changePassword: 'An error occurred while changing the password!',
   recoverPassword: 'An error occurred while recovering the password!',
   invalidCredentials: 'Invalid credentials!',
@@ -33,5 +36,3 @@ const errors = {
     too_big_array: 'Must contain at most ${max} item(s)',
   },
 };
-
-export default errors;

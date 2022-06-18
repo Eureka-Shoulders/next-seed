@@ -1,14 +1,9 @@
+import { FXAutocomplete, FXDatePicker, FXTextField } from '@euk-labs/formix-mui';
 import { Grid } from '@mui/material';
 
-import useTranslation from '@core/hooks/useTranslation';
+import FXCPFCNPJField from '@components/form/FXCPFCNPJField';
 
-import FXCPFCNPJField from '@components/Inputs/FXCPFCNPJField';
-
-import {
-  FXAutocomplete,
-  FXDatePicker,
-  FXTextField,
-} from '@euk-labs/formix-mui';
+import { useTranslation } from '@hooks/services';
 
 import { getPersonTypes } from '../types';
 

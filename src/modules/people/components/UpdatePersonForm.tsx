@@ -1,3 +1,6 @@
+import { EntityStore } from '@euk-labs/fetchx';
+import { Formix } from '@euk-labs/formix';
+import { FXSubmitButton } from '@euk-labs/formix-mui';
 import { Grid, Tab, Tabs } from '@mui/material';
 import { Box } from '@mui/system';
 import { observer } from 'mobx-react-lite';
@@ -5,15 +8,12 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Person } from 'types';
 
-import TabPanel from '@core/components/TabPanel';
-import useTranslation from '@core/hooks/useTranslation';
-import { zodValidator } from '@core/utils/validators';
+import TabPanel from '@components/utility/TabPanel';
 
+import { useTranslation } from '@hooks/services';
 import { useNotificationService } from '@hooks/services';
 
-import { EntityStore } from '@euk-labs/fetchx';
-import { Formix } from '@euk-labs/formix';
-import { FXSubmitButton } from '@euk-labs/formix-mui';
+import { zodValidator } from '@utils/zodValidator';
 
 import { getInitialValuesForUpdate } from '../initialValues';
 import { UpdatePersonSchema } from '../people.schema';
@@ -41,7 +41,7 @@ function EditPersonForm({ personEntity }: Props) {
       name: values.name,
       contacts: values.contacts.map((contact) => ({
         ...contact,
-        type: contact.type.value,
+        type: contact?.type?.value,
         personId: undefined,
       })),
       addresses: values.addresses.map((address) => ({
@@ -50,28 +50,21 @@ function EditPersonForm({ personEntity }: Props) {
       })),
     };
     const onSuccess = () => {
-      router.push('/people');
+      router.push('/app/people');
     };
 
-    await notificationService.handleHttpRequest(
-      () => personEntity.update(newData),
-      {
-        feedbackSuccess: translate('feedbacks.person.updated'),
-        feedbackError: translate('errors.people.update'),
-        onSuccess,
-      }
-    );
+    await notificationService.handleHttpRequest(() => personEntity.update(newData), {
+      feedbackSuccess: translate('feedbacks.person.updated'),
+      feedbackError: translate('errors.person.update'),
+      onSuccess,
+    });
   }
 
   return (
     <>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          value={activeTab}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label={translate('common.informations')} />
+        <Tabs value={activeTab} onChange={handleChange} aria-label="basic tabs example">
+          <Tab label={translate('common.information')} />
           <Tab label={translate('common.contacts')} />
           <Tab label={translate('common.addresses')} />
         </Tabs>
